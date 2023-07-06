@@ -1,0 +1,29 @@
+.help-contain {
+    padding: 20px 20px 20px 40px;
+    .headline {
+        font-size: 18px;
+        line-height: 26px;
+        margin-bottom: 36px;
+    }
+    .headline-two {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+    .text {
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+    .img-width {
+        width: 800px;
+        display: block;
+        margin-bottom: 10px;
+    }
+    table {
+        border-color: #bdddeb;
+        margin-bottom: 10px;
+        td {
+            border: 1px solid !important;
+            padding: 10px !important;
+        }
+    }
+}

@@ -1,0 +1,219 @@
+// 全局变量，不涉及切换
+$high-color: #387dee;
+$dark-color: rgb(0 0 0 / 90%);
+$danger-color: #e34d59;
+
+
+// 1.主题定义
+$custom-default: (
+    font-size: 14px,
+
+    font-color-high: #387dee,
+
+    font-color-dark: rgb(0 0 0 / 90%),
+
+    drop-item-bg: rgb(56 125 238 / 10%),
+
+    page-bg: #e8eef7,
+
+
+    top-bar-bg: #387dee,
+
+    top-font-color: rgb(255 255 255 / 70%),
+
+    top-hover-font-color: #ffffff,
+
+    top-logo-text-color: rgb(255 255 255 / 90%),
+
+    top-tool-font-color: #ffffff,
+
+    top-tool-high-color:  #ffffff,
+
+    left-nav-bg: #387dee,
+
+    left-font-color: rgb(255 255 255 / 70%),
+
+    left-hover-font-color: #ffffff,
+
+    top-nav-bg: #ffffff,
+
+    top-nav-logo-text-color: #191919,
+
+    top-menu-logo-text-color: #ffffff,
+
+    top-nav-tool-font-color: #95aac9,
+
+    top-nav-tool-high-color:  #c65edb,
+
+    list-tips-color:  #387dee,
+
+    close-color:#387dee,
+
+    save-btn-color: #00a870,
+
+    config-high-btn-color: #b500ff,
+    breadcrumb:#e8eef7,
+    el-dropdown-link-color:rgb(0 0 0 / 90%)
+);
+
+$custom-dark: (
+    font-size: 14px,
+
+    font-color-high: #387dee,
+
+    font-color-dark: rgb(0 0 0 / 90%),
+
+    drop-item-bg: rgb(56 125 238 / 10%),
+
+    page-bg: #e8eef7,
+
+
+    top-bar-bg: #2a3142,
+
+    top-font-color: rgb(255 255 255 / 70%),
+
+    top-hover-font-color: #ffffff,
+
+    top-logo-text-color: rgb(255 255 255 / 90%),
+
+    top-tool-font-color: #ffffff,
+
+    top-tool-high-color:  #ffffff,
+
+    left-nav-bg: #387dee,
+
+    left-font-color: rgb(255 255 255 / 70%),
+
+    left-hover-font-color: #ffffff,
+
+    top-nav-bg: #ffffff,
+
+    top-nav-logo-text-color: #191919,
+
+    top-menu-logo-text-color: #ffffff,
+
+    top-nav-tool-font-color: #95aac9,
+
+    top-nav-tool-high-color:  #c65edb,
+
+    list-tips-color:  #2a3142,
+
+    close-color:#2a3142,
+
+    save-btn-color: #2a3142,
+
+    config-high-btn-color: #2a3142,
+    breadcrumb-bg-color:#e8eef7,
+    el-dropdown-link-color:rgb(0 0 0 / 90%)
+);
+
+$custom-purple: (
+    font-size: 14px,
+
+    font-color-high: #387dee,
+
+    font-color-dark: rgb(0 0 0 / 90%),
+
+    drop-item-bg: rgb(56 125 238 / 10%),
+
+    page-bg: #e8eef7,
+
+
+    top-bar-bg: linear-gradient(to bottom, #5657f7 0%, #7d55f8 100%),
+
+    top-font-color: rgb(255 255 255 / 70%),
+
+    top-hover-font-color: #ffffff,
+
+    top-logo-text-color: rgb(255 255 255 / 90%),
+
+    top-tool-font-color: #ffffff,
+
+    top-tool-high-color:  #ffffff,
+
+    left-nav-bg: #387dee,
+
+    left-font-color: rgb(255 255 255 / 70%),
+
+    left-hover-font-color: #ffffff,
+
+    top-nav-bg: #ffffff,
+
+    top-nav-logo-text-color: #191919,
+
+    top-menu-logo-text-color: #ffffff,
+
+    top-nav-tool-font-color: #95aac9,
+
+    top-nav-tool-high-color:  #c65edb,
+
+    list-tips-color:  linear-gradient(to bottom, #5657f7 0%, #7d55f8 100%),
+
+    close-color:#7d55f8,
+
+    save-btn-color: #7d55f8,
+
+    config-high-btn-color: #7d55f8,
+    breadcrumb-bg-color:#e8eef7,
+    el-dropdown-link-color:rgb(0 0 0 / 90%)
+);
+
+$custom-star: (
+    font-size: 14px,
+
+    font-color-high: #387dee,
+
+    font-color-dark: rgb(0 0 0 / 90%),
+
+    drop-item-bg: rgb(56 125 238 / 10%),
+
+    page-bg: transparent,
+
+
+    top-bar-bg: url('../../../assets/img/custom_star/top_bg.png') no-repeat center,
+
+    top-font-color: rgb(255 255 255 / 70%),
+
+    top-hover-font-color: #ffffff,
+
+    top-logo-text-color: rgb(255 255 255 / 90%),
+
+    top-tool-font-color: #ffffff,
+
+    top-tool-high-color:  #ffffff,
+
+    left-nav-bg: #387dee,
+
+    left-font-color: rgb(255 255 255 / 70%),
+
+    left-hover-font-color: #ffffff,
+
+    top-nav-bg: url('../../../assets/img/custom_star/top_bg.png') no-repeat center,
+
+    top-nav-logo-text-color: #ffffff,
+
+    top-menu-logo-text-color: #ffffff,
+
+    top-nav-tool-font-color: #95aac9,
+
+    top-nav-tool-high-color:  #1cd7fa,
+
+    list-tips-color:  #1cd7fa,
+
+    close-color: #50dcff,
+
+    save-btn-color: #1cd7fa,
+
+    config-high-btn-color: #1cd7fa,
+    breadcrumb-bg-color:transparent,
+    el-dropdown-link-color:#ffffff
+);
+
+
+//  2.将定义好到主题添加到map中
+$themes:(
+    custom-default:$custom-default,
+    custom-dark:$custom-dark,
+    custom-purple:$custom-purple,
+    custom-star:$custom-star,
+);

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./static/css/element_dark_theme.css">
+    <link rel="stylesheet" href="./static/css/element_purple_theme.css">
+    <link rel="stylesheet" href="./static/css/element_star_theme.css">
+    <link rel="stylesheet" href="./static/css/public.css">
+    <script src="/static/js/countUp.js"></script>
+    <!--<title>基础开发平台</title>-->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            outline: 0;
+            /*box-sizing: border-box;*/
+            font-family: '微软雅黑', '宋体', 'Helvetica';
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        img {
+            border: none;
+            max-width: 100%;
+        }
+
+
+        a:hover,
+        a:visited,
+        a:link,
+        a:active,
+        a {
+            color: -webkit-link;
+            text-decoration: underline;
+            cursor: pointer;
+            outline: 0;
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        textarea {
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        textarea {
+            width: 100%;
+            height: auto;
+            outline: none;
+            border: none;
+            resize: none;
+        }
+
+        .line-2 {
+            display: -webkit-box;
+            display: -moz-box;
+            -webkit-box-orient: vertical;
+            -moz-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            -moz-line-clamp: 2;
+            overflow: hidden
+        }
+
+        .line-3 {
+            display: -webkit-box;
+            display: -moz-box;
+            -webkit-box-orient: vertical;
+            -moz-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            -moz-line-clamp: 3;
+            overflow: hidden;
+        }
+    </style>
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    <script>
+        if (window.screen.width <= 1400) {
+            document.write('<link rel="stylesheet" href="./static/css/index_1366.css">');
+        } else if (window.screen.width <= 1600) {
+            document.write('<link rel="stylesheet" href="./static/css/index_1600.css">');
+        }
+    </script>
+</head>
+
+<body class="custom-default">
+    <div id="app"></div>
+    <script type="text/javascript" src="/static/js/echarts.min.js"></script>
+    <!-- built files will be auto injected -->
+</body>
+
+</html>

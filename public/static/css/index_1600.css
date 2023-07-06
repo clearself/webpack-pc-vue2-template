@@ -1,0 +1,55 @@
+/*登录页*/
+#app .login .main {
+    position: absolute;
+   /* top: 30px;
+    bottom: 30px;
+    left: 120px;
+    right: 120px; */
+}
+
+#app .login .main .title-info {
+    /* top: 20px; */
+}
+
+#app .login .main .left .form {
+    height: 380px;
+}
+
+#app .login .modal .mail {
+    top: 10vh;
+}
+#app .login .main .right img {
+    max-height: 560px;
+}
+
+/*注册页*/
+#app .register .main{
+    position: absolute;
+    /* top: 24px;
+    bottom: 24px;
+    left: 100px;
+    right: 100px; */
+    min-height: 560px !important;
+}
+
+#app .register .main .title-info {
+    /* display: none !important; */
+}
+
+#app .register .main .register-form .el-form-item {
+    margin-bottom: 18px;
+}
+#app .register .main .left .form {
+    margin-top: 10px;
+}
+#app .register .main .left .form .welcome {
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 30px;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 20px;
+}
+#app .register .main .right img {
+    max-height: 480px;
+    bottom: 20px;
+}

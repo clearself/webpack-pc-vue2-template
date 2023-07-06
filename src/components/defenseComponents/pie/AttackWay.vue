@@ -1,0 +1,130 @@
+<template>
+    <div style="width: 100%;height: 300px;" ref="myEcharts"></div>
+</template>
+
+<script>
+// import echarts from 'echarts/index';
+export default {
+    name: 'AttackWay',
+    props: ['chartData', 'title', 'type'],
+    data() {
+        return {
+        }
+    },
+    mounted() {
+        let data = this.chartData; let radius = []; let center = []
+        console.log(data)
+        radius = ['0%', '100%']
+        center = ['60%', '55%']
+        if (window.screen.width > 1680) {
+            radius = ['30%', '60%']
+            center = ['60%', '50%']
+        }
+        let option = {
+            color: ['#00fdff', '#00ccff', '#0055fb', '#00ffd1', '#518aff', '#a0f3ff', '#00ebf6', '#28d1fa', '#f5fffd'],
+            tooltip: {
+                trigger: 'item',
+                textStyle: {
+                    fontSize: 12
+                },
+                formatter(params) {
+                    // console.log(params)
+                    let color = params.color
+                    var htmlStr = '<div>'
+                    // 实现了一个点的效果
+                    htmlStr += '<span style="margin-right:5px;display:inline-block;width:10px;height:10px;background-color:' + color + ';"></span>'
+                    htmlStr += params.name + '<br />'
+                    // 这里可以自定义文本内容
+                    htmlStr += `<span style="color:${color};">${params.value} 次</span>`
+                    htmlStr += '</div>'
+                    return htmlStr
+                }
+            },
+            legend: {
+                show: true,
+                orient: 'vertical',
+                top: 'center',
+                left: 10,
+                icon: 'stack',
+                itemWidth: 20,
+                itemHeight: 6,
+                textStyle: {
+                    color: 'rgba(255,255,255,1)',
+                    fontSize: 12
+                },
+                nameTextStyle: {
+                    color: 'rgba(255,255,255,1)'
+                }
+            },
+            series: [{
+                name: '',
+                type: 'pie',
+                minAngle: 5,
+                radius: radius,
+                center: center,
+                left: 'right',
+                width: '70%',
+                label: {
+                    formatter: '{d}%'
+                },
+                labelLine: {
+                    show: true,
+                    smooth: false,
+                    lineStyle: {
+                        type: 'dotted'
+                    }
+                },
+                data: data
+            }]
+        }
+        let myindex = 0
+        let recordId
+        // eslint-disable-next-line no-undef
+        let myChart = echarts.init(this.$refs.myEcharts)
+        myChart.setOption(option)
+        // 定时器
+        function DrawPieArea(curIndex) {
+            if (curIndex == null) {
+                myChart.dispatchAction({ type: 'highlight', seriesIndex: 0, dataIndex: 0 })
+            } else {
+                myChart.dispatchAction({ type: 'highlight', seriesIndex: 0, dataIndex: curIndex }) // 高亮
+                myChart.dispatchAction({ type: 'showTip', seriesIndex: 0, dataIndex: curIndex }) // 显示
+                recordId = setInterval(function() {
+                    let dataLen = data.length
+                    myChart.dispatchAction({ type: 'downplay', seriesIndex: 0, dataIndex: curIndex })
+                    myChart.dispatchAction({ type: 'hidTip', seriesIndex: 0, dataIndex: curIndex })
+                    curIndex = (curIndex + 1) % dataLen
+                    myChart.dispatchAction({ type: 'highlight', seriesIndex: 0, dataIndex: curIndex })
+                    myChart.dispatchAction({ type: 'showTip', seriesIndex: 0, dataIndex: curIndex })
+                }, 3000)
+            }
+        }
+
+        DrawPieArea(myindex)
+        // 鼠标呼入清定时器
+        myChart.on('mouseover', function(params) {
+            clearInterval(recordId)
+            for (let i in data) {
+                if (Number(i) != params.dataIndex) {
+                    myChart.dispatchAction({ type: 'downplay', seriesIndex: 0, dataIndex: Number(i) })
+                    myChart.dispatchAction({ type: 'hideTip', seriesIndex: 0, dataIndex: Number(i) })
+                }
+            }
+        })
+
+        myChart.on('mouseout', function(params) {
+            // console.log(params)
+            for (let i in data) {
+                myChart.dispatchAction({ type: 'downplay', seriesIndex: 0, dataIndex: Number(i) })
+                myChart.dispatchAction({ type: 'hideTip', seriesIndex: 0, dataIndex: Number(i) })
+            }
+            myindex = params.dataIndex
+            DrawPieArea(myindex)
+        })
+    }
+}
+</script>
+
+<style scoped>
+
+</style>

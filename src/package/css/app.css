@@ -1,0 +1,154 @@
+.custom-bpmn .djs-connection .djs-visual {
+    stroke-width: 1px!important;
+    stroke: #1296db!important;
+}
+
+.icon-custom {
+    border-radius: 50%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.icon-custom-start {
+    background-image: url('../images/start.png');
+}
+.djs-context-pad .icon-custom-start.entry:hover {
+    background: url('../images/start.png') center no-repeat!important;
+    background-size: cover!important;
+}
+
+.icon-custom-boundaryEvent{
+    background-image: url('../images/border.png');
+}
+.djs-context-pad .icon-custom-boundaryEvent.entry:hover {
+    background: url('../images/border.png') center no-repeat!important;
+    background-size: cover!important;
+}
+.icon-custom-group{
+    background-image: url('../images/stage.png');
+    border-radius: 0%;
+}
+.djs-context-pad .icon-custom-group.entry:hover {
+    background: url('../images/stage.png') center no-repeat!important;
+    background-size: cover!important;
+}
+
+
+
+
+.icon-custom-end {
+    background-image: url('../images/end.png');
+}
+.djs-context-pad .icon-custom-end.entry:hover {
+    background: url('../images/end.png') center no-repeat!important;
+    background-size: cover!important;
+}
+.icon-custom-task {
+    background-image: url('../images/auto.png');
+    background-size: 100% 60%;
+    border-radius: 0%;
+}
+.djs-context-pad .icon-custom-task.entry:hover {
+    background: url('../images/auto.png') center no-repeat!important;
+    background-size: 100% 60% !important;
+    border-radius: 0% !important;
+}
+.icon-custom-businessRule {
+    background-image: url('../images/auto.png');
+    background-size: 100% 60%;
+    border-radius: 0%;
+}
+.djs-context-pad .icon-custom-businessRule.entry:hover {
+    background: url('../images/auto.png') center no-repeat!important;
+    background-size: 100% 60% !important;
+    border-radius: 0% !important;
+}
+.icon-custom-user-task {
+    background-image: url('../images/shenpi.png');
+    background-size: cover;
+    border-radius: 0%;
+}
+.djs-context-pad .icon-custom-user-task.entry:hover {
+    background: url('../images/shenpi.png') center no-repeat!important;
+    background-size: cover!important;
+    border-radius: 0% !important;
+}
+
+.icon-custom-sign-task {
+    background-image: url('../images/joinSing.png');
+    background-size: cover;
+    border-radius: 0%;
+}
+.djs-context-pad .icon-custom-sign-task.entry:hover {
+    background: url('../images/joinSing.png') center no-repeat!important;
+    background-size: cover!important;
+    border-radius: 0% !important;
+}
+
+
+.icon-custom-exclusive-gateway {
+    background-image: url('../images/bingxing.png');
+    background-size: cover;
+    border-radius: 0%;
+}
+.djs-context-pad .icon-custom-exclusive-gateway.entry:hover {
+    background: url('../images/bingxing.png') center no-repeat!important;
+    background-size: cover!important;
+    border-radius: 0% !important;
+}
+
+
+
+
+.icon-custom-data {
+    background-image: url('../images/score.png');
+}
+
+
+/*线*/
+.icon-custom-flow {
+    background-image: url('../images/flow.png');
+}
+
+.icon-custom-edit {
+    background-image: url('../images/edit.png');
+}
+
+.icon-custom-delete {
+    background-image: url('../images/delete.png');
+}
+
+
+
+
+
+
+.djs-context-pad .icon-custom-data.entry:hover {
+    background:  url('../images/score.png') center no-repeat!important;
+    background-size: cover!important;
+}
+
+.djs-context-pad .icon-custom-flow.entry:hover {
+    background: url('../images/flow.png') center no-repeat!important;
+    background-size: cover!important;
+}
+
+.djs-context-pad .icon-custom-edit.entry:hover {
+    background: url('../images/edit.png') center no-repeat!important;
+    background-size: cover!important;
+}
+
+.djs-context-pad .icon-custom-delete.entry:hover {
+    background: url('../images/delete.png') center no-repeat!important;
+    background-size: cover!important;
+}
+
+.djs-context-pad .entry:hover {
+    border: 1px solid #1890ff;
+}
+
+.djs-context-pad .entry {
+    background-size: 94%;
+    transition: all 0.3s;
+    box-sizing: border-box;
+}
