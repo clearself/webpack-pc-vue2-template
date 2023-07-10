@@ -1,12 +1,12 @@
 <template>
     <div class="event">
         <div class="ub w100">
-            <div class="event-content mr-1 custom-color" style="overflow: auto;overflow-x: hidden;padding: 20px 5px 10px;width: 200px;box-sizing: border-box;background-color: #ffffff;">
+            <div class="event-content mr-1" style="width:200px;padding: 20px 5px 10px;box-sizing: border-box;background-color: #fff;overflow: auto;overflow-x: hidden;">
                 <div class="tree">
                     <!-- <span style="position: absolute;width:10px;height:10px;background: red;top:50%;right:0;"></span> -->
-                    <div class="ub ub-pj ub-ac w100" style="margin-bottom: 20px;padding-left: 10px;width: 200px;">
-                        <div class="list-tips" style="margin-bottom: 0;font-size: 14px;">组织</div>
-                        <div class="tree-option" style="padding-right: 10px;font-size: 16px;color: #387dee;">
+                    <div class="ub ub-pj ub-ac w100" style="padding-left:10px;margin-bottom: 20px;">
+                        <div class="list-tips" style="margin-bottom: 0;font-size:14px;">组织</div>
+                        <div class="tree-option" style="font-size:16px;color:#387dee;padding-right:10px;">
                             <el-tooltip class="item" effect="dark" content="新增" placement="top-start">
                                 <i class="iconfont icon-tianjia1" @click="addRuleShow"></i>
                             </el-tooltip>
@@ -18,41 +18,29 @@
                             </el-tooltip>
                         </div>
                     </div>
-                    <div class="w100">
-                        <el-input
-                            size="small"
-                            placeholder="输入关键字进行过滤"
-                            v-model="filterText"
-                            style="margin-bottom: 15px;width: 95%;">
-                        </el-input>
-                    </div>
-                    <div class="tress" v-loading="treeLoading">
-
-                        <el-tree
-                            show-checkbox
-                            ref="tree"
-                            node-key="id"
-                            :default-expand-all="false"
-                            :highlight-current="true"
-                            :data="treeData"
-                            :props='propsData'
-                            @node-click="handleNodeClick"
-                            :check-strictly="true"
-                            :expand-on-click-node="false"
-                            :indent='indent'
-                            :filter-node-method="filterNode"
-                            @check-change="handleClick">
-                            <span class="custom-tree-node" slot-scope="{ node, data }">
-                                <span class="span-color" style="font-size: 12px;" :title="node.label">{{ node.label }}</span>
-                                <span style="font-size: 12px;color: #718492;">
-                                    ({{ data.number }})
-                                </span>
+                    <el-tree
+                        show-checkbox
+                        ref="tree"
+                        node-key="id"
+                        :default-expand-all="true"
+                        :highlight-current="true"
+                        :data="treeData"
+                        :props='propsData'
+                        @node-click="handleNodeClick"
+                        :check-strictly="true"
+                        :expand-on-click-node="false"
+                        :indent='indent'
+                        @check-change="handleClick">
+                        <span class="custom-tree-node" slot-scope="{ node, data }">
+                            <span style="font-size:12px;">{{ node.label }}</span>
+                            <span style="color:#718492;font-size:12px;">
+                                ({{ data.number }})
                             </span>
-                        </el-tree>
-                    </div>
+                        </span>
+                    </el-tree>
                 </div>
             </div>
-            <div class="ub ub-f1 ub-ver" style="overflow: auto;height: 100%;">
+            <div class="ub ub-f1 ub-ver" style="height: 100%;overflow: auto">
                 <SearchTop @search="searchCheck" @reset="reset" @isOpen="isOpen1">
                     <el-col :md="12" :lg="8" :xl="6">
                         <el-form :model="get_params">
@@ -92,14 +80,14 @@
                 </SearchTop>
                 <div class="list-container">
                     <div class="ub ub-pj w100 mb-1">
-                        <div class="list-tips" style="width: 100px;">资产用户管理
+                        <div class="list-tips" style="width:100px">资产用户管理
                         </div>
                         <div>
-                            <!-- <el-button v-per="['base_asset_sync']" size="small" icon="el-icon-refresh" type="primary" @click="openSyncDialog">数据同步</el-button>
-                            <el-button v-per="['base_asset_data']" size="small" icon="iconfont icon-duqu" type="primary" @click="syncAD">AD域数据读取</el-button> -->
+                            <el-button v-per="['base_asset_sync']" size="small" icon="el-icon-refresh" type="primary" @click="openSyncDialog">数据同步</el-button>
+                            <el-button v-per="['base_asset_data']" size="small" icon="iconfont icon-duqu" type="primary" @click="syncAD">AD域数据读取</el-button>
                             <el-button v-per="['base_asset_add']" size="small" icon="el-icon-plus" type="primary" @click="addPersonDialog = true">添 加</el-button>
 
-                            <!-- <el-button v-per="['base_asset_set']" size="small" icon="el-icon-refresh" type="primary" @click="$router.push('/system/ad_config')">AD域同步配置</el-button> -->
+                            <el-button v-per="['base_asset_set']" size="small" icon="el-icon-refresh" type="primary" @click="$router.push('/system/ad_config')">AD域同步配置</el-button>
 
                             <el-upload
                                 :headers="header"
@@ -110,7 +98,7 @@
                                 :show-file-list="false"
                                 :on-success="handleSuccess"
                                 style="display: inline-block;">
-                                <el-button  v-per="['base_asset_import']" size="small" style="margin-right: 6px;margin-left: 6px;" icon="iconfont icon-daoru" type="primary">导 入</el-button>
+                                <el-button  v-per="['base_asset_import']" size="small" style="margin-right:6px;margin-left:6px" icon="iconfont icon-daoru" type="primary">导 入</el-button>
                             </el-upload>
                             <el-button v-per="['base_asset_export']" size="small" icon="iconfont icon-daochu" type="primary" @click="handleDown">导 出</el-button>
                             <el-button v-per="['base_asset_template']" @click="handleDownTemplate" size="small" icon="el-icon-download" type="primary">下载模板</el-button>
@@ -164,13 +152,13 @@
         <el-dialog title="添加人员" :visible.sync="addPersonDialog" width="700px" custom-class="common-dialog">
             <el-form :model="addPersonForm" :rules="user_rules_add" ref="addPersonForm" inline label-position="top">
                 <div class="ub w100 ub-pj">
-                    <el-form-item label="所属资产部门：" prop="department"  label-width="120px"  style="width: 50%;">
-                        <OrgSearch ref="tree_addPerson" type="1" size="small" v-model="addPersonForm.department"></OrgSearch>
-                        <!-- <div class="select-box tree">
-                            <div style="cursor: pointer;" class="ub ub-ac select-title" @click.stop="onOff=!onOff">
-                                <div class="ub ub-f1 ub-ac" style="text-indent: 14px;line-height: 32px;"><span style="opacity: 0.7;" v-if="!currentGroup_addPerson">请选择</span>{{currentGroup_addPerson}}</div>
-                                <div style="width: 28px;height: 32px;text-align: center;line-height: 32px;">
-                                    <i style="color: rgb(0 0 0 / 40%);" :class="{'el-icon-arrow-up':onOff,'el-icon-arrow-down':!onOff}"></i>
+                    <el-form-item label="所属部门：" prop="department"  label-width="120px"  style="width: 30%;">
+                        <!--<el-input style="width:210px;" placeholder="请输入" clearable v-model="addPersonForm.department" size="small"></el-input>-->
+                        <div class="select-box tree">
+                            <div style="cursor:pointer;" class="ub ub-ac select-title" @click.stop="onOff=!onOff">
+                                <div class="ub ub-f1 ub-ac" style="text-indent: 14px;line-height: 32px;"><span style="opacity: 0.7" v-if="!currentGroup_addPerson">请选择</span>{{currentGroup_addPerson}}</div>
+                                <div style="width:28px;height:32px;text-align: center;line-height: 32px;">
+                                    <i style="color:rgba(0, 0, 0, 0.4);" :class="{'el-icon-arrow-up':onOff,'el-icon-arrow-down':!onOff}"></i>
                                 </div>
                             </div>
                             <div v-show="onOff" class="select-mask">
@@ -187,33 +175,32 @@
                                     :indent='indent'
                                     @check-change="handleClick_addPerson">
                                     <span class="custom-tree-node" slot-scope="{ node}">
-                                        <span style="font-size: 14px;">{{ node.label }}</span></span>
+                                        <span style="font-size:14px;">{{ node.label }}</span></span>
                                 </el-tree>
                             </div>
-                        </div> -->
+                        <!--<div v-if="!addPersonForm.department" style="position:absolute;left:0;top:32px;line-height:20px;font-size:12px;color:#F56C6C;">请选择所属部门</div>-->
+                        </div>
                     </el-form-item>
-                    <el-form-item label="员工姓名：" prop="name" label-width="120px"  style="width: 50%;">
-                        <el-input style="width: 312px;" placeholder="请输入" clearable v-model="addPersonForm.name" size="small"></el-input>
+                    <el-form-item label="员工姓名：" prop="name" label-width="120px"  style="width: 30%;">
+                        <el-input style="width:210px;" placeholder="请输入" clearable v-model="addPersonForm.name" size="small"></el-input>
                     </el-form-item>
-                </div>
-                <div class="ub w100 ub-pj">
-                    <el-form-item label="员工编号：" prop="personNumber" label-width="120px"  style="width: 50%;">
-                        <el-input style="width: 312px;" placeholder="请输入" clearable v-model="addPersonForm.personNumber" size="small"></el-input>
-                    </el-form-item>
-                    <el-form-item label="职位：" prop="post" label-width="120px" style="width: 50%;">
-                        <el-input style="width: 312px;" placeholder="请输入" clearable v-model="addPersonForm.post" size="small"></el-input>
+                    <el-form-item label="员工编号：" prop="personNumber" label-width="120px"  style="width: 30%;">
+                        <el-input style="width:210px;" placeholder="请输入" clearable v-model="addPersonForm.personNumber" size="small"></el-input>
                     </el-form-item>
                 </div>
                 <div class="ub w100 ub-pj">
-                    <el-form-item label="邮箱：" prop="mail" label-width="120px" style="width: 50%;">
-                        <el-input style="width: 312px;" placeholder="请输入" clearable v-model="addPersonForm.mail" size="small"></el-input>
+                    <el-form-item label="职位：" prop="post" label-width="120px" style="width: 30%;">
+                        <el-input style="width:210px;" placeholder="请输入" clearable v-model="addPersonForm.post" size="small"></el-input>
                     </el-form-item>
-                    <el-form-item label="手机号：" prop="phone" label-width="120px" style="width: 50%;">
-                        <el-input style="width: 312px;" placeholder="请输入" clearable v-model="addPersonForm.phone" size="small"></el-input>
+                    <el-form-item label="邮箱：" prop="mail" label-width="120px" style="width: 30%;">
+                        <el-input style="width:210px;" placeholder="请输入" clearable v-model="addPersonForm.mail" size="small"></el-input>
+                    </el-form-item>
+                    <el-form-item label="手机号：" prop="phone" label-width="120px" style="width: 30%;">
+                        <el-input style="width:210px;" placeholder="请输入" clearable v-model="addPersonForm.phone" size="small"></el-input>
                     </el-form-item>
                 </div>
                 <el-form-item label="座机号：" prop="tPhone" label-width="120px">
-                    <el-input style="width: 312px;" placeholder="请输入" clearable v-model="addPersonForm.tPhone" size="small"></el-input>
+                    <el-input style="width:210px;" placeholder="请输入" clearable v-model="addPersonForm.tPhone" size="small"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -222,16 +209,16 @@
             </span>
         </el-dialog>
 
-        <el-dialog title="编辑人员" :visible.sync="editPersonDialog" width="700px" custom-class="common-dialog">
+        <el-dialog title="编辑人员" :visible.sync="editPersonDialog" width="790px" custom-class="common-dialog">
             <el-form :model="editPersonForm" :rules="user_rules_edit" ref="editPersonForm" inline label-position="top">
                 <div class="ub w100 ub-pj">
-                    <el-form-item label="所属资产部门：" prop="department"  label-width="120px" style="width: 50%;">
-                        <OrgSearch ref="tree_editPerson" type="1" size="small" v-model="editPersonForm.department"></OrgSearch>
-                        <!-- <div class="select-box tree">
-                            <div style="cursor: pointer;" class="ub ub-ac select-title" @click.stop="onOff=!onOff">
-                                <div class="ub ub-f1 ub-ac" style="text-indent: 14px;line-height: 28px;"><span style="opacity: 0.7;" v-if="!currentGroup_editPerson">请选择</span>{{currentGroup_editPerson}}</div>
-                                <div style="width: 28px;height: 28px;text-align: center;line-height: 28px;">
-                                    <i style="color: #1cd7fa;" :class="{'el-icon-arrow-up':onOff,'el-icon-arrow-down':!onOff}"></i>
+                    <el-form-item label="所属部门：" prop="department"  label-width="120px" style="width: 30%;">
+                        <!--<el-input style="width:210px;" placeholder="请输入" clearable v-model="addPersonForm.department" size="small"></el-input>-->
+                        <div class="select-box tree">
+                            <div style="cursor:pointer;" class="ub ub-ac select-title" @click.stop="onOff=!onOff">
+                                <div class="ub ub-f1 ub-ac" style="text-indent: 14px;line-height: 28px;"><span style="opacity: 0.7" v-if="!currentGroup_editPerson">请选择</span>{{currentGroup_editPerson}}</div>
+                                <div style="width:28px;height:28px;text-align: center;line-height: 28px;">
+                                    <i style="color:#1cd7fa;" :class="{'el-icon-arrow-up':onOff,'el-icon-arrow-down':!onOff}"></i>
                                 </div>
                             </div>
                             <div v-show="onOff" class="select-mask">
@@ -249,33 +236,31 @@
                                     :default-checked-keys="editPersonDefault"
                                     @check-change="handleClick_editPerson">
                                     <span class="custom-tree-node" slot-scope="{ node}">
-                                        <span style="font-size: 14px;">{{ node.label }}</span></span>
+                                        <span style="font-size:14px;">{{ node.label }}</span></span>
                                 </el-tree>
                             </div>
-                        </div> -->
+                        </div>
                     </el-form-item>
-                    <el-form-item label="员工姓名：" prop="name" label-width="120px" style="width: 50%;">
-                        <el-input style="width: 312px;" placeholder="请输入" clearable v-model="editPersonForm.name" size="small"></el-input>
+                    <el-form-item label="员工姓名：" prop="name" label-width="120px" style="width: 30%;">
+                        <el-input style="width:210px;" placeholder="请输入" clearable v-model="editPersonForm.name" size="small"></el-input>
                     </el-form-item>
-                </div>
-                <div class="ub w100 ub-pj">
-                    <el-form-item label="员工编号：" prop="personNumber" label-width="120px" style="width: 50%;">
-                        <el-input style="width: 312px;" placeholder="请输入" clearable v-model="editPersonForm.personNumber" size="small"></el-input>
-                    </el-form-item>
-                    <el-form-item label="职位：" prop="post" label-width="120px" style="width: 50%;">
-                        <el-input style="width: 312px;" placeholder="请输入" clearable v-model="editPersonForm.post" size="small"></el-input>
+                    <el-form-item label="员工编号：" prop="personNumber" label-width="120px" style="width: 30%;">
+                        <el-input style="width:210px;" placeholder="请输入" clearable v-model="editPersonForm.personNumber" size="small"></el-input>
                     </el-form-item>
                 </div>
                 <div class="ub w100 ub-pj">
-                    <el-form-item label="邮箱：" prop="mail" label-width="120px" style="width: 50%;">
-                        <el-input style="width: 312px;" placeholder="请输入" clearable v-model="editPersonForm.mail" size="small"></el-input>
+                    <el-form-item label="职位：" prop="post" label-width="120px" style="width: 30%;">
+                        <el-input style="width:210px;" placeholder="请输入" clearable v-model="editPersonForm.post" size="small"></el-input>
                     </el-form-item>
-                    <el-form-item label="手机号：" prop="phone" label-width="120px" style="width: 50%;">
-                        <el-input style="width: 312px;" placeholder="请输入" clearable v-model="editPersonForm.phone" size="small"></el-input>
+                    <el-form-item label="邮箱：" prop="mail" label-width="120px" style="width: 30%;">
+                        <el-input style="width:210px;" placeholder="请输入" clearable v-model="editPersonForm.mail" size="small"></el-input>
+                    </el-form-item>
+                    <el-form-item label="手机号：" prop="phone" label-width="120px" style="width: 30%;">
+                        <el-input style="width:210px;" placeholder="请输入" clearable v-model="editPersonForm.phone" size="small"></el-input>
                     </el-form-item>
                 </div>
                 <el-form-item label="座机号：" prop="tPhone" label-width="120px">
-                    <el-input style="width: 312px;" placeholder="请输入" clearable v-model="editPersonForm.tPhone" size="small"></el-input>
+                    <el-input style="width:210px;" placeholder="请输入" clearable v-model="editPersonForm.tPhone" size="small"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -289,7 +274,7 @@
                 <el-tabs v-model="activeName"  @tab-click="get_sync_data">
                     <el-tab-pane label="增加人员" name="first">
                         <div class="tab-table">
-                            <div class="tab-btn ub ub-pc ub-pj" style="margin-bottom: 10px;">
+                            <div class="tab-btn ub ub-pc ub-pj" style="margin-bottom: 10px">
                                 <div></div>
                                 <div>
                                     <el-button type="primary" size="small" @click="handleAddSyncAll">批量添加</el-button>
@@ -333,7 +318,7 @@
                     </el-tab-pane>
                     <el-tab-pane label="删除人员" name="second">
                         <div class="tab-table">
-                            <div class="tab-btn ub ub-pc ub-pj" style="margin-bottom: 10px;">
+                            <div class="tab-btn ub ub-pc ub-pj" style="margin-bottom: 10px">
                                 <div></div>
                                 <div>
                                     <el-button type="primary" size="small" @click="handleDeleteSyncAll">批量删除</el-button>
@@ -377,7 +362,7 @@
                     </el-tab-pane>
                     <el-tab-pane label="信息变更人员" name="third">
                         <div class="tab-table">
-                            <div class="tab-btn ub ub-pc ub-pj" style="margin-bottom: 10px;">
+                            <div class="tab-btn ub ub-pc ub-pj" style="margin-bottom: 10px">
                                 <div></div>
                                 <div>
                                     <el-button type="primary" size="small" @click="handleUpdateSyncAll">批量变更</el-button>
@@ -441,15 +426,15 @@
         <el-dialog title="创建部门" :visible.sync="addRuleGroupDialog" width="600px" custom-class="common-dialog">
             <el-form :model="addRuleGroupForm" :rules="group_rules_add" ref="addRuleGroupForm" label-position="top">
                 <el-form-item label="部门名称：" prop="name" label-width="120px">
-                    <el-input style="width: 100%;" placeholder="请输入" clearable v-model.trim="addRuleGroupForm.name" size="small"></el-input>
+                    <el-input style="width:100%;" placeholder="请输入" clearable v-model.trim="addRuleGroupForm.name" size="small"></el-input>
                 </el-form-item>
                 <el-form-item label="上级部门：" prop="department" label-width="120px">
-                    <OrgSearch ref="tree_addGroup" type="1" size="small" v-model="addRuleGroupForm.department"></OrgSearch>
-                    <!-- <div class="select-box tree" style="width: 100%;">
-                        <div style="cursor: pointer;" class="ub ub-ac select-title" @click.stop="onOff=!onOff">
-                            <div class="ub ub-f1 ub-ac" style="text-indent: 14px;line-height: 32px;"><span style="opacity: 0.7;" v-if="!currentGroup_addGroup">请选择</span>{{currentGroup_addGroup}}</div>
-                            <div style="width: 28px;height: 32px;text-align: center;line-height: 32px;">
-                                <i style="color: rgb(0 0 0 / 40%);" :class="{'el-icon-arrow-up':onOff,'el-icon-arrow-down':!onOff}"></i>
+                    <!--<el-input style="width:90%;" placeholder="请输入" clearable v-model="addRuleGroupForm.department" size="small"></el-input>-->
+                    <div class="select-box tree" style="width: 100%">
+                        <div style="cursor:pointer;" class="ub ub-ac select-title" @click.stop="onOff=!onOff">
+                            <div class="ub ub-f1 ub-ac" style="text-indent: 14px;line-height: 32px;"><span style="opacity: 0.7" v-if="!currentGroup_addGroup">请选择</span>{{currentGroup_addGroup}}</div>
+                            <div style="width:28px;height:32px;text-align: center;line-height: 32px;">
+                                <i style="color:rgba(0, 0, 0, 0.4);" :class="{'el-icon-arrow-up':onOff,'el-icon-arrow-down':!onOff}"></i>
                             </div>
                         </div>
                         <div v-show="onOff" class="select-mask">
@@ -466,14 +451,15 @@
                                 :indent='indent'
                                 @check-change="handleClick_addGroup">
                                 <span class="custom-tree-node" slot-scope="{ node,}">
-                                    <span style="font-size: 14px;">{{ node.label }}</span></span>
+                                    <span style="font-size:14px;">{{ node.label }}</span></span>
                             </el-tree>
                         </div>
-                    </div> -->
+                        <!--<div v-if="!addPersonForm.department" style="position:absolute;left:0;top:32px;line-height:20px;font-size:12px;color:#F56C6C;">请选择所属部门</div>-->
+                    </div>
                 </el-form-item>
                 <el-form-item label="负责人：" prop="person" label-width="120px">
                     <!--<el-input style="width:90%;" placeholder="请输入" clearable v-model="addRuleGroupForm.person" size="small"></el-input>-->
-                    <el-select size="small" style="width: 100%;" clearable v-model="addRuleGroupForm.person" filterable placeholder="请选择">
+                    <el-select size="small" style="width: 100%" clearable v-model="addRuleGroupForm.person" filterable placeholder="请选择">
                         <el-option v-for="(item) in assetUsers" :label="item.name" :value="item.id" :key="item.id"></el-option>
                     </el-select>
                 </el-form-item>
@@ -487,19 +473,18 @@
         <el-dialog title="编辑部门" :visible.sync="editRuleGroupDialog" width="600px" custom-class="common-dialog">
             <el-form :model="editRuleGroupForm" :rules="group_rules_edit" ref="editRuleGroupForm" label-position="top">
                 <el-form-item label="部门名称：" prop="name" label-width="120px">
-                    <el-input style="width: 100%;" placeholder="请输入" clearable v-model.trim="editRuleGroupForm.name" size="small"></el-input>
+                    <el-input style="width:100%;" placeholder="请输入" clearable v-model.trim="editRuleGroupForm.name" size="small"></el-input>
                 </el-form-item>
                 <el-form-item label="上级部门：" prop="department" label-width="120px">
-                    <OrgSearch ref="tree_editGroup" type="1" size="small" v-model="editRuleGroupForm.department"></OrgSearch>
-                    <!-- <div class="select-box tree" style="width: 100%;">
-                        <div style="cursor: pointer;" class="ub ub-ac select-title" @click.stop="onOff=!onOff">
-                            <div class="ub ub-f1 ub-ac" style="text-indent: 14px;line-height: 28px;"><span style="opacity: 0.7;" v-if="!currentGroup_editGroup">请选择</span>{{currentGroup_editGroup}}</div>
-                            <div style="width: 28px;height: 28px;text-align: center;line-height: 28px;">
-                                <i style="color: rgb(0 0 0 / 40%);" :class="{'el-icon-arrow-up':onOff,'el-icon-arrow-down':!onOff}"></i>
+                    <!--<el-input style="width:90%;" placeholder="请输入" clearable v-model="editRuleGroupForm.department" size="small"></el-input>-->
+                    <div class="select-box tree" style="width: 100%">
+                        <div style="cursor:pointer;" class="ub ub-ac select-title" @click.stop="onOff=!onOff">
+                            <div class="ub ub-f1 ub-ac" style="text-indent: 14px;line-height: 28px;"><span style="opacity: 0.7" v-if="!currentGroup_editGroup">请选择</span>{{currentGroup_editGroup}}</div>
+                            <div style="width:28px;height:28px;text-align: center;line-height: 28px;">
+                                <i style="color:rgba(0, 0, 0, 0.4);" :class="{'el-icon-arrow-up':onOff,'el-icon-arrow-down':!onOff}"></i>
                             </div>
                         </div>
                         <div v-show="onOff" class="select-mask">
-
                             <el-tree
                                 show-checkbox
                                 ref="tree_editGroup"
@@ -514,14 +499,14 @@
                                 :indent='indent'
                                 @check-change="handleClick_editGroup">
                                 <span class="custom-tree-node" slot-scope="{ node }">
-                                    <span style="font-size: 14px;">{{ node.label }}</span></span>
+                                    <span style="font-size:14px;">{{ node.label }}</span></span>
                             </el-tree>
                         </div>
-                    </div> -->
+                    </div>
                 </el-form-item>
                 <el-form-item label="负责人：" prop="person" label-width="120px">
                     <!--<el-input style="width:90%;" placeholder="请输入" clearable v-model="editRuleGroupForm.person" size="small"></el-input>-->
-                    <el-select size="small" style="width: 100%;" clearable v-model="editRuleGroupForm.person" filterable placeholder="请选择">
+                    <el-select size="small" style="width: 100%" clearable v-model="editRuleGroupForm.person" filterable placeholder="请选择">
                         <el-option v-for="(item) in assetUsers" :label="item.name" :value="item.id" :key="item.id"></el-option>
                     </el-select>
                 </el-form-item>
@@ -609,8 +594,6 @@ export default {
             }
         }
         return {
-            treeLoading: false,
-            filterText: '',
             kaiguan: '',
             tableHeight: document.body.clientHeight - 270,
             activeName: 'first',
@@ -747,8 +730,7 @@ export default {
             },
             user_rules_add: {
                 department: [{
-                    required: true,
-                    // validator: validateAddPerson,
+                    validator: validateAddPerson,
                     message: '请选择所属部门',
                     trigger: 'blur'
                 }],
@@ -778,8 +760,7 @@ export default {
             },
             user_rules_edit: {
                 department: [{
-                    required: true,
-                    // validator: validateEditPerson,
+                    validator: validateEditPerson,
                     message: '请选择所属部门',
                     trigger: 'blur'
                 }],
@@ -882,9 +863,6 @@ export default {
         }
     },
     watch: {
-        filterText(val) {
-            this.$refs.tree.filter(val)
-        },
         kaiguan(val) {
             if (val) {
                 this.tableHeight = document.body.clientHeight - 320
@@ -948,14 +926,10 @@ export default {
             let userInfo = this.$getsessionStorage('userInfo')
             this.userId = userInfo.id
             this.initTree()
-            // this.get_asset_users()
+            this.get_asset_users()
         })
     },
     methods: {
-        filterNode(value, data) {
-            if (!value) return true
-            return data.name.indexOf(value) !== -1
-        },
         isOpen1(val) {
             console.log(val)
             this.kaiguan = val
@@ -1003,17 +977,13 @@ export default {
             this.get_params.phone = ''
             this.get_params.email = ''
             this.get_params.landline = ''
-            this.get_params.page = 1
-            this.get_data()
         },
         initTree() {
             let data = {
                 queryData: {},
                 paramsData: {}
             }
-            this.treeLoading = true
             get_asset_tree(data).then(res => {
-                this.treeLoading = false
                 console.log('tree', res)
                 if (this.isFirst) {
                     this.depId = res[0].id
@@ -1028,7 +998,6 @@ export default {
                 this.$refs.tree.setCurrentKey(this.depId)
                 this.isClick = true
             }).catch(error => {
-                this.treeLoading = false
                 console.log('error' + error)
             })
         },
@@ -1054,7 +1023,7 @@ export default {
         initParams() {
             this.get_params = {
                 page: 1,
-                size: 20,
+                size: 10,
                 code: '',
                 name: '',
                 depId: '',
@@ -1074,13 +1043,13 @@ export default {
                 this.$refs.tree.setCheckedNodes([data])
             }
         },
-        // handleClick_addPerson(data, checked, node) {
-        //     if (checked) {
-        //         this.addPersonForm.department = data.id
-        //         this.currentGroup_addPerson = data.name
-        //         this.$refs.tree_addPerson.setCheckedNodes([data])
-        //     }
-        // },
+        handleClick_addPerson(data, checked, node) {
+            if (checked) {
+                this.addPersonForm.department = data.id
+                this.currentGroup_addPerson = data.name
+                this.$refs.tree_addPerson.setCheckedNodes([data])
+            }
+        },
         handleClick_editPerson(data, checked, node) {
             if (checked) {
                 this.editPersonForm.department = data.id
@@ -1088,20 +1057,20 @@ export default {
                 this.$refs.tree_editPerson.setCheckedNodes([data])
             }
         },
-        // handleClick_addGroup(data, checked, node) {
-        //     if (checked) {
-        //         this.addRuleGroupForm.department = data.id
-        //         this.currentGroup_addGroup = data.name
-        //         this.$refs.tree_addGroup.setCheckedNodes([data])
-        //     }
-        // },
-        // handleClick_editGroup(data, checked, node) {
-        //     if (checked) {
-        //         this.editRuleGroupForm.department = data.id
-        //         this.currentGroup_editGroup = data.name
-        //         this.$refs.tree_editGroup.setCheckedNodes([data])
-        //     }
-        // },
+        handleClick_addGroup(data, checked, node) {
+            if (checked) {
+                this.addRuleGroupForm.department = data.id
+                this.currentGroup_addGroup = data.name
+                this.$refs.tree_addGroup.setCheckedNodes([data])
+            }
+        },
+        handleClick_editGroup(data, checked, node) {
+            if (checked) {
+                this.editRuleGroupForm.department = data.id
+                this.currentGroup_editGroup = data.name
+                this.$refs.tree_editGroup.setCheckedNodes([data])
+            }
+        },
         handleNodeClick(node) {
             console.log(node)
             this.depId = node.id
@@ -1146,9 +1115,6 @@ export default {
             this.currentGroup_editPerson = row.depName
             this.editPersonDefault = [row.depId]
             this.editPersonDialog = true
-            this.$nextTick(() => {
-                this.$refs.tree_editPerson.remoteMethod(row.depName)
-            })
         },
 
         handleDelete(row) {
@@ -1367,14 +1333,9 @@ export default {
             this.editRuleGroupForm.person = this.currentNode.manager
             this.editRuleGroupForm.department = this.currentNode.parentId
             this.editRuleGroupForm.id = this.currentNode.id
-            let orgName = this.currentNode.parentName ? this.currentNode.parentName : '全公司'
-
-            // this.currentGroup_editGroup =
+            this.currentGroup_editGroup = this.currentNode.parentName ? this.currentNode.parentName : '全公司'
             this.editDefault = [this.currentNode.parentId]
             this.editRuleGroupDialog = true
-            this.$nextTick(() => {
-                this.$refs.tree_editGroup.remoteMethod(orgName)
-            })
         },
         submitGroupFormEdit(formName) {
             this.$refs[formName].validate((valid) => {
@@ -1441,7 +1402,7 @@ export default {
                 setTimeout(() => {
                     this.initTree()
                     this.get_data()
-                    // this.get_asset_users()
+                    this.get_asset_users()
                 }, 1500)
             }).catch(error => {
                 console.log(error + 'error')
@@ -1470,7 +1431,7 @@ export default {
                 setTimeout(() => {
                     this.initTree()
                     this.get_data()
-                    // this.get_asset_users()
+                    this.get_asset_users()
                 }, 1500)
             }).catch(error => {
                 console.log(error + 'error')
@@ -1579,8 +1540,8 @@ export default {
         get_asset_users() {
             let data = {
                 queryData: {
-                    page: this.get_params.page,
-                    pageSize: this.get_params.pageSize
+                    page: 1,
+                    pageSize: 99999
                 },
                 paramsData: {}
             }
@@ -1729,7 +1690,7 @@ export default {
                 setTimeout(() => {
                     this.initTree()
                     this.get_data()
-                    // this.get_asset_users()
+                    this.get_asset_users()
                 }, 1000)
             }).catch(error => {
                 this.deleteItemDialog = false
@@ -1758,7 +1719,7 @@ export default {
                 setTimeout(() => {
                     this.initTree()
                     this.get_data()
-                    // this.get_asset_users()
+                    this.get_asset_users()
                 }, 1000)
             }).catch(error => {
                 this.deleteAllDialog = false
@@ -1798,108 +1759,81 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.custom-star .tree .el-checkbox__input.is-checked .el-checkbox__inner::after {
-    border-color: #1cd7fa;
-}
-.custom-star .tree-option i {
-    margin: 0 3px;
-    color: #1cd7fa;
-    cursor: pointer;
-}
-.custom-star {
-    .list-tips {
-        color: #fff;
-    }
-    .span-color {
-        color: #fff !important;
-    }
-    .custom-color {
-        background-color: #052942 !important;
-        color: #fff;
-        box-shadow: inset 0px 0px 18px 0px #00b4ff;
-        border: solid 1px #50b0ff;
-    }
-    .tree ::v-deep .el-checkbox__inner::after,.auto ::v-deep .el-checkbox__inner::after {
-        border-color: #1cd7fa;
-    }
-    .tree ::v-deep .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner,.auto ::v-deep .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner {
-        border-color: #1cd7fa;
-        background-color: rgb(0 0 0 / 0%)!important;
-    }
-}
-.tress {
-    overflow: scroll;
-    margin-top: 10px;
-    width: 200px;
-    max-height: calc(100vh - 154px);
-    border: none;
-    ::v-deep .el-tree {
-        display: inline-block;
-        min-width: 100%;
-    }
-}
 .pagination {
     padding: 30px 0 20px;
     text-align: right;
 }
+
 .el-input.ips {
     display: block;
     width: 100%;
 }
+
 .drawer-pad {
     padding: 0 20px;
 }
+
 .el-form-item {
     margin: 0;
 }
+
 .domain-add {
     line-height: 1;
     position: relative;
     padding: 0 20px;
     color: #1cd7fa;
+
     .el-button {
         position: absolute;
-        top: 0;
         right: 20px;
+        top: 0;
         padding: 0;
         color: #1cd7fa;
     }
 }
+
 .domain-list {
+    background: rgba(0, 0, 0, .3);
     margin: 3px 0 20px;
     padding: 20px 0 1px;
-    background: rgb(0 0 0 / 30%);
+
     .list-tit {
         width: 100px;
         text-align: right;
     }
+
     .ub {
         margin-bottom: 20px;
     }
+
     .list-btn {
         padding-left: 20px;
+
         .el-button {
-            color: #f56c6c;
+            color: #F56C6C;
         }
     }
 }
+
 .event ::v-deep .el-range-input {
-    color: #ffffff;
-    background-color: rgb(0 0 0 / 0%);
+    background-color: rgba(0, 0, 0, 0);
+    color: #fff;
 }
+
 .event ::v-deep .el-range-separator {
-    color: #ffffff;
+    color: #fff;
 }
 .event ::v-deep .el-upload-list__item-name {
-    color: #01e9ff;
+    color: #01E9FF;
+
     i {
-        color: #01e9ff;
+        color: #01E9FF;
     }
 }
 .attendance-dialog .el-form-item {
     margin-bottom: 30px;
 }
-.upload-demo ::v-deep .el-button--primary {
+.upload-demo ::v-deep .el-button--primary{
     // background-color: rgba(0,0,0,0);
     // border-color: rgba(0,0,0,0);
     // background-image: url(../../assets/img/XZWJ.png);
@@ -1907,59 +1841,61 @@ export default {
     // background-repeat: no-repeat;
     // background-size: 100% 100%;
 }
-.el-tree {
-    background: rgb(0 0 0 / 0%);
+.el-tree{
+    background: rgba(0,0,0,0);
 }
 .tree ::v-deep .el-tree--highlight-current .el-tree-node>.el-tree-node__content {
-    .custom-tree-node {
-        span:nth-child(1) {
-            color: rgb(0 0 0 / 90%);
+    .custom-tree-node{
+        span:nth-child(1){
+            color: rgba(0, 0, 0, 0.9);
         }
-        span:nth-child(2) {
-            color: #86939e;
+        span:nth-child(2){
+            color:#86939e;
+        }
+
+    }
+}
+.tree ::v-deep .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content{
+    background-color: rgba(0,0,0,0)!important;
+    .custom-tree-node{
+        span{
+            color:#0052d9;
         }
     }
 }
-.tree ::v-deep .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
-    background-color: rgb(0 0 0 / 0%)!important;
-    .custom-tree-node {
-        span {
-            color: #0052d9;
+.tree ::v-deep .el-tree--highlight-current .el-tree-node>.el-tree-node__content:hover{
+    background-color: rgba(0,0,0,0)!important;
+    .custom-tree-node{
+        span{
+            color:#0052d9;
         }
     }
 }
-.tree ::v-deep .el-tree--highlight-current .el-tree-node>.el-tree-node__content:hover {
-    background-color: rgb(0 0 0 / 0%)!important;
-    .custom-tree-node {
-        span {
-            color: #0052d9;
-        }
-    }
-}
-.tree ::v-deep .el-checkbox__input.is-disabled .el-checkbox__inner {
-    border-color: #1cd7fa;
+.tree ::v-deep .el-checkbox__input.is-disabled .el-checkbox__inner{
     background-color: #606266;
+    border-color: #606266;
 }
-.tree ::v-deep .el-checkbox__input .el-checkbox__inner,.auto ::v-deep .el-checkbox__input .el-checkbox__inner {
-    border-color: #1cd7fa;
+.tree ::v-deep .el-checkbox__input .el-checkbox__inner,.auto ::v-deep .el-checkbox__input .el-checkbox__inner{
+    border-color: #606266;
 }
-.tree ::v-deep .el-checkbox__input.is-focus .el-checkbox__inner,.auto ::v-deep .el-checkbox__input.is-focus .el-checkbox__inner {
-    border-color: #1cd7fa;
+.tree ::v-deep .el-checkbox__input.is-focus .el-checkbox__inner,.auto ::v-deep .el-checkbox__input.is-focus .el-checkbox__inner{
+    border-color: #606266;
 }
 .tree ::v-deep .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner,.auto ::v-deep .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner {
-    border-color: #1cd7fa;
-    background-color: rgb(0 0 0 / 0%)!important;
+    background-color: rgba(0,0,0,0)!important;
+    border-color: #606266;
 }
-.tree-option i {
+.tree-option i{
     margin: 0 3px;
     cursor: pointer;
 }
-.tree ::v-deep .el-checkbox__inner::after,.auto ::v-deep .el-checkbox__inner::after {
-    border-color: #1cd7fa;
+.tree ::v-deep .el-checkbox__inner::after,.auto ::v-deep .el-checkbox__inner::after{
+    border-color:#606266;
 }
-.auto ::v-deep .el-checkbox__input.is-checked+.el-checkbox__label {
-    color: #0052d9;
+.auto ::v-deep .el-checkbox__input.is-checked+.el-checkbox__label{
+    color:#0052d9;
 }
+
 .tab-wrapper ::v-deep .el-button--primary {
     //font-size: 14px!important;
     // box-sizing: border-box;
@@ -1971,9 +1907,9 @@ export default {
     // background-size: 100% 100%;
 }
 .tab-wrapper ::v-deep .el-tabs__item.is-active {
-    height: 34px;
     color: #0052d9;
     opacity: 1;
+    height: 34px;
     line-height: 34px;
 }
 .el-tabs ::v-deep .el-tabs__nav-wrap::after {
@@ -1993,112 +1929,110 @@ export default {
     border: none !important;
     box-shadow: none !important;
 }
+
 .el-tabs ::v-deep .el-tabs__active-bar {
     background: #0052d9;
     //margin-left: 14px;
 }
+
 .el-tabs ::v-deep .el-tabs__item {
     // color: #ffffff;
     // opacity: .5;
 }
-.tab-wrapper  ::v-deep .el-table__empty-block {
+.tab-wrapper  ::v-deep .el-table__empty-block{
     // background-color:#042136;
 }
 .select-box {
-    position: relative;
-    display: inline-block;
-    width: 312px;
+    width: 210px;
     height: 28px;
+    display: inline-block;
+    position: relative;
 }
-.select-title {
-    width: 100%;
-    height: 100%;
+.select-title{
+    width:100%;
+    height:100%;
+    background: transparent;
     border: 1px solid #dcdcdc;
     // box-shadow: 0px 0px 7px #389bf7 inset;
     // color: #fff;
-    border-radius: 3px;
-    background: transparent;
+    border-radius:3px;
     box-sizing: border-box;
 }
-.select-mask {
+.select-mask{
+    width:100%;
+    min-height:100px;
+    max-height:300px;
     position: absolute;
-    top: 34px;
-    left: 0;
+    left:0;
+    top:34px;
     z-index: 999;
     overflow-y: auto;
-    width: 100%;
-    min-height: 100px;
-    max-height: 300px;
-    border: 1px solid #dcdcdc;
-    border-radius: 3px;
-    color: rgb(0 0 0 / 90%);
     background: transparent;
-    background-color: #ffffff;
-    box-shadow: 0 0 20px 0 rgb(0 0 0 / 10%);
+    border: 1px solid #dcdcdc;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.9);
+    border-radius:3px;
+    background-color: #fff;
 }
-.el-tree {
-    background: rgb(0 0 0 / 0%);
+.el-tree{
+    background: rgba(0,0,0,0);
 }
 .tree ::v-deep .el-tree--highlight-current .el-tree-node>.el-tree-node__content {
-    .custom-tree-node {
-        span:nth-child(1) {
-            color: rgb(0 0 0 / 90%);
+    .custom-tree-node{
+        span:nth-child(1){
+            color: rgba(0, 0, 0, 0.9);
         }
-        span:nth-child(2) {
-            color: #86939e;
+        span:nth-child(2){
+            color:#86939e;
         }
+
     }
 }
 .tree ::v-deep .el-tree-node__content {
-    background-color: rgb(0 0 0 / 0%)!important;
+    background-color: rgba(0,0,0,0)!important;
 }
-.tree ::v-deep .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
-    background-color: rgb(0 0 0 / 0%)!important;
-    .custom-tree-node {
-        span {
-            color: #0052d9;
+.tree ::v-deep .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content{
+    background-color: rgba(0,0,0,0)!important;
+    .custom-tree-node{
+        span{
+            color:#0052d9;
         }
     }
 }
-.tree ::v-deep .el-tree--highlight-current .el-tree-node>.el-tree-node__content:hover {
-    background-color: rgb(0 0 0 / 0%)!important;
-    .custom-tree-node {
-        span {
-            color: #0052d9;
+.tree ::v-deep .el-tree--highlight-current .el-tree-node>.el-tree-node__content:hover{
+    background-color: rgba(0,0,0,0)!important;
+    .custom-tree-node{
+        span{
+            color:#0052d9;
         }
     }
 }
-.tree ::v-deep .el-checkbox__input.is-disabled .el-checkbox__inner {
-    border-color: #606266;
+.tree ::v-deep .el-checkbox__input.is-disabled .el-checkbox__inner{
     background-color: #606266;
+    border-color: #606266;
 }
-.tree ::v-deep .el-checkbox__input .el-checkbox__inner,.auto ::v-deep .el-checkbox__input .el-checkbox__inner {
+.tree ::v-deep .el-checkbox__input .el-checkbox__inner,.auto ::v-deep .el-checkbox__input .el-checkbox__inner{
     border-color: #606266;
     background-color: transparent;
 }
-.tree ::v-deep .el-checkbox__input.is-focus .el-checkbox__inner,.auto ::v-deep .el-checkbox__input.is-focus .el-checkbox__inner {
+.tree ::v-deep .el-checkbox__input.is-focus .el-checkbox__inner,.auto ::v-deep .el-checkbox__input.is-focus .el-checkbox__inner{
     border-color: #606266;
 }
 .tree ::v-deep .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner,.auto ::v-deep .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+    background-color: rgba(0,0,0,0)!important;
     border-color: #606266;
-    background-color: rgb(0 0 0 / 0%)!important;
 }
-.tree-option i {
+.tree-option i{
     margin: 0 3px;
     cursor: pointer;
 }
-.tree ::v-deep .el-checkbox__inner::after,.auto ::v-deep .el-checkbox__inner::after {
-    border-color: #606266;
+.tree ::v-deep .el-checkbox__inner::after,.auto ::v-deep .el-checkbox__inner::after{
+    border-color:#606266;
 }
 .home .el-table.outer {
     min-height: 500px !important;
 }
 .event  ::v-deep  .attendance-dialog.inner-dialog .el-dialog__body {
     padding: 25px 20px !important;
-}
-::v-deep .select-box.tree .ub.ub-f1.ub-ac {
-    display: inline-block !important;
-    overflow: hidden !important;
-    height: 28px !important;
 }
 </style>

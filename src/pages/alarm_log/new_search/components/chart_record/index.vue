@@ -15,14 +15,14 @@
                         <el-table ref="multipleTable" v-loading="loading" class='bigTable' :data="tableData" border stripe tooltip-effect="dark" :height="310">
                             <!-- <el-table-column align="center" type="index" width="50" :index="indexMethod" label="序号">
                             </el-table-column> -->
-                            <el-table-column prop="name" width="120" label="名称" show-overflow-tooltip>
+                            <el-table-column prop="name" width="60" label="名称" show-overflow-tooltip>
                             </el-table-column>
-                            <el-table-column prop="groupName" width="80" label="分类名称" show-overflow-tooltip>
+                            <el-table-column prop="groupName" width="120" label="分类名称" show-overflow-tooltip>
                             </el-table-column>
                             <el-table-column width="200" label="已选字段" show-overflow-tooltip>
                                 <template slot-scope="scope">
                                     <div class="line-3">
-                                        <span v-for="(item,index) in JSON.parse(scope.row.originHeader)" :key="index">{{item.name}}{{index==JSON.parse(scope.row.originHeader).length-1?'':'，'}}</span>
+                                        <span v-for="(item,index) in JSON.parse(scope.row.chartHeader)" :key="index">{{item.name}}{{index==JSON.parse(scope.row.chartHeader).length-1?'':'，'}}</span>
                                     </div>
                                 </template>
                             </el-table-column>
@@ -39,7 +39,7 @@
                                     </div>
                                 </template>
                             </el-table-column>
-                            <el-table-column align="center" label="操作" width="90">
+                            <el-table-column align="center" label="操作" width="100">
                                 <template slot-scope="scope">
                                     <el-button  type="text" size="small" @click="query(scope.row)">查询</el-button>
                                     <el-button  type="text" size="small" @click="delBtn(scope.row)">删除</el-button>
@@ -188,9 +188,7 @@ export default {
                 paramsData: {
                     dashboardName: this.get_params.name,
                     groupManageId: this.get_params.typeId,
-                    indexType: '7',
-                    originType: 2,
-                    chartType: 1
+                    indexType: '7'
                 }
             }
             pageDashboardChart(data).then(res => {

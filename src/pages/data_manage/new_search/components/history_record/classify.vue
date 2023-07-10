@@ -66,7 +66,6 @@
                             :normalizer="normalizer"
                             noChildrenText="当前分支无子节点"
                             noOptionsText="无可用选项"
-                            noResultsText="无可用选项"
                             placeholder="请选择"
                             v-model="addForm.parentId"
                         />

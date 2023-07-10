@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-drawer title="查看详情" :visible.sync="seeDialog" direction="rtl" size="74%" :wrapperClosable="false" @close="closeDrawer" common-class="custom-drawer" :append-to-body="true">
+        <el-drawer title="查看详情" :visible.sync="seeDialog" direction="rtl" size="74%" :wrapperClosable="false" @close="closeDrawer" common-class="drawer-dialog">
             <div class="drawer-content">
                 <div class="drawer-pad" style="overflow-y:hidden">
                     <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -23,22 +23,7 @@
                                                         <span>查询情报</span>
                                                     </p>
                                                 </div>
-                                                <p class="highlighted" style="cursor: pointer; text-decoration: underline; color: rgb(0, 82, 217); display: inline-block;" slot="reference">
-                                                    <!-- <i
-                                                        v-if="info.desIpVenusIsSpite != '内网' && info.desIp"
-                                                        class="iconfont"
-                                                        :style="{
-                                                            color: [{ type: '安全', color: '#00ff48' }, { type: '恶意', color: '#ff0000' }, { type: '未知', color: '#7c7c7c' },{ type: 'kong', color: '#7c7c7c' }].filter(
-                                                                co => co.type == info.desIpVenusIsSpite
-                                                            )[0].color
-                                                        }"
-                                                        :title="'VenusEye：'+info.desIpVenusIsSpite"
-                                                        :class="{
-                                                            'icon-liebiaonei-anquan': info.desIpVenusIsSpite == '安全',
-                                                            'icon-liebiaonei-buanquan': info.desIpVenusIsSpite == '恶意',
-                                                            'icon-liebiaonei-weizhi': info.desIpVenusIsSpite == '未知'
-                                                        }"
-                                                    ></i> -->
+                                                <p class="highlighted" style="cursor: pointer; text-decoration: underline; color: #03a5dd; display: inline-block;" slot="reference">
                                                     <i
                                                         v-if="info.desIpIsSpite != '内网' && info.desIp"
                                                         class="iconfont"
@@ -47,7 +32,7 @@
                                                                 co => co.type == info.desIpIsSpite
                                                             )[0].color
                                                         }"
-                                                        :title="'微步：'+info.desIpIsSpite"
+                                                        :title="info.desIpIsSpite"
                                                         :class="{
                                                             'icon-liebiaonei-anquan': info.desIpIsSpite == '安全',
                                                             'icon-liebiaonei-buanquan': info.desIpIsSpite == '恶意',
@@ -56,7 +41,7 @@
                                                     ></i>
                                                     {{ info.desIp }}
                                                 </p>
-                                                <!-- <p style="cursor: pointer; text-decoration: underline; color: rgb(0, 82, 217);" slot="reference" v-html="info.desIp"></p> -->
+                                                <!-- <p style="cursor: pointer; text-decoration: underline; color: #03a5dd;" slot="reference" v-html="info.desIp"></p> -->
                                             </el-popover>
                                         </el-descriptions-item>
                                         <el-descriptions-item label="目的端口">{{info.desPort}}</el-descriptions-item>
@@ -72,22 +57,7 @@
                                                         <span>查询情报</span>
                                                     </p>
                                                 </div>
-                                                <p class="highlighted" style="cursor: pointer; text-decoration: underline; color: rgb(0, 82, 217); display: inline-block;" slot="reference">
-                                                    <!-- <i
-                                                        v-if="info.srcIpVenusIsSpite != '内网' && info.srcIp"
-                                                        class="iconfont"
-                                                        :style="{
-                                                            color: [{ type: '安全', color: '#00ff48' }, { type: '恶意', color: '#ff0000' }, { type: '未知', color: '#7c7c7c' },{ type: 'kong', color: '#7c7c7c' }].filter(
-                                                                co => co.type == info.srcIpVenusIsSpite
-                                                            )[0].color
-                                                        }"
-                                                        :title="'VenusEye：'+info.srcIpVenusIsSpite"
-                                                        :class="{
-                                                            'icon-liebiaonei-anquan': info.srcIpVenusIsSpite == '安全',
-                                                            'icon-liebiaonei-buanquan': info.srcIpVenusIsSpite == '恶意',
-                                                            'icon-liebiaonei-weizhi': info.srcIpVenusIsSpite == '未知'
-                                                        }"
-                                                    ></i> -->
+                                                <p class="highlighted" style="cursor: pointer; text-decoration: underline; color: #03a5dd; display: inline-block;" slot="reference">
                                                     <i
                                                         v-if="info.srcIpIsSpite != '内网' && info.srcIp"
                                                         class="iconfont"
@@ -96,7 +66,7 @@
                                                                 co => co.type == info.srcIpIsSpite
                                                             )[0].color
                                                         }"
-                                                        :title="'微步：'+info.srcIpIsSpite"
+                                                        :title="info.srcIpIsSpite"
                                                         :class="{
                                                             'icon-liebiaonei-anquan': info.srcIpIsSpite == '安全',
                                                             'icon-liebiaonei-buanquan': info.srcIpIsSpite == '恶意',
@@ -105,7 +75,7 @@
                                                     ></i>
                                                     {{ info.srcIp }}
                                                 </p>
-                                                <!-- <p style="cursor: pointer; text-decoration: underline; color: rgb(0, 82, 217);" slot="reference" v-html="info.srcIp"></p> -->
+                                                <!-- <p style="cursor: pointer; text-decoration: underline; color: #03a5dd;" slot="reference" v-html="info.srcIp"></p> -->
                                             </el-popover>
                                         </el-descriptions-item>
                                         <el-descriptions-item label="源端口">{{info.srcPort}}</el-descriptions-item>
@@ -138,6 +108,7 @@
                                         :data="tableData"
                                         border
                                         stripe
+                                        :height="400"
                                         tooltip-effect="dark"
                                         :expand-row-keys="expandRowKeys"
                                         @sort-change="changeTableSort"
@@ -171,7 +142,7 @@
                                                             <p
                                                                 v-else
                                                                 class="highlighted"
-                                                                :style="['ip', 'url', '域名'].some(keyWord => item.code.toLowerCase().includes(keyWord)) ? 'cursor: pointer; text-decoration: underline; color: rgb(0, 82, 217);' : 'cursor: default; text-decoration: unset; color: rgba(0, 0, 0, 0.9);'"
+                                                                :style="['ip', 'url', '域名'].some(keyWord => item.code.toLowerCase().includes(keyWord)) ? 'cursor: pointer; text-decoration: underline; color: #03a5dd;' : 'cursor: default; text-decoration: unset; color: rgba(0, 0, 0, 0.9);'"
                                                                 slot="reference"
                                                                 v-html="expandJsonData[item.code]"
                                                             ></p>
@@ -215,7 +186,7 @@
                                                         <p
                                                             v-else
                                                             class="highlighted"
-                                                            :style="['ip', 'url', '域名'].some(keyWord => item.fieldName.toLowerCase().includes(keyWord)) ? 'cursor: pointer; text-decoration: underline; color: rgb(0, 82, 217);' : 'cursor: default; text-decoration: unset; color: rgba(0, 0, 0, 0.9);'"
+                                                            :style="['ip', 'url', '域名'].some(keyWord => item.fieldName.toLowerCase().includes(keyWord)) ? 'cursor: pointer; text-decoration: underline; color: #03a5dd;' : 'cursor: default; text-decoration: unset; color: rgba(0, 0, 0, 0.9);'"
                                                             slot="reference"
                                                             v-html="scope.row[item.fieldName]"
                                                         ></p>
@@ -247,7 +218,7 @@
                                         <el-form-item label="源端口:" label-width="63px" prop="reportName">
                                             <el-input placeholder="请输入源端口" clearable v-model="seeForm.srcPort" size="small" style="width: 100%"></el-input>
                                         </el-form-item>
-                                        <el-button size="small" type="primary" @click='search' style="height:32px">搜 索</el-button>
+                                        <el-button size="small" type="primary" @click='search'>搜 索</el-button>
                                     </div>
                                     <!-- <div class="ub ub-pe">
                                         <addBtn style="margin-left: 10px;margin-bottom:10px" icon="el-icon-download" title="下载PCAP包" />
@@ -303,7 +274,7 @@
                                                             <p
                                                                 v-else
                                                                 class="highlighted"
-                                                                :style="['ip', 'url', '域名'].some(keyWord => item.code.toLowerCase().includes(keyWord)) ? 'cursor: pointer; text-decoration: underline; color: rgb(0, 82, 217);' : 'cursor: default; text-decoration: unset; color: rgba(0, 0, 0, 0.9);'"
+                                                                :style="['ip', 'url', '域名'].some(keyWord => item.code.toLowerCase().includes(keyWord)) ? 'cursor: pointer; text-decoration: underline; color: #03a5dd;' : 'cursor: default; text-decoration: unset; color: rgba(0, 0, 0, 0.9);'"
                                                                 slot="reference"
                                                                 v-html="expandJsonData1[item.code]"
                                                             ></p>
@@ -341,7 +312,7 @@
                                                         </div>
                                                         <p
                                                             class="highlighted"
-                                                            style="'cursor: pointer; text-decoration: underline;color: rgb(0, 82, 217);'"
+                                                            style="'cursor: pointer; text-decoration: underline; color: #03a5dd;' "
                                                             slot="reference"
                                                             v-html="scope.row.clientIp"
                                                         ></p>
@@ -385,7 +356,7 @@
                                                         </div>
                                                         <p
                                                             class="highlighted"
-                                                            style="'cursor: pointer; text-decoration: underline; color: rgb(0, 82, 217);' "
+                                                            style="'cursor: pointer; text-decoration: underline; color: #03a5dd;' "
                                                             slot="reference"
                                                             v-html="scope.row.serverIp"
                                                         ></p>
@@ -458,7 +429,7 @@
                                                 slot="reference"
                                                 v-html="assetsInfo.ip"
                                             ></p>
-                                            <p class="highlighted" style="cursor: pointer; text-decoration: underline; color: rgb(0, 82, 217); display: inline-block;" slot="reference">
+                                            <p class="highlighted" style="cursor: pointer; text-decoration: underline; color: #03a5dd; display: inline-block;" slot="reference">
                                                 <i
                                                     v-if="assetsInfo.ipIsSpite != '内网' && assetsInfo.ip"
                                                     class="iconfont"
@@ -513,14 +484,13 @@ import {
     getKey,
     downloadLogPacket
 } from '@/server/alarm_log/api.js'
-import { get_threat_search, getStartConfig, get_threat_searchVenus } from '@/server/alarm/api.js'
+import { get_threat_search } from '@/server/intelligence/api.js'
 export default {
     components: {
         CustomTransfer
     },
     data() {
         return {
-            startData: [],
             transferDialog: false,
             activeName: '1',
             seeDialog: false,
@@ -610,9 +580,6 @@ export default {
             createTaskDialog: false
         }
     },
-    mounted() {
-        // this.getStartConfigData()
-    },
     filters: {
         getisBoundary(val) {
             if (val == 1) {
@@ -631,47 +598,30 @@ export default {
         // }
     },
     methods: {
-        getStartConfigData() {
-            getStartConfig({ queryData: {}, paramsData: {}}).then(res => {
-                this.startData = res
-            })
-        },
         jumpAsset(item, value) {
             this.$setsessionStorage('currentPath', '/assets/assets_asset_info?ip=' + value)
             window.open(window.location.origin + '/#' + '/assets/assets_asset_info?ip=' + value)
         },
         jumpThreat(item, value) {
-            console.log(value)
             let obj = {
-                queryData: {},
-                paramsData: { value }
+                queryData: {
+                    value
+                },
+                paramsData: {}
             }
-            if (this.startData.includes(1)) {
-                this.searchWeibu(obj, value)
-            } else if (this.startData.includes(0)) {
-                this.searchVenus(obj, value)
-            }
-        },
-        searchWeibu(obj, value) {
             get_threat_search(obj)
                 .then(res => {
                     console.log(res)
                     this.$setsessionStorage('search-item', res)
-                    window.open(window.location.origin + '/#' + '/intelligence/threat_detail?searchStr=' + value)
+                    let route = this.$router.resolve({
+                        name: 'intelligence_threat_detail',
+                        query: {
+                            searchStr: value
+                        }
+                    })
+                    window.open(route.href, '_blank')
                 })
                 .catch(err => {
-                    console.log(err + 'err')
-                })
-        },
-        searchVenus(obj, value) {
-            get_threat_searchVenus(obj, value)
-                .then(res => {
-                    console.log(res)
-                    this.$setsessionStorage('search-item', res)
-                    window.open(window.location.origin + '/#' + '/intelligence/threat_detail?searchStr=' + value)
-                })
-                .catch(err => {
-                    this.btnLoading = false
                     console.log(err + 'err')
                 })
         },
@@ -688,7 +638,7 @@ export default {
                 srcPort: ''
             }
             this.get_logId()
-            // this.quanbu()
+            this.quanbu()
             this.initSelectedFileds()
             this.initCanSelectedFileds()
         },
@@ -1123,28 +1073,21 @@ export default {
         display:inline-block;
     }
 }
-.container{
-    ::v-deep .el-descriptions-item__label{
-                width:100px !important;
-                background-color: #EBF1F5 !important;
-            }
-}
 .el-table{
     ::v-deep .el-table__expanded-cell{
         padding:10px !important;
         .container{
-            .el-descriptions-item__content{
-                width:500px !important;
+            .el-descriptions-item__cell{
                 height:30px !important;
                 font-size:12px !important;
                 // background-color: #033254 !important;
-                // border: none !important;
-                // padding: 0 10px !important;
+                border: none !important;
+                padding: 0 10px !important;
                 // box-shadow: inset 0px 0px 2px rgba(0, 186, 255, 73%) !important;
             }
             .el-descriptions-item__label{
                 width:100px !important;
-                background-color: #EBF1F5 !important;
+                // background-color: #00466d !important;
                 font-weight: 600;
             }
         }

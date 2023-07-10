@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-drawer :visible.sync="openDialog" direction="rtl" :size="720" :show-close="true" :before-close="closeDialog" :wrapperClosable="false" :title="addForm.id ? '编辑事件':'发起事件'"  custom-class="drawer-dialog" :append-to-body="true">
+        <el-drawer :visible.sync="alarmDialog" direction="rtl" :size="720" :show-close="true" :before-close="closeDialog" :wrapperClosable="false" :title="addForm.id ? '编辑事件':'发起事件'"  custom-class="drawer-dialog">
             <div class="drawer-content mb-3" style="margin-top: -5px;">
                 <div
                     style="
@@ -13,7 +13,6 @@
                         overflow-y: auto;
                     ">
                     <div class="drawer-pad">
-                        <p style="margin-bottom:10px;color: rgba(0, 0, 0, 0.26);font-size:12px"><span class="iconfont icon-zhushi"></span>“发起事件后列表3秒后生效”</p>
                         <el-form :model="addForm" :rules="rules" ref="addForm" :inline="true" label-position="top">
                             <div class="ub ub-pj">
                                 <el-form-item label="事件名称:" :label-width="formLabelWidth" prop="reportName">
@@ -38,7 +37,6 @@
                                         clearable
                                         v-model="addForm.desPort"
                                         type="number"
-                                        :min="0"
                                         onKeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))"
                                         size="small"></el-input>
                                 </el-form-item>
@@ -52,7 +50,6 @@
                                         style="width: 300px"
                                         placeholder="请输入源端口"
                                         clearable
-                                        :min="0"
                                         v-model="addForm.srcPort"
                                         type="number"
                                         onKeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))"
@@ -88,9 +85,9 @@
                                 <el-form-item label="工单名称:" :label-width="formLabelWidth" prop="workOrderName">
                                     <el-input placeholder="请输入" clearable v-model="addForm.workOrderName" size="small" style="width: 300px"></el-input>
                                 </el-form-item>
-                                <el-form-item label="模板类型:" prop="mouldType" :label-width="formLabelWidth">
-                                    <el-select style="width: 300px" size="small" v-model="addForm.mouldType" clearable placeholder="请选择" @change="changeMouldType">
-                                        <el-option v-for="(item, index) in mouldTypeList" :key="index" :label="item.name" :value="item.id"></el-option>
+                                <el-form-item label="工单模板:" :label-width="formLabelWidth" prop="workMouldId">
+                                    <el-select style="width: 300px" size="small" v-model="addForm.workMouldId" clearable placeholder="请选择">
+                                        <el-option :key="index" v-for="(item,index) in workMouldIdList" :label="item.name" :value="item.id"></el-option>
                                     </el-select>
                                 </el-form-item>
                             </div>
@@ -98,11 +95,6 @@
                                 <el-form-item label="优先级:" :label-width="formLabelWidth" prop="level">
                                     <el-select style="width: 300px" size="small" v-model="addForm.level" clearable placeholder="请选择">
                                         <el-option :key="index" v-for="(item,index) in levelList" :label="item.name" :value="item.id"></el-option>
-                                    </el-select>
-                                </el-form-item>
-                                <el-form-item label="工单模板:" :label-width="formLabelWidth" prop="workMouldId">
-                                    <el-select style="width: 300px" size="small" v-model="addForm.workMouldId" clearable placeholder="请选择">
-                                        <el-option :key="index" v-for="(item,index) in workMouldIdList" :label="item.name" :value="item.id"></el-option>
                                     </el-select>
                                 </el-form-item>
                             </div>
@@ -174,38 +166,22 @@ export default {
     },
     watch: {
         alarmDialog(newVal, oldVal) {
-            this.openDialog = newVal
             if (!newVal) {
                 this.$refs.addForm.resetFields()
             } else {
                 this.getAlarmTypeData()
-                // this.getAlarmWorkMouldData()
+                this.getAlarmWorkMouldData()
             }
         }
     },
     mounted() {
         this.$nextTick(() => {
             this.getAlarmTypeData()
-            // this.getAlarmWorkMouldData()
+            this.getAlarmWorkMouldData()
         })
     },
     data() {
         return {
-            mouldTypeList: [
-                {
-                    id: 0,
-                    name: '分析'
-                },
-                {
-                    id: 1,
-                    name: '应急'
-                },
-                {
-                    id: 2,
-                    name: '通报'
-                }
-            ],
-            openDialog: this.alarmDialog,
             allData: [],
             logIds: [],
             reportLevelList: [
@@ -267,9 +243,6 @@ export default {
             formLabelWidth: '83px',
             typeList: [],
             rules: {
-                mouldType: [
-                    { required: true, message: '请选择模板类型', trigger: ['change'] }
-                ],
                 isStart: [{
                     required: true,
                     message: '请选择',
@@ -356,20 +329,12 @@ export default {
                 workOrderName: '',
                 workMouldId: '',
                 level: '',
-                workOrderContent: '',
-                mouldType: ''
+                workOrderContent: ''
             }
         }
     },
     computed: {},
     methods: {
-        changeMouldType(val) {
-            if (val !== '') {
-                this.getAlarmWorkMouldData()
-            } else {
-                this.workMouldIdList = []
-            }
-        },
         reportNameChange(val) {
             if (val && this.addForm.isStart) {
                 this.addForm.workOrderName = `${val}${this.$moment().format('x')}`
@@ -397,7 +362,8 @@ export default {
         },
         getAlarmWorkMouldData() {
             let data = {
-                mouldType: this.addForm.mouldType
+                queryData: {},
+                paramsData: {}
             }
             getAlarmWorkMould(data).then(res => {
                 this.workMouldIdList = res

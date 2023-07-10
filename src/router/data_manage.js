@@ -21,8 +21,6 @@ const data_manage_alarm_log = () =>
     import('@/pages/alarm_log/new_search/index.vue')
 const data_manage_log_config = () =>
     import('@/pages/data_manage/log_config/index.vue')
-const data_manage_pool = () =>
-    import('@/pages/data_manage/pool/pool.vue')
 // export default [
 //     {
 //         path: 'data_manage_new_search',
@@ -52,14 +50,6 @@ export default [
         redirect: '/data_manage/new_search',
         // redirect: '/system/page'
         children: [
-            {
-                path: 'pool',
-                name: 'pool',
-                component: data_manage_pool,
-                meta: {
-                    title: '动态资源池配置'
-                }
-            },
             {
                 path: 'log_config',
                 name: 'data_manage_log_config',

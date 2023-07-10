@@ -33,7 +33,7 @@
                 <div class="setting-mode layout-mode ub ub-wrap ub-pj">
                     <div class="mode-item ub ub-ver ub-ac" :class="{selected: item.value === themeConfigValue}" v-for="(item, index) in themeConfig" :key="index" @click="selectThemeMode(item)">
                         <div class="mode-img ub ub-ac ub-pc">
-                            <img :src="item.img" alt="" style="width: 40px;height: 40px;">
+                            <img :src="item.img" alt="" style="width:40px;height:40px">
                         </div>
                         <p class="mode-text ub ub-pc ub-ac">{{item.key}}</p>
                     </div>
@@ -55,7 +55,6 @@ import nav_fold from '../../../assets/img/system/nav_fold.png'
 import theme_default from '../../../assets/img/system/theme_default.png'
 import theme_dark from '../../../assets/img/system/theme_dark.png'
 import theme_purple from '../../../assets/img/system/theme_purple.png'
-import theme_star from '../../../assets/img/system/theme_star.png'
 import { mapMutations, mapGetters } from 'vuex'
 import { get_user_system_config } from '@/server/system/security_policy.js'
 import { update_subject_sideslip } from '@/server/system/theme_manage.js'
@@ -112,11 +111,6 @@ export default {
                     key: '紫色',
                     value: 'purple',
                     img: theme_purple
-                },
-                {
-                    key: '星空蓝',
-                    value: 'star',
-                    img: theme_star
                 }
             ]
         }
@@ -167,8 +161,6 @@ export default {
                 this.themeConfigValue = 'dark'
             } else if (colour === 3) {
                 this.themeConfigValue = 'purple'
-            } else if (colour === 4) {
-                this.themeConfigValue = 'star'
             }
             this.changeSetting({
                 key: 'themeSettings',
@@ -191,8 +183,6 @@ export default {
                 return 2
             } else if (val === 'purple') {
                 return 3
-            } else if (val === 'star') {
-                return 4
             }
         },
         handleClose() {
@@ -259,63 +249,54 @@ export default {
 }
 .drawer-footer {
     position: absolute;
-    right: 0;
     bottom: 10px;
+    right: 0;
     padding: 0 24px;
 }
 .mode-title {
-    margin-bottom: 16px;
     font-size: 12px;
+    margin-bottom: 16px;
 }
 .mode-title:not(:first-child) {
     margin-top: 20px;
 }
-.custom-star {
-    .mode-title {
-        color: #ffffff;
-    }
-    .mode-text {
-        color: #ffffff;
-    }
-    .mode-item.selected .mode-text {
-        color: #1cd7fa!important;
-    }
-}
 .setting-mode {
     &>div {
-        margin-bottom: 16px;
         width: 120px;
         height: 118px;
+        margin-bottom: 16px;
         cursor: pointer;
+
         img {
             width: 120px;
             height: 88px;
         }
         .mode-img {
-            width: 120px;
-            height: 90px;
             border: solid 1px #dddddd;
             border-radius: 4px;
+            width: 120px;
+            height: 90px;
             box-sizing: border-box;
         }
         .mode-text {
+            font-size: 12px;
             margin-top: 8px;
             height: 20px;
-            font-size: 12px;
         }
     }
+
     .mode-item.selected {
         .mode-img {
             position: relative;
             border-color: $high-color;
         }
         .mode-img::before {
-            position: absolute;
-            top: 5px;
-            right: 5px;
             font-family: iconfont;
-            color: $high-color;
             content: '\e7e6';
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            color: $high-color;
         }
         .mode-text {
             color: $high-color;

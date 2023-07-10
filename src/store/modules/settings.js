@@ -30,8 +30,7 @@ const mutations = {
                 let colorObj = {
                     default: 1,
                     dark: 2,
-                    purple: 3,
-                    star: 4
+                    purple: 3
                 }
                 initInfo.theme.color = colorObj[value]
             } else if (key === 'navCollapseSettings') {

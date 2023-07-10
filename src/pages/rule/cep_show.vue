@@ -1,9 +1,9 @@
 <template>
     <div class="container rules-page" id="container" v-loading.lock="loading" element-loading-text="规则处理中......" style="position:relative">
-        <div class="even-content starWrapper" style="height:90.5vh;overflow-y:auto;position:relative;overflow-x:hidden;padding-bottom:200px !important">
+        <div class="even-content" style="height:90.5vh;overflow-y:auto;position:relative;overflow-x:hidden">
             <div
                 class="list-tip"
-                style="display: block;position:fixed;top:90px;z-index: 100;width: 80%;height: 42px;background: #fff;line-height: 42px;margin-top:-9px;">规则编辑
+                style="display: block;position:fixed;top:90px;left: 252px;z-index: 100;width: calc(100vw - 248px);height: 42px;background: #fff;line-height: 42px;margin-top:-9px;padding-left: 20px;">规则编辑
             </div>
             <div class="title-line mt-3">
                 <span class="title-name">基础信息</span>
@@ -525,9 +525,7 @@
                                 </el-option>
                             </el-select>
                             <span style="color:#ddd;margin:0 9px">—-</span>
-                            <el-input-number v-model="accmulateForm.value" label="" :controls="false" style="width: 190px" :disabled="disIsAvg"></el-input-number>
-                            <span class="ml-2"></span>
-                            <el-checkbox v-model="accmulateForm.isAvg" @change="changeIsAvg">平均访问次数</el-checkbox>
+                            <el-input-number v-model="accmulateForm.value" label="" :controls="false" style="width: 190px"></el-input-number>
                         </el-form-item>
 
                     </el-form>
@@ -710,15 +708,15 @@
                                                 :disabled="false"
                                                 clearable
                                                 class="value"
-                                                style="font-size: 12px;width:300px !important;"></el-input>
+                                                style="font-size: 12px;width:388px !important;"></el-input>
                                         </p>
-                                        <p style="position: relative" v-if="!['reportStatus','reportType','reportLevel','attackResult','timeQua', 'isBanned','isStart','level','workMouldId','orderCreateUser', 'attChain', 'attCk'].includes(int.key)">
+                                        <p style="position: relative" v-if="!['reportStatus','reportType','reportLevel','attackResult','timeQua', 'isBanned','isStart','level','workMouldId','orderCreateUser'].includes(int.key)">
                                             <el-input
                                                 v-model="int.value"
                                                 placeholder="请输入"
                                                 clearable
                                                 class="value"
-                                                style="font-size: 12px;width:300px !important;"></el-input>
+                                                style="font-size: 12px;width:388px !important;"></el-input>
                                             <el-tooltip
                                                 class="item"
                                                 v-if="int.key === 'workOrderName'"
@@ -735,7 +733,7 @@
                                                 placeholder="请选择"
                                                 size="mini"
                                                 class="value"
-                                                style="font-size: 12px;width:300px !important;"
+                                                style="font-size: 12px;width:388px !important"
                                                 popper-class="select-option showThen">
                                                 <el-option
                                                     v-for="item in thenType"
@@ -751,7 +749,7 @@
                                                 placeholder="请选择"
                                                 size="mini"
                                                 class="value"
-                                                style="font-size: 12px;width:300px !important;"
+                                                style="font-size: 12px;width:388px !important"
                                                 popper-class="select-option showThen">
                                                 <el-option label="否" value="0"></el-option>
                                                 <el-option label="是" value="1"></el-option>
@@ -763,7 +761,7 @@
                                                 placeholder="请选择"
                                                 size="mini"
                                                 class="value"
-                                                style="font-size: 12px;width:300px !important;"
+                                                style="font-size: 12px;width:388px !important"
                                                 popper-class="select-option showThen">
                                                 <el-option label="否" value="0"></el-option>
                                                 <el-option label="是" value="1"></el-option>
@@ -776,7 +774,7 @@
                                                 size="mini"
                                                 clearable
                                                 class="value"
-                                                style="font-size: 12px;width:300px !important;"
+                                                style="font-size: 12px;width:388px !important"
                                                 popper-class="select-option showThen">
                                                 <el-option label="高" value="1"></el-option>
                                                 <el-option label="中" value="2"></el-option>
@@ -790,7 +788,7 @@
                                                 size="mini"
                                                 clearable
                                                 class="value"
-                                                style="font-size: 12px;width:300px !important;"
+                                                style="font-size: 12px;width:388px !important"
                                                 popper-class="select-option showThen">
                                                 <el-option v-for="item in templateList" :label="item.name" :value="item.id" :key="item.id"></el-option>
                                             </el-select>
@@ -803,7 +801,7 @@
                                                 clearable
                                                 filterable
                                                 class="value"
-                                                style="font-size: 12px;width:300px !important;"
+                                                style="font-size: 12px;width:388px !important"
                                                 popper-class="select-option showThen">
                                                 <el-option v-for="item in orderUserList" :label="item.chineseName" :value="item.id" :key="item.id"></el-option>
                                             </el-select>
@@ -815,7 +813,7 @@
                                                 placeholder="请输入"
                                                 clearable
                                                 class="value"
-                                                style="font-size: 12px;width:300px !important;"></el-input>
+                                                style="font-size: 12px;width:388px !important"></el-input>
                                         </p>
                                         <p v-if="int.key === 'attackResult'">
                                             <el-select
@@ -824,7 +822,7 @@
                                                 size="mini"
                                                 clearable
                                                 class="value"
-                                                style="font-size: 12px;width:300px !important;"
+                                                style="font-size: 12px;width:388px !important"
                                                 popper-class="select-option showThen">
                                                 <el-option
                                                     v-for="item in attackResultList"
@@ -840,7 +838,7 @@
                                                 placeholder="请选择"
                                                 size="mini"
                                                 class="value"
-                                                style="font-size: 12px;width:300px !important;"
+                                                style="font-size: 12px;width:388px !important"
                                                 popper-class="select-option showThen">
                                                 <el-option
                                                     v-for="item in thenStatus"
@@ -856,7 +854,7 @@
                                                 placeholder="请选择"
                                                 size="mini"
                                                 class="value"
-                                                style="font-size: 12px;width:300px !important;"
+                                                style="font-size: 12px;width:388px !important"
                                                 popper-class="select-option showThen">
                                                 <el-option
                                                     v-for="item in thenLevel"
@@ -865,39 +863,6 @@
                                                     :value="item.value">
                                                 </el-option>
                                             </el-select>
-                                        </p>
-                                        <p v-if="int.key === 'attChain'">
-                                            <el-select
-                                                v-model="int.value"
-                                                placeholder="请选择"
-                                                size="mini"
-                                                clearable
-                                                class="value"
-                                                style="font-size: 12px;width:300px !important;"
-                                                popper-class="select-option showThen">
-                                                <el-option
-                                                    v-for="item in attChainList"
-                                                    :key="symbolKey(item.id)"
-                                                    :label="item.name"
-                                                    :value="item.id">
-                                                </el-option>
-                                            </el-select>
-                                        </p>
-                                        <p v-if="int.key === 'attCk'">
-                                            <Treeselect
-                                                class="attck-tree"
-                                                :disable-branch-nodes="true"
-                                                style="font-size: 12px;width:300px !important;"
-                                                @input="inputChange"
-                                                :appendToBody="true"
-                                                size="small"
-                                                :options="treeDataAtt"
-                                                :normalizer="normalizerAtt"
-                                                noChildrenText="当前分支无子节点"
-                                                noOptionsText="无可用选项"
-                                                placeholder="请选择"
-                                                v-model="int.value"
-                                            />
                                         </p>
                                         <span>
                                             <span class="dottedLine" style="margin: 0 5px"></span>
@@ -930,7 +895,7 @@
                             <el-checkbox-group v-model="eventData.noticeMap.noticeType">
                                 <el-checkbox label="1">邮件</el-checkbox>
                                 <el-checkbox label="2">短信</el-checkbox>
-                                <el-checkbox label="3">蓝信</el-checkbox>
+                                <el-checkbox label="3">蓝鲸</el-checkbox>
                             </el-checkbox-group>
                         </el-form-item>
                         <el-form-item label="通知人员:" prop="noticeUser" v-if="eventData.noticeMap.noticeType.length">
@@ -977,8 +942,6 @@ import drools_tree_data from './drools/drools_tree_data.vue'
 import { codemirror } from 'vue-codemirror' // 引入组件
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/cobalt.css'
-import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import {
     buildDrools,
     get_one_rule,
@@ -1000,23 +963,16 @@ import {
     get_order_template,
     get_order_user
 } from '../../server/rule/inspection'
-import {
-    getAttCk,
-    getAttChain
-} from '../../server/alarm/alarm.js'
 require('codemirror/mode/clike/clike.js')
 
 export default {
     name: 'DroolsRule',
     components: {
         codemirror,
-        Treeselect,
         drools_tree_data
     },
     data() {
         return {
-            treeDataAtt: [],
-            attChainList: [],
             searchKey: '',
             cmOptions: {
                 tabSize: 4, // 制表符的宽度
@@ -1189,10 +1145,8 @@ export default {
             accmulateForm: {
                 fieldBindName: '',
                 operator: '',
-                value: '',
-                isAvg: false
+                value: ''
             },
-            disIsAvg: false,
             record_fieldBindName: '',
 
             common_options: [{
@@ -1314,12 +1268,6 @@ export default {
             }, {
                 label: '工单发起人',
                 value: 'orderCreateUser'
-            }, {
-                label: '攻击链阶段',
-                value: 'attChain'
-            }, {
-                label: 'ATT&CK',
-                value: 'attCk'
             }],
 
             mailKey: [
@@ -1453,14 +1401,6 @@ export default {
                     {
                         key: 'isBanned',
                         value: '0'
-                    },
-                    {
-                        key: 'attChain',
-                        value: ''
-                    },
-                    {
-                        key: 'attCk',
-                        value: null
                     }
                 ],
                 noticeMap: {
@@ -1469,15 +1409,7 @@ export default {
                     userIds: []
                 }
             },
-            toogleChildIS: false,
-            normalizerAtt(node) {
-                return {
-                    id: node.id,
-                    label: node.name,
-                    children: node.child
-                }
-            },
-            tableData_all: []
+            toogleChildIS: false
         }
     },
     created() {
@@ -1504,8 +1436,6 @@ export default {
     },
     mounted() {
         console.log(this.testData)
-        this.getAttCkFn()
-        this.getAttChainFn()
         window.addEventListener('click', (e) => {
             this.onOff = false
         })
@@ -1525,7 +1455,6 @@ export default {
                     }
                 }
             })
-            console.log(arr, '这个是啥')
             return arr
         },
         /* 只收集非累计变量名*/
@@ -1579,31 +1508,6 @@ export default {
         }
     },
     methods: {
-        changeIsAvg(val) {
-            if (val) {
-                this.accmulateForm.value = ''
-                this.disIsAvg = true
-            } else {
-                this.disIsAvg = false
-            }
-            console.log(val)
-        },
-        getAttCkFn() {
-            getAttCk({}).then(res => {
-                console.log(res)
-                this.treeDataAtt = res
-            }).catch(err => {
-                console.log(err)
-            })
-        },
-        getAttChainFn() {
-            getAttChain({}).then(res => {
-                this.attChainList = res
-            }).catch(err => {
-                console.log(err)
-            })
-        },
-        inputChange() {},
         searchs() {
             let arr
             let a
@@ -1828,10 +1732,7 @@ export default {
         },
         addFields(row) {
             console.log(row)
-            // 修改一下
             this.fieldsItem.value = this.fieldsType + '.' + row.name
-            this.fieldsItem.values = this.fieldsType + '.' + row.handle
-            console.log(this.fieldsItem.value)
             this.fieldsDialog = false
         },
         search_data_resource() {
@@ -1918,7 +1819,7 @@ export default {
             this.tableData_fields_OutputEvent = []
             this.tableData_fields_AppEvent = []
             let data = {}
-            this.tableData_all = []
+
             let list = this.$getsessionStorage('rule_fields')
             let err
             if (!list.length) {
@@ -1934,7 +1835,6 @@ export default {
             console.log(list, '这个是什么东西')
             if (list.length > 0) {
                 list.forEach(item => {
-                    console.log(item.name, item.handle)
                     this.enObj[item.name] = item.handle
                     this.cnObj[item.handle] = item.name
                     if (item.type === 'AlarmEvent') {
@@ -2023,7 +1923,6 @@ export default {
                 console.log(this.enObj, '发送')
                 console.log(this.cnObj, '接收')
             }
-            this.tableData_all = list
             this.init_data()
         },
 
@@ -2244,7 +2143,6 @@ export default {
             this.accmulateForm.fieldBindName = this.record_fieldBindName = item.countMap.constraintList[0].fieldBindName
             this.accmulateForm.operator = item.countMap.constraintList[0].operator
             this.accmulateForm.value = item.countMap.constraintList[0].value
-            this.accmulateForm.isAvg = item.countMap.constraintList[0].isAvg != 0
             this.accmulateDialog = true
         },
         accmulateDialogSuccess() {
@@ -2258,7 +2156,6 @@ export default {
             this.eventData.sourceList[this.countIndex].countMap.constraintList[0].fieldBindName = this.accmulateForm.fieldBindName
             this.eventData.sourceList[this.countIndex].countMap.constraintList[0].operator = this.accmulateForm.operator
             this.eventData.sourceList[this.countIndex].countMap.constraintList[0].value = this.accmulateForm.value
-            this.eventData.sourceList[this.countIndex].countMap.constraintList[0].isAvg = this.accmulateForm.isAvg == false ? 0 : 1
 
             this.accmulateDialog = false
         },
@@ -2340,9 +2237,9 @@ export default {
                     list.forEach(item => {
                         let obj = {}
                         obj.id = item.id
-                        obj.name = item.name
-                        obj.mail = `${item.name}(${item.mailbox})`
-                        obj.phone = `${item.name}(${item.phone})`
+                        obj.name = item.chinesename
+                        obj.mail = `${item.chinesename}(${item.mailbox})`
+                        obj.phone = `${item.chinesename}(${item.phone})`
                         // obj.is_sys = item.is_sys;
                         this.usersList.push(obj)
                     })
@@ -2443,7 +2340,6 @@ export default {
                     data.typeId = this.oneData.typeId
                     this.currentGroup = this.oneData.typeName
                 }
-                this.initAttCk(data.thenList)
                 this.getFormat_sourceList(data.sourceList)
                 this.receiveEnToChinese(data.sourceList)
                 this.splitWindow(data.sourceList, 'slideWindow_sourceList')
@@ -2473,8 +2369,7 @@ export default {
                     this.isEdit = !!JSON.parse(detail).isEdit
                     this.isExtend = JSON.parse(detail).isExtend
                 }
-                console.log(data)
-                this.initAttCk(data.thenList)
+
                 this.getFormat_sourceList(data.sourceList)
                 this.receiveEnToChinese(data.sourceList)
                 this.splitWindow(data.sourceList, 'slideWindow_sourceList')
@@ -2504,24 +2399,6 @@ export default {
                 }*/
             }
         },
-        initAttCk(thenList) {
-            // attck初始化需要为null后端需要空字符串，编辑时候需要转化
-            const tmpAttCk = thenList.filter(item => item.key == 'attCk')[0]
-            if (!tmpAttCk) {
-                thenList.push({
-                    key: 'attChain',
-                    value: ''
-                })
-                thenList.push({
-                    key: 'attCk',
-                    value: null
-                })
-            } else {
-                if (tmpAttCk.value === '') {
-                    tmpAttCk.value = null
-                }
-            }
-        },
         submitRule(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -2549,7 +2426,6 @@ export default {
         },
 
         sendModelData() {
-            console.log(JSON.stringify(this.eventData))
             // if(this.currentGroup ==''){
             //     this.groupIsSelected = true;
             //     return;
@@ -2583,24 +2459,9 @@ export default {
             if (itemType) {
                 data.thenList[0].reportTypeName = itemType.name
             }
-            console.log(JSON.stringify(data))
-            // attCk初始值为null 需转化为空字符串 ''
-            const tmpAttCk = data.thenList.filter(thenitem => thenitem.key == 'attCk')[0]
-            if (!tmpAttCk.value) {
-                tmpAttCk.value = ''
-            }
             // 重组window、after
             data.sourceList.forEach((item, index) => {
                 if (item.type == '0') {
-                    // 重置attCk的空值为''
-                    let tmp = item.constraintList.filter(con => con.constraintName == 'attCk')
-                    if (tmp[0]) {
-                        tmp.forEach(tmpitem => {
-                            if (!tmpitem.value) {
-                                tmpitem.value = ''
-                            }
-                        })
-                    }
                     // console.log(this.slideWindow_sfactpList, index)
                     if (this.slideWindow_sourceList[index] && this.slideWindow_sourceList[index].slideType && this.slideWindow_sourceList[index].slideValue.trim()) {
                         item.window = 'over window:' + this.slideWindow_sourceList[index].slideType + '(' + this.timeToStr(this.slideWindow_sourceList[index].slideValue) + ')'
@@ -2634,12 +2495,11 @@ export default {
                     }
                 }
             })
-            console.log(JSON.stringify(data), '1')
+
             this.sendFormat_sourceList(data.sourceList)
             this.sendChineseToEn(data.sourceList)
             data.noticeMap.userIds = data.noticeMap.userIds.join(',')
             data.status = data.status ? 1 : 0
-            console.log(JSON.stringify(data), '2')
             if (this.$route.query.ids == 'edit') {
                 updateRule(data).then(res => {
                     if (document.getElementsByClassName('el-message').length === 0) {
@@ -2782,9 +2642,7 @@ export default {
 
         // 发送时递归遍历数据，将变量字段中文转英文
         sendChineseToEn(arr) {
-            console.log(JSON.stringify(arr))
             arr.forEach(item => {
-                console.log(arr)
                 if (item.type == 0) {
                     this.cnToEn(item.constraintList, item.factType)
                 } else if (item.type == 1) {
@@ -2795,7 +2653,6 @@ export default {
 
         cnToEn(arr, factType) {
             arr.forEach(it => {
-                console.log(it)
                 if (it.dataType == 1) {
                     if (it.value.trim() && it.value.includes('.')) {
                         let num = it.value.lastIndexOf('.')
@@ -2804,13 +2661,10 @@ export default {
                         //     it.value = it.value.slice(0, num) + this.enObj[str]
                         // }
                         // 中文转英文时，加入了根据变量名筛选的逻辑
-                        // this.switchFaceType(factType)
-                        const list = this.tableData_all
-                        console.log(list, factType)
+                        const list = this.switchFaceType(factType)
                         if (list.filter(item => item.name == str)[0]) {
                             it.value = it.value.slice(0, num) + list.filter(item => item.name == str)[0].handle
                         }
-                        console.log(list)
                     }
                 }
                 if (it.constraintList && it.constraintList.length !== 0) {
@@ -2819,7 +2673,6 @@ export default {
             })
         },
         switchFaceType(faceType) {
-            console.log(faceType)
             let list = []
             switch (faceType) {
                 case 'AlarmEvent':
@@ -2851,6 +2704,7 @@ export default {
             }
             return list
         },
+
         // 接收数据时递归遍历数据，将变量字段英文转中文
         receiveEnToChinese(arr) {
             arr.forEach(item => {
@@ -3047,7 +2901,7 @@ export default {
 .showKey{
     ::v-deep input{
         background:#fff !important;
-        width:102px !important;
+        width:100px !important;
         color:#0052d9 !important;
         border-right:none !important;
         border-top-right-radius: none !important;
@@ -3831,29 +3685,6 @@ div.addRule {
 .showcase_then  ::v-deep  .showKey .el-input__suffix {
     display: none;
 }
-.attck-tree {
-    ::v-deep .vue-treeselect__control {
-        border-radius: 0 4px 5px 0;
-        width:300px !important;
-        .vue-treeselect__value-container {
-            .vue-treeselect__single-value {
-                line-height: 30px;
-            }
-            .vue-treeselect__input-container {
-                height: 30px;
-            }
-        }
-    }
-    // ::v-deep .vue-treeselect__input-container {
-    //     height: 30px;
-    // }
-    // ::v-deep .vue-treeselect__single-value {
-    //     line-height: 30px;
-    // }
-    ::v-deep .vue-treeselect__input {
-        height: auto!important;
-    }
-}
 .container  ::v-deep  .iconfont.icon-zhedie.fold-arrow {
     text-shadow: 0px 0px 8px #00d2ff;
 }
@@ -4008,37 +3839,5 @@ p.is-required.required-msg::after {
 }
 .bigTable.innerTable.el-table::before {
     background: transparent;
-}
-
-.custom-star .list-tip {
-    background-color: rgba(0,0,0,0) !important;
-    color: #fff;
-}
-.custom-star .container ::v-deep .el-tabs--top .el-tabs__item.is-top {
-    color: #fff;
-}
-.custom-star #app .showcase_then .showKey ::v-deep .el-input__inner{
-    border: none !important;
-    background-color: rgba(0,0,0,0) !important;
-    color: #fff !important;
-    box-shadow: none !important;
-}
-
-.custom-star #app .bg-area:nth-child(odd){
-    background: rgba(0,0,0,0);
-}
-.custom-star #app .bg-area:nth-child(even) {
-    background: rgba(0,0,0,0);
-}
-.custom-star #app .select-title {
-    border: 1px solid #1cd7fa;
-    color: #ffffff;
-    background-color: rgb(0 0 0 / 0%);
-    box-shadow: 0 0 7px inset #389bf7;
-    border-radius: 4px;
-
-}
-.custom-star #app .even-content {
-    background-color: rgba(0,0,0,0);
 }
 </style>

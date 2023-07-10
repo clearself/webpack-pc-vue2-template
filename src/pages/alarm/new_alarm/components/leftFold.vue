@@ -1,5 +1,5 @@
 <template>
-    <div class="expert-left starWrapper" :class="{'left-fold': leftFold,'event-content':!leftFold}">
+    <div class="expert-left" :class="{'left-fold': leftFold,'event-content':!leftFold}">
         <i class="fold iconfont icon-zhedie" @click="leftFold=!leftFold" style="color:rgba(0,0,0,0.4);margin-top:3px"></i>
         <div v-show="!leftFold">
             <div class="list-tips" style="margin-top:5px">筛选器</div>

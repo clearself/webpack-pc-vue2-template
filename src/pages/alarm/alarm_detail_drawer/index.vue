@@ -5,14 +5,14 @@
             :key="123"
             popper-class="custom-date-picker1"
             placement="bottom"
-            width="672"
+            width="650"
             trigger="click"
             @hide="popoverHide"
             @show="popoverShow"
             ref="datePopver"
             :visible-arrow="false"
         >
-            <div style="height: 415px">
+            <div style="height: 400px">
                 <el-date-picker
                     :default-time="['00:00:00', '23:59:59']"
                     :append-to-body="false"
@@ -594,7 +594,6 @@ export default {
         font-size:12px !important;
     }
     & ::v-deep .el-input.is-disabled .el-input__inner {
-        background:white !important;
         cursor: pointer;
     }
     & ::v-deep .el-input.is-disabled .el-input__icon {

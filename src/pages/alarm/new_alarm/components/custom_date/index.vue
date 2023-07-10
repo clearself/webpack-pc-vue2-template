@@ -5,7 +5,7 @@
             :key="123"
             popper-class="custom-date-picker"
             placement="bottom-start"
-            width="672"
+            width="650"
             trigger="click"
             @hide="popoverHide"
             @show="popoverShow"
@@ -289,7 +289,6 @@ export default {
             this.isSelectOther = index
             this.dateData = data.name
             let num = -data.time
-            this.$setsessionStorage('temporaryAlarm', { actualTime: data.time, timeUnit: data.timeUnit + 1 })
             let endTime = this.$moment().format('YYYY-MM-DD HH:mm:ss')
             let unitText = this.getUnitText(data.timeUnit)
             let startTime = this.$moment().add(num, unitText).format('YYYY-MM-DD HH:mm:ss')
@@ -318,7 +317,6 @@ export default {
             }
         },
         handleRelative(data, index) {
-            this.$setsessionStorage('temporaryAlarm', { actualTime: '', timeUnit: '' })
             this.isSelectOther = null
             this.isSelectRecently = null
             this.isSelectRelative = index
@@ -403,7 +401,6 @@ export default {
             this.$refs.datePopver.doClose()
         },
         handleRecently(data, index) {
-            this.$setsessionStorage('temporaryAlarm', { actualTime: '', timeUnit: '' })
             this.isSelectOther = null
             this.isSelectRelative = null
             this.isSelectRecently = index
@@ -512,7 +509,6 @@ export default {
             } else {
                 if (document.querySelector('.time-panel-picker')) document.querySelector('.time-panel-picker').style.zIndex = '-1000'
             }
-            this.$setsessionStorage('temporaryAlarm', { actualTime: '', timeUnit: '' })
             console.log(val)
         },
         dateChange(value) {
@@ -550,7 +546,6 @@ export default {
                     message: '应用成功',
                     type: 'success'
                 })
-                this.$setsessionStorage('temporaryAlarm', { actualTime: this.actualTime, timeUnit: this.timeUnit + 1 })
                 this.handleUse()
                 this.$refs.datePopver.doClose()
                 setTimeout(() => {

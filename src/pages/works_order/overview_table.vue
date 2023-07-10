@@ -4,7 +4,6 @@
             <div class="list-tips">列表内容</div>
         </div>
         <el-table ref="multipleTable" v-loading="loading" :height="tableHeight" class='bigTable work-overview' border  :data="tableData">
-            <!-- <el-table-column align="center" type="index" width="50" :index="indexMethod" label="序号"></el-table-column> -->
             <el-table-column label="工单名称" align="center">
                 <template slot-scope="scope" width="160">
                     <div>{{scope.row.workOrderName}}</div>

@@ -1,7 +1,7 @@
 <template>
     <div class="container drop-box user-drop" @click.stop>
         <div class="show-box ub ub-pj">
-            <div class="show-left ub ub-ac" :class="showFlag ? 'is-show' : 'not-show'" @click="showMore = !showMore">
+            <div class="show-left ub ub-ac" :class="showFlag ? 'is-show' : 'not-show'">
                 <el-tag
                     class="tags"
                     :key="index+'e'"
@@ -24,21 +24,21 @@
         <div class="bottom-box tree" v-if="showMore">
             <el-tabs v-model="activeName">
                 <el-tab-pane label="同事" name="first">
-                    <span slot="label" style="position: relative;">同事<span class="red-num">{{checkUsers.length}}</span></span>
+                    <span slot="label" style="position: relative">同事<span class="red-num">{{checkUsers.length}}</span></span>
                     <el-checkbox-group v-model="checkUsers">
-                        <el-checkbox v-for="(item,index) in usersList" :key="index" :label="JSON.stringify(item)" style="display: block;">{{item.chineseName}}</el-checkbox>
+                        <el-checkbox v-for="(item,index) in usersList" :key="index" :label="JSON.stringify(item)" style="display: block">{{item.chineseName}}</el-checkbox>
                     </el-checkbox-group>
                 </el-tab-pane>
                 <el-tab-pane label="部门" name="second">
-                    <span slot="label" style="position: relative;">部门<span class="red-num">{{checkDeps.length}}</span></span>
+                    <span slot="label" style="position: relative">部门<span class="red-num">{{checkDeps.length}}</span></span>
                     <el-checkbox-group v-model="checkDeps">
-                        <el-checkbox v-for="(item,index) in depList" :key="index + 'a'" :label="JSON.stringify(item)" style="display: block;">{{item.name}}</el-checkbox>
+                        <el-checkbox v-for="(item,index) in depList" :key="index + 'a'" :label="JSON.stringify(item)" style="display: block">{{item.name}}</el-checkbox>
                     </el-checkbox-group>
                 </el-tab-pane>
                 <el-tab-pane label="角色" name="third">
-                    <span slot="label" style="position: relative;">角色<span class="red-num">{{checkRoles.length}}</span></span>
+                    <span slot="label" style="position: relative">角色<span class="red-num">{{checkRoles.length}}</span></span>
                     <el-checkbox-group v-model="checkRoles">
-                        <el-checkbox v-for="(item,index) in rolesList" :key="index + 'b'" :label="JSON.stringify(item)" style="display: block;">{{item.roleName}}</el-checkbox>
+                        <el-checkbox v-for="(item,index) in rolesList" :key="index + 'b'" :label="JSON.stringify(item)" style="display: block">{{item.roleName}}</el-checkbox>
                     </el-checkbox-group>
                 </el-tab-pane>
             </el-tabs>
@@ -111,154 +111,155 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.tags {
-    margin-right: 5px;
-    margin-bottom: 4px;
+.tags{
+    margin-right:5px;
+    margin-bottom:4px;
     height: 26px;
     line-height: 26px;
     color: #909399;
     background-color: #f4f4f5;
 }
 .container {
-    position: relative;
     width: 100%;
+    position: relative;
 }
 .show-box {
-    height: 100%;
     min-height: 20px;
-    border: 1px solid #dddddd;
+    border: 1px solid #ddd;
     border-radius: 3px;
+    height: 100%;
     .show-right {
         width: 50px;
         height: 20px;
+
         &>div {
             width: 24px;
             height: 20px;
             line-height: 25px;
+
             & i {
-                font-size: 13px;
                 color: #1cd7fa;
+                font-size: 13px;
                 cursor: pointer;
-                &.arrow-up::before {
+
+                &.arrow-up:before {
                     display: inline-block;
                     transform: rotate(90deg);
                 }
-                &.arrow-down::before {
+                &.arrow-down:before {
                     display: inline-block;
                     transform: rotate(-90deg);
                 }
             }
         }
     }
+
     .show-left {
-        display: flex;
-        margin: 2px 5px 0;
         width: calc(100% - 50px);
+        display:flex;
         flex-wrap: wrap;
-        &::v-deep.el-tag {
+        margin:2px 5px 0 5px;
+        &::v-deep.el-tag{
             margin-left: 5px;
-            color: #909399;
             background-color: #f4f4f5;
+            color: #909399;
             & .el-tag__close {
                 color: #909399;
             }
+
             & .el-tag__close:hover {
-                color: #000000;
                 background-color: #909399;
+                color: #000;
             }
         }
     }
     .show-left.not-show {
-        overflow: hidden;
         height: 28px;
+        overflow: hidden;
     }
-    .show-left.is-show {overflow: hidden;
-        min-height: 28px;
+    .show-left.is-show {
+        min-height: 28px;overflow: hidden;
     }
 }
 .bottom-box {
-    position: absolute;
+    position:absolute;
+    width:100%;
     margin-top: 10px;
     padding-left: 10px;
-    width: 100%;
-    border: 1px solid #dddddd;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    background-color: #fff;
     // box-shadow: inset 0px 0px 7px 0px #389bf7;
     border-radius: 3px;
-    background-color: #ffffff;
-    box-sizing: border-box;
-    ::v-deep .el-tabs__item.is-active, ::v-deep.el-tabs__item:hover {
-        border: none;
+
+    ::v-deep .el-tabs__item.is-active, ::v-deep.el-tabs__item:hover{
         color: #387dee;
         opacity: 1;
+        border: none;
         box-shadow: none;
     }
     ::v-deep.el-tabs__active-bar {
         background-color: #387dee;
     }
     ::v-deep .el-tabs__item {
-        padding: 0 10px;
-        font-size: 12px;
         color: #387dee;
         opacity: 0.4;
+        font-size: 12px;
+        padding: 0 10px;
+
     }
     ::v-deep .el-tabs__nav-wrap::after {
-        background-color: #dddddd;
+        background-color: #ddd;
     }
     ::v-deep .el-tabs__content {
-        overflow-y: auto;
         max-height: 240px !important;
+        overflow-y: auto;
     }
     ::v-deep .red-num {
         position: absolute;
-        top: -10px;
-        left: 20px;
         width: 20px;
         height: 20px;
-        font-size: 12px;
-        border-radius: 50%;
         text-align: center;
-        color: #ffffff;
-        background: #ff3d3d;
+        font-size: 12px;
         line-height: 20px;
-    }
-}
-.custom-star {
-    .bottom-box {
-        background: transparent;
+        background: #ff3d3d;
+        color: #fff;
+        border-radius: 50%;
+        left: 20px;
+        top: -10px;
     }
 }
 .drop-box {
     -webkit-touch-callout: none;
-    user-select: none;
-    user-select: none;
-    user-select: none;
-    user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
 }
 
 </style>
 <style>
 .white-theme .user-drop .show-box {
-    border: 1px solid #c1c1c1 !important;
     box-shadow: none !important;
+    border: 1px solid #c1c1c1 !important;
 }
 .white-theme .user-drop.container {
     box-shadow: none !important;
-
-    /* border: 1px solid #c1c1c1 !important; */
+    /* border: 1px solid #c1c1c1 !important;*/
 }
 .white-theme .user-drop.container .bottom-box.tree {
-    border: 1px solid #c1c1c1 !important;
     box-shadow: none !important;
+    border: 1px solid #c1c1c1 !important;
 }
 .white-theme .user-drop .operate-color,
 .white-theme .show-box .show-right > div i {
     color: #3aa6e4 !important;
 }
 .white-theme .user-drop.drop-box .bottom-box {
-    background: #ffffff !important;
+    background: #fff !important;
 }
-.white-theme .user-drop.drop-box .el-tag .el-icon-close {
-    top: -3px !important;
+.white-theme .user-drop.drop-box .el-tag .el-icon-close{
+    top:-3px !important;
 }
 </style>

@@ -42,9 +42,9 @@
                 <el-main style="padding: 0;">
                     <div ref="canvas" class="canvas detail-box" />
                 </el-main>
-                <!-- <el-aside class="panel-wrapper">
+                <!--<el-aside class="panel-wrapper">
                     <panel v-if="modeler" :modeler="modeler" :users="users" :groups="groups" :categorys="categorys" />
-                </el-aside> -->
+                </el-aside>-->
             </el-container>
         </el-container>
         <el-dialog :visible.sync="xmlVisible" title="XML" :fullscreen="false" top="10vh">

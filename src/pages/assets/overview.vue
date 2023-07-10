@@ -1,24 +1,5 @@
 <template>
     <div class="event asset overview">
-        <el-form :model="searchForm" style="position:fixed;top:45px;right:15px;z-index:999">
-            <el-form-item label-width="80px" style="height: 32px">
-                <div class="treeselect">
-                    <Treeselect
-                        @input="inputChange"
-                        :appendToBody="true"
-                        size="small"
-                        style="width:300px;"
-                        :options="treeData"
-                        :normalizer="normalizer"
-                        noChildrenText="当前分支无子节点"
-                        noOptionsText="无可用选项"
-                        noResultsText="无可用选项"
-                        placeholder="请选择"
-                        v-model="searchForm.limits"
-                    />
-                </div>
-            </el-form-item>
-        </el-form>
         <div class="w100">
             <div class="event-content w100">
                 <div class="ub w100 num-statistic">
@@ -100,21 +81,21 @@
                     </div>
                     <div class="chart-box" style="width: calc(50% - 5px); padding-top:25px;">
                         <div class="ub ub-pj ub-ac w100 chart-top" style="padding:0 10px;box-sizing: border-box;">
-                            <div class="title">{{zone_assets_zw_type==0?'安全域资产分布':'业务系统分布'}}</div>
+                            <div class="title">{{zone_assets_zw_type==0?'安全域资产分布':'业务系统资产'}}</div>
                             <div class="ub ub-f1 ub-ac ub-pe" style="padding-right:5px;cursor: pointer;">
                                 <div><i style="font-size:13px;color:#0052d9;" class="el-icon-refresh"></i></div>
                                 <div class="table-type" @click="initAssetsZWTypeZone(0)" v-if="zone_assets_zw_type==1" style="font-size:12px;color:rgba(0,0,0,.9);line-height: 12px;margin-left: 5px;">安全域资产分布</div>
-                                <div class="table-type" @click="initAssetsZWTypeZone(1)" v-if="zone_assets_zw_type==0" style="font-size:12px;color:rgba(0,0,0,.9);line-height: 12px;margin-left: 5px;">业务系统分布</div>
+                                <div class="table-type" @click="initAssetsZWTypeZone(1)" v-if="zone_assets_zw_type==0" style="font-size:12px;color:rgba(0,0,0,.9);line-height: 12px;margin-left: 5px;">业务系统资产</div>
                             </div>
                         </div>
                         <div class="ub w100">
-                            <div v-loading="zone_assets_type_view_loading" style="width:55%;height:280px" :class="{'h320':assetsTypeViewDataZone.length>4}">
+                            <div v-loading="zone_assets_type_view_loading" style="width:50%;height:280px" :class="{'h320':assetsTypeViewDataZone.length>4}">
                                 <div v-if="zone_assets_type_view_data" class="ub ub-f1 ub-ac ub-pc" style="height:100%;color:#909399;font-size:16px; cursor: pointer;">
                                     暂无数据
                                 </div>
                                 <pie :chartData="assetsTypeViewDataZone" v-if="assetsTypeViewDataZone.length>0" type="2" />
                             </div>
-                            <div style="width:45%;">
+                            <div style="width:50%;">
                                 <div class="ub ub-ac table-top w100">
                                     <div class="ub ub-ac" style="margin-bottom:5px">
                                         <div v-if="zone_assets_zw_type==0" class="text">安全域资产总数</div>
@@ -123,11 +104,11 @@
                                     </div>
                                 </div>
                                 <el-table v-loading="zone_assets_type_view_loading" class="drill-table assets-view-table" :data="assetsTypeViewDataTableZone" style="width: 96%;margin-right:20px;">
-                                    <el-table-column type="index" label="序号" width="50">
+                                    <el-table-column type="index" label="序号" width="100">
                                     </el-table-column>
                                     <el-table-column show-overflow-tooltip prop="name" :label="zone_assets_zw_type==0?'安全域名称':'业务系统名称'">
                                     </el-table-column>
-                                    <el-table-column align="right" prop="value" :label="zone_assets_zw_type==0?'安全域数量':'联动资产数量'">
+                                    <el-table-column align="right" prop="value" :label="zone_assets_zw_type==0?'安全域数量':'业务系统数量'">
                                     </el-table-column>
                                 </el-table>
                                 <div class="table-type" @click="asset_zone(assetsTypeViewDataZone)" v-if="assetsTypeViewDataZone.length>7" style="color:rgba(0,0,0,.9);font-size:12px;line-height:40px;text-align: center;cursor: pointer;">更多>></div>
@@ -139,14 +120,12 @@
                 <div class="w100" style="margin-top:10px;">
                     <div class="chart-box border" style="width:100%;padding-top:40px;">
                         <div class="ub ub-pj ub-ac w100 chart-top" style="padding:0 10px;box-sizing: border-box;">
-                            <!-- <div class="title">{{loop_assets_zw_type==0?'漏洞资产TOP10':'情报资产TOP10'}}</div> -->
-                            <div class="title">漏洞资产TOP10</div>
-                            <!-- <div @click="loop_initAssetsZWType(0)" class="ub ub-f1 ub-ac ub-pe" style="padding-right:5px;cursor: pointer;">
+                            <div class="title">{{loop_assets_zw_type==0?'漏洞资产TOP10':'情报资产TOP10'}}</div>
+                            <div class="ub ub-f1 ub-ac ub-pe" style="padding-right:5px;cursor: pointer;">
                                 <div><i style="font-size:13px;color:#0052d9;" class="el-icon-refresh"></i></div>
                                 <div class="table-type" @click="loop_initAssetsZWType(0)" v-if="loop_assets_zw_type==1" style="font-size:12px;color:rgba(0,0,0,.9);line-height: 12px;margin-left: 5px;">漏洞资产TOP10</div>
                                 <div class="table-type" @click="loop_initAssetsZWType(1)" v-if="loop_assets_zw_type==0" style="font-size:12px;color:rgba(0,0,0,.9);line-height: 12px;margin-left: 5px;">情报资产TOP10</div>
-                                <div class="table-type" style="font-size:12px;color:rgba(0,0,0,.9);line-height: 12px;margin-left: 5px;">漏洞资产TOP10</div>
-                            </div> -->
+                            </div>
                         </div>
                         <div class="ub w100">
                             <div v-loading="loop_assets_type_view_loading" style="width:67%;height:320px;margin-right:3%">
@@ -171,12 +150,7 @@
                 <div class="w100 mb-1" style="margin-top:10px;">
                     <div class="chart-box border" style="width:100%;padding-top:40px;">
                         <div class="ub ub-pj ub-ac w100 chart-top" style="padding:0 10px;box-sizing: border-box;">
-                            <div class="title">事件资产TOP10</div>
-                            <div class="ub box ub-pc ub-ac mt-1">
-                                <div class="box-1" @click="pitch(1)" :class="[pitchOn == 1?'box-2':'']">近一天</div>
-                                <div class="box-1" @click="pitch(2)" :class="[pitchOn == 2?'box-2':'']">近七天</div>
-                                <div class="box-1" @click="pitch(3)" :class="[pitchOn == 3?'box-2':'']">全部</div>
-                            </div>
+                            <div class="title">{{alarm_assets_zw_type==0?'事件资产TOP10':'漏洞指纹'}}</div>
                         </div>
                         <div class="ub w100">
                             <div v-loading="alarm_assets_type_view_loading" style="width:67%;height:320px;margin-right:3%">
@@ -214,14 +188,14 @@
                 </el-table>
             </div>
         </el-dialog>
-        <el-dialog :title="zone_assets_zw_type==0?'安全域资产分布':'业务系统分布'" :visible.sync="asset_zone_dialog" width="700px" custom-class="common-dialog">
-            <div>
+        <el-dialog :title="zone_assets_zw_type==0?'安全域资产分布':'业务系统资产'" :visible.sync="asset_zone_dialog" width="700px" custom-class="common-dialog">
+            <div style="max-height: 600px;overflow-y: auto;">
                 <el-table class="drill-table" :data="assetsTypeViewDataTableZone_more" style="width: 96%;margin: 0 auto;">
                     <el-table-column type="index" label="序号" width="100">
                     </el-table-column>
                     <el-table-column show-overflow-tooltip prop="name" :label="zone_assets_zw_type==0?'安全域名称':'业务系统名称'">
                     </el-table-column>
-                    <el-table-column align="right" prop="value" :label="zone_assets_zw_type==0?'安全域数量':'联动资产数量'">
+                    <el-table-column align="right" prop="value" :label="zone_assets_zw_type==0?'安全域数量':'业务系统数量'">
                     </el-table-column>
                 </el-table>
             </div>
@@ -239,20 +213,13 @@ import {
     getLoopAssets,
     getAlarmAssets
 } from '../../server/assets/overview.js'
-import {
-    getTreeOrg
-} from '@/server/assets/api.js'
-import { get_dep } from '@/server/system/user.js'
 import pie from './charts/pie.vue'
 import bar from './charts/bar.vue'
-import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 export default {
     name: 'Overview',
     components: {
         pie,
-        bar,
-        Treeselect
+        bar
     },
     data() {
         return {
@@ -303,20 +270,7 @@ export default {
             alarm_assetsTypeViewData: [],
             alarm_assetsTypeViewDataTable: [],
             alarm_assets_type_view_loading: true,
-            alarm_assets_type_view_data: true,
-            treeData: [],
-            normalizer(node) {
-                return {
-                    id: node.id,
-                    label: node.name,
-                    children: node.children
-                }
-            },
-            searchForm: {
-                limits: null
-            },
-            pitchOn: 1,
-            organizationIds: []
+            alarm_assets_type_view_data: true
         }
     },
     mounted() {
@@ -326,54 +280,9 @@ export default {
             this.initAssetsZWTypeZone(this.zone_assets_zw_type)
             this.loop_initAssetsZWType(this.loop_assets_zw_type)
             this.alarm_initAssetsZWType(this.alarm_assets_zw_type)
-            // this.getDepData()
         })
     },
-    created() {
-        this.initTree()
-    },
     methods: {
-        inputChange() {
-            this.initDrillStatistic()
-            this.initAssetsZWType(this.assets_zw_type)
-            this.initAssetsZWTypeZone(this.zone_assets_zw_type)
-            this.loop_initAssetsZWType(this.loop_assets_zw_type)
-            this.alarm_initAssetsZWType(this.alarm_assets_zw_type)
-            console.log(this.searchForm, '权限')
-        },
-        initTree() {
-            let data = {
-                queryData: {},
-                paramsData: {}
-            }
-            getTreeOrg(data).then(res => {
-                console.log('tree', res)
-                // this.organizationIds = [res[0].id]
-                // this.searchForm.limits = res[0].id
-                this.treeData = res
-                console.log(this.organizationIds)
-            }).catch(error => {
-                console.log('error' + error)
-            })
-        },
-        pitch(value) {
-            this.pitchOn = value
-            this.alarm_initAssetsZWType()
-        },
-        getDepData() {
-            let data = {
-                queryData: {},
-                paramsData: {}
-            }
-            get_dep(data).then(res => {
-                this.treeData = res
-            }).catch(error => {
-                console.log('error' + error)
-            })
-        },
-        treeChange(value, instanceId) {
-            // if (!value) this.userForm.departmentId = null
-        },
         asset_zone(assetsTypeViewDataZone) {
             this.asset_zone_dialog = true
             this.assetsTypeViewDataTableZone_more = this.$deepCopy(assetsTypeViewDataZone)
@@ -385,9 +294,7 @@ export default {
         initDrillStatistic() {
             let data = {
                 queryData: {},
-                paramsData: {
-                    organizationIds: this.searchForm.limits != null ? [this.searchForm.limits] : []
-                }
+                paramsData: {}
             }
             getAssetsStatistic(data).then(res => {
                 console.log('演练统计', res)
@@ -412,8 +319,7 @@ export default {
             let data = {
                 queryData: {},
                 paramsData: {
-                    type: type,
-                    organizationIds: this.searchForm.limits != null ? [this.searchForm.limits] : []
+                    type: type
                 }
             }
             getAssetsZWType(data).then(res => {
@@ -450,8 +356,7 @@ export default {
             let data = {
                 queryData: {},
                 paramsData: {
-                    type: type,
-                    organizationIds: this.searchForm.limits != null ? [this.searchForm.limits] : []
+                    type: type
                 }
             }
             getAssetsZWTypeZone(data).then(res => {
@@ -485,8 +390,7 @@ export default {
             let data = {
                 queryData: {},
                 paramsData: {
-                    // type: type,
-                    organizationIds: this.searchForm.limits != null ? [this.searchForm.limits] : []
+                    type: type
                 }
             }
             getLoopAssets(data).then(res => {
@@ -516,10 +420,7 @@ export default {
             this.alarm_assetsTypeViewDataTable = []
             let data = {
                 queryData: {},
-                paramsData: {
-                    type: this.pitchOn,
-                    organizationIds: this.searchForm.limits != null ? [this.searchForm.limits] : []
-                }
+                paramsData: {}
             }
             getAlarmAssets(data).then(res => {
                 console.log('事件资产TOP10', res)
@@ -545,23 +446,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.box{
-    font-size:12px;
-    .box-1{
-        width:70px;
-        height:30px;
-        border:1px solid #D7D7D7;
-        text-align: center;
-        line-height:30px;
-        color:#999999;
-        cursor: pointer;
-    }
-    .box-2{
-        background: #0079fe;
-        color:#fff;
-        border:1px solid #0079fe;
-    }
-}
 
     $zero: #7efcfb;
     $one: #00c7ff;

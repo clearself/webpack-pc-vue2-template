@@ -38,7 +38,7 @@
                     :indent="indent">
                     <span class="custom-tree-node ub" slot-scope="{ node, data }" @mouseenter="mouseenter(data)" @mouseleave="mouseleave(data)">
                         <el-tooltip class="item" effect="dark" :content="node.label" placement="top" :open-delay="1000">
-                            <div class="node-label" style="color: #36373a; font-size: 12px;margin-right:5px;width:100px !important">{{
+                            <div class="node-label" style="color: #36373a; font-size: 12px;margin-right:5px;width:50px !important">{{
                                 node.label
                             }}</div>
                         </el-tooltip>
@@ -72,7 +72,6 @@
                             :normalizer="normalizer"
                             noChildrenText="当前分支无子节点"
                             noOptionsText="无可用选项"
-                            noResultsText="无可用选项"
                             placeholder="请选择"
                             v-model="addForm.parentId"
                         />
@@ -179,9 +178,7 @@ export default {
                 queryData: {},
                 paramsData: {
                     name: this.addForm.name,
-                    parentId: this.addForm.parentId,
-                    originType: 2,
-                    chartType: ''
+                    parentId: this.addForm.parentId
                 }
             }
             saveSearchTypeChart(obj).then(res => {
@@ -209,9 +206,7 @@ export default {
                 paramsData: {
                     id: this.addForm.id,
                     name: this.addForm.name,
-                    parentId: this.addForm.parentId,
-                    originType: 1,
-                    chartType: ''
+                    parentId: this.addForm.parentId
                 }
             }
             saveSearchTypeChart(obj).then(res => {
@@ -277,10 +272,7 @@ export default {
             // this.treeData = []
             let data = {
                 queryData: {},
-                paramsData: {
-                    originType: 2,
-                    chartType: ''
-                }
+                paramsData: {}
             }
             findSearchTypeChart(data)
                 .then(res => {
@@ -341,7 +333,7 @@ export default {
         },
         delNode(val) {
             this.delDialog = true
-            console.log(this.currentNode)
+            console.log(val)
         },
         handleDel() {
             let data = {

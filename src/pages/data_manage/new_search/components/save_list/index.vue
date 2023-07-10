@@ -24,7 +24,7 @@
                                     <el-dropdown-item command="1">导出excel</el-dropdown-item>
                                 </el-dropdown-menu>
                             </el-dropdown>
-                            <el-button icon="el-icon-delete" type="danger" size="small" @click="handleClearAllDialog = true">清空列表</el-button>
+                            <el-button icon="el-icon-delete" type="danger" size="small" @click="handleClearAll">清空列表</el-button>
                         </div>
                     </div>
                     <div class="drawer-pad">
@@ -236,13 +236,6 @@
                 <el-button size="small" type="primary" @click="createAllTaskConfim">确认</el-button>
             </span>
         </el-dialog>
-        <el-dialog title="提示" :visible.sync="handleClearAllDialog" width="30%" custom-class="attendance-dialog">
-            <span>确定清空列表吗？</span>
-            <span slot="footer" class="dialog-footer">
-                <el-button size="small" @click="handleClearAllDialog = false">取消</el-button>
-                <el-button size="small" type="primary" @click="handleClearAll">确认</el-button>
-            </span>
-        </el-dialog>
         <el-dialog title="提示" :visible.sync="createTaskDialog" width="30%" custom-class="attendance-dialog">
             <span>确定创建PCAP包任务吗？</span>
             <span slot="footer" class="dialog-footer">
@@ -348,7 +341,6 @@ export default {
     },
     data() {
         return {
-            handleClearAllDialog: false,
             tableHeight: document.body.clientHeight - 310,
             totalData: 0,
             emptyData: true,
@@ -859,7 +851,6 @@ export default {
             }
             clearStashFields(data).then(res => {
                 this.$message.success('操作成功！')
-                this.handleClearAllDialog = false
                 setTimeout(() => {
                     this.tableData = []
                     // this.get_data()

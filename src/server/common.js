@@ -32,12 +32,4 @@ export const get_time = (data) => {
         data: data.paramsData
     })
 }
-// 查询仪表盘是否有默认
-export const searchDefault = (data) => {
-    return request({
-        url: 'dashboard/manage/dashboard/searchDefault',
-        method: 'post',
-        params: data.queryData,
-        data: data.paramsData
-    })
-}
+

@@ -1,6 +1,6 @@
 <template>
     <el-dialog custom-class="common-dialog" width="700px" title="查看用户" :visible.sync="dialogVisible" :before-close="cancel">
-        <el-descriptions class="margin-top" size="mini" border :column="1" label-class-name="des-label">
+        <el-descriptions class="margin-top" size="mini" border :column="1">
             <el-descriptions-item labelClassName="common-label" label="用户名">
                 {{ userForm.username | noneData }}
             </el-descriptions-item>
@@ -78,10 +78,16 @@ export default {
             switch (val) {
                 case 0:
                     return '启用'
+                    // eslint-disable-next-line no-unreachable
+                    break
                 case 2:
                     return '禁用'
+                    // eslint-disable-next-line no-unreachable
+                    break
                 default:
                     return '--'
+                    // eslint-disable-next-line no-unreachable
+                    break
             }
         }
     },
@@ -130,12 +136,5 @@ $blue: #387DEE;
 }
 .common-dialog ::v-deep .common-label {
     width: 100px;
-}
-</style>
-<style>
-#app .el-descriptions .is-bordered .el-descriptions-item__cell {
-    border: solid 1px #1cd7fa !important;
-    background-color: #052942;
-    color: #fff;
 }
 </style>

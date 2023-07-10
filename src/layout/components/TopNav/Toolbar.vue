@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { exit, ssoloading } from '@/server/login/index.js'
+import { exit } from '@/server/login/index.js'
 export default {
     name: 'Toolbar',
     data() {
@@ -43,40 +43,17 @@ export default {
             this.$eventBus.$emit('passwordShow')
         },
         handleCommand(command) {
-            let data = {
-                queryData: {},
-                paramsData: {}
-            }
-            if (command === 'exit' && this.$getlocalStorage('project') == '1') {
-                ssoloading(data).then(res => {
-                    if (res == null) {
-                        exit({}).then(res => {
-                            this.$removesessionStorage('currentPath')
-                            this.$router.push({
-                                name: 'login'
-                            })
-                        }).catch(error => {
-                            console.log('error', error)
+            if (command === 'exit') {
+                exit({})
+                    .then((res) => {
+                        this.$removesessionStorage('currentPath')
+                        this.$router.push({
+                            name: 'login'
                         })
-                    } else {
-                        exit({}).then(res => {
-                            this.$removesessionStorage('currentPath')
-                        }).catch(error => {
-                            console.log('error', error)
-                        })
-                        window.location.href = '/api/base-server/sso/clean'
-                    }
-                    console.log(res)
-                })
-            } else {
-                exit({}).then(res => {
-                    this.$removesessionStorage('currentPath')
-                    this.$router.push({
-                        name: 'login'
                     })
-                }).catch(error => {
-                    console.log('error', error)
-                })
+                    .catch((error) => {
+                        console.log('error', error)
+                    })
             }
         },
         openDrawer() {
@@ -96,14 +73,14 @@ export default {
     }
 
     @include themeify {
-        color: themed('top-nav-tool-font-color');
+        color: themed("top-nav-tool-font-color");
     }
     i {
         font-size: 16px;
     }
     &.settings {
         @include themeify {
-            color: themed('top-nav-tool-high-color');
+            color: themed("top-nav-tool-high-color");
         }
     }
     &.user {
@@ -112,18 +89,16 @@ export default {
             cursor: pointer;
             font-size: 12px;
             line-height: 22px;
-            @include themeify {
-                color: themed('el-dropdown-link-color');
-            }
+            color: rgba(0, 0, 0, 0.9);
         }
         .el-icon-arrow-down {
             font-size: 12px;
         }
     }
 }
-.el-dropdown-menu__item {
-    line-height: 30px;
-    padding: 0 10px;
-    font-size: 12px;
-}
+ .el-dropdown-menu__item {
+            line-height: 30px;
+            padding: 0 10px;
+            font-size: 12px;
+        }
 </style>

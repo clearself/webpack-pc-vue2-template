@@ -1,6 +1,7 @@
 
 import router from '../../router'
 const elementResizeDetectorMaker = require('element-resize-detector')// 引入监听dom变化的组件
+import _ from 'lodash'
 import {
     getTime,
     isClick,
@@ -24,11 +25,7 @@ import {
     flatten,
     treeData,
     getAllButtons,
-    uuid,
-    color16,
-    toHump,
-    toLine,
-    scrollHide
+    uuid
 } from './public_fun.js'
 export default {
     version: '0.0.1',
@@ -49,10 +46,6 @@ export default {
         Vue.prototype.$treeData = treeData;
         Vue.prototype.$getAllButtons = getAllButtons;
         Vue.prototype.$uuid = uuid;
-        Vue.prototype.$color16 = color16
-        Vue.prototype.$toHump = toHump
-        Vue.prototype.$toLine = toLine
-        
 
 
 
@@ -109,7 +102,7 @@ export default {
             })
         };
         Vue.prototype.$resizeEcharts = (echart, myChart) => {
-      
+
             const erd = elementResizeDetectorMaker()
             // 监听id为echart的元素 大小变化
             erd.listenTo(echart, function(element) {
@@ -131,5 +124,11 @@ export default {
             }
             return num;
         }
+        Vue.prototype.$fakeDelay = (time) => {
+            return new Promise(resolve => {
+                setTimeout(resolve, time)
+            })
+        }
+        Vue.prototype.$_ = _
     },
 }

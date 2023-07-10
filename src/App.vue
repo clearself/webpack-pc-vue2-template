@@ -29,8 +29,6 @@ export default {
     },
     created() {
         console.log('created')
-        // 判断是不是中铝项目
-        this.$setlocalStorage('project', '0')
         let initInfo = this.$getlocalStorage('initInfo')
         if (initInfo?.theme?.systemName) {
             document.title = initInfo.theme.systemName
@@ -77,12 +75,5 @@ html,body {
     @include themeify {
         background: themed('page-bg');
     }
-}
-.custom-star #app {
-    background: none!important;
-    background-image: url(./assets/img/custom_star/start_bg.jpg)!important;
-    background-position: center!important;
-    background-repeat: no-repeat!important;
-    background-size: cover!important;
 }
 </style>

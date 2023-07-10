@@ -1,6 +1,6 @@
 <template>
     <div class="list">
-        <SearchTop @search="searchCheck" @reset="reset" style="border-top-left-radius: 0;border-top-right-radius: 0;box-shadow: none;">
+        <SearchTop @search="searchCheck" @reset="reset" style="border-top-left-radius:0;border-top-right-radius:0;box-shadow:none">
             <el-col :md="12" :lg="8" :xl="6">
                 <el-form :model="get_params">
                     <el-form-item label="配置名称：" label-width="90px">
@@ -20,7 +20,7 @@
                             v-model="get_params.createUser"
                             filterable
                             placeholder="请选择"
-                            style="width: 100%;"
+                            style="width: 100%"
                             size="small"
                             clearable>
                             <el-option
@@ -94,7 +94,7 @@
                 </el-table-column>
 
             </el-table>
-            <pagination :total="total_num" :page.sync="get_params.page" :limit.sync="get_params.size"  style="padding-top: 10px;" @pagination="get_data" v-show="total_num>0"/>
+            <pagination :total="total_num" :page.sync="get_params.page" :limit.sync="get_params.size"  style="padding-top:10px" @pagination="get_data" v-show="total_num>0"/>
         </div>
 
         <!--增加对象-->
@@ -113,7 +113,7 @@
                         size="small"></el-input>
                 </el-form-item>
                 <el-form-item label="配置动作：" prop="type" :label-width="formLabelWidth">
-                    <el-select style="width: 100%;" size="small" clearable v-model="addForm.type" filterable placeholder="请选择">
+                    <el-select style="width: 100%" size="small" clearable v-model="addForm.type" filterable placeholder="请选择">
                         <el-option label="事件提示语" value="0"></el-option>
                         <el-option label="发送syslog" value="1"></el-option>
                     </el-select>
@@ -123,15 +123,15 @@
                         <div class="left-condition">AND</div>
                         <div class="ub ub-ver">
                             <div class="part-condition" v-for="(_item, _index) in addForm.rules" :key="_index">
-                                <el-select filterable clearable v-model="_item.field" size="mini" style="width: 100px;" placeholder="请选择" @change="()=>{_item.val = ''}">
+                                <el-select filterable clearable v-model="_item.field" size="mini" style="width: 100px" placeholder="请选择" @change="()=>{_item.val = ''}">
                                     <el-option v-for="(item, index) in fieldsList" :key="index" :label="item.label" :value="item.value"></el-option>
                                 </el-select>
-                                <span style="color: #dddddd;"> — </span>
-                                <el-select filterable clearable v-model="_item.condition" size="mini" style="margin: 0;width: 100px;" placeholder="请选择" @change="_item.val=''">
+                                <span style="color:#dddddd"> — </span>
+                                <el-select filterable clearable v-model="_item.condition" size="mini" style="margin: 0 0px;width: 100px" placeholder="请选择" @change="_item.val=''">
                                     <el-option v-for="(item, index) in conditionList" :key="index" :label="item.name" :value="item.value"></el-option>
                                 </el-select>
-                                <span style="color: #dddddd;"> — </span>
-                                <el-input v-if="showValue(_item) === 'text'&&(_item.condition!=4&&_item.condition!=5)" v-model="_item.val" clearable size="mini" style="width: 280px;" placeholder="请输入"></el-input>
+                                <span style="color:#dddddd"> — </span>
+                                <el-input v-if="showValue(_item) === 'text'&&(_item.condition!=4&&_item.condition!=5)" v-model="_item.val" clearable size="mini" style="width: 280px" placeholder="请输入"></el-input>
                                 <el-select v-if="showValue(_item) === 'select'&&(_item.condition!=4&&_item.condition!=5)"  placeholder="请选择" style="width: 280px;" v-model="_item.val" size="mini">
                                     <el-option v-for="(tag,_index) in _item.item" :label="tag.value" :value="tag.key" :key="_index"></el-option>
                                 </el-select>
@@ -139,8 +139,8 @@
                                     @click.stop="deleteOneRule(_index)"
                                     v-if="_index != 0"
                                     class="el-icon-remove-outline"
-                                    style="margin-left: 10px;font-size: 14px;color: #ff0000;cursor: pointer;"></i>
-                                <i class="el-icon-circle-plus-outline" style="margin-left: 10px;font-size: 14px;color: #266fe8;cursor: pointer;" @click="addOneRule" v-if="_index == addForm.rules.length -1"></i>
+                                    style="cursor: pointer;font-size:14px;color:#ff0000;margin-left:10px"></i>
+                                <i class="el-icon-circle-plus-outline" style="font-size:14px;color:#266fe8;margin-left:10px;cursor: pointer" @click="addOneRule" v-if="_index == addForm.rules.length -1"></i>
                             </div>
                             <!-- <p class="del-btn">
                                 <i class="el-icon-circle-plus-outline" style="font-size:14px;color:#266fe8;margin-left:10px" @click="addOneRule"></i>
@@ -149,10 +149,10 @@
                     </div>
                 </el-form-item>
                 <el-form-item v-if="addForm.type !== '' && addForm.type == 0" key="a" label="提示语：" prop="warn" :label-width="formLabelWidth">
-                    <el-select style="width: 100%;" size="small" clearable v-model="addForm.warn" filterable placeholder="请选择">
+                    <el-select style="width: 100%" size="small" clearable v-model="addForm.warn" filterable placeholder="请选择">
                         <el-option v-for="(item,index) in soundList" :key="index" :label="item.label" :value="item.value">
-                            <span style="float: left;">{{ item.label }}</span>
-                            <span @click.stop="listenMisuc(item)" style="float: right; font-size: 12px; color: #3aa6e4;">试听</span>
+                            <span style="float: left">{{ item.label }}</span>
+                            <span @click.stop="listenMisuc(item)" style="float: right; color: #3aa6e4; font-size: 12px">试听</span>
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -184,7 +184,7 @@
                         size="small"></el-input>
                 </el-form-item>
                 <el-form-item label="配置动作：" prop="type" :label-width="formLabelWidth">
-                    <el-select style="width: 100%;" size="small" clearable v-model="editForm.type" filterable placeholder="请选择">
+                    <el-select style="width: 100%" size="small" clearable v-model="editForm.type" filterable placeholder="请选择">
                         <el-option label="事件提示语" value="0"></el-option>
                         <el-option label="发送syslog" value="1"></el-option>
                     </el-select>
@@ -194,16 +194,16 @@
                         <div class="left-condition">AND</div>
                         <div class="ub ub-ver">
                             <div class="part-condition" v-for="(_item, _index) in editForm.rules" :key="_index">
-                                <el-select filterable clearable v-model="_item.field" size="mini" style="width: 100px;" placeholder="请选择"  @change="()=>{_item.val = ''}">
+                                <el-select filterable clearable v-model="_item.field" size="mini" style="width: 100px" placeholder="请选择"  @change="()=>{_item.val = ''}">
                                     <el-option v-for="(item, index) in fieldsList" :key="index" :label="item.label" :value="item.value"></el-option>
                                 </el-select>
-                                <span style="margin: 0 3px;color: #dddddd;">—</span>
-                                <el-select filterable clearable v-model="_item.condition" size="mini" style="margin: 0;width: 100px;" placeholder="请选择" @change="_item.val=''">
+                                <span style="margin:0 3px;color:#ddd">—</span>
+                                <el-select filterable clearable v-model="_item.condition" size="mini" style="margin: 0;width: 100px" placeholder="请选择" @change="_item.val=''">
                                     <el-option v-for="(item, index) in conditionList" :key="index" :label="item.name" :value="item.value"></el-option>
                                 </el-select>
-                                <span v-if="showValue(_item) === 'text'&&(_item.condition!=4&&_item.condition!=5)" style="margin: 0 3px;color: #dddddd;">—</span>
-                                <el-input v-if="showValue(_item) === 'text'&&(_item.condition!=4&&_item.condition!=5)" v-model="_item.val" clearable size="mini" style="width: 280px;" placeholder="请输入"></el-input>
-                                <span v-if="showValue(_item) === 'select'&&(_item.condition!=4&&_item.condition!=5)" style="margin: 0 3px;color: #dddddd;">—</span>
+                                <span v-if="showValue(_item) === 'text'&&(_item.condition!=4&&_item.condition!=5)" style="margin:0 3px;color:#ddd">—</span>
+                                <el-input v-if="showValue(_item) === 'text'&&(_item.condition!=4&&_item.condition!=5)" v-model="_item.val" clearable size="mini" style="width: 280px" placeholder="请输入"></el-input>
+                                <span v-if="showValue(_item) === 'select'&&(_item.condition!=4&&_item.condition!=5)" style="margin:0 3px;color:#ddd">—</span>
                                 <el-select v-if="showValue(_item) === 'select'&&(_item.condition!=4&&_item.condition!=5)"  placeholder="请选择" style="width: 280px;" v-model="_item.val" size="mini">
                                     <el-option v-for="(tag,_index) in _item.item" :label="tag.value" :value="tag.key" :key="_index"></el-option>
                                 </el-select>
@@ -211,8 +211,8 @@
                                     @click.stop="deleteOneRuleEdit(_index)"
                                     v-if="_index != 0"
                                     class="el-icon-remove-outline"
-                                    style="margin-left: 10px;font-size: 14px;color: #ff0000;cursor: pointer;"></i>
-                                <i class="el-icon-circle-plus-outline" style="margin-left: 10px;font-size: 14px;color: #266fe8;cursor: pointer;" @click="addOneRuleEdit" v-if="_index == editForm.rules.length -1"></i>
+                                    style="cursor: pointer;font-size:14px;color:#ff0000;margin-left:10px"></i>
+                                <i class="el-icon-circle-plus-outline" style="font-size:14px;color:#266fe8;margin-left:10px;cursor: pointer" @click="addOneRuleEdit" v-if="_index == editForm.rules.length -1"></i>
                             </div>
                             <!-- <p class="del-btn">
                                 <i class="el-icon-circle-plus-outline" style="font-size:14px;color:#266fe8;margin-left:10px" @click="addOneRuleEdit"></i>
@@ -221,10 +221,10 @@
                     </div>
                 </el-form-item>
                 <el-form-item v-if="editForm.type !== '' && editForm.type == 0" key="aa" label="提示语：" prop="warn" :label-width="formLabelWidth">
-                    <el-select style="width: 100%;" size="small" clearable v-model="editForm.warn" filterable placeholder="请选择">
+                    <el-select style="width: 100%" size="small" clearable v-model="editForm.warn" filterable placeholder="请选择">
                         <el-option v-for="(item,index) in soundList" :key="index" :label="item.label" :value="item.value">
-                            <span style="float: left;">{{ item.label }}</span>
-                            <span @click.stop="listenMisuc(item)" style="float: right; font-size: 12px; color: #3aa6e4;">试听</span>
+                            <span style="float: left">{{ item.label }}</span>
+                            <span @click.stop="listenMisuc(item)" style="float: right; color: #3aa6e4; font-size: 12px">试听</span>
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -749,9 +749,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.riqi {
-    ::v-deep .el-range-input {
-        font-size: 12px !important;
+.riqi{
+    ::v-deep .el-range-input{
+        font-size:12px !important;
     }
 }
 .el-input.ips {
@@ -769,38 +769,43 @@ export default {
     position: relative;
     padding: 0 20px;
     color: #1cd7fa;
+
     .el-button {
         position: absolute;
-        top: 0;
         right: 20px;
+        top: 0;
         padding: 0;
         color: #1cd7fa;
     }
 }
 .domain-list {
+    background: rgba(0, 0, 0, .3);
     margin: 3px 0 20px;
     padding: 20px 0 1px;
-    background: rgb(0 0 0 / 30%);
+
     .list-tit {
         width: 100px;
         text-align: right;
     }
+
     .ub {
         margin-bottom: 20px;
     }
+
     .list-btn {
         padding-left: 20px;
+
         .el-button {
-            color: #f56c6c;
+            color: #F56C6C;
         }
     }
 }
 .event  ::v-deep  .el-range-input {
-    color: #ffffff;
-    background-color: rgb(0 0 0 / 0%);
+    background-color: rgba(0, 0, 0, 0);
+    color: #fff;
 }
 .event  ::v-deep  .el-range-separator {
-    color: #ffffff;
+    color: #fff;
 }
 .event  ::v-deep  .el-radio {
     margin: 0 150px 0 30px;
@@ -809,28 +814,31 @@ export default {
     padding: 0;
 }
 .event  ::v-deep  .el-upload-list__item-name {
-    color: #01e9ff;
+    color: #01E9FF;
+
     i {
-        color: #01e9ff;
+        color: #01E9FF;
     }
 }
 .rule-condition {
-    margin-top: 0;
+    margin-top: 0px;
     padding: 10px;
     box-sizing: border-box;
     flex-wrap: wrap;
-    border: 1px solid rgb(0 0 0 / 10%);
+    border: 1px solid rgba(0,0,0,.1);
     border-radius: 4px;
-    background-color: rgb(56 125 238 / 2%);
+    background-color:rgba(56, 125, 238, 0.02);
+
 }
 .part-condition {
     margin-top: 10px;
 }
 .left-condition {
-    margin-top: 5px;
+    font-size: 12px;
     margin-right: 20px;
+    margin-top: 5px;
     width: 30px;
     height: 100%;
-    font-size: 12px;
+
 }
 </style>

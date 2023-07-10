@@ -6,74 +6,74 @@
                     <div class="work-btn" :class="{ 'tab-active': activeTabName === 'one' }">任务详情</div>
                     <div class="draft-btn" :class="{ 'tab-active': activeTabName === 'two' }">流程图</div>
                 </div>
-                <div class="ub ub-pj w100" style="padding: 20px;">
-                    <div class="text-name">{{ workTaskInfo.workOrderName }}</div>
+                <div class="ub ub-pj w100" style="padding:20px">
+                    <div>{{ workTaskInfo.workOrderName }}</div>
                     <div><el-button @click="back" size="small">返回</el-button></div>
                 </div>
                 <div style="padding: 0 20px 20px;" v-if="activeTabName === 'one'">
                     <div class="info-title">基本信息</div>
                     <div>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">工单编号：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ workTaskInfo.workOrderId | NullStr }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">工单名称：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ workTaskInfo.workOrderName | NullStr }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">工单类型：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ workTaskInfo.workOrderObjectName | NullStr }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">优先级：</div>
                                 <div class="ub ub-f1 line1 label-val">
-                                    <span v-if="workTaskInfo.level == 1" style="color: #ff0000;">{{ workTaskInfo.level | getLevel }}</span>
-                                    <span v-else-if="workTaskInfo.level == 2" style="color: #ffdd00;">{{ workTaskInfo.level | getLevel }}</span>
-                                    <span v-else style="color: #00e1fd;">{{ workTaskInfo.level | getLevel }}</span>
+                                    <span v-if="workTaskInfo.level == 1" style="color:#ff0000;">{{ workTaskInfo.level | getLevel }}</span>
+                                    <span v-else-if="workTaskInfo.level == 2" style="color:#ffdd00;">{{ workTaskInfo.level | getLevel }}</span>
+                                    <span v-else style="color:#00e1fd;">{{ workTaskInfo.level | getLevel }}</span>
                                 </div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">工单状态：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ workTaskInfo.status | getTaskStatus }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">待办节点：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ workTaskInfo.runningNodeName | getRunningNodeName }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">待办节点状态：</div>
                                 <div class="ub ub-f1 line1 label-val">
-                                    <span v-if="workTaskInfo.currentNodeStatus === '待处理'" style="color: #ffba00;">{{ workTaskInfo.currentNodeStatus }}</span>
-                                    <span v-if="workTaskInfo.currentNodeStatus === '已超时'" style="color: #ff00e4;">{{ workTaskInfo.currentNodeStatus }}</span>
-                                    <span v-if="workTaskInfo.currentNodeStatus === '已撤销'" style="color: #cccccc;">{{ workTaskInfo.currentNodeStatus }}</span>
-                                    <span v-if="workTaskInfo.currentNodeStatus === '已完成'" style="color: lightgreen;">{{ workTaskInfo.currentNodeStatus }}</span>
+                                    <span v-if="workTaskInfo.currentNodeStatus === '待处理'" style="color:#ffba00;">{{ workTaskInfo.currentNodeStatus }}</span>
+                                    <span v-if="workTaskInfo.currentNodeStatus === '已超时'" style="color:#ff00e4;">{{ workTaskInfo.currentNodeStatus }}</span>
+                                    <span v-if="workTaskInfo.currentNodeStatus === '已撤销'" style="color:#ccc;">{{ workTaskInfo.currentNodeStatus }}</span>
+                                    <span v-if="workTaskInfo.currentNodeStatus === '已完成'" style="color:lightgreen;">{{ workTaskInfo.currentNodeStatus }}</span>
                                 </div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">创建人：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ workTaskInfo.createUser | NullStr }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">创建时间：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ workTaskInfo.createTime | NullStr }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">待办节点处理人：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ workTaskInfo.players | NullStr }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 100%;">
+                            <div class="ub" style="width:100%;">
                                 <div class="label">工单描述：</div>
                                 <div class="ub ub-f1 ub-ver label-val" v-html="workTaskInfo.workOrderContent"></div>
                             </div>
@@ -82,49 +82,49 @@
                     <div v-if="workTaskInfo.workOrderObject == 1" style="margin-top: 18px;" class="info-title">事件详情</div>
                     <div v-if="workTaskInfo.workOrderObject == 1">
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">事件名称：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ alarmInfo.reportName | NullStr }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">时间等级：</div>
                                 <div class="ub ub-f1 line1 label-val">
-                                    <span v-if="alarmInfo.reportLevel == 0" style="color: #00bcd4;">{{ alarmInfo.reportLevel | getrePortLevel }}</span>
-                                    <span v-if="alarmInfo.reportLevel == 1" style="color: #00c7ff;">{{ alarmInfo.reportLevel | getrePortLevel }}</span>
-                                    <span v-if="alarmInfo.reportLevel == 2" style="color: #f2cd00;">{{ alarmInfo.reportLevel | getrePortLevel }}</span>
-                                    <span v-if="alarmInfo.reportLevel == 3" style="color: #fc7f00;">{{ alarmInfo.reportLevel | getrePortLevel }}</span>
-                                    <span v-if="alarmInfo.reportLevel == 4" style="color: #fd0001;">{{ alarmInfo.reportLevel | getrePortLevel }}</span>
+                                    <span v-if="alarmInfo.reportLevel == 0" style="color:#00bcd4">{{ alarmInfo.reportLevel | getrePortLevel }}</span>
+                                    <span v-if="alarmInfo.reportLevel == 1" style="color:#00c7ff">{{ alarmInfo.reportLevel | getrePortLevel }}</span>
+                                    <span v-if="alarmInfo.reportLevel == 2" style="color:#f2cd00">{{ alarmInfo.reportLevel | getrePortLevel }}</span>
+                                    <span v-if="alarmInfo.reportLevel == 3" style="color:#fc7f00">{{ alarmInfo.reportLevel | getrePortLevel }}</span>
+                                    <span v-if="alarmInfo.reportLevel == 4" style="color:#fd0001">{{ alarmInfo.reportLevel | getrePortLevel }}</span>
                                     <span v-if="!alarmInfo.reportLevel && alarmInfo.reportLevel != 0">--</span>
                                 </div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">事件类型：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ alarmInfo.reportTypeName | NullStr }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">事件状态：</div>
                                 <div class="ub ub-f1 line1 label-val">
-                                    <span v-if="alarmInfo.reportStatus == 0" style="color: #ffdd00;">{{ alarmInfo.reportStatus | getreportStatus }}</span>
-                                    <span v-if="alarmInfo.reportStatus == 1" style="color: #01ff01;">{{ alarmInfo.reportStatus | getreportStatus }}</span>
-                                    <span v-if="alarmInfo.reportStatus == 2" style="color: #00e1fd;">{{ alarmInfo.reportStatus | getreportStatus }}</span>
-                                    <span v-if="alarmInfo.reportStatus == 3" style="color: #fd0001;">{{ alarmInfo.reportStatus | getreportStatus }}</span>
+                                    <span v-if="alarmInfo.reportStatus == 0" style="color:#ffdd00">{{ alarmInfo.reportStatus | getreportStatus }}</span>
+                                    <span v-if="alarmInfo.reportStatus == 1" style="color:#01ff01">{{ alarmInfo.reportStatus | getreportStatus }}</span>
+                                    <span v-if="alarmInfo.reportStatus == 2" style="color:#00e1fd">{{ alarmInfo.reportStatus | getreportStatus }}</span>
+                                    <span v-if="alarmInfo.reportStatus == 3" style="color:#fd0001">{{ alarmInfo.reportStatus | getreportStatus }}</span>
                                     <span v-if="!alarmInfo.reportStatus && alarmInfo.reportStatus != 0">--</span>
                                 </div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">攻击源头IP：</div>
                                 <el-popover v-if="alarmInfo.srcIp" popper-class="add-search-order" placement="bottom" title="" trigger="click">
                                     <div>
                                         <p @click="jumpAsset(alarmInfo.srcIp)" class="ub ub-ac click-btn">
-                                            <i class="iconfont icon-chaxunzichan" style="font-size: 12px;"></i>
+                                            <i class="iconfont icon-chaxunzichan" style="font-size:12px"></i>
                                             <span>查询资产</span>
                                         </p>
-                                        <p style="margin-top: 10px;" @click="jumpThreat(alarmInfo.srcIp)" class="ub ub-ac click-btn">
-                                            <i class="iconfont icon-chaxunqingbao" style="font-size: 12px;"></i>
+                                        <p style="margin-top:10px" @click="jumpThreat(alarmInfo.srcIp)" class="ub ub-ac click-btn">
+                                            <i class="iconfont icon-chaxunqingbao" style="font-size:12px"></i>
                                             <span>查询情报</span>
                                         </p>
                                     </div>
@@ -137,26 +137,9 @@
                                                     { type: '安全', color: '#00ff48' },
                                                     { type: '恶意', color: '#ff0000' },
                                                     { type: '未知', color: '#7c7c7c' }
-                                                ].filter(co => co.type == alarmInfo.srcIpVenusIsSpite)[0].color
-                                            }"
-                                            :title="'VenusEye：'+alarmInfo.srcIpVenusIsSpite"
-                                            :class="{
-                                                'icon-liebiaonei-anquan': alarmInfo.srcIpVenusIsSpite == '安全',
-                                                'icon-liebiaonei-buanquan': alarmInfo.srcIpVenusIsSpite == '恶意',
-                                                'icon-liebiaonei-weizhi': alarmInfo.srcIpVenusIsSpite == '未知'
-                                            }"
-                                        ></i>
-                                        <i
-                                            v-if="alarmInfo.srcIpIsSpite != '内网'"
-                                            class="iconfont"
-                                            :style="{
-                                                color: [
-                                                    { type: '安全', color: '#00ff48' },
-                                                    { type: '恶意', color: '#ff0000' },
-                                                    { type: '未知', color: '#7c7c7c' }
                                                 ].filter(co => co.type == alarmInfo.srcIpIsSpite)[0].color
                                             }"
-                                            :title="'微步：'+alarmInfo.srcIpIsSpite"
+                                            :title="alarmInfo.srcIpIsSpite"
                                             :class="{
                                                 'icon-liebiaonei-anquan': alarmInfo.srcIpIsSpite == '安全',
                                                 'icon-liebiaonei-buanquan': alarmInfo.srcIpIsSpite == '恶意',
@@ -170,43 +153,26 @@
                                     {{ alarmInfo.srcIp | NullStr }}
                                 </div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">攻击源端口：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ alarmInfo.srcPort | NullStr }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">目的IP：</div>
                                 <el-popover v-if="alarmInfo.desIp" popper-class="add-search-order" placement="bottom" title="" trigger="click">
                                     <div>
                                         <p @click="jumpAsset(alarmInfo.desIp)" class="ub ub-ac click-btn">
-                                            <i class="iconfont icon-chaxunzichan" style="font-size: 12px;"></i>
+                                            <i class="iconfont icon-chaxunzichan" style="font-size:12px"></i>
                                             <span>查询资产</span>
                                         </p>
-                                        <p style="margin-top: 10px;" @click="jumpThreat(alarmInfo.desIp)" class="ub ub-ac click-btn">
-                                            <i class="iconfont icon-chaxunqingbao" style="font-size: 12px;"></i>
+                                        <p style="margin-top:10px" @click="jumpThreat(alarmInfo.desIp)" class="ub ub-ac click-btn">
+                                            <i class="iconfont icon-chaxunqingbao" style="font-size:12px"></i>
                                             <span>查询情报</span>
                                         </p>
                                     </div>
                                     <div slot="reference" class="ub ub-f1 line1 label-val" style="cursor: pointer; text-decoration: underline; color: #03a5dd;">
-                                        <i
-                                            v-if="alarmInfo.desIpVenusIsSpite != '内网'"
-                                            class="iconfont"
-                                            :style="{
-                                                color: [
-                                                    { type: '安全', color: '#00ff48' },
-                                                    { type: '恶意', color: '#ff0000' },
-                                                    { type: '未知', color: '#7c7c7c' }
-                                                ].filter(co => co.type == alarmInfo.desIpVenusIsSpite)[0].color
-                                            }"
-                                            :title="'VenusEye：'+alarmInfo.desIpVenusIsSpite"
-                                            :class="{
-                                                'icon-liebiaonei-anquan': alarmInfo.desIpVenusIsSpite == '安全',
-                                                'icon-liebiaonei-buanquan': alarmInfo.desIpVenusIsSpite == '恶意',
-                                                'icon-liebiaonei-weizhi': alarmInfo.desIpVenusIsSpite == '未知'
-                                            }"
-                                        ></i>
                                         <i
                                             v-if="alarmInfo.desIpIsSpite != '内网'"
                                             class="iconfont"
@@ -217,7 +183,7 @@
                                                     { type: '未知', color: '#7c7c7c' }
                                                 ].filter(co => co.type == alarmInfo.desIpIsSpite)[0].color
                                             }"
-                                            :title="'微步：'+alarmInfo.desIpIsSpite"
+                                            :title="alarmInfo.desIpIsSpite"
                                             :class="{
                                                 'icon-liebiaonei-anquan': alarmInfo.desIpIsSpite == '安全',
                                                 'icon-liebiaonei-buanquan': alarmInfo.desIpIsSpite == '恶意',
@@ -231,30 +197,30 @@
                                     {{ alarmInfo.desIp | NullStr }}
                                 </div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">攻击结果：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ alarmInfo.attackResult | NullStr }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">是否封禁：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ alarmInfo.isBanned == 1 ? '是' : '否' }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">规则名称：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ alarmInfo.ruleName | NullStr }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 100%;">
+                            <div class="ub" style="width:100%;">
                                 <div class="label">是否溯源：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ alarmInfo.isTrace ? '是' : '否' }}</div>
                             </div>
                         </el-row>
                         <!-- <el-row style="margin: 0;" type="flex" justify="start"> -->
-                        <div class="" style="width: 100%;">
-                            <div class="" style="margin-top: 18px;margin-bottom: 18px;font-size: 12px;color: #0052d9;">原始日志：</div>
+                        <div class="" style="width:100%;">
+                            <div class="" style="font-size:12px;color:#0052d9;margin-bottom:18px;margin-top:18px">原始日志：</div>
                             <div class="ub ub-f1">
                                 <div class="ub ub-ver ub-f1">
                                     <el-table
@@ -297,15 +263,15 @@
                                                                 @click="jumpAsset(scope.row.srcIp)"
                                                                 class="ub ub-ac click-btn"
                                                             >
-                                                                <i class="iconfont icon-chaxunzichan" style="font-size: 12px;"></i>
+                                                                <i class="iconfont icon-chaxunzichan" style="font-size:12px"></i>
                                                                 <span>查询资产</span>
                                                             </p>
                                                             <p
-                                                                style="margin-top: 10px;"
+                                                                style="margin-top:10px"
                                                                 @click="jumpThreat(scope.row.srcIp)"
                                                                 class="ub ub-ac click-btn"
                                                             >
-                                                                <i class="iconfont icon-chaxunqingbao" style="font-size: 12px;"></i>
+                                                                <i class="iconfont icon-chaxunqingbao" style="font-size:12px"></i>
                                                                 <span>查询情报</span>
                                                             </p>
                                                         </div>
@@ -328,21 +294,21 @@
                                                                 @click="jumpAsset(scope.row.desIp)"
                                                                 class="ub ub-ac click-btn"
                                                             >
-                                                                <i class="iconfont icon-chaxunzichan" style="font-size: 12px;"></i>
+                                                                <i class="iconfont icon-chaxunzichan" style="font-size:12px"></i>
                                                                 <span>查询资产</span>
                                                             </p>
                                                             <p
-                                                                style="margin-top: 10px;"
+                                                                style="margin-top:10px"
                                                                 @click="jumpThreat(scope.row.desIp)"
                                                                 class="ub ub-ac click-btn"
                                                             >
-                                                                <i class="iconfont icon-chaxunqingbao" style="font-size: 12px;"></i>
+                                                                <i class="iconfont icon-chaxunqingbao" style="font-size:12px"></i>
                                                                 <span>查询情报</span>
                                                             </p>
                                                         </div>
                                                         <p
                                                             class="highlighted"
-                                                            style='cursor: pointer; text-decoration: underline;color: #03a5dd;'
+                                                            style='cursor: pointer; text-decoration: underline; color: #03a5dd;'
                                                             slot="reference"
                                                         >{{scope.row.desIp}}</p>
                                                     </el-popover>
@@ -378,136 +344,136 @@
                     <div v-if="workTaskInfo.workOrderObject == 2" class="info-title">漏洞详情</div>
                     <div v-if="workTaskInfo.workOrderObject == 2">
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">漏洞名称：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.nodeName | NullStr }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">漏洞类型：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.leakTypeCN | NullStr }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">漏洞级别：</div>
                                 <div class="ub ub-f1 line1">
-                                    <span style="margin-left: 8px;font-size: 12px;color: #00a2ff;line-height: 32px;" v-if="leaksInfo.riskLevel == 1">{{ leaksInfo.riskLevelCN }}</span>
-                                    <span style="margin-left: 8px;font-size: 12px;color: #f2cd00;line-height: 32px;" v-if="leaksInfo.riskLevel == 2">{{ leaksInfo.riskLevelCN }}</span>
-                                    <span style="margin-left: 8px;font-size: 12px;color: #f86900;line-height: 32px;" v-if="leaksInfo.riskLevel == 3">{{ leaksInfo.riskLevelCN }}</span>
-                                    <span style="margin-left: 8px;font-size: 12px;color: #19b0b1;line-height: 32px;" v-if="leaksInfo.riskLevel == 4">{{ leaksInfo.riskLevelCN }}</span>
+                                    <span style="color:#00a2ff;font-size:12px;line-height:32px;margin-left:8px" v-if="leaksInfo.riskLevel == 1">{{ leaksInfo.riskLevelCN }}</span>
+                                    <span style="color:#f2cd00;font-size:12px;line-height:32px;margin-left:8px" v-if="leaksInfo.riskLevel == 2">{{ leaksInfo.riskLevelCN }}</span>
+                                    <span style="color:#f86900;font-size:12px;line-height:32px;margin-left:8px" v-if="leaksInfo.riskLevel == 3">{{ leaksInfo.riskLevelCN }}</span>
+                                    <span style="color:#19b0b1;font-size:12px;line-height:32px;margin-left:8px" v-if="leaksInfo.riskLevel == 4">{{ leaksInfo.riskLevelCN }}</span>
                                 </div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">修复建议：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.repairAdvice | NullStr }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">简短描述：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.shortDesc | NullStr }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">详细描述：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.fullDesc | NullStr }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">漏洞CVSS分值：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.cvssScore | NullStr }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">CVE编号：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.cveTag | NullStr }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">CNVD编号：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.cnvdTag | NullStr }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">CNNVD编号：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.cnnvdTag | NullStr }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">CNCVE编号：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.cncveTag | NullStr }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">BUGTRAP：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.bugTraqTag | NullStr }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">更新时间：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.updateTime | NullStr }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">影响平台：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.platforms | NullStr }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">创建时间：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.createTime | NullStr }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">漏洞端口：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.port | NullStr }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">服务名称：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.serviceName | NullStr }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">检查结果：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.checkResult | NullStr }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">检查类型：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.checkType | NullStr }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">合规项描述：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.compliance | NullStr }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">加固方案：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.reinforcement | NullStr }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">漏洞URL：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.leakUrl | NullStr }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">网站名称：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.webName | NullStr }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">提交类型：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.submitType | NullStr }}</div>
                             </div>
                         </el-row>
                         <el-row style="margin: 0;" type="flex" justify="start">
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">测试数据：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.testData | NullStr }}</div>
                             </div>
-                            <div class="ub" style="width: 50%;">
+                            <div class="ub" style="width:50%;">
                                 <div class="label">post数据：</div>
                                 <div class="ub ub-f1 line1 label-val">{{ leaksInfo.postData | NullStr }}</div>
                             </div>
@@ -518,8 +484,8 @@
                         <el-button type="text" icon="el-icon-download" v-on:click="getPdf('pdfPrint', workTaskInfo.workOrderName)">生成PDF</el-button>
                     </div>
                     <div class="w100 work-record" id="pdfPrint">
-                        <el-row style="margin: 0;background: #ffffff;" type="flex" justify="center">
-                            <el-timeline style="margin-left: 140px;width: 90%;">
+                        <el-row style="margin: 0;background: #fff" type="flex" justify="center">
+                            <el-timeline style="width:90%;margin-left: 140px;">
                                 <el-timeline-item
                                     class="w100"
                                     v-for="(activity, index) in bpmRecord"
@@ -534,20 +500,20 @@
                                 >
                                     <div class="ub ub-pj ub-ac time-box">
                                         <div class="ub" style="width: 50%;">
-                                            <h4 style="font-size: 16px;color: rgb(0 0 0 / 90%);">
+                                            <h4 style="color: rgba(0, 0, 0, 0.9);font-size: 16px;">
                                                 {{ activity.userName | NullStr }}
-                                                <sub style="margin-left: 10px;font-size: 12px;color: rgb(0 0 0 / 60%);vertical-align: bottom;">
+                                                <sub style="font-size:12px;color: rgba(0, 0, 0, 0.6);margin-left: 10px;vertical-align: bottom;">
                                                     {{ activity.userRole | NullStr }}
                                                 </sub>
-                                                <sub style="margin-left: 10px;font-size: 12px;color: rgb(0 0 0 / 60%);vertical-align: bottom;">
+                                                <sub style="font-size:12px;color: rgba(0, 0, 0, 0.6);margin-left: 10px;vertical-align: bottom;">
                                                     当前节点：{{ activity.nodeName ? activity.nodeName : '' }}
                                                 </sub>
                                             </h4>
                                         </div>
-                                        <div class="time-right" style="width: 150px;text-align: right;">
+                                        <div class="time-right" style="width: 150px;text-align: right">
                                             <el-button
                                                 type="text"
-                                                style="font-size: 12px;text-decoration: underline;"
+                                                style="text-decoration: underline;font-size:12px;"
                                                 :class="{ 'el-icon-arrow-down': activity.isOpen, 'el-icon-arrow-up': !activity.isOpen }"
                                                 @click="activity.isOpen = !activity.isOpen"
                                             >
@@ -566,14 +532,7 @@
                                                 <div v-else class="time-text-box-right" v-html="item.val" @click="imageEnlargement"></div>
                                             </div>
                                         </div>
-                                        <div class="time-text-box" v-if="!['1', '2', '3', '4', '5','6'].includes(workTaskInfo.workOrderObject)&&activity.dealType!=2">
-                                            <div class="w100 time-text-box-item" v-for="(item, _index) in activity.dealContent" :key="_index">
-                                                <div class="time-text-box-left">{{ _index }}：</div>
-                                                <div class="time-text-box-right" v-html="item" @click="imageEnlargement"></div>
-                                            </div>
-                                        </div>
-                                        <!-- 通知公告 -->
-                                        <div class="time-text-box" v-if="['6'].includes(workTaskInfo.workOrderObject)&&activity.dealType==1">
+                                        <div class="time-text-box" v-if="!['1', '2', '3', '4', '5'].includes(workTaskInfo.workOrderObject)">
                                             <div class="w100 time-text-box-item" v-for="(item, _index) in activity.dealContent" :key="_index">
                                                 <div class="time-text-box-left">{{ _index }}：</div>
                                                 <div class="time-text-box-right" v-html="item" @click="imageEnlargement"></div>
@@ -769,7 +728,7 @@
         </el-dialog>
         <el-dialog v-dialogDrag :title="agreeTitle" :visible.sync="checkDialog" width="65%" custom-class="attendance-dialog">
             <el-form class="w100" :model="checkkForm" :rules="rules" ref="checkkForm">
-                <el-form-item style="margin-bottom: 20px;width: 100%;" label="审批意见：" prop="" :label-width="formLabelWidth">
+                <el-form-item style="width:100%;margin-bottom: 20px;" label="审批意见：" prop="" :label-width="formLabelWidth">
                     <div class="ub ub-pc ub-f1"><vue-ueditor-wrap v-model="checkkForm.approveOpinion" :config="myConfig"></vue-ueditor-wrap></div>
                 </el-form-item>
             </el-form>
@@ -779,7 +738,7 @@
             </span>
         </el-dialog>
         <el-dialog v-dialogDrag title="事件详情" :visible.sync="detailDialog" width="700" custom-class="attendance-dialog" top="10vh">
-            <div style="display: flex;overflow-y: auto;margin: 0 auto;width: 90%;flex-wrap: wrap;">
+            <div style="width:90%;margin: 0 auto;display: flex;flex-wrap: wrap;overflow-y: auto">
                 <div class="table-container" v-for="(val, key) in detailArr" :key="key">
                     <div class="table-left">{{ fieldToChinese(key) }}</div>
                     <div class="table-right" v-html="val"></div>
@@ -796,7 +755,7 @@ import { ImagePreview } from 'vant'
 import VueUeditorWrap from '../../components/vue-ueditor-wrap.vue' // ES6 Module
 import ueditorConfig from '../../mixins/ueditorConfig'
 import { get_workTask_detailAllTask, finish_workTask, get_one_workAllTask, get_task_infoAllTask } from '../../server/works_order/api.js'
-import { get_threat_search, getStartConfig, get_threat_searchVenus } from '@/server/alarm/api.js'
+import { get_threat_search } from '@/server/intelligence/api.js'
 import bpmnModeler from '../../package/detailXml'
 export default {
     name: 'TaskDetail',
@@ -944,8 +903,7 @@ export default {
             },
             detailDialog: false,
             detailArr: {},
-            dealContent: null,
-            startData: []
+            dealContent: null
         }
     },
     filters: {
@@ -1214,50 +1172,32 @@ export default {
     created() {
         this.currentTab = this.$getsessionStorage('currentTab')
         this.initTask()
-        this.getStartConfigData()
     },
     methods: {
-        getStartConfigData() {
-            getStartConfig({ queryData: {}, paramsData: {}}).then(res => {
-                this.startData = res
-            })
-        },
         jumpAsset(value) {
             this.$setsessionStorage('currentPath', '/assets/assets_asset_info?ip=' + value)
             window.open(window.location.origin + '/#' + '/assets/assets_asset_info?ip=' + value)
         },
         jumpThreat(value) {
-            console.log(value)
             let obj = {
-                queryData: {},
-                paramsData: { value }
+                queryData: {
+                    value
+                },
+                paramsData: {}
             }
-            if (this.startData.includes(1)) {
-                this.searchWeibu(obj, value)
-            } else if (this.startData.includes(0)) {
-                this.searchVenus(obj, value)
-            }
-        },
-        searchWeibu(obj, value) {
             get_threat_search(obj)
                 .then(res => {
                     console.log(res)
                     this.$setsessionStorage('search-item', res)
-                    window.open(window.location.origin + '/#' + '/intelligence/threat_detail?searchStr=' + value)
+                    let route = this.$router.resolve({
+                        name: 'intelligence_threat_detail',
+                        query: {
+                            searchStr: value
+                        }
+                    })
+                    window.open(route.href, '_blank')
                 })
                 .catch(err => {
-                    console.log(err + 'err')
-                })
-        },
-        searchVenus(obj, value) {
-            get_threat_searchVenus(obj, value)
-                .then(res => {
-                    console.log(res)
-                    this.$setsessionStorage('search-item', res)
-                    window.open(window.location.origin + '/#' + '/intelligence/threat_detail?searchStr=' + value)
-                })
-                .catch(err => {
-                    this.btnLoading = false
                     console.log(err + 'err')
                 })
         },
@@ -1700,6 +1640,7 @@ export default {
 .work-detail {
     margin: 10px;
 }
+
 .click-btn {
     cursor: pointer;
     font-size: 12px;
@@ -1714,194 +1655,223 @@ export default {
 .click-btn:hover {
     background: #ebf1f5;
 }
+
 .tab-button {
-    margin-bottom: 2px;
     height: 30px;
-    background-color: #ffffff;
+    background-color: #fff;
+    margin-bottom: 2px;
+
     & div {
         width: 80px;
         height: 30px;
-        font-size: 14px;
-        text-align: center;
-        color: rgb(0 0 0 / 60%);
         line-height: 30px;
+        text-align: center;
         cursor: pointer;
+        color: rgba(0, 0, 0, 0.6);
         box-sizing: border-box;
+        font-size: 14px;
+
         &.tab-active {
-            border-bottom: 1px solid #387dee;
             color: #387dee;
+            border-bottom: 1px solid #387dee;;
         }
     }
 }
 .table-left,
 .table-right {
-    padding: 4px 10px;
     font-size: 16px;
-    border: 1px solid #dddddd;
-    color: rgb(0 0 0 / 90%);
+    border: 1px solid #ddd;
+    color: rgba(0, 0, 0, 0.9);
+    padding: 4px 10px;
 }
+
 .table-left {
-    padding-right: 10px;
-    width: 160px !important;
-    border-right: none;
-    text-align: right;
     background-color: #ebf1f5;
     flex-shrink: 0;
-
-    /* white-space: nowrap; */
+    border-right: none;
+    padding-right: 10px;
+    text-align: right;
+    width: 160px !important;
+    /*white-space: nowrap;*/
 }
+
 .table-right {
     width: calc(100% - 160px);
 }
+
 .event {
-    position: relative;
-    padding: 0;
+    padding: 0px 0px 0px 0px;
     box-sizing: border-box;
+    position: relative;
 }
 .event-content {
-    background-color: #ffffff;
+    background-color: #fff;
 }
 .event ::v-deep .el-timeline-item__wrapper {
-    margin-left: 4px;
     border-left: 1px solid #00b7ee;
+    margin-left: 4px;
 }
 .event ::v-deep .el-timeline-item__node--large {
     z-index: 2;
     background-color: #387dee!important;
 }
 .event ::v-deep .el-timeline-item__timestamp.is-top {
-    position: absolute;
-    top: 0;
-    left: -145px;
     margin-bottom: 8px;
     padding-top: 3px;
-    width: 130px;
-    font-size: 12px;
-    text-align: right;
-    color: rgb(0 0 0 / 90%);
-}
-.event ::v-deep .el-range-input {
-    color: rgb(0 0 0 / 90%);
-    background-color: rgb(0 0 0 / 0%);
-}
-.event ::v-deep .el-range-separator {
-    color: rgb(0 0 0 / 90%);
-}
-.el-tabs ::v-deep .el-tabs__nav-wrap::after {
     position: absolute;
-    bottom: 0;
+    left: -145px;
+    top: 0;
+    font-size: 12px;
+    width: 130px;
+    text-align: right;
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.event ::v-deep .el-range-input {
+    background-color: rgba(0, 0, 0, 0);
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.event ::v-deep .el-range-separator {
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.el-tabs ::v-deep .el-tabs__nav-wrap::after {
+    content: '';
+    position: absolute;
     left: 0;
-    z-index: 1;
+    bottom: 0;
     width: 100%;
     height: 1px;
-    background-color: rgb(28 215 250 / 20%);
-    content: '';
+    background-color: rgba(28, 215, 250, 0.2);
+    z-index: 1;
 }
+
 .el-tabs ::v-deep .el-tabs__active-bar {
-    margin-left: 14px;
     background: #0052d9;
+    margin-left: 14px;
 }
+
 .el-tabs ::v-deep .el-tabs__item.is-active {
-    height: 34px;
-    border-color: transparent;
     color: #0052d9;
+    height: 34px;
     line-height: 34px;
+    border-color: transparent;
 }
 // .el-tabs ::v-deep .el-tabs__item.is-top {
 
 // }
 .info-title {
-    margin-bottom: 18px;
     // margin-left: 14px;
     font-size: 12px;
     color: #0052d9;
+    margin-bottom: 18px;
 }
+
 .task-status {
-    margin: 16px 0 30px;
     padding-right: 30px;
     box-sizing: border-box;
+    margin: 16px 0 30px;
 }
+
 .task-status > div:nth-child(1) {
+    color: rgba(0, 0, 0, 0.9);
     font-size: 22px;
-    color: rgb(0 0 0 / 90%);
 }
+
 .assets-big-image ::v-deep .el-image-viewer__close {
     color: #00e1ff !important;
 }
+
 .task-status > div:nth-child(2) {
+    color: rgba(0, 0, 0, 0.9);
     font-size: 12px;
-    color: rgb(0 0 0 / 90%);
+
     span.one {
         color: #c0c0c0;
     }
+
     span.two {
         color: #fdb900;
     }
+
     span.three {
         color: #00bffe;
     }
 }
+
 .label {
-    padding: 8px;
     width: 120px;
-    min-height: 32px;
+    border: 1px solid #ddd;
+    height: 32px;
     font-size: 12px;
-    border: 1px solid #dddddd;
+    padding: 8px;
+    color: #999;
     text-align: left;
-    color: #999999;
     background-color: #ebf1f5;
 }
+
 .label-val {
-    padding: 8px;
-    min-height: 32px;
     font-size: 12px;
+    height: 32px;
+    padding: 8px;
     border: 1px solid #ebf1f5;
-    color: rgb(0 0 0 / 90%);
-    word-break: break-all;
+    color: rgba(0, 0, 0, 0.9);
 }
+
 .event ::v-deep .el-timeline-item__tail {
     border-left: 2px solid #00b7ee !important;
 }
+
 .event ::v-deep .el-timeline-item__icon.el-icon-circle-check {
+    color: #fff !important;
     font-size: 20px !important;
-    color: #ffffff !important;
 }
+
 .event ::v-deep .el-timeline-item__icon.icon-circle {
+    color: #00b7ee !important;
     font-size: 16px !important;
     font-weight: 500;
-    color: #00b7ee !important;
 }
+
 .time-box {
-    margin-bottom: 10px;
     width: 100%;
     height: 20px;
+    margin-bottom: 10px;
 }
+
 .time-left > h4 {
+    color: rgba(0, 0, 0, 0.9);
     font-weight: 500;
-    color: rgb(0 0 0 / 90%);
 }
+
 .time-left > p {
-    margin-top: 5px;
+    color: #999;
     font-size: 12px;
-    color: #999999;
+    margin-top: 5px;
 }
+
 .time-right > div.one {
     color: #c0c0c0;
 }
+
 .time-right > div.two {
     color: #fdb900;
 }
+
 .time-right > div.three {
     color: #00bffe;
 }
+
 .time-right > p {
-    margin-top: 5px;
+    color: rgba(0, 0, 0, 0.9);
     font-size: 12px;
-    color: rgb(0 0 0 / 90%);
+    margin-top: 5px;
 }
 .event ::v-deep .el-table__empty-block {
-    background-color: #ffffff;
+    background-color: #fff;
 }
+
 .event ::v-deep .edui-editor-iframeholder {
     height: 200px !important;
 }
@@ -1911,56 +1881,31 @@ export default {
     transform: rotate(90deg);
     color: #00fffe;
 }
-.custom-star {
-    .event-content {
-        background-color: #052942!important;
-    }
-    .tab-button {
-        border: solid 1px #50b0ff;
-        background-color: rgba($color: #136dac, $alpha: 20%);
-        box-shadow: inset 0 0 18px 0
-            #00b4ff;
-        & div {
-            color: #ffffff;
-        }
-    }
-    .text-name {
-        color: #ffffff;
-    }
-    .label {
-        border: 1px solid #1cd7fa;
-        color: #ffffff;
-        background-color: #052942;
-    }
-    .label-val {
-        border: 1px solid #1cd7fa;
-        color: #ffffff;
-    }
-}
 </style>
 <style>
-.add-search-order.el-popover {
+.add-search-order.el-popover{
+    background: #fff;
     /* box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.59) inset; */
-    border: solid 1px #dddddd;
-    color: rgb(0 0 0 / 90%);
-    background: #ffffff;
+    border: solid 1px #ddd;
+    color: rgba(0, 0, 0, 0.9);
 }
+
 .time-text-box {
     padding: 5px;
-    border: solid 1px #dddddd;
-    border-radius: 3px;
     background-color: #f5f8fe;
+    border-radius: 3px;
+    border: solid 1px #dddddd;
 }
 .time-text-box-item {
-    overflow: hidden;
     margin: 10px 0;
+    overflow: hidden;
 }
 .time-text-box-left {
     float: left;
-    margin-right: 10px;
     font-size: 12px;
-    color: rgb(0 0 0 / 40%);
     letter-spacing: 1px;
+    color: rgba(0, 0, 0, 0.4);
+    margin-right: 10px;
     vertical-align: top;
 }
 .time-box-item-bottom div {
@@ -1971,27 +1916,28 @@ export default {
 }
 .time-text-box-bottom i {
     font-size: 10px;
-    color: #999999;
+    color: #999;
 }
 .time-text-box-bottom span {
     font-size: 10px;
-    color: #999999;
+    color: #999;
 }
 .time-text-box-right {
-    float: left;
     width: 88%;
+    float: left;
     font-size: 12px;
-    color: rgb(0 0 0 / 90%);
+    color: rgba(0, 0, 0, 0.9);
     vertical-align: top;
 }
 .time-text-box-right * {
     word-break: break-all;
 }
+
 .time-text-box-right p {
     font-size: 12px !important;
 }
+
 .time-text-box-right img {
     max-width: 50% !important;
 }
-
 </style>

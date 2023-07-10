@@ -132,7 +132,7 @@
                                         <el-col v-if="this.get_params.topId === '4' && searchType === 'normal'" :span="6">
                                             <div>
                                                 <el-form :model="applicationLogForm" label-position="right" :label-width="labelWidth">
-                                                    <el-form-item label="事件等级:">
+                                                    <el-form-item label="事件级别:">
                                                         <el-input
                                                             placeholder="请输入"
                                                             clearable
@@ -235,7 +235,7 @@
                                             <el-col :span="6">
                                                 <div>
                                                     <el-form :model="safeLogForm" label-position="right" :label-width="labelWidth">
-                                                        <el-form-item label="事件等级:">
+                                                        <el-form-item label="事件级别:">
                                                             <el-input
                                                                 placeholder="请输入"
                                                                 clearable
@@ -281,49 +281,9 @@
                                                             <el-input
                                                                 placeholder="请输入"
                                                                 clearable
-                                                                v-model.trim="safeLogForm.alternateField88"
+                                                                v-model.trim="safeLogForm.alternateField2"
                                                                 size="small">
                                                             </el-input>
-                                                        </el-form-item>
-                                                    </el-form>
-                                                </div>
-                                            </el-col>
-                                            <el-col :span="6">
-                                                <div>
-                                                    <el-form :model="safeLogForm">
-                                                        <el-form-item label="组织架构:" :label-width="labelWidth">
-                                                            <div class="treeselect">
-                                                                <Treeselect
-                                                                    :appendToBody="true"
-                                                                    size="small"
-                                                                    style="width:99%;margin-top: 4px;"
-                                                                    :options="originTreeData"
-                                                                    :normalizer="normalizerOrg"
-                                                                    noChildrenText="当前分支无子节点"
-                                                                    noOptionsText="无可用选项"
-                                                                    placeholder="请选择"
-                                                                    v-model="safeLogForm.alternateField290"
-                                                                />
-                                                            </div>
-                                                        </el-form-item>
-                                                    </el-form>
-                                                </div>
-                                            </el-col>
-                                            <el-col :span="6">
-                                                <div>
-                                                    <el-form :model="safeLogForm">
-                                                        <el-form-item label="组织级别:" :label-width="labelWidth">
-                                                            <div>
-                                                                <el-select class="custom-select" size="small" v-model="safeLogForm.alternateField288" placeholder="请选择" style="width: 100%;" clearable>
-                                                                    <el-option
-                                                                        style="height:24px !important;line-height:24px !important;width: 100%;"
-                                                                        v-for="item in levelOptions"
-                                                                        :key="item.value"
-                                                                        :label="item.label"
-                                                                        :value="item.value">
-                                                                    </el-option>
-                                                                </el-select>
-                                                            </div>
                                                         </el-form-item>
                                                     </el-form>
                                                 </div>
@@ -402,46 +362,6 @@
                                                     </el-form>
                                                 </div>
                                             </el-col>
-                                            <el-col :span="6">
-                                                <div>
-                                                    <el-form :model="hostLogForm">
-                                                        <el-form-item label="组织架构：" :label-width="labelWidth">
-                                                            <div class="treeselect">
-                                                                <Treeselect
-                                                                    :appendToBody="true"
-                                                                    size="small"
-                                                                    style="width:100%;margin-top: 3px;"
-                                                                    :options="originTreeData"
-                                                                    :normalizer="normalizerOrg"
-                                                                    noChildrenText="当前分支无子节点"
-                                                                    noOptionsText="无可用选项"
-                                                                    placeholder="请选择"
-                                                                    v-model="hostLogForm.alternateField290"
-                                                                />
-                                                            </div>
-                                                        </el-form-item>
-                                                    </el-form>
-                                                </div>
-                                            </el-col>
-                                            <el-col :span="6">
-                                                <div>
-                                                    <el-form :model="hostLogForm">
-                                                        <el-form-item label="组织级别：" :label-width="labelWidth">
-                                                            <div>
-                                                                <el-select class="custom-select" size="small" v-model="hostLogForm.alternateField288" placeholder="请选择" style="width: 100%;">
-                                                                    <el-option
-                                                                        style="height:24px !important;line-height:24px !important;width: 100%;"
-                                                                        v-for="item in levelOptions"
-                                                                        :key="item.value"
-                                                                        :label="item.label"
-                                                                        :value="item.value">
-                                                                    </el-option>
-                                                                </el-select>
-                                                            </div>
-                                                        </el-form-item>
-                                                    </el-form>
-                                                </div>
-                                            </el-col>
                                         </el-row>
 
                                         <!--topId === 3, 流日志-->
@@ -512,46 +432,6 @@
                                                                 v-model.trim="flowLogForm.alternateField5"
                                                                 size="small">
                                                             </el-input>
-                                                        </el-form-item>
-                                                    </el-form>
-                                                </div>
-                                            </el-col>
-                                            <el-col :span="6">
-                                                <div>
-                                                    <el-form :model="flowLogForm">
-                                                        <el-form-item label="组织架构:" :label-width="labelWidth">
-                                                            <div class="treeselect">
-                                                                <Treeselect
-                                                                    :appendToBody="true"
-                                                                    size="small"
-                                                                    style="width:100%;margin-top: 3px;"
-                                                                    :options="originTreeData"
-                                                                    :normalizer="normalizerOrg"
-                                                                    noChildrenText="当前分支无子节点"
-                                                                    noOptionsText="无可用选项"
-                                                                    placeholder="请选择"
-                                                                    v-model="flowLogForm.alternateField290"
-                                                                />
-                                                            </div>
-                                                        </el-form-item>
-                                                    </el-form>
-                                                </div>
-                                            </el-col>
-                                            <el-col :span="6">
-                                                <div>
-                                                    <el-form :model="flowLogForm">
-                                                        <el-form-item label="组织级别:" :label-width="labelWidth">
-                                                            <div>
-                                                                <el-select class="custom-select" size="small" v-model="flowLogForm.alternateField288" placeholder="请选择" style="width: 100%;">
-                                                                    <el-option
-                                                                        style="height:24px !important;line-height:24px !important;width: 100%;"
-                                                                        v-for="item in levelOptions"
-                                                                        :key="item.value"
-                                                                        :label="item.label"
-                                                                        :value="item.value">
-                                                                    </el-option>
-                                                                </el-select>
-                                                            </div>
                                                         </el-form-item>
                                                     </el-form>
                                                 </div>
@@ -630,46 +510,6 @@
                                                     </el-form>
                                                 </div>
                                             </el-col>
-                                            <el-col :span="6">
-                                                <div>
-                                                    <el-form :model="applicationLogForm">
-                                                        <el-form-item label="组织架构：" :label-width="labelWidth">
-                                                            <div class="treeselect">
-                                                                <Treeselect
-                                                                    :appendToBody="true"
-                                                                    size="small"
-                                                                    style="width:100%;margin-top: 3px;"
-                                                                    :options="originTreeData"
-                                                                    :normalizer="normalizerOrg"
-                                                                    noChildrenText="当前分支无子节点"
-                                                                    noOptionsText="无可用选项"
-                                                                    placeholder="请选择"
-                                                                    v-model="applicationLogForm.alternateField290"
-                                                                />
-                                                            </div>
-                                                        </el-form-item>
-                                                    </el-form>
-                                                </div>
-                                            </el-col>
-                                            <el-col :span="6">
-                                                <div>
-                                                    <el-form :model="applicationLogForm">
-                                                        <el-form-item label="组织级别：" :label-width="labelWidth">
-                                                            <div>
-                                                                <el-select class="custom-select" size="small" v-model="applicationLogForm.alternateField288" placeholder="请选择" style="width: 100%;">
-                                                                    <el-option
-                                                                        style="height:24px !important;line-height:24px !important;width: 100%;"
-                                                                        v-for="item in levelOptions"
-                                                                        :key="item.value"
-                                                                        :label="item.label"
-                                                                        :value="item.value">
-                                                                    </el-option>
-                                                                </el-select>
-                                                            </div>
-                                                        </el-form-item>
-                                                    </el-form>
-                                                </div>
-                                            </el-col>
                                         </el-row>
                                     </template>
                                 </div>
@@ -726,6 +566,7 @@
                 <ProgressBar ref="progressBar" :status="barStatus" />
                 <div class="ub chart-title">
                     <!-- <div class="table-view ub ub-pc" @click="viewTab = 'tableView'" :class="{'active': viewTab === 'tableView'}">表格视图</div> -->
+                    <!--<div class="chart-view ub ub-pc" @click="viewTab = 'chartView'" :class="{'active': viewTab === 'chartView'}">图表视图</div>-->
                     <div class="table-view ub ub-pc" @click="viewTab = 'tableView'" :class="{'active': viewTab === 'tableView'}">
                         <div style="padding-left:0">表格视图</div>
                         <div>
@@ -734,7 +575,6 @@
                             <i :class="['iconfont', 'icon-a-yibiaopan-xiala1',viewChartOpen?'icon-select1':'icon-select' ]"  @click="viewChartOpen=!viewChartOpen" style="font-size:12px"></i>
                         </div>
                     </div>
-                    <div class="chart-view ub ub-pc" @click="viewTab = 'chartView'" :class="{'active': viewTab === 'chartView'}">图表视图</div>
                 </div>
             </div>
             <!-- <div class="ub ub-pe fold-box">
@@ -782,20 +622,8 @@
             @saveLogIdSuccess="saveLogIdSuccess"
             @createTaskSucess="createTaskSucess"
             @handleDownload="handleDownload"
-            v-show="viewTab === 'tableView'">
+            v-if="viewTab === 'tableView'">
         </TableContent>
-        <ChartContent
-            :type="3"
-            :tab="'classify'"
-            :isOpen="isOpen"
-            :searchType="searchType"
-            v-loading.lock="loading"
-            element-loading-background="rgba(0, 0, 0, 0.05)"
-            element-loading-text="拼命加载中......"
-            ref="chartContent"
-            :sortFieldObj="sortFieldObj"
-            v-show="viewTab === 'chartView'">
-        </ChartContent>
 
         <Alarm :alarm-dialog="alarmDialog" :select-mode='selectMode' @addAlarmSucess="addAlarmSucess" ref="drawerRef"></Alarm>
         <SaveList :type="1" :save-list-dialog="saveListDialog"></SaveList>
@@ -836,10 +664,7 @@ import {
     getTopField,
     download,
     getTableChart,
-    searchFieldVal,
-    getSortField,
-    getTreeOrg,
-    getOrgLevel
+    searchFieldVal
 } from '@/server/data_manage/new_search.js'
 import draggable from 'vuedraggable'
 import Prcess from '@/components/prcess.vue'
@@ -856,7 +681,6 @@ import CustomSearch from '@/pages/data_manage/new_search/components/custom_searc
 import ConditionRules from '@/pages/data_manage/new_search/components/ConditionRules'
 import TableChart from '@/pages/data_manage/new_search/components/chart/TableChart'
 import EventBus from '@/assets/js/bus'
-import ChartContent from '@/pages/data_manage/chart_option/components/ChartContent'
 export default {
     name: 'Classify',
     components: {
@@ -871,8 +695,7 @@ export default {
         ConditionRules,
         TableChart,
         CustomDate,
-        SaveList,
-        ChartContent
+        SaveList
     },
     mixins: [ueditorConfig],
     data() {
@@ -903,7 +726,7 @@ export default {
             exactId: '',
             searchLoading: false,
             resetShow: false,
-            appendToBody: true,
+            appendToBody: false,
             selectMode: 0,
             sqlTermData: '',
             customTime: [],
@@ -953,11 +776,9 @@ export default {
                 desPort: '',
                 protocol: '',
                 level: '',
-                alternateField290: null,
-                alternateField288: '',
                 alternateField3: '',
                 alternateField1: '',
-                alternateField88: ''
+                alternateField2: ''
             },
             hostLogForm: {
                 subject: '',
@@ -966,9 +787,7 @@ export default {
                 alternateField8: '',
                 alternateField9: '',
                 alternateField10: '',
-                alternateField11: '',
-                alternateField290: null,
-                alternateField288: ''
+                alternateField11: ''
             },
             flowLogForm: {
                 srcIp: '',
@@ -977,9 +796,7 @@ export default {
                 desPort: '',
                 alternateField3: '',
                 alternateField4: '',
-                alternateField5: '',
-                alternateField290: null,
-                alternateField288: ''
+                alternateField5: ''
             },
             applicationLogForm: {
                 level: '',
@@ -988,9 +805,7 @@ export default {
                 alternateField1: '',
                 alternateField13: '',
                 msg: '',
-                alternateField14: '',
-                alternateField290: null,
-                alternateField288: ''
+                alternateField14: ''
             },
 
             isCanOption: true,
@@ -1017,17 +832,9 @@ export default {
                     children: node.child
                 }
             },
-            normalizerOrg(node) {
-                return {
-                    id: node.id,
-                    label: node.name,
-                    children: node.childDepInfo
-                }
-            },
             limitText(count) {
                 return `+${count}`
             },
-            levelOptions: [],
             isLoadDliog: false,
             loadId: '',
             timestrId: '',
@@ -1185,9 +992,7 @@ export default {
             useDate: {},
             useIndex: '',
             parentID: '',
-            first: 0,
-            sortFieldObj: null,
-            originTreeData: []
+            first: 0
         }
     },
     computed: {
@@ -1311,57 +1116,14 @@ export default {
         // if (this.$route.params.markId && this.$route.params.markId.length) {
         //     this.markId = this.$route.params.markId
         // }
-        this.initTree()
-        this.initLevel()
         this.getTreeData()
-        this.getSortFieldFn()
         this.initCanSelectedFileds(true)
         this.isShow = true
         this.$nextTick(() => {
             this.getHighlight()
         })
-        if (Object.keys(this.$route.query).length && Object.keys(this.$route.query) == 'logId') {
-            this.get_data()
-        }
     },
     methods: {
-        initTree() {
-            let data = {
-                queryData: {},
-                paramsData: {}
-            }
-            getTreeOrg(data)
-                .then(res => {
-                    console.log('tree', res)
-                    this.originTreeData = res
-                })
-                .catch(error => {
-                    console.log('error' + error)
-                })
-        },
-        initLevel() {
-            getOrgLevel({
-                queryData: {},
-                paramsData: {}
-            }).then(res => {
-                console.log('tree', res)
-                this.levelOptions = []
-                for (let i = 1; i < Number(res) + 1; i++) {
-                    this.levelOptions.push({
-                        label: `级别${i}`,
-                        value: i
-                    })
-                }
-            }).catch(error => {
-                console.log('error' + error)
-            })
-        },
-        getSortFieldFn() {
-            getSortField({ queryData: {}, paramsData: {}}).then(res => {
-                console.log(res)
-                this.sortFieldObj = res
-            })
-        },
         customDateUse() {
             this.searchLoading = true
             this.get_params.page = 1
@@ -1376,6 +1138,8 @@ export default {
         handleChartRefresh() {
             // this.setDate()
             this.setRecordDate()
+            console.log(this.chartTimeRange)
+            console.log(this.customTime)
             setTimeout(() => {
                 this.get_data()
                 this.get_chart_data()
@@ -1469,31 +1233,30 @@ export default {
             if (this.searchType === 'normal') {
                 if (this.get_params.topId === '1') {
                     for (const key in this.safeLogForm) {
-                        console.log(key)
                         data.paramsData.inputTerm.push({
                             field: key,
-                            value: this.safeLogForm[key] == null ? '' : this.safeLogForm[key]
+                            value: this.safeLogForm[key]
                         })
                     }
                 } else if (this.get_params.topId === '2') {
                     for (const key in this.hostLogForm) {
                         data.paramsData.inputTerm.push({
                             field: key,
-                            value: this.hostLogForm[key] == null ? '' : this.hostLogForm[key]
+                            value: this.hostLogForm[key]
                         })
                     }
                 } else if (this.get_params.topId === '3') {
                     for (const key in this.flowLogForm) {
                         data.paramsData.inputTerm.push({
                             field: key,
-                            value: this.flowLogForm[key] == null ? '' : this.flowLogForm[key]
+                            value: this.flowLogForm[key]
                         })
                     }
                 } else if (this.get_params.topId === '4') {
                     for (const key in this.applicationLogForm) {
                         data.paramsData.inputTerm.push({
                             field: key,
-                            value: this.applicationLogForm[key] == null ? '' : this.applicationLogForm[key]
+                            value: this.applicationLogForm[key]
                         })
                     }
                 }
@@ -1505,11 +1268,10 @@ export default {
                     type: 'success'
                 })
             }).catch(error => {
-                this.$message({
-                    message: error,
-                    type: 'error'
-                })
-                this.$refs.tableContent.downLoading = false
+                // this.$message({
+                //     message: error,
+                //     type: 'error'
+                // })
                 console.log('error', error)
             })
         },
@@ -1817,27 +1579,15 @@ export default {
         resetFun() {
             for (let key in this.safeLogForm) {
                 this.safeLogForm[key] = ''
-                if (key == 'alternateField290') {
-                    this.safeLogForm[key] = null
-                }
             }
             for (let key in this.hostLogForm) {
                 this.hostLogForm[key] = ''
-                if (key == 'alternateField290') {
-                    this.safeLogForm[key] = null
-                }
             }
             for (let key in this.flowLogForm) {
                 this.flowLogForm[key] = ''
-                if (key == 'alternateField290') {
-                    this.safeLogForm[key] = null
-                }
             }
             for (let key in this.applicationLogForm) {
                 this.applicationLogForm[key] = ''
-                if (key == 'alternateField290') {
-                    this.safeLogForm[key] = null
-                }
             }
             this.conditionData = []
             this.sqlTermData = ''
@@ -2119,28 +1869,28 @@ export default {
                     for (const key in this.safeLogForm) {
                         data.paramsData.inputTerm.push({
                             field: key,
-                            value: this.safeLogForm[key] == null ? '' : this.safeLogForm[key]
+                            value: this.safeLogForm[key]
                         })
                     }
                 } else if (this.get_params.topId === '2') {
                     for (const key in this.hostLogForm) {
                         data.paramsData.inputTerm.push({
                             field: key,
-                            value: this.hostLogForm[key] == null ? '' : this.hostLogForm[key]
+                            value: this.hostLogForm[key]
                         })
                     }
                 } else if (this.get_params.topId === '3') {
                     for (const key in this.flowLogForm) {
                         data.paramsData.inputTerm.push({
                             field: key,
-                            value: this.flowLogForm[key] == null ? '' : this.flowLogForm[key]
+                            value: this.flowLogForm[key]
                         })
                     }
                 } else if (this.get_params.topId === '4') {
                     for (const key in this.applicationLogForm) {
                         data.paramsData.inputTerm.push({
                             field: key,
-                            value: this.applicationLogForm[key] == null ? '' : this.applicationLogForm[key]
+                            value: this.applicationLogForm[key]
                         })
                     }
                 }
@@ -2154,59 +1904,6 @@ export default {
                 this.log_loading = false
                 console.log('error' + error)
             })
-        },
-        getSearchParams() {
-            let data = {
-                queryData: {
-                },
-                paramsData: {
-                    inputTerm: [{ field: 'startTime', value: this.customTime[0] }, { field: 'endTime', value: this.customTime[1] }],
-                    sqlTerm: this.searchType === 'sql' ? this.sqlTermData : '',
-                    filterTerm: this.conditionData.map(it => it.origin[0]),
-                    logType: this.get_params.topId,
-                    fields: this.list.map(it => it.fieldName),
-                    time: this.$getsessionStorage('temporaryOld').actualTime ? this.$getsessionStorage('temporaryOld').actualTime : this.dateData,
-                    timeStatus: this.$getsessionStorage('temporaryOld').timeUnit ? this.$getsessionStorage('temporaryOld').timeUnit : ''
-                }
-            }
-            if (this.exactId) {
-                data.paramsData.inputTerm.push({
-                    field: 'dt',
-                    value: this.exactId
-                })
-            }
-            if (this.searchType === 'normal') {
-                if (this.get_params.topId === '1') {
-                    for (const key in this.safeLogForm) {
-                        data.paramsData.inputTerm.push({
-                            field: key,
-                            value: this.safeLogForm[key] == null ? '' : this.safeLogForm[key]
-                        })
-                    }
-                } else if (this.get_params.topId === '2') {
-                    for (const key in this.hostLogForm) {
-                        data.paramsData.inputTerm.push({
-                            field: key,
-                            value: this.hostLogForm[key] == null ? '' : this.hostLogForm[key]
-                        })
-                    }
-                } else if (this.get_params.topId === '3') {
-                    for (const key in this.flowLogForm) {
-                        data.paramsData.inputTerm.push({
-                            field: key,
-                            value: this.flowLogForm[key] == null ? '' : this.flowLogForm[key]
-                        })
-                    }
-                } else if (this.get_params.topId === '4') {
-                    for (const key in this.applicationLogForm) {
-                        data.paramsData.inputTerm.push({
-                            field: key,
-                            value: this.applicationLogForm[key] == null ? '' : this.applicationLogForm[key]
-                        })
-                    }
-                }
-            }
-            return data
         },
         get_data() {
             this.loading = true
@@ -2232,9 +1929,6 @@ export default {
                     fields: this.list.map(it => it.fieldName)
                 }
             }
-            if (Object.keys(this.$route.query).length && Object.keys(this.$route.query) == 'logId') {
-                data.paramsData.fields.push({ field: 'logId', value: this.$route.query.logId })
-            }
             if (this.exactId) {
                 data.paramsData.inputTerm.push({
                     field: 'dt',
@@ -2246,28 +1940,28 @@ export default {
                     for (const key in this.safeLogForm) {
                         data.paramsData.inputTerm.push({
                             field: key,
-                            value: this.safeLogForm[key] == null ? '' : this.safeLogForm[key]
+                            value: this.safeLogForm[key]
                         })
                     }
                 } else if (this.get_params.topId === '2') {
                     for (const key in this.hostLogForm) {
                         data.paramsData.inputTerm.push({
                             field: key,
-                            value: this.hostLogForm[key] == null ? '' : this.hostLogForm[key]
+                            value: this.hostLogForm[key]
                         })
                     }
                 } else if (this.get_params.topId === '3') {
                     for (const key in this.flowLogForm) {
                         data.paramsData.inputTerm.push({
                             field: key,
-                            value: this.flowLogForm[key] == null ? '' : this.flowLogForm[key]
+                            value: this.flowLogForm[key]
                         })
                     }
                 } else if (this.get_params.topId === '4') {
                     for (const key in this.applicationLogForm) {
                         data.paramsData.inputTerm.push({
                             field: key,
-                            value: this.applicationLogForm[key] == null ? '' : this.applicationLogForm[key]
+                            value: this.applicationLogForm[key]
                         })
                     }
                 }
@@ -2282,7 +1976,6 @@ export default {
                 this.loading = false
                 this.barStatus = 1
                 let arr = res.records
-                this.total_num = res.total
                 if (arr.length > 0) {
                     this.tableData = this.$lodash.cloneDeep(arr)
                 } else if (arr.length === 0) {
@@ -2319,28 +2012,28 @@ export default {
                     for (const key in this.safeLogForm) {
                         data.paramsData.inputTerm.push({
                             field: key,
-                            value: this.safeLogForm[key] == null ? '' : this.safeLogForm[key]
+                            value: this.safeLogForm[key]
                         })
                     }
                 } else if (this.get_params.topId === '2') {
                     for (const key in this.hostLogForm) {
                         data.paramsData.inputTerm.push({
                             field: key,
-                            value: this.hostLogForm[key] == null ? '' : this.hostLogForm[key]
+                            value: this.hostLogForm[key]
                         })
                     }
                 } else if (this.get_params.topId === '3') {
                     for (const key in this.flowLogForm) {
                         data.paramsData.inputTerm.push({
                             field: key,
-                            value: this.flowLogForm[key] == null ? '' : this.flowLogForm[key]
+                            value: this.flowLogForm[key]
                         })
                     }
                 } else if (this.get_params.topId === '4') {
                     for (const key in this.applicationLogForm) {
                         data.paramsData.inputTerm.push({
                             field: key,
-                            value: this.applicationLogForm[key] == null ? '' : this.applicationLogForm[key]
+                            value: this.applicationLogForm[key]
                         })
                     }
                 }
@@ -2491,23 +2184,16 @@ export default {
         height: 24px;
         line-height: 24px;
         font-size: 12px;
-        color: rgba(77, 77, 77, 0.6);
+        color: rgba(255,255,255,.6);
         top: 0;
-        // div:nth-child(1) {
-        //     padding:0 10px;
-        //     // width: 80px;
-        //     cursor: pointer;
-        // }
-        .table-view, .chart-view {
+
+        div:nth-child(1) {
             padding:0 10px;
             // width: 80px;
             cursor: pointer;
-            div:nth-child(1) {
-                padding-right: 10px;
-            }
         }
         div.active {
-            border-radius: 4px 0 0 0;
+             border-radius: 4px 0 0 0;
             //background-color: #008aff;
             color: #0052d9;
             background-color: rgba(255, 255, 255, 0.5);

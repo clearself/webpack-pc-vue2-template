@@ -195,7 +195,6 @@ export const getAlarmWorkMould = (data) => {
 
 // 发起告警
 export const saveAlarm = (data) => {
-    console.log(data)
     return request({
         url: 'data-center/manage/agg/saveAlarm',
         method: 'post',
@@ -461,15 +460,6 @@ export const downloadLogPacket = (data, pacp) => {
         timeout: timeoutData,
         responseType: 'blob',
         baseURL: ''
-    })
-}
-// 创建图表时获取维度字段和度量
-export const getSortField = (data) => {
-    return request({
-        url: 'data-center/manage/chartSet/getGjSortField',
-        method: 'post',
-        params: data.queryData,
-        data: data.paramsData
     })
 }
 

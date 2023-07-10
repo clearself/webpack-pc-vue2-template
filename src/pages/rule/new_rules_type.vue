@@ -1,7 +1,7 @@
 <template>
     <div class="list">
         <div class="ub w100" style="height: calc(100vh - 80px); overflow: hidden">
-            <div style="background:#fff;border: solid 1px #dadee8;border-radius: 4px;overflow-y:auto;width:178px" class="mr-1 mb-1 leftListTree">
+            <div style="background:#fff;border: solid 1px #dadee8;border-radius: 4px;overflow-y:auto;width:178px" class="mr-1 mb-1">
                 <div class="tree" style="position: relative">
                     <div class="ub ub-pj ub-ac w100 mt-1 pl-1 mb-1">
                         <div class="list-tips" style="margin-bottom: 0;font-size:12px;">分组列表</div>
@@ -86,18 +86,12 @@
                                 <el-input placeholder="请输入" clearable v-model.trim="get_params.updateUserName" @keyup.enter.native="searchCheck" size="small"></el-input></el-form-item>
                         </el-form>
                     </el-col>
-                    <el-col :md="12" :lg="8" :xl="6">
-                        <el-form :model="get_params">
-                            <el-form-item label="模糊搜索：" label-width="75px">
-                                <el-input placeholder="请输入" clearable v-model.trim="get_params.vagueSearch" @keyup.enter.native="searchCheck" size="small"></el-input></el-form-item>
-                        </el-form>
-                    </el-col>
                 </SearchTop>
                 <div class="list-container">
                     <div class="ub ub-pj w100 mb-1 ub-ac">
                         <div class="list-tips">分析规则管理</div>
                         <div>
-                            <!-- <el-button style="color:rgba(0,0,0,.26);font-size:12px" title="点击查看帮助手册" icon="el-icon-question" @click="$pushRouter('/help_manual/help_rule_manage')" type="text">帮助手册</el-button> -->
+                            <el-button style="color:rgba(0,0,0,.26);font-size:12px" title="点击查看帮助手册" icon="el-icon-question" @click="$pushRouter('/help_manual/help_rule_manage')" type="text">帮助手册</el-button>
                             <el-button  icon="el-icon-plus" size="small" type="primary" @click="handleAdd" v-per="['rule_manage_add']">新建规则</el-button>
                             <el-button icon="iconfont icon-kaiqi" size="small" type="primary" @click="handleDeployAll(1)" v-per="['rule_manage_enable']">启用规则</el-button>
                             <el-button icon="iconfont icon-zanting" size="small" type="primary" @click="handleDeployAll(0)" v-per="['rule_manage_disable']">停用规则</el-button>
@@ -284,7 +278,6 @@
                         :normalizer="normalizer"
                         noChildrenText="当前分支无子节点"
                         noOptionsText="无可用选项"
-                        noResultsText="无可用选项"
                         placeholder="请选择"
                         v-model="ruleGroupForm.typeId"
                     />
@@ -514,8 +507,7 @@ export default {
                 status: '',
                 createUserName: '',
                 updateUserName: '',
-                ruleNumber: '',
-                vagueSearch: ''
+                ruleNumber: ''
             },
             typeList: [],
             filterText: ''
@@ -624,7 +616,6 @@ export default {
                     type: 'success'
                 })
                 setTimeout(() => {
-                    this.initTree()
                     this.get_data()
                 }, 1500)
             }).catch(error => {
@@ -986,8 +977,7 @@ export default {
                     status: this.get_params.status,
                     codeNum: this.get_params.ruleNumber,
                     createUserName: this.get_params.createUserName,
-                    updateUserName: this.get_params.updateUserName,
-                    vagueSearch: this.get_params.vagueSearch
+                    updateUserName: this.get_params.updateUserName
                 }
             }
             getDrools(data).then(res => {
@@ -1564,50 +1554,4 @@ $borderColor:#DCDFE6;
 .white-theme .switch-wrapper.no>div:nth-child(2){
     animation: _moveone_white 0s linear forwards;
 }
-
-.custom-star .leftListTree {
-    border: 1px solid #1cd7fa !important;
-    background-color: transparent !important;
-    box-shadow: 0 0 7px inset #389bf7 !important;
-    .list-tips {
-        color: #ffffff !important;
-    }
-}
-
-.custom-star .leftListTree {
-    .tree ::v-deep .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content{
-        background-color: rgba(0,0,0,0)!important;
-        .custom-tree-node{
-            span{
-                color:#fff;
-            }
-        }
-    }
-
-    .tree ::v-deep .el-tree--highlight-current .el-tree-node>.el-tree-node__content:hover{
-        background-color: rgba(0,0,0,0);
-        .custom-tree-node{
-            span{
-                color:#fff;
-            }
-        }
-    }
-
-    .tree ::v-deep .el-tree--highlight-current .el-tree-node>.el-tree-node__content {
-        .custom-tree-node{
-            span:nth-child(1){
-                color:rgba(255,255,255,0.9);
-            }
-            span:nth-child(2){
-                color:#86939e;
-            }
-
-        }
-    }
-
-    .tree ::v-deep .el-checkbox__inner::after,.auto ::v-deep .el-checkbox__inner::after{
-        border-color:#fff;
-    }
-}
-
 </style>

@@ -7,30 +7,29 @@
                     <!-- <cancel-btn title="取 消"  @click="cancel"></cancel-btn>
                     <cancel-btn title="重 置" style="margin-right: 10px;" @click="reset"></cancel-btn>
                     <searchBtn title="提 交" @click.native="finish" /> -->
-                    <el-button size="small" @click="cancel" style="z-index: 9999;">取 消</el-button>
-                    <el-button size="small" @click="reset"  style="z-index: 9999;">重 置</el-button>
-                    <el-button size="small" type="primary" @click="finish" style="z-index: 9999;">提 交</el-button>
+                    <el-button size="small" @click="cancel" style="z-index: 9999">取 消</el-button>
+                    <el-button size="small" @click="reset"  style="z-index: 9999">重 置</el-button>
+                    <el-button size="small" type="primary" @click="finish" style="z-index: 9999">提 交</el-button>
                 </div>
             </div>
             <div class="content-rule">
                 <div class="w100 form-wrapper">
                     <div class="title w100"><span class="t1">基础信息</span></div>
                     <el-form ref="formData" :model="formData" :rules="formDataRules" label-width="120px" label-position="top">
-                        <div class="ub" style=" justify-content: space-between;width: 100%;">
-                            <el-form-item label="解析规则名称：" style="width: 22%;" prop="name" size="small">
+                        <div class="ub" style="width:100%; justify-content: space-between;">
+                            <el-form-item label="解析规则名称：" style="width: 22%" prop="name" size="small">
                                 <el-input clearable v-model.trim="formData.name" placeholder="请输入规则名称"></el-input>
                             </el-form-item>
-                            <el-form-item label="接入设备类型：" style="width: 22%;" prop="name" size="small">
+                            <el-form-item label="接入设备类型：" style="width: 22%" prop="name" size="small">
                                 <treeselect
                                     size="small"
                                     :appendToBody="true"
                                     class="treeselect"
-                                    style="width: 100%;"
+                                    style="width:100%;"
                                     :options="regAssetTypeList"
                                     :normalizer="normalizer"
                                     noChildrenText="当前分支无子节点"
                                     noOptionsText="无可用选项"
-                                    noResultsText="无可用选项"
                                     placeholder="请选择接入设备类型"
                                     v-model="formData.deviceType"
                                     @input="treeChange"
@@ -38,7 +37,7 @@
                                     :disableBranchNodes="true"
                                 />
                             </el-form-item>
-                            <el-form-item label="数据源厂商：" style="width: 22%;" size="small">
+                            <el-form-item label="数据源厂商：" style="width: 22%" size="small">
                                 <el-select @change="changeCpy" style="width: 100%;" filterable clearable v-model.trim="formData.company" placeholder="请选择">
                                     <el-option v-for="(item, index) in compantList" :key="index" :label="item.name" :value="item.busId"></el-option>
                                 </el-select>
@@ -79,8 +78,8 @@
                                 <div v-for="(item, index) in filters" :key="index">
                                     <el-form-item :label="'规则$' + index + '：'" size="small">
                                         <div class="filter-item">
-                                            <div class="del-item" style="font-size: 12px;" @click="removeFilter(index)">
-                                                <i class="el-icon-close" style="color: #e34d59;cursor: pointer;"></i>
+                                            <div class="del-item" style="font-size:12px;" @click="removeFilter(index)">
+                                                <i class="el-icon-close" style="color: #e34d59;cursor:pointer;"></i>
                                                 删除
                                             </div>
                                             <el-select
@@ -89,7 +88,7 @@
                                                         changeType(item, data)
                                                     }
                                                 "
-                                                style="margin-bottom: 20px;width: 40%;"
+                                                style="width: 40%;margin-bottom: 20px;"
                                                 filterable
                                                 v-model.trim="item.type"
                                                 placeholder="请选择"
@@ -103,7 +102,7 @@
                                                         <el-option v-for="(item, index) in systemFieldOptins" :key="index" :label="item.label" :value="item.value"></el-option>
                                                     </el-select>
                                                     <!-- </el-form-item> -->
-                                                    <i style="margin-right: 10px;margin-left: 10px; color: #dcdcdc; font: 14px;" class="iconfont icon-lianjie"></i>
+                                                    <i style="margin-left: 10px;margin-right: 10px; color: #dcdcdc; font: 14px;" class="iconfont icon-lianjie"></i>
                                                     <el-input v-if="info.type != 5" style="width: 40%;" clearable v-model.trim="info.sourceField" placeholder="请输入字段值"></el-input>
                                                     <el-select v-if="info.type == 5" style="width: 40%;" filterable clearable v-model.trim="info.sourceField" placeholder="请选择字段值">
                                                         <el-option v-for="(item, index) in info.option" :key="index" :label="item.label" :value="item.value"></el-option>
@@ -112,12 +111,12 @@
                                                         v-show="item.fields.length != 1"
                                                         @click.stop="removeInfo(item.fields, i)"
                                                         class="el-icon-remove-outline"
-                                                        style="padding-left: 10px;color: #ff2727;cursor: pointer;"
+                                                        style="padding-left: 10px;color: #ff2727;cursor:pointer;"
                                                     ></i>
                                                     <i
                                                         class="el-icon-circle-plus-outline"
                                                         @click.stop="addInfo(item.fields)"
-                                                        style="margin-left: 10px;color: #0052d9;cursor: pointer;"
+                                                        style="color: #0052d9;cursor:pointer;margin-left:10px;"
                                                     ></i>
                                                 </div>
                                             </template>
@@ -139,7 +138,7 @@
                                                                     v-show="info.sourceField.length != 1"
                                                                     @click.stop="removeInfo(info.sourceField, i)"
                                                                     class="el-icon-minus"
-                                                                    style=" padding-right: 11px;padding-left: 10px;color: #ff2727;cursor: pointer;"
+                                                                    style="padding-left: 10px;color: #ff2727;cursor:pointer; padding-right: 11px;"
                                                                 ></i>
                                                             </el-tooltip>
                                                             <el-tooltip class="item" effect="dark" content="添加合并字段" placement="top">
@@ -153,12 +152,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="merge-with">
-                                                        <el-input style=" margin-right: 36px;width: calc(26.66% - 12px);" clearable v-model.trim="info.with" placeholder="特殊值说明">
+                                                        <el-input style="width: calc(26.66% - 12px); margin-right: 36px;" clearable v-model.trim="info.with" placeholder="特殊值说明">
                                                             <template slot="prepend">
                                                                 WITH
                                                             </template>
                                                         </el-input>
-                                                        <el-input style=" margin-right: 36px;width: calc(26.66% - 12px);" clearable v-model="info.connectStr" placeholder="合并字段时中间的连接符">
+                                                        <el-input style="width: calc(26.66% - 12px); margin-right: 36px;" clearable v-model="info.connectStr" placeholder="合并字段时中间的连接符">
                                                             <template slot="prepend">
                                                                 连接符
                                                             </template>
@@ -173,7 +172,7 @@
                                                                 v-show="item.fields.length != 1"
                                                                 @click.stop="removeInfo(item.fields, i)"
                                                                 class="el-icon-remove-outline"
-                                                                style=" padding-left: 10px;color: #ff2727;cursor: pointer;"
+                                                                style="color: #ff2727;cursor:pointer; padding-left:10px;"
                                                             ></i>
                                                         </el-tooltip>
                                                         <el-tooltip class="item" effect="dark" content="添加合并字段组" placement="top">
@@ -181,7 +180,7 @@
                                                                 v-show="item.fields.length === i + 1"
                                                                 class="el-icon-circle-plus-outline"
                                                                 @click.stop="addMergeItem(item.fields)"
-                                                                style="margin-left: 10px;color: #0052d9;cursor: pointer;"
+                                                                style="color: #0052d9;cursor:pointer;margin-left: 10px;"
                                                             ></i>
                                                         </el-tooltip>
                                                     </div>
@@ -201,7 +200,7 @@
                                                         >
                                                         </el-input-number>
                                                         <el-input-number
-                                                            style="margin-left: 20px;width: calc(50% - 10px);"
+                                                            style="width: calc(50% - 10px);margin-left: 20px;"
                                                             controls-position="right"
                                                             clearable
                                                             v-model.trim="info.length"
@@ -213,12 +212,12 @@
                                                         v-show="item.fields.length != 1"
                                                         @click.stop="removeInfo(item.fields, i)"
                                                         class="el-icon-remove-outline"
-                                                        style="margin-left: 10px;color: #ff2727;cursor: pointer;"
+                                                        style="color: #ff2727;cursor:pointer;margin-left:10px;"
                                                     ></i>
                                                     <i
                                                         class="el-icon-circle-plus-outline"
                                                         @click.stop="addTailoring(item.fields)"
-                                                        style="margin-left: 10px;color: #0052d9;cursor: pointer;"
+                                                        style="color: #0052d9;cursor:pointer;margin-left:10px;"
                                                     ></i>
                                                 </div>
                                             </template>
@@ -238,7 +237,7 @@
                         <div class="parse">
                             <div class="parse-res" v-if="parseingResult.length">
                                 <el-form label-width="auto" class="parse-form" :key="key" v-for="(parseItem, key) in parseingResult">
-                                    <div class="ub mb20" style=" justify-content: space-between;width: 92.4%;">
+                                    <div class="ub mb20" style="width:92.4%; justify-content: space-between;">
                                         <el-form-item style="flex: 1; margin-right: 70px;" label="原始字段：" size="small">
                                             <el-input disabled v-model.trim="parseItem.sourceField"></el-input>
                                         </el-form-item>
@@ -274,11 +273,11 @@
                                         </el-form-item>
                                     </div>
                                     <div class="ub mb20" style="justify-content: space-between;">
-                                        <el-form-item style="width: 92.4%;" label="匹配结果：" size="small">
+                                        <el-form-item style="width:92.4%;" label="匹配结果：" size="small">
                                             <el-input  disabled v-model.trim="parseItem.matchingResult"></el-input>
                                         </el-form-item>
                                         <div class="parse-action ub ub-ac" style="width: 7.6%;" @click="addMap(parseItem)">
-                                            <i class="el-icon-plus" @click.stop="addInfo(item.fields)" style="margin-left: 10px;color: #0052d9;cursor: pointer;"></i>
+                                            <i class="el-icon-plus" @click.stop="addInfo(item.fields)" style="color: #0052d9;cursor:pointer;margin-left:10px;"></i>
                                             添加映射
                                         </div>
                                     </div>
@@ -288,7 +287,7 @@
                                             <!-- base64解码 2 -->
                                             <!-- Unicode解码 3 -->
                                             <!-- 重定义 4 -->
-                                            <div style="width: 92.4%;" v-if="mapItem.type == '1'" class="ub ub-pj">
+                                            <div style="width:92.4%;" v-if="mapItem.type == '1'" class="ub ub-pj">
                                                 <el-form-item style="flex: 1;margin-right: 70px;" label="映射类型：" size="small">
                                                     <el-select filterable style="width: 100%;" v-model.trim="mapItem.type" @change="changeMapType(mapItem)" placeholder="请选择">
                                                         <el-option v-for="(typeItem, tpidx) in mapTypeList" :key="tpidx" :label="typeItem.label" :value="typeItem.value"></el-option>
@@ -299,7 +298,7 @@
                                                 </el-form-item>
                                                 <el-form-item style="flex: 1;" label="映射值：" size="small"><el-input v-model.trim="mapItem.mappingValue"></el-input></el-form-item>
                                             </div>
-                                            <div style="width: 92.4%;" v-if="mapItem.type == '2'" class="ub ub-pj">
+                                            <div style="width:92.4%;" v-if="mapItem.type == '2'" class="ub ub-pj">
                                                 <el-form-item style="width: calc((100% - 140px)/3);" label="映射类型：" size="small">
                                                     <el-select filterable style="width: 100%;" v-model.trim="mapItem.type" @change="changeMapType(mapItem)" placeholder="请选择">
                                                         <el-option v-for="(typeItem, tpidx) in mapTypeList" :key="tpidx" :label="typeItem.label" :value="typeItem.value"></el-option>
@@ -309,14 +308,14 @@
                                                     <el-input v-model.trim="mapItem.codingMode"></el-input>
                                                 </el-form-item>
                                             </div>
-                                            <div style="width: 92.4%;" v-if="mapItem.type == '3'" class="ub ub-pj">
+                                            <div style="width:92.4%;" v-if="mapItem.type == '3'" class="ub ub-pj">
                                                 <el-form-item style="width: calc((100% - 140px)/3);" label="映射类型：" size="small">
                                                     <el-select filterable style="width: 100%;" v-model.trim="mapItem.type" @change="changeMapType(mapItem)" placeholder="请选择">
                                                         <el-option v-for="(typeItem, tpidx) in mapTypeList" :key="tpidx" :label="typeItem.label" :value="typeItem.value"></el-option>
                                                     </el-select>
                                                 </el-form-item>
                                             </div>
-                                            <div style="width: 92.4%;" v-if="mapItem.type == '4'" class="ub ub-pj">
+                                            <div style="width:92.4%;" v-if="mapItem.type == '4'" class="ub ub-pj">
                                                 <el-form-item style="width: calc((100% - 140px)/3);" label="映射类型：" size="small">
                                                     <el-select filterable style="width: 100%;" v-model.trim="mapItem.type" placeholder="请选择">
                                                         <el-option v-for="(typeItem, tpidx) in mapTypeList" :key="tpidx" :label="typeItem.label" :value="typeItem.value"></el-option>
@@ -327,14 +326,14 @@
                                                 </el-form-item>
                                             </div>
                                             <div class="map-action ub ub-ac">
-                                                <i @click.stop="removeInfo(parseItem.mapping, mapidx)" class="el-icon-remove-outline" style="color: #ff2727;cursor: pointer;"></i>
+                                                <i @click.stop="removeInfo(parseItem.mapping, mapidx)" class="el-icon-remove-outline" style="color: #ff2727;cursor:pointer;"></i>
                                             </div>
                                         </div>
                                     </div>
                                 </el-form>
                             </div>
                             <div @click="review" v-if="parseingResult.length" class="parse-btn">预 览</div>
-                            <div v-else class="result" style="height: 80px;font-size: 12px;color: rgb(0 0 0 / 40%);line-height: 80px;">无数据</div>
+                            <div v-else style="height: 80px;line-height: 80px;color: rgba(0,0,0,.4);font-size:12px">无数据</div>
                         </div>
                     </template>
                 </div>
@@ -360,7 +359,7 @@
                             </div>
                         </div>
                     </div>
-                    <div v-else class="result" style="height: 80px;font-size: 12px;color: rgb(0 0 0 / 40%);line-height: 80px;">无数据</div>
+                    <div v-else style="height: 80px;line-height: 80px;color: rgba(0,0,0,.4);font-size:12px">无数据</div>
                 </div>
             </div>
         </div>
@@ -1207,29 +1206,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.parse-res {
-    ::v-deep .el-form-item__label {
-        color: #0052d9 !important;
+.parse-res{
+    ::v-deep .el-form-item__label{
+        color:#0052d9 !important;
+    }
+}
+.event-content{
+    ::v-deep .el-input-group__prepend{
+        color:#0052d9 !important;
     }
 }
 .event-content {
-    ::v-deep .el-input-group__prepend {
-        color: #0052d9 !important;
-    }
-}
-.event-content {
+    // padding-bottom: 20px;
+    background-color: #fff;
     // background-image: url('/static/img/dialog-bg2.013a7ba.png');
     // background-position: right 200px;
     // background-repeat: no-repeat;
     // background-size: 200px 320px;
-    padding: 20px 20px 14px;
-    // padding-bottom: 20px;
-    background-color: #ffffff;
-}
-.custom-star {
-    .event-content {
-        background: unset;
-    }
+    padding: 20px 20px 14px 20px;
 }
 .add_rules ::v-deep .el-form {
     .el-form-item__label {
@@ -1241,7 +1235,7 @@ export default {
     .btn-wrap {
         position: absolute;
         right: 0;
-        z-index: 999;
+        z-index:999;
         ::v-deep .cancel {
             .btn {
                 p {
@@ -1276,38 +1270,41 @@ export default {
 // }
 .add_rules ::v-deep .is-disabled {
     .el-textarea__inner {
-        border: 1px solid #dcdcdc;
-        color: #cccccc;
         background: transparent;
-        box-shadow: 0 0 7px #389bf7 inset;
+        border: 1px solid #dcdcdc;
+        box-shadow: 0px 0px 7px #389bf7 inset;
+        color: #ccc;
     }
 }
+
 .add-rules-btn {
-    display: inline-block;
-    margin-right: 10px;
     width: 80px;
     height: 30px;
-    font-size: 12px;
-    border: solid 1px #39caf3;
-    border-radius: 5px;
     text-align: center;
-    color: #a2ceec;
-    background-color: #041f38;
-    box-shadow: inset 0 0 10px 0 rgb(0 167 245 / 97%);
     line-height: 30px;
+    background-color: #041f38;
+    display: inline-block;
+    box-shadow: inset 0px 0px 10px 0px rgba(0, 167, 245, 0.97);
+    border: solid 1px #39caf3;
+    font-size: 12px;
     letter-spacing: 1px;
+    color: #a2ceec;
+    border-radius: 5px;
+    margin-right: 10px;
     cursor: pointer;
     box-sizing: border-box;
 }
+
 .reset,
 .finish {
     // background-image: url(../../../assets/img/searchBg.png);
     border: none;
-    background-position: right 0;
     background-repeat: no-repeat;
+    background-position: right 0;
     background-size: 100% 30px;
     box-shadow: none;
 }
+
 .title {
     margin-top: 30px;
     line-height: 20px;
@@ -1320,13 +1317,13 @@ export default {
         color: #0052d9;
     }
     .tips {
-        margin-left: 30px;
         font-size: 12px;
+        letter-spacing: 0px;
         color: #ffd8d8;
+        text-shadow: 0px 0px 4px rgba(255, 0, 0, 0.5);
         // box-shadow: 0px 0px 4px 0px rgba(255, 0, 0, 0.5);
         opacity: 0.8;
-        text-shadow: 0 0 4px rgb(255 0 0 / 50%);
-        letter-spacing: 0;
+        margin-left: 30px;
         .iconfont {
             font-size: 12px;
         }
@@ -1336,23 +1333,24 @@ export default {
     padding-top: 20px;
     padding-right: 40px;
 }
+
 .parse-btn {
-    margin: 30px auto 0;
     width: 90px;
     height: 30px;
-    font-size: 12px;
-    border-radius: 4px;
-    text-align: center;
-    color: #ffffff;
-    background: #387dee;
-    // background-image: url(../../../assets/img/parse.png);
-    opacity: 0.8;
     line-height: 26px;
+    font-size: 12px;
+    text-align: center;
     cursor: pointer;
     box-sizing: border-box;
+    margin: 30px auto 0;
+    // background-image: url(../../../assets/img/parse.png);
+    opacity: 0.8;
     &:hover {
         opacity: 1;
     }
+    background: #387dee;
+    color: #fff;
+    border-radius: 4px;
 }
 .separator ::v-deep .label-tit {
     .el-form-item__label {
@@ -1363,50 +1361,51 @@ export default {
     .label-tit ::v-deep .el-form-item__label {
         color: #00ffe4;
     }
+
     .filter-item {
+        background:rgba(56,125,238,0.02);
         position: relative;
         padding: 20px;
-        border: solid 1px #dddddd;
         border-radius: 2px;
-        background: rgb(56 125 238 / 2%);
+        border: solid 1px #dddddd;
         // background: rgba(0,0,0,.25);
         .key-value:not(:last-child) {
             margin-bottom: 20px;
         }
         .del-item {
+            width:66px;
+            height: 24px;
+            cursor: pointer;
             position: absolute;
             top: 0;
-            right: 0;
-            width: 66px;
-            height: 24px;
+            right: 0px;
+            color: #e34d59 !important;
             border: solid 1px #dddddd;
+            text-align: center;
+            line-height: 24px;
             border-top: none;
             border-right: none;
-            border-radius: 0 0 0 10px !important;
-            text-align: center;
-            color: #e34d59 !important;
-            cursor: pointer;
-            line-height: 24px;
+            border-radius:0 0 0 10px !important;
         }
     }
     .add-rule ::v-deep .el-form-item__content {
-        display: inline-block;
-        padding-right: 10px;
-        padding-left: 10px;
-        height: 24px;
-        border: solid 1px #387dee;
-        border-radius: 3px;
         color: #0052d9;
         cursor: pointer;
-        line-height: 24px !important;
+        display: inline-block;
+        border: solid 1px #387dee;
+        border-radius: 3px;
+        padding-left: 10px;
+        padding-right: 10px;
+        height:24px;
+        line-height:24px;
     }
 }
 .field-wrap {
     display: flex;
-    justify-content: center;
-    align-items: center;
     padding: 30px 20px;
     box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
     .field-table ::v-deep .cell {
         height: 30px;
         line-height: 30px;
@@ -1432,10 +1431,10 @@ export default {
     flex-direction: row;
     flex-wrap: wrap;
     .merge-inner {
+        width: calc(40% + 36px);
         display: flex;
         align-items: center;
         margin-bottom: 20px;
-        width: calc(40% + 36px);
     }
     .last-merge {
         width: calc(40% + 50px);
@@ -1447,14 +1446,15 @@ export default {
         }
     }
 }
+
 .form-wrapper .parse-form {
-    margin: 20px 40px 0 0;
     padding: 0;
     padding-top: 20px;
     padding-left: 20px;
-    border: solid 1px rgb(28 215 250 / 50%);
-    border-radius: 2px 2px 0;
-    background-color: rgb(0 0 0 / 25%);
+    margin: 20px 40px 0 0px;
+    background-color: rgba(0, 0, 0, .25);
+    border-radius: 2px 2px 0px 2px;
+    border: solid 1px rgba(28, 215, 250, 0.5);
     .mb20 {
         margin-bottom: 20px;
         .el-form-item {
@@ -1465,9 +1465,9 @@ export default {
         }
     }
     .parse-action {
-        font-size: 12px;
-        color: #0052d9;
         cursor: pointer;
+        color: #0052d9;
+        font-size: 12px;
         i {
             margin-right: 6px;
         }
@@ -1487,26 +1487,26 @@ export default {
 .preview-wrapper {
     .preview {
         margin: 20px 40px;
-        border-radius: 4px 0 0;
-        color: #ffffff;
+        color: #fff;
+        border-radius: 4px 0px 0px 0px;
         .p-item {
             margin-bottom: 10px;
         }
         .pre-line {
-            justify-content: space-between;
+            background: transparent;
             // border: 1px solid #dcdcdc;
             // box-shadow: 0px 0px 7px #389bf7 inset;
             height: 30px;
-            background: transparent;
             line-height: 30px;
+            justify-content: space-between;
         }
         .inner {
             flex: 1;
             .pre-key {
-                padding-left: 9px;
                 width: 100px;
-                background-color: #ebf1f5;
+                padding-left: 9px;
                 box-sizing: border-box;
+                background-color: #ebf1f5;
                 // box-shadow: inset 0px 0px 6px 0px rgba(0, 186, 255, 0.73);
             }
             .pre-value {
@@ -1516,13 +1516,14 @@ export default {
     }
 }
 .arrow {
-    display: inline-block;
-    margin-right: 84px;
-    margin-left: 84px;
     width: 52px;
     height: 31px;
+    display: inline-block;
+    margin-left: 84px;
+    margin-right: 84px;
     // background-image: url(../../../assets/img/arrow.png);
     transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
 }
 .dis {
     cursor: no-drop;
@@ -1535,8 +1536,8 @@ export default {
     color: #dcdcdc;
 }
 .add_rules ::v-deep .el-input-number__increase {
-    border-bottom: 1px solid #dcdcdc;
     border-left: 1px solid #dcdcdc;
+    border-bottom: 1px solid #dcdcdc;
     color: #dcdcdc;
 }
 .add_rules ::v-deep .el-input-number__decrease,
@@ -1544,8 +1545,8 @@ export default {
     background-color: transparent;
 }
 .content-rule {
-    overflow: scroll;
     height: calc(100vh - 82px - 70px);
+    overflow: scroll;
     border-top: none;
     &::before {
         display: none!important;
@@ -1553,75 +1554,60 @@ export default {
 }
 .is_fixed {
     position: fixed;
-    z-index: 1;
+    background: rgba(0,0,0,.1);
     width: calc(100% - 222px - 10px - 46px);
-    background: rgb(0 0 0 / 10%);
+    z-index: 1;
 }
-.form-wrapper .parse-form {
-    margin: 20px 40px 0 0;
-    padding: 0;
-    padding-top: 20px;
-    padding-left: 20px;
-    border: solid 1px #dddddd;
-    border-radius: 2px 2px 0;
-    background-color: #ffffff;
-}
-.preview-wrapper {
-    .preview {
-        margin: 20px 40px;
-        margin-left: 0;
-        color: #3f4f57;
-        .p-item {
-            margin-bottom: 20px;
-            border-top: 1px solid #dddddd;
-            border-right: 1px solid #dddddd;
-            border-left: 1px solid #dddddd;
-        }
-        .pre-line {
-            justify-content: space-between;
-            height: 30px;
-            // box-shadow: 0px 0px 7px #dddddd inset;
-            border-bottom: 1px solid #dddddd;
-            border-radius: 4px 0 0;
-            background: transparent;
-            line-height: 30px;
-        }
-        .inner {
-            flex: 1;
-            .pre-key {
-                padding-left: 9px;
-                width: 100px;
-                font-size: 12px;
-                border-top: solid 1px #dddddd;
-                // box-shadow: inset 0px 0px 6px 0px rgba(0, 186, 255, 0.73);
-                border-right: solid 1px #dddddd;
-                border-bottom: solid 1px #dddddd;
-                background-color: #ebf1f5;
-                box-sizing: border-box;
-            }
-            .pre-value {
-                padding-left: 20px;
-                font-size: 12px;
-            }
-        }
-    }
-}
-.custom-star {
+// .white-theme {
     .form-wrapper .parse-form {
-        background-color: unset;
+        padding: 0;
+        padding-top: 20px;
+        padding-left: 20px;
+        margin: 20px 40px 0 0px;
+        border-radius: 2px 2px 0px 2px;
+        border: solid 1px #dddddd;
+        background-color: #fff;
     }
-    .pre-value {
-        color: #ffffff!important;
-    }
-    .result {
-        color: #ffffff!important;
-    }
-    .list-tips {
-        color: #ffffff!important;
-    }
-    .event-wrapper {
-        border: solid 1px #1cd7fa;
-    }
-}
+    .preview-wrapper {
 
+        .preview {
+            margin: 20px 40px;
+            margin-left: 0;
+            color: #3f4f57;
+            .p-item {
+                border-top: 1px solid #dddddd;
+                border-right: 1px solid #dddddd;
+                border-left: 1px solid #dddddd;
+                margin-bottom: 20px;
+            }
+            .pre-line {
+                border-radius: 4px 0px 0px 0px;
+                background: transparent;
+                // box-shadow: 0px 0px 7px #dddddd inset;
+                border-bottom: 1px solid #dddddd;
+                height: 30px;
+                line-height: 30px;
+                justify-content: space-between;
+            }
+            .inner {
+                flex: 1;
+                .pre-key {
+                    width: 100px;
+                    padding-left: 9px;
+                    box-sizing: border-box;
+                    background-color: #ebf1f5;
+                    // box-shadow: inset 0px 0px 6px 0px rgba(0, 186, 255, 0.73);
+                    border-right: solid 1px #dddddd;
+                    border-bottom: solid 1px #dddddd;
+                    border-top: solid 1px #dddddd;
+                    font-size: 12px;
+                }
+                .pre-value {
+                    padding-left: 20px;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+// }
 </style>

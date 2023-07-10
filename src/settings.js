@@ -18,8 +18,8 @@ module.exports = {
     navCollapseSettings: false,
 
     /**
-     * @type {string} default | dark | purple| star
-     * @description 主题颜色，默认蓝色 | 黑色 | 紫色|星空蓝
+     * @type {string} default | dark | purple
+     * @description 主题颜色，默认蓝色 | 黑色 | 紫色
      */
     themeSettings: 'default'
 }

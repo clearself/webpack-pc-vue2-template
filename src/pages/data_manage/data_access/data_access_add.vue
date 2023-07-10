@@ -12,19 +12,19 @@
                 </div>
 
             </div>
-            <div style="padding: 30px 0 0;">
+            <div style="padding:30px 0 0 0px;">
                 <el-form ref="formData" :model="formData" label-width="105px" :rules="formDataRules" label-position="top">
                     <div class="ub w100 ub-pj">
-                        <el-form-item label="任务名称：" style="width: 30%;" prop="taskName" size="small">
+                        <el-form-item label="任务名称：" style="width: 30%" prop="taskName" size="small">
                             <el-input clearable v-model="formData.taskName" size="small" placeholder="请输入"></el-input>
                         </el-form-item>
                         <el-form-item label="工作节点：" style="width: 30%;" prop="nodeId" size="small">
-                            <el-select filterable v-model="formData.nodeId" size="small" style="width: 100%;" placeholder="请选择">
+                            <el-select filterable v-model="formData.nodeId" size="small" style="width: 100%" placeholder="请选择">
                                 <el-option v-for="(item, index) in nodeIdList" :key="index" :label="item.name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item label="接入类型：" style="width: 30%;" prop="type" size="small">
-                            <el-select filterable  v-model="formData.type" size="small" style="width: 100%;" placeholder="请选择">
+                            <el-select filterable  v-model="formData.type" size="small" style="width: 100%" placeholder="请选择">
                                 <el-option v-for="(item, index) in typeList" :key="index" :label="item.name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
@@ -32,7 +32,7 @@
                     <div class="ub w100 ub-pj">
 
                         <el-form-item label="解析规则："  style="width: 30%;" prop="ruleIdList" size="small">
-                            <el-select filterable v-model="formData.ruleIdList" size="small" style="width: 100%;" placeholder="请选择" multiple collapse-tags>
+                            <el-select filterable v-model="formData.ruleIdList" size="small" style="width: 100%" placeholder="请选择" multiple collapse-tags>
                                 <el-option v-for="(item, index) in ruleIdList" :key="index" :label="item.name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
@@ -42,11 +42,11 @@
                 <el-form ref="catalogueForm" :model="catalogueForm" label-width="105px" :rules="catalogueRules"  v-if="formData.type===1" label-position="top">
                     <div class="ub w100 ub-as">
                         <el-form-item label="编码：" style="width: 30%;" prop="encode" size="small">
-                            <el-select filterable  v-model="catalogueForm.encode" size="small" style="width: 100%;" placeholder="请选择">
+                            <el-select filterable  v-model="catalogueForm.encode" size="small" style="width: 100%" placeholder="请选择">
                                 <el-option v-for="(item, index) in encodeList" :key="index" :label="item.name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="文件路径：" style=" margin-left: 5%;width: 30%;" prop="path" size="small">
+                        <el-form-item label="文件路径：" style="width: 30%; margin-left:5%" prop="path" size="small">
                             <el-input clearable v-model="catalogueForm.path" size="small" placeholder="请填写文件路径"></el-input>
                         </el-form-item>
                     </div>
@@ -55,7 +55,7 @@
                 <el-form ref="databaseForm" :model="databaseForm" label-width="105px" :rules="databaseRules"  v-if="formData.type===2" label-position="top">
                     <div class="ub w100 ub-pj">
                         <el-form-item label="数据库类型：" style="width: 30%;" prop="dbType" size="small">
-                            <el-select filterable  v-model="databaseForm.dbType" size="small" style="width: 100%;" placeholder="请选择">
+                            <el-select filterable  v-model="databaseForm.dbType" size="small" style="width: 100%" placeholder="请选择">
                                 <el-option v-for="(item, index) in dbTypeList" :key="index" :label="item.name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
@@ -85,7 +85,7 @@
                             <el-input clearable v-model="databaseForm.incrementalField" size="small" placeholder="请填写递增字段"></el-input>
                         </el-form-item>
                         <el-form-item label="索引类型：" style="width: 30%;" prop="incrementalType" size="small">
-                            <el-select filterable v-model="databaseForm.incrementalType" size="small" style="width: 100%;" placeholder="请选择">
+                            <el-select filterable v-model="databaseForm.incrementalType" size="small" style="width: 100%" placeholder="请选择">
                                 <el-option v-for="(item, index) in incrementalTypeList" :key="index" :label="item.name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
@@ -95,15 +95,15 @@
                             <el-input clearable v-model="databaseForm.indexColumn" size="small" placeholder="请填写索引列"></el-input>
                         </el-form-item>
                         <el-form-item label="索引起始位置：" style="width: 30%;" prop="indexStart" size="small">
-                            <el-input-number v-model="databaseForm.indexStart" controls-position="right"  size="small" placeholder="请选择" style="width: 100%;"></el-input-number>
+                            <el-input-number v-model="databaseForm.indexStart" controls-position="right"  size="small" placeholder="请选择" style="width: 100%"></el-input-number>
                         </el-form-item>
                         <el-form-item label="索引步长：" style="width: 30%;" prop="indexPace" size="small">
-                            <el-input-number v-model="databaseForm.indexPace " controls-position="right"  size="small" style="width: 100%;"></el-input-number>
+                            <el-input-number v-model="databaseForm.indexPace " controls-position="right"  size="small" style="width: 100%"></el-input-number>
                         </el-form-item>
                     </div>
                     <div class="ub w100 ub-pj">
                         <el-form-item label="修改偏移：" style="width: 30%;" prop="indexOffset" size="small">
-                            <el-select filterable  v-model="databaseForm.indexOffset" size="small" style="width: 100%;" placeholder="请选择">
+                            <el-select filterable  v-model="databaseForm.indexOffset" size="small" style="width: 100%" placeholder="请选择">
                                 <el-option v-for="(item, index) in indexOffsetList" :key="index" :label="item.name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
@@ -130,24 +130,24 @@
                             <el-input clearable v-model="kafkaForm.customeId " size="small" placeholder="请填写客户端ID"></el-input>
                         </el-form-item>
                         <el-form-item label="编码：" style="width: 30%;" prop="encode" size="small">
-                            <el-select filterable  v-model="kafkaForm.encode" size="small" style="width: 100%;" placeholder="请选择">
+                            <el-select filterable  v-model="kafkaForm.encode" size="small" style="width: 100%" placeholder="请选择">
                                 <el-option v-for="(item, index) in encodeList" :key="index" :label="item.name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
                     </div>
                     <div class="ub w100 ub-pj">
                         <el-form-item label="启用通配符：" style="width: 30%;" prop="wildcard" size="small">
-                            <el-select filterable  v-model="kafkaForm.wildcard" size="small" style="width: 100%;" placeholder="请选择">
+                            <el-select filterable  v-model="kafkaForm.wildcard" size="small" style="width: 100%" placeholder="请选择">
                                 <el-option v-for="(item, index) in wildcardList" :key="index" :label="item.name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item label="修改偏移：" style="width: 30%;" prop="indexOffset" size="small">
-                            <el-select filterable  v-model="kafkaForm.indexOffset" size="small" style="width: 100%;" placeholder="请选择">
+                            <el-select filterable  v-model="kafkaForm.indexOffset" size="small" style="width: 100%" placeholder="请选择">
                                 <el-option v-for="(item, index) in indexOffsetList" :key="index" :label="item.name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item label="权限校验：" style="width: 30%;" prop="permissionCheck" size="small">
-                            <el-select filterable  v-model="kafkaForm.permissionCheck" size="small" style="width: 100%;" placeholder="请选择">
+                            <el-select filterable  v-model="kafkaForm.permissionCheck" size="small" style="width: 100%" placeholder="请选择">
                                 <el-option v-for="(item, index) in permissionCheckList" :key="index" :label="item.name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
@@ -160,7 +160,7 @@
                             <el-input clearable v-model="syslogForm.port " size="small" placeholder="请填写端口"></el-input>
                         </el-form-item>
                         <el-form-item label="编码：" style="width: 30%;" prop="encode" size="small">
-                            <el-select filterable  v-model="syslogForm.encode" size="small" style="width: 100%;" placeholder="请选择">
+                            <el-select filterable  v-model="syslogForm.encode" size="small" style="width: 100%" placeholder="请选择">
                                 <el-option v-for="(item, index) in encodeList" :key="index" :label="item.name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
@@ -179,18 +179,18 @@
                             <el-input clearable v-model="hdfsForm.port" size="small" placeholder="请填写端口"></el-input>
                         </el-form-item>
                         <el-form-item label="编码：" style="width: 30%;" prop="encode" size="small">
-                            <el-select filterable  v-model="hdfsForm.encode" size="small" style="width: 100%;" placeholder="请选择">
+                            <el-select filterable  v-model="hdfsForm.encode" size="small" style="width: 100%" placeholder="请选择">
                                 <el-option v-for="(item, index) in encodeList" :key="index" :label="item.name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
                     </div>
                     <div class="ub w100 ub-as">
                         <el-form-item label="修改偏移：" style="width: 30%;" prop="indexOffset" size="small">
-                            <el-select filterable  v-model="hdfsForm.indexOffset" size="small" style="width: 100%;" placeholder="请选择">
+                            <el-select filterable  v-model="hdfsForm.indexOffset" size="small" style="width: 100%" placeholder="请选择">
                                 <el-option v-for="(item, index) in indexOffsetList" :key="index" :label="item.name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="文件路径：" style="margin-left: 5%;width: 30%;" prop="path" size="small">
+                        <el-form-item label="文件路径：" style="width: 30%;margin-left: 5%" prop="path" size="small">
                             <el-input clearable v-model="hdfsForm.path" size="small" placeholder="请填写文件的绝对路径"></el-input>
                         </el-form-item>
                     </div>
@@ -214,12 +214,12 @@
                             <el-input clearable v-model="esForm.indexColumn" size="small" placeholder="请填写索引列"></el-input>
                         </el-form-item>
                         <el-form-item label="索引列类型：" style="width: 30%;" prop="incrementalType" size="small">
-                            <el-select filterable v-model="esForm.incrementalType" size="small" style="width: 100%;" placeholder="请选择">
+                            <el-select filterable v-model="esForm.incrementalType" size="small" style="width: 100%" placeholder="请选择">
                                 <el-option v-for="(item, index) in incrementalTypeList" :key="index" :label="item.name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item label="索引步长：" style="width: 30%;" prop="indexPace" size="small">
-                            <el-input-number v-model="esForm.indexPace " controls-position="right"  size="small" style="width: 100%;"></el-input-number>
+                            <el-input-number v-model="esForm.indexPace " controls-position="right"  size="small" style="width: 100%"></el-input-number>
                         </el-form-item>
                     </div>
                     <div class="ub w100 ub-pj">
@@ -227,18 +227,18 @@
                             <el-input clearable v-model="esForm.colonyName" size="small" placeholder="请填写集群名称"></el-input>
                         </el-form-item>
                     </div>
-                    <div class="" style="width: 100%;">
-                        <div v-for="(item, index) in esForm.ips" :key="index" style="width: 30%;">
+                    <div class="" style="width:100%;">
+                        <div v-for="(item, index) in esForm.ips" :key="index" style="width:30%;">
                             <div class="ub" >
-                                <el-form-item label="主机及端口：" style="width: 60%;"  :prop="'ips.'+index+'.ip'" size="small" :rules="[{ required: true, message: '请输入主机', trigger: 'blur' }]">
+                                <el-form-item label="主机及端口：" style="width: 60%"  :prop="'ips.'+index+'.ip'" size="small" :rules="[{ required: true, message: '请输入主机', trigger: 'blur' }]">
                                     <el-input  clearable v-model="item.ip" size="small" placeholder="请输入"></el-input>
                                 </el-form-item>
-                                <div style="margin: 50px 10px 0;width: 25px;height: 2px;background: #dcdcdc;"></div>
-                                <el-form-item style="margin-top: 30px;width: 30%;" :prop="'ips.'+index+'.port'"  size="small" label-width="0px" :rules="[{ required: true, message: '请输入端口', trigger: 'blur' }]">
+                                <div style="background: #dcdcdc;margin: 50px 10px 0px 10px;width:25px;height:2px"></div>
+                                <el-form-item style="width: 30%;margin-top: 30px" :prop="'ips.'+index+'.port'"  size="small" label-width="0px" :rules="[{ required: true, message: '请输入端口', trigger: 'blur' }]">
                                     <el-input  clearable v-model="item.port" size="small" placeholder="请输入"></el-input>
                                 </el-form-item>
-                                <i v-show="esForm.ips.length>1" @click.stop="removeInfo(esForm.ips, index)" class="el-icon-remove-outline" style="margin-left: 10px;font-size: 14px;color: #ff2727;cursor: pointer;line-height: 90px;"></i>
-                                <i  @click.stop="addInfo(esForm.ips)" class="el-icon-circle-plus-outline" style="margin-left: 10px;font-size: 14px;color: #0052d9;cursor: pointer;line-height: 90px;"></i>
+                                <i v-show="esForm.ips.length>1" @click.stop="removeInfo(esForm.ips, index)" class="el-icon-remove-outline" style="color: #ff2727;cursor:pointer;font-size:14px;margin-left:10px;line-height: 90px"></i>
+                                <i  @click.stop="addInfo(esForm.ips)" class="el-icon-circle-plus-outline" style="color: #0052d9;cursor:pointer;margin-left:10px;font-size:14px;line-height: 90px"></i>
                             </div>
                         </div>
                     </div>
@@ -637,42 +637,43 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .event-wrapper {
-        height: 100%;
+    .event-wrapper{
+        height:100%;
         box-sizing: border-box;
+
     }
     .event-content {
+        height: -webkit-calc(100vh - 98px);
+        height: -moz-calc(100vh - 98px);
+        height: -ms-calc(100vh - 98px);
+        height: calc(100vh - 98px);
+        box-sizing: border-box;
+        padding:20px;
+        background-color: #fff;
         // background-image: url(../../../assets/img/dialog-bg2.png);
         // background-position: right 200px;
         // background-repeat: no-repeat;
         // background-size: 200px 320px;
         overflow-y: auto;
-        padding: 20px;
-        height: calc(100vh - 98px);
-        height: calc(100vh - 98px);
-        height: -ms-calc(100vh - 98px);
-        height: calc(100vh - 98px);
-        background-color: #ffffff;
-        box-sizing: border-box;
     }
-    .sure-btn {
+    .sure-btn{
         margin: 50px;
         box-sizing: border-box;
     }
-    .match-con ::v-deep .el-checkbox__label {
-        color: #ffffff;
+    .match-con ::v-deep .el-checkbox__label{
+        color:#fff;
     }
-    .match-con ::v-deep .is-checked .el-checkbox__label {
-        color: #409eff;
+    .match-con ::v-deep .is-checked .el-checkbox__label{
+        color:#409EFF;
     }
     .tips {
-        margin-left: 30px;
         font-size: 12px;
+        letter-spacing: 0px;
         color: #ffd8d8;
+        text-shadow: 0px 0px 4px rgba(255, 0, 0, 0.5);
         // box-shadow: 0px 0px 4px 0px rgba(255, 0, 0, 0.5);
         opacity: 0.8;
-        text-shadow: 0 0 4px rgb(255 0 0 / 50%);
-        letter-spacing: 0;
+        margin-left: 30px;
         .iconfont {
             font-size: 12px;
         }
@@ -689,15 +690,7 @@ export default {
     .event  ::v-deep  .el-input-number__decrease, .event  ::v-deep  .el-input-number__increase {
         background-color: transparent;
     }
-    .el-select-dropdown.is-multiple .el-select-dropdown__item.selected::after {
+    .el-select-dropdown.is-multiple .el-select-dropdown__item.selected::after{
         // color: #1cd7fa;
-    }
-    .custom-star {
-        .event-content {
-            background: unset;
-        }
-        .list-tips {
-            color: #ffffff;
-        }
     }
 </style>

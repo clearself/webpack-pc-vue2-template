@@ -169,7 +169,7 @@
                                 border
                                 stripe
                                 tooltip-effect="dark">
-                                <el-table-column align="center" type="index" width="50" label="序号"></el-table-column>
+                                <el-table-column align="center" type="index" width="50" label="序号" :index="indexMethod"></el-table-column>
                                 <el-table-column prop="workOrderName" label="工单名称">
                                 </el-table-column>
                                 <el-table-column prop="name" label="当前节点">

@@ -10,6 +10,7 @@
                                     <div class="ub ub-ac">
                                         <Refresh @selectChange="selectChange" />
                                     </div>
+
                                     <div class="ub ub-ac">
                                         <el-form :model="get_params" label-position="right" label-width="20px">
                                             <!-- label="发生时间:" -->
@@ -24,10 +25,10 @@
                                         <i class="el-icon-brush"></i>
                                         <span>输出图表记录</span>
                                     </p> -->
-                                    <!-- <p @click="taskDialog = true">
+                                    <p @click="taskDialog = true">
                                         <i class="iconfont icon-lixianrenwu"></i>
                                         <span>离线任务查询</span>
-                                    </p> -->
+                                    </p>
                                     <p @click="recordDialog = true">
                                         <i class="iconfont icon-lishi1"></i>
                                         <span>历史查询记录</span>
@@ -77,7 +78,6 @@
                             <i :class="['iconfont', 'icon-a-yibiaopan-xiala1',viewChartOpen?'icon-select1':'icon-select' ]"  @click="viewChartOpen=!viewChartOpen" style="font-size:12px"></i>
                         </div>
                     </div>
-                    <div class="chart-view ub ub-pc" @click="viewTab = 'chartView'" :class="{'active': viewTab === 'chartView'}">图表视图</div>
                 </div>
             </div>
             <div
@@ -127,17 +127,9 @@
             @handleDownload="handleDownload"
             v-if="viewTab === 'tableView'">
         </TableContent>
-        <ChartContent
-            :type="4"
-            v-loading.lock="loading"
-            element-loading-background="rgba(0, 0, 0, 0.05)"
-            element-loading-text="拼命加载中......"
-            ref="chartContent"
-            :sortFieldObj="sortFieldObj"
-            v-if="viewTab === 'chartView'">
-        </ChartContent>
+
         <Alarm :alarm-dialog="alarmDialog" :select-mode='selectMode' @addAlarmSucess="addAlarmSucess" ref="drawerRef"></Alarm>
-        <SaveList :type="2" :save-list-dialog="saveListDialog" v-if="saveListDialog"></SaveList>
+        <SaveList :type="2" :save-list-dialog="saveListDialog"></SaveList>
         <OffLineTask :task-dialog="taskDialog" @handleSee="seeTask" ref="offLineTask"></OffLineTask>
         <HistoryRecord :record-dialog='recordDialog' @query="historyQuery" ref="historyRecordRef"></HistoryRecord>
         <ChartRecord :chart-dialog='chartDialog' @query="historyChart" ref="chartRecordRef"></ChartRecord>
@@ -173,7 +165,6 @@
                         noChildrenText="当前分支无子节点"
                         noOptionsText="无可用选项"
                         placeholder="请选择资产类型"
-                        noResultsText="无可用选项"
                         v-model="saveRecordForm.typeId"
                         loadingText="下拉框无匹配项"
                         :clearable="false"
@@ -198,8 +189,8 @@
         </el-dialog>
         <el-dialog title="保存至输出图表" width="700px" :visible.sync="chartTaskDialog" custom-class="common-dialog">
             <el-form :model="chartTaskForm" ref="chartTaskForm" :rules="saveTaskRules" label-position="top">
-                <el-form-item label="名称：" prop="name" label-width="86px" style="margin-bottom: 20px">
-                    <el-input size="mini" placeholder="请输入" v-model="chartTaskForm.name" style="width:652px;margin-top: 3px"></el-input>
+                <el-form-item label="任务名称：" prop="name" label-width="86px" style="margin-bottom: 20px">
+                    <el-input size="mini" placeholder="请输入" v-model="chartTaskForm.name"></el-input>
                 </el-form-item>
                 <el-form-item label="所属分组：" prop="typeId" label-width="86px" style="margin-bottom: 20px">
                     <treeselect
@@ -210,7 +201,6 @@
                         noChildrenText="当前分支无子节点"
                         noOptionsText="无可用选项"
                         placeholder="请选择资产类型"
-                        noResultsText="无可用选项"
                         v-model="chartTaskForm.typeId"
                         loadingText="下拉框无匹配项"
                         :clearable="false"
@@ -249,7 +239,6 @@ import OffLineTask from './components/off_line_task/index.vue'
 import SaveList from './components/save_list/index.vue'
 import CustomDate from './components/custom_date/index.vue'
 import CustomDate1 from './components/chart_record/custom_date.vue'
-import ChartContent from '@/pages/data_manage/chart_option/components/ChartContent'
 import {
     getList,
     getTableChart,
@@ -264,12 +253,8 @@ import {
     findSearchType,
     searchFieldVal,
     getTopField,
-    download,
-    getSortField
+    download
 } from '@/server/alarm_log/api.js'
-// import {
-//     getSortField
-// } from '@/server/data_manage/new_search.js'
 import { addDashboardChart, findSearchTypeChart } from '@/server/alarm_log/chart_record.js'
 import condition from '@/components/condition.vue'
 import ueditorConfig from '@/mixins/ueditorConfig'
@@ -299,8 +284,7 @@ export default {
         HistoryRecord,
         Treeselect,
         ChartRecord,
-        CustomDate1,
-        ChartContent
+        CustomDate1
     },
     mixins: [ueditorConfig],
     data() {
@@ -608,8 +592,7 @@ export default {
             dateData1: '',
             dateMode1: '',
             useDate1: {},
-            useIndex1: '',
-            sortFieldObj: null
+            useIndex1: ''
         }
     },
     computed: {
@@ -737,18 +720,11 @@ export default {
         this.initCanSelectedFileds()
         this.initSelectedFileds1()
         this.isShow = true
-        this.getSortFieldFn()
         this.$nextTick(() => {
             this.getHighlight()
         })
     },
     methods: {
-        getSortFieldFn() {
-            getSortField({ queryData: {}, paramsData: {}}).then(res => {
-                console.log(res)
-                this.sortFieldObj = res
-            })
-        },
         handlechartTaskClose() {
             this.chartTaskForm = {
                 name: '',
@@ -882,9 +858,8 @@ export default {
                                 timeStatus: this.$getsessionStorage('temporaryalarm').timeUnit ? this.$getsessionStorage('temporaryalarm').timeUnit : ''
                             },
                             groupId: this.chartTaskForm.typeId,
-                            originHeader: this.list,
-                            indexType: 7,
-                            originType: 2
+                            chartHeader: this.list,
+                            indexType: 7
                         }
                     }
                     console.log(data)
@@ -952,7 +927,7 @@ export default {
             }
         },
         historyChart(val) {
-            let queryMapData = JSON.parse(val.chartQueryCriteria)
+            let queryMapData = JSON.parse(val.chartSql)
             console.log('历史查询任务', queryMapData)
             this.sqlTermData = queryMapData.sqlTerm ?? ''
             this.$refs.customSearch.inputData = queryMapData.sqlTerm ?? ''
@@ -998,22 +973,6 @@ export default {
                     this.chartTimeRange = [start, end]
                 }
             }
-        },
-        getSearchParams() {
-            let data = {
-                queryData: {
-                },
-                paramsData: {
-                    inputTerm: this.customTime.length > 0 ? [{ field: 'startTime', value: this.customTime[0] }, { field: 'endTime', value: this.customTime[1] }] : [],
-                    sqlTerm: this.sqlTermData,
-                    filterTerm: this.conditionData.map(it => it.origin[0]),
-                    fields: this.list.map(it => it.fieldName),
-                    taskId: this.taskId,
-                    time: this.$getsessionStorage('temporaryOld').actualTime ? this.$getsessionStorage('temporaryOld').actualTime : this.dateData,
-                    timeStatus: this.$getsessionStorage('temporaryOld').timeUnit ? this.$getsessionStorage('temporaryOld').timeUnit : ''
-                }
-            }
-            return data
         },
         getUnitText(val) {
             if (val == 1) {
@@ -1761,7 +1720,6 @@ export default {
                 return res
             }).then(res => {
                 console.log('数据查询列表', res)
-                this.total_num = res.total
                 this.loading = false
                 this.barStatus = 1
                 let arr = res.records
@@ -1939,15 +1897,13 @@ export default {
         height: 24px;
         line-height: 24px;
         font-size: 12px;
-        color: rgba(77, 77, 77, 0.6);
+        color: rgba(255,255,255,.6);
         top: 0;
-        .table-view, .chart-view {
+
+        div:nth-child(1) {
             padding:0 10px;
             // width: 80px;
             cursor: pointer;
-            div:nth-child(1) {
-                padding-right: 10px;
-            }
         }
         div.active {
             //background-color: #008aff;

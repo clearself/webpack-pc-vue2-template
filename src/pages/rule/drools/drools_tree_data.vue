@@ -1,16 +1,16 @@
 <template>
     <div :class="{'before-line': hasDownItem}" class="toogle-box">
         <div v-if="constraintList.length != 0"  class="toogle-box1">
-            <div  v-for="(item,index) in constraintList" :key="index" class="tree-line inner-box" :class="{'first': first}" style="position: relative;margin-top: 2px ;padding-left: 40px;min-height: 30px;color: antiquewhite;line-height: 30px;">
-                <i @click.stop="toogleChild" :class="{'el-icon-caret-right': item.junctionType, 'is-show': true, 'fold-arrow': item.junctionType}" style="position: absolute;cursor: pointer;font-size: 18px;color: #387dee;" :style="{'left':item.junctionType?'20px':'12px','top':item.junctionType?'5px':'0'}"></i>
-                <div style="position: relative;margin-left: 8px;">
+            <div  v-for="(item,index) in constraintList" :key="index" class="tree-line inner-box" :class="{'first': first}" style="padding-left: 40px;margin-top:2px ;min-height: 30px;line-height: 30px;color: antiquewhite;position: relative">
+                <i @click.stop="toogleChild" :class="{'el-icon-caret-right': item.junctionType, 'is-show': true, 'fold-arrow': item.junctionType}" style="position: absolute;cursor: pointer;font-size:18px;color:#387dee;" :style="{'left':item.junctionType?'20px':'12px','top':item.junctionType?'5px':'0'}"></i>
+                <div style="position: relative;margin-left:8px">
                     <el-row style="font-size: 0;" v-if="!item.junctionType">
                         <el-select
                             v-model="item.constraintName"
                             placeholder="请选择"
                             size="mini"
                             filterable
-                            style="width: 160px;"
+                            style="width: 160px"
                             @change="clearAfterData(item)"
                             :popper-append-to-body="false"
                             class="select"
@@ -26,7 +26,7 @@
                             :popper-append-to-body="false"
                             class="select"
                             popper-class="select-option innerSelect"
-                            style="margin: 0 10px;width: 120px;">
+                            style="width: 120px;margin: 0 10px">
                             <el-option v-for="(item,index) in (item.attrType == 3 ? callDate_options : common_options)" :key="index" :value="item.value" :label="item.label"></el-option>
                         </el-select>
                         <el-select
@@ -37,7 +37,7 @@
                             v-if="item.constraintName === 'historyIP'"
                             size="mini"
                             popper-class="select-option innerSelect"
-                            style="margin: 0 10px;width: 120px;">
+                            style="width: 120px;margin: 0 10px">
                             <el-option value="==" label="等于"></el-option>
                         </el-select>
 
@@ -45,7 +45,6 @@
                             class="constant-select select1"
                             @change="item.value = ''"
                             :popper-append-to-body="false"
-                            v-if="item.constraintName !== 'alarmTime'"
                             v-model="item.dataType"
                             placeholder="请选择"
                             size="mini"
@@ -53,42 +52,14 @@
                             <el-option label="常量" value="0"></el-option>
                             <el-option label="变量" value="1"></el-option>
                         </el-select>
-                        <el-select
-                            class="constant-select select1"
-                            @change="item.value = ''"
-                            :popper-append-to-body="false"
-                            v-if="item.constraintName === 'alarmTime'"
-                            v-model="item.dataType"
-                            placeholder="请选择"
-                            size="mini"
-                            style="width: 95px;">
-                            <el-option label="常量" value="0"></el-option>
-                            <el-option label="变量" value="1"></el-option>
-                            <el-option label="起止时间" value="2"></el-option>
-                        </el-select>
-                        <el-select :popper-append-to-body="false" filterable v-if="item.attrType == 5 && item.constraintName !== 'attCk'" v-model="item.value" placeholder="请选择" size="mini" style="width: 180px;" class="select shuru">
+
+                        <el-select :popper-append-to-body="false" filterable v-if="item.attrType == 5" v-model="item.value" placeholder="请选择" size="mini" style="width: 180px;" class="select shuru">
                             <el-option :label="item.label" :value="item.value" v-for="(item, index) in getEnumOptions(factType, item.constraintName)" :key="index"></el-option>
                         </el-select>
-                        <!-- attCK的树形结构 -->
-                        <Treeselect
-                            v-if="item.attrType == 5 && item.constraintName == 'attCk'"
-                            class="attck-tree"
-                            :disable-branch-nodes="true"
-                            style="display: inline-block;margin-top: 1px;width: 180px;font-size: 12px;vertical-align: top;"
-                            @input="inputChange"
-                            :appendToBody="true"
-                            size="small"
-                            :options="getEnumOptions(factType, item.constraintName)"
-                            :normalizer="normalizerAtt"
-                            noChildrenText="当前分支无子节点"
-                            noOptionsText="无可用选项"
-                            placeholder="请选择"
-                            v-model="item.value"
-                        />
                         <el-date-picker
                             v-model="item.value"
-                            v-if="item.attrType == 3 && item.constraintName === 'alarmTime' && item.dataType != 2"
-                            style="width: 180px;font-size: 12px;"
+                            v-if="item.attrType == 3"
+                            style="width: 180px;font-size: 12px"
                             class="handleTime"
                             popper-class="handleDrop"
                             type="datetime"
@@ -98,20 +69,9 @@
                         </el-date-picker>
                         <el-input v-if="item.attrType != 3 && item.attrType != 5" v-model="item.value" :disabled="item.operator === 'in' || item.operator === 'not in'" placeholder="请输入值" size="mini" clearable class="w300 shuru">
                         </el-input>
-                        <el-select
-                            class="select1"
-                            :popper-append-to-body="false"
-                            v-if="item.attrType == 3 && item.constraintName === 'alarmTime' && item.dataType == 2"
-                            v-model="item.value"
-                            placeholder="请选择"
-                            size="mini"
-                            style="width: 180px;font-size: 12px;">
-                            <el-option label="平均开始时间" value="平均开始时间"></el-option>
-                            <el-option label="平均结束时间" value="平均结束时间"></el-option>
-                        </el-select>
                         <el-dropdown class="constant-select" trigger="click" icon="el-icon-more" v-if="(item.operator === 'in' || item.operator === 'not in') || (item.dataType === '1' && item.operator !== 'in' && item.operator !== 'not in')">
                             <el-button size="mini" class="inner-btn">
-                                <i class="el-icon-more" style="color: rgb(0 0 0 / 70%);"></i>
+                                <i class="el-icon-more" style="color: rgba(0,0,0,.7)"></i>
                             </el-button>
                             <el-dropdown-menu slot="dropdown" :append-to-body="false">
                                 <el-dropdown-item data-type="1" v-if="item.operator === 'in' || item.operator === 'not in'" @click.native="moreFields($event,item)">资源池</el-dropdown-item>
@@ -119,18 +79,18 @@
                             </el-dropdown-menu>
                         </el-dropdown>
 
-                        <div v-if="item.fieldBindName" class="box-title" style="display: inline-block;margin-top: 1px;margin-right: 0!important;vertical-align: top;">
-                            <span style="margin-right: 5px;">变量名：</span><span style="color: #03864f;">{{item.fieldBindName}}</span>
+                        <div v-if="item.fieldBindName" class="box-title" style="display: inline-block;vertical-align: top;margin-right: 0px!important;margin-top: 1px">
+                            <span style="margin-right: 5px">变量名：</span><span style="color: #03864f">{{item.fieldBindName}}</span>
                         </div>
 
-                        <div class="operate-btn data-fields" style="display: inline-block;">
+                        <div class="operate-btn data-fields" style="display: inline-block">
                             <el-tooltip
                                 class="item"
                                 popper-class="atooltip"
                                 effect="dark"
                                 content="属性"
                                 placement="top">
-                                <i class="iconfont icon-shuxing" style="color: #387dee;" @click="openField(item, index)"></i>
+                                <i class="iconfont icon-shuxing" style="color: #387dee" @click="openField(item, index)"></i>
                             </el-tooltip>
 
                             <el-dropdown trigger="click" v-if="factType != 'HistoryIPEvent'">
@@ -139,9 +99,9 @@
                                     popper-class="atooltip"
                                     effect="dark"
                                     content="向下添加"
-                                    style="color: #387dee;"
+                                    style="color:#387dee"
                                     placement="top">
-                                    <i class="iconfont icon-xiangxiatianjia" style="margin-right: 5px;font-size: 14px;color: #387dee;cursor: pointer;"></i>
+                                    <i class="iconfont icon-xiangxiatianjia" style="font-size: 14px;color: #387dee;margin-right: 5px;cursor: pointer;"></i>
                                 </el-tooltip>
 
                                 <el-dropdown-menu slot="dropdown" :append-to-body="false">
@@ -155,9 +115,9 @@
                                     popper-class="atooltip"
                                     effect="dark"
                                     content="向上添加"
-                                    style="color: #387dee;"
+                                    style="color:#387dee"
                                     placement="top">
-                                    <i class="iconfont icon-xiangshangtianjia" style="margin-right: 5px;font-size: 14px;color: #387dee;cursor: pointer;"></i>
+                                    <i class="iconfont icon-xiangshangtianjia" style="font-size: 14px;color: #387dee;margin-right: 5px;cursor: pointer;"></i>
                                 </el-tooltip>
 
                                 <el-dropdown-menu slot="dropdown" :append-to-body="false">
@@ -171,13 +131,13 @@
                                 effect="dark"
                                 content="删除"
                                 placement="top">
-                                <i class="el-icon-close" style="color: #387dee;" @click="deleteFields(index)"></i>
+                                <i class="el-icon-close" style="color:#387dee" @click="deleteFields(index)"></i>
                             </el-tooltip>
 
                         </div>
                     </el-row>
 
-                    <el-row  v-if="item.junctionType == '||'" style="position: relative;font-size: 0;">
+                    <el-row  v-if="item.junctionType == '||'" style="position: relative;font-size: 0">
                         <el-dropdown trigger="click" class="fold-arrow-before">
                             <el-button type="primary" size="mini">
                                 {{item.junctionType == '&&' ? 'AND' : 'OR'}}<i class="el-icon-arrow-down el-icon--right"></i>
@@ -189,7 +149,7 @@
                             </el-dropdown-menu>
                         </el-dropdown>
 
-                        <div class="operate-btn" style="display: inline-block;">
+                        <div class="operate-btn" style="display: inline-block">
                             <el-dropdown trigger="click">
                                 <el-tooltip
                                     class="item"
@@ -197,7 +157,7 @@
                                     effect="dark"
                                     content="向下添加"
                                     placement="top">
-                                    <i class="iconfont icon-xiangxiatianjia" style="margin-right: 5px;font-size: 14px;color: #387dee;cursor: pointer;"></i>
+                                    <i class="iconfont icon-xiangxiatianjia" style="font-size: 14px;color: #387dee;margin-right: 5px;cursor: pointer;"></i>
                                 </el-tooltip>
 
                                 <el-dropdown-menu slot="dropdown" :append-to-body="false">
@@ -212,7 +172,7 @@
                                     effect="dark"
                                     content="向上添加"
                                     placement="top">
-                                    <i class="iconfont icon-xiangshangtianjia" style="margin-right: 5px;font-size: 14px;color: #387dee;cursor: pointer;"></i>
+                                    <i class="iconfont icon-xiangshangtianjia" style="font-size: 14px;color: #387dee;margin-right: 5px;cursor: pointer;"></i>
                                 </el-tooltip>
 
                                 <el-dropdown-menu slot="dropdown" :append-to-body="false">
@@ -227,7 +187,7 @@
                                     effect="dark"
                                     content="向内添加"
                                     placement="top">
-                                    <i class="el-icon-plus" style="margin-right: 5px;font-size: 14px;color: #387dee;cursor: pointer;"></i>
+                                    <i class="el-icon-plus" style="font-size: 14px;color: #387dee;margin-right: 5px;cursor: pointer;"></i>
                                 </el-tooltip>
 
                                 <el-dropdown-menu slot="dropdown" :append-to-body="false">
@@ -241,12 +201,12 @@
                                 effect="dark"
                                 content="删除"
                                 placement="top">
-                                <i class="el-icon-close" @click="deleteFields(index)" style="color: #387dee;"></i>
+                                <i class="el-icon-close" @click="deleteFields(index)" style="color:#387dee"></i>
                             </el-tooltip>
 
                         </div>
                     </el-row>
-                    <el-row  v-if="item.junctionType == '&&'" style="position: relative;font-size: 0;">
+                    <el-row  v-if="item.junctionType == '&&'" style="position: relative;font-size: 0">
                         <el-dropdown trigger="click" class="fold-arrow-before">
                             <el-button type="primary" size="mini">
                                 {{item.junctionType == '&&' ? 'AND' : 'OR'}}<i class="el-icon-arrow-down el-icon--right"></i>
@@ -257,7 +217,7 @@
                             </el-dropdown-menu>
                         </el-dropdown>
 
-                        <div class="operate-btn" style="display: inline-block;">
+                        <div class="operate-btn" style="display: inline-block">
                             <el-dropdown trigger="click">
                                 <el-tooltip
                                     class="item"
@@ -265,7 +225,7 @@
                                     effect="dark"
                                     content="向下添加"
                                     placement="top">
-                                    <i class="iconfont icon-xiangxiatianjia" style="margin-right: 5px;font-size: 14px;color: #387dee;cursor: pointer;"></i>
+                                    <i class="iconfont icon-xiangxiatianjia" style="font-size: 14px;color: #387dee;margin-right: 5px;cursor: pointer;"></i>
                                 </el-tooltip>
 
                                 <el-dropdown-menu slot="dropdown" :append-to-body="false">
@@ -280,7 +240,7 @@
                                     effect="dark"
                                     content="向上添加"
                                     placement="top">
-                                    <i class="iconfont icon-xiangshangtianjia" style="margin-right: 5px;font-size: 14px;color: #387dee;cursor: pointer;"></i>
+                                    <i class="iconfont icon-xiangshangtianjia" style="font-size: 14px;color: #387dee;margin-right: 5px;cursor: pointer;"></i>
                                 </el-tooltip>
 
                                 <el-dropdown-menu slot="dropdown" :append-to-body="false">
@@ -295,7 +255,7 @@
                                     effect="dark"
                                     content="向内添加"
                                     placement="top">
-                                    <i class="el-icon-plus" style="margin-right: 5px;font-size: 14px;color: #387dee;cursor: pointer;"></i>
+                                    <i class="el-icon-plus" style="font-size: 14px;color: #387dee;margin-right: 5px;cursor: pointer;"></i>
                                 </el-tooltip>
 
                                 <el-dropdown-menu slot="dropdown" :append-to-body="false">
@@ -309,7 +269,7 @@
                                 effect="dark"
                                 content="删除"
                                 placement="top">
-                                <i class="el-icon-close" @click="deleteFields(index)" style="color: #387dee;"></i>
+                                <i class="el-icon-close" @click="deleteFields(index)" style="color:#387dee"></i>
                             </el-tooltip>
 
                         </div>
@@ -317,7 +277,7 @@
                 </div>
 
                 <drools-tree-data
-                    style="position: relative;"
+                    style="position: relative"
                     @upResource="upResource"
                     @upFields="upFields"
                     :testData="testData"
@@ -330,11 +290,11 @@
             </div>
         </div>
 
-        <div v-if="constraintList.length == 0 && first" style="margin-top: 10px;padding-left: 20px;color: antiquewhite;" class="tree-line-bottom">
+        <div v-if="constraintList.length == 0 && first" style="padding-left: 20px;margin-top:10px;color: antiquewhite" class="tree-line-bottom">
             <el-row style="position: relative;">
-                <i class="el-icon-caret-right" style="font-size: 18px;color: #387dee;"></i>
+                <i class="el-icon-caret-right" style="color:#387dee;font-size:18px"></i>
                 <el-dropdown trigger="click">
-                    <i class="el-icon-circle-plus-outline" style="margin-left: 5px;font-size: 16px;color: #387dee;line-height: 30px;cursor: pointer;"></i>
+                    <i class="el-icon-circle-plus-outline" style="font-size: 16px;line-height: 30px;color: #387dee;cursor: pointer;margin-left:5px"></i>
                     <el-dropdown-menu slot="dropdown" :append-to-body="false">
                         <el-dropdown-item v-if="factType != 'HistoryIPEvent'" data-type="1" @click.native="bottomAddData($event)">逻辑符</el-dropdown-item>
                         <el-dropdown-item data-type="2" @click.native="bottomAddData($event)">字段名</el-dropdown-item>
@@ -349,8 +309,8 @@
             :visible.sync="fieldDialog"
             custom-class="common-dialog">
             <el-form ref="addRuleAtt_Form" label-width="80px" label-position="top">
-                <el-form-item label="变量名：" style="margin-bottom: 10px;" >
-                    <el-input v-model="fieldBindName" placeholder="请输入以$开头的英文变量名" size="small" style="width: 100%;" @blur="judgeFieldBindName(fieldBindName)"></el-input>
+                <el-form-item label="变量名：" style="margin-bottom: 10px" >
+                    <el-input v-model="fieldBindName" placeholder="请输入以$开头的英文变量名" size="small" style="width: 100%" @blur="judgeFieldBindName(fieldBindName)"></el-input>
                 </el-form-item>
 
             </el-form>
@@ -363,22 +323,10 @@
 </template>
 
 <script>
-import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 export default {
     name: 'DroolsTreeData',
-    components: {
-        Treeselect
-    },
     data() {
         return {
-            normalizerAtt(node) {
-                return {
-                    id: node.value,
-                    label: node.label,
-                    children: node.child
-                }
-            },
             test: '',
             currentSelect: 'AND',
             fieldDialog: false,
@@ -475,7 +423,6 @@ export default {
     computed: {
         getEnumOptions() {
             return function(event, labelVal) {
-                console.log(this.optionsData)
                 let item = this.optionsData.find(it => it.value === event)
                 if (item && item.options) {
                     let innerItem = item.options.find(it => it.value === labelVal)
@@ -498,7 +445,6 @@ export default {
         }
     },
     methods: {
-        inputChange() {},
         toogleChild(e) {
             if (this.toogleChildIS) {
                 this.toogleChildIS = false
@@ -572,7 +518,6 @@ export default {
             console.log(arr)
             let selectItem = arr.find(it => it.value === item.constraintName)
             if (selectItem) {
-                console.log(selectItem)
                 item.attrType = selectItem.type
             } else {
                 item.attrType = 1
@@ -582,10 +527,6 @@ export default {
             item.value = ''
             item.dataType = '0'
             item.fieldBindName = ''
-            if (item.constraintName == 'attCk') {
-                // attck 树状结构初始值为null
-                item.value = null
-            }
         },
         openField(item, index) {
             console.log(item)
@@ -715,103 +656,104 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.toogle-box {
-    ::v-deep .shuru {
-        input {
+.toogle-box{
+    ::v-deep .shuru{
+        input{
             // border-top-left-radius: 0;
             // border-bottom-left-radius: 0;
-            border-radius: 0;
+            border-radius:0;
         }
     }
 }
+
 .toogle-box1 {
-    .fold-arrow-before {
-        ::v-deep .el-button--primary {
-            padding: 7px;
+    .fold-arrow-before{
+        ::v-deep .el-button--primary{
+            padding: 7px 7px;
             width: 60px !important;
-            color: #ffffff;
+            box-sizing: border-box;
+            background-color: #387dee !important;
             background-position: 0 0;
             background-repeat: no-repeat;
             background-size: 100% 100%;
-            background-color: #387dee !important;
-            box-sizing: border-box;
+            color:#fff;
         }
     }
 }
 .inner-box {
-    position: relative;
     white-space: nowrap;
+    position: relative;
 }
 .tree-line::before {
-    position: absolute;
-    top: -25px;
-    left: -15px;
-    width: 1px;
+    content: "";
     height: 40px;
-    border-width: 1px;
-    border-left: 1px dashed #387dee;
-    content: '';
-}
-.tree-line.first::before {
-    position: absolute;
-    top: -27px;
-    left: -15px;
     width: 1px;
-    height: 42px;
+    position: absolute;
+    left: -15px;
+    top: -25px;
     border-width: 1px;
     border-left: 1px dashed #387dee;
-    content: '';
+}
+
+.tree-line.first::before {
+    content: "";
+    height: 42px;
+    width: 1px;
+    position: absolute;
+    left: -15px;
+    top: -27px;
+    border-width: 1px;
+    border-left: 1px dashed #387dee;
 }
 .tree-line.first::after {
-    position: absolute;
-    top: 14px;
-    left: -14px;
+    content: "";
     width: 36px;
     height: 20px;
+    position: absolute;
+    left: -14px;
+    top: 14px;
     border-width: 1px;
     border-top: 1px dashed #387dee;
-    content: '';
 }
 .tree-line::after {
-    position: absolute;
-    top: 14px;
-    left: -14px;
+    content: "";
     width: 36px;
     height: 20px;
+    position: absolute;
+    left: -14px;
+    top: 14px;
     border-width: 1px;
     border-top: 1px dashed #387dee;
-    content: '';
 }
 .tree-line-bottom::before {
-    position: absolute;
-    top: -20px;
-    left: -15px;
-    width: 1px;
+    content: "";
     height: 44px;
+    width: 1px;
+    position: absolute;
+    left: -15px;
+    top: -20px;
     border-width: 1px;
     border-left: 1px dashed #387dee;
-    content: '';
 }
 .tree-line-bottom::after {
-    position: absolute;
-    top: 24px;
-    left: -14px;
+    content: "";
     width: 30px;
     height: 20px;
+    position: absolute;
+    left: -14px;
+    top: 24px;
     border-width: 1px;
     border-top: 1px dashed #387dee;
-    content: '';
 }
 .fold-arrow {
     position: absolute;
-    top: 0;
-    left: 19px;
-    z-index: 9;
     width: 14px;
     height: 14px;
+    left: 19px;
+    top: 0px;
     font-size: 14px;
-    color: #ffffff;
-
+    z-index: 9;
+    color: #fff;
     /* text-shadow: 0 0 5px #00d2ff; */
 }
 .fold-arrow.is-show {
@@ -820,142 +762,126 @@ export default {
 }
 .fold-arrow-bottom {
     position: absolute;
-    top: 8px;
-    left: -20px;
-    z-index: 9;
     width: 14px;
     height: 14px;
+    left: -20px;
+    top: 8px;
     font-size: 14px;
-    color: #ffffff;
+    z-index: 9;
+    color: #fff;
     text-shadow: 0 0 8px #00d2ff;
 }
+
 .tree-line  ::v-deep .el-input-group__append, .tree-line ::v-deep .el-input-group__prepend {
+    background-color: transparent !important;
     border: 1px solid #1cd7fa;
     border-right: none;
-    color: #ffffff;
-    background-color: transparent !important;
-    box-shadow: 0 0 7px #389bf7 inset;
+    box-shadow: 0px 0px 7px #389bf7 inset;
+    color: #fff;
 }
 .tree-line  ::v-deep .el-input-group__append {
     padding: 0 8px;
 }
 .operate-btn {
+    font-size: 0;
     margin-left: 10px;
     height: 30px;
-    font-size: 0;
     line-height: 30px;
 }
 .operate-btn i {
-    margin-right: 10px !important;
     font-size: 12px !important;
     color: #0af0f3;
+    margin-right: 10px !important;
     cursor: pointer;
 }
 .data-fields.operate-btn i {
     margin-right: 10px !important;
 }
 .el-dropdown-menu {
-    padding: 5px 0!important;
     width: 60px !important;
+    padding: 5px 0!important;
     box-sizing: border-box;
 }
 .el-dropdown-menu__item {
+    text-align: center;
     padding: 0 !important;
     font-size: 12px;
-    text-align: center;
 }
 .w300 {
     width: 260px;
 }
 .inner-btn {
-    padding: 7px 0;
     width: 20px;
     height: 28px;
-    border-radius: 0;
-    background: transparent !important;
     box-sizing: border-box;
-
+    border-radius: 0;
+    padding: 7px 0;
+    background: transparent !important;
     /* border: 1px solid #1cd7fa; */
     // border-left: none;
-
     /* -webkit-box-shadow: inset 0px 0px 7px 0px #389bf7;
     box-shadow: inset 0px 0px 7px 0px #389bf7; */
 }
 .inner-btn:hover {
+    background: transparent !important;
     /* border: 1px solid #1cd7fa; */
     // border: none;
     border: 1px solid #dcdcdc;
-    background: transparent !important;
-
     /* -webkit-box-shadow: 0px 0px 7px 0px #389bf7 inset; */
-
     /* box-shadow: 0px 0px 7px 0px #389bf7 inset; */
 }
-.inner-btn:active {
+.inner-btn:active{
     // border: none;
     border: 1px solid #dcdcdc;
 }
-.inner-btn:focus {
+.inner-btn:focus{
     border: 1px solid #dcdcdc;
 }
 .box-title {
     position: relative;
-    overflow: hidden;
-    margin: 0 10px;
-    padding: 0 10px 0 15px;
-
-    /* border-radius: 0px; */
-    width: 160px;
     height: 28px;
-    font-size: 12px;
-    border: 1px solid #dcdcdc;
-    border-radius: 2px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    /* -webkit-box-shadow: 0px 0px 7px 0px #389bf7 inset; */
-
-    /* box-shadow: 0px 0px 7px 0px #389bf7 inset; */
-    color: rgb(0 0 0 / 90%);
-    background-color: #ffffff;
     line-height: 28px;
     box-sizing: border-box;
-
-    /* 超出部分隐藏 */
-
-    /* 超出部分显示省略号 */
-
-    /* 规定段落中的文本不进行换行 */
+    /* border-radius: 0px; */
+    width: 160px;
+    background-color: #fff;
+    border: 1px solid #dcdcdc;
+    /* -webkit-box-shadow: 0px 0px 7px 0px #389bf7 inset; */
+    /* box-shadow: 0px 0px 7px 0px #389bf7 inset; */
+    color: rgba(0,0,0,.9);
+    font-size: 12px;
+    padding: 0 10px 0 15px;
+    margin: 0 10px;
+    overflow:hidden;/*超出部分隐藏*/
+    text-overflow:ellipsis;/*超出部分显示省略号*/
+    white-space:nowrap;/*规定段落中的文本不进行换行 */
+    border-radius: 2px;
 }
-
-/* 表示逻辑符下面还有上一级的同级 */
+/*表示逻辑符下面还有上一级的同级*/
 .before-line::before {
-    position: absolute;
-    top: -26px;
-    left: -55px;
-    width: 1px;
+    content: "";
     height: calc(100% + 10px);
+    width: 1px;
+    position: absolute;
+    left: -55px;
+    top: -26px;
     border-width: 1px;
     border-left: 1px dashed #387dee;
-    content: '';
 }
-.tree-line  ::v-deep  .constant-select .el-input__inner, .tree-line  ::v-deep  .constant-select {
-    border: #1cd7fa;
-
+.tree-line  ::v-deep  .constant-select .el-input__inner, .tree-line  ::v-deep  .constant-select{
     /* background: rgba(0,198,255,.15) !important; */
-    color: #0052d9;
-
+    color:#0052d9;
+    border: #1cd7fa;
     /* border-radius: 0; */
 }
-.constant-select ::v-deep .el-select__caret {
-    color: #0052d9;
+.constant-select ::v-deep .el-select__caret{
+    color:#0052d9
 }
 .tree-line  ::v-deep  .constant-select .el-input__inner {
     border: 1px solid #1cd7fa;
     border-right: none;
 }
-
-/* .toogle-box  ::v-deep .atooltip{
+/*.toogle-box  ::v-deep .atooltip{
     border: 1px solid #1cd7fa !important;
     padding: 8px 10px;
     background: #042136 !important;
@@ -963,89 +889,69 @@ export default {
     -webkit-box-shadow: 0px 0px 7px #389bf7 inset;
     box-shadow: 0px 0px 7px #389bf7 inset;
     color: #fff;
-} */
+}*/
 .toogle-box  ::v-deep  .iconfont.icon-zhedie.fold-arrow {
     /* text-shadow: 0px 0px 8px #00d2ff; */
 }
-.el-select-dropdown__item {
-    padding: 0 !important;
+.el-select-dropdown__item{
+    padding:0px !important;
 }
 .el-select-dropdown__item.selected {
     font-weight: normal;
 }
 .el-select-dropdown__item.selected span {
-    color: #ffffff;
+    color: #fff;
 }
-.tree_dropdown .el-select-dropdown__item.hover span {
-    color: #ffffff;
+.tree_dropdown .el-select-dropdown__item.hover span{
+    color: #fff;
 }
-.el-tree {
-    background: rgb(0 0 0 / 0%);
+.el-tree{
+    background: rgba(0,0,0,0);
 }
-.tree_dropdown .el-select-dropdown__item.hover span {
-    color: #ffffff;
+.tree_dropdown .el-select-dropdown__item.hover span{
+    color: #fff;
 }
 </style>
 <style lang="scss" scoped>
-.select {
-    ::v-deep .el-select-dropdown__item span {
+.select{
+    ::v-deep .el-select-dropdown__item span{
+        width:158px !important;
+        height:34px !important;
+        display:inline-block !important;
+        padding-left:14px !important;
         // background:#042136 !important;
-        z-index: 1000 !important;
-        display: inline-block !important;
-        padding-left: 14px !important;
-        width: 158px !important;
-        height: 34px !important;
+        z-index:1000 !important;
     }
 }
-.toogle-box1 {
-    .attck-tree {
-        height: 28px;
-        ::v-deep .vue-treeselect__control {
-            padding-left: 10px;
-            height: 28px !important;
-            border-radius: 0;
-            .vue-treeselect__value-container {
-                line-height: 26px;
-                .vue-treeselect__single-value {
-                    line-height: 26px;
-                }
-            }
-        }
-        ::v-deep .vue-treeselect__placeholder {
-            line-height: 28px;
-        }
-    }
-}
-.select1 {
-    ::v-deep .el-select-dropdown__item {
-        span {
-            // background:#042136 !important;
-            z-index: 1000 !important;
+.select1{
+    ::v-deep .el-select-dropdown__item{
+        span{
             display: block;
-            display: inline-block !important;
-            padding-left: 14px !important;
-            width: 72px !important;
-            height: 34px !important;
+            width:72px !important;
+            height:34px !important;
+            display:inline-block !important;
+            padding-left:14px !important;
+            // background:#042136 !important;
+            z-index:1000 !important;
         }
     }
-    ::v-deep input {
+    ::v-deep input{
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
         border-right: 0;
     }
 }
-.custom-tree-node span:hover {
-    color: #0052d9 !important;
-}
-.el-tree-node__content {
-    background-color: rgb(0 0 0 / 0%)!important;
-}
-
-/* li::-webkit-scrollbar {
+    .custom-tree-node span:hover {
+        color: #0052d9 !important;
+    }
+    .el-tree-node__content {
+        background-color: rgba(0,0,0,0)!important;
+    }
+    /*li::-webkit-scrollbar {
         display: none!important;
-    } */
-.el-tree-node__content:hover,.el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
-    background: none !important;
-}
+    }*/
+    .el-tree-node__content:hover,.el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
+        background: none !important;
+    }
 
 </style>

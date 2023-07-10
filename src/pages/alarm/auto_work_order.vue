@@ -18,7 +18,7 @@
             </el-col>
             <el-col :md="12" :lg="8" :xl="6">
                 <el-form :model="get_params">
-                    <el-form-item label="工单名称：" label-width="80px">
+                    <el-form-item label="规则名称：" label-width="80px">
                         <el-input placeholder="请输入" clearable v-model.trim="get_params.name" size="small"></el-input>
                     </el-form-item>
                 </el-form>
@@ -48,7 +48,7 @@
                 <el-table-column type="selection" width="30" align="center"></el-table-column>
                 <el-table-column align="center" type="index" width="50" :index="indexMethod" label="序号">
                 </el-table-column>
-                <el-table-column prop="configName" label="工单名称" width="300">
+                <el-table-column prop="configName" label="规则名称" width="300">
                 </el-table-column>
                 <el-table-column prop="startType" label="启用状态" align="center" width="100">
                     <template slot-scope="{row}">
@@ -88,7 +88,7 @@
         <!--增加内容开始-->
         <el-dialog title="添加自动工单配置" :visible.sync="addDialog" width="700px" custom-class="common-dialog">
             <el-form :model="addForm" :rules="rules" ref="addForm" label-position="top">
-                <el-form-item label="工单名称：" prop="name" :label-width="formLabelWidth">
+                <el-form-item label="规则名称：" prop="name" :label-width="formLabelWidth">
                     <el-input size="small" v-model.trim="addForm.name" placeholder="请输入" autocomplete="off" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="工单模板：" prop="template" :label-width="formLabelWidth">
@@ -146,7 +146,7 @@
         <!--编辑内容开始-->
         <el-dialog title="编辑自动工单配置" :visible.sync="editDialog" width="700px" custom-class="common-dialog">
             <el-form :model="editForm" :rules="rules" ref="editForm" label-position="top">
-                <el-form-item label="工单名称：" prop="name" :label-width="formLabelWidth">
+                <el-form-item label="规则名称：" prop="name" :label-width="formLabelWidth">
                     <el-input size="small" v-model.trim="editForm.name" placeholder="请输入" autocomplete="off" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="工单模板：" prop="template" :label-width="formLabelWidth">
@@ -270,7 +270,7 @@ export default {
             rules: {
                 name: [{
                     required: true,
-                    message: '请输入工单名称',
+                    message: '请输入规则名称',
                     trigger: 'blur'
                 }],
                 template: [{
@@ -340,10 +340,8 @@ export default {
     },
     methods: {
         defHighlight(value) {
-            if (value) {
-                var a = value.replace(/ AND /g, "<span style='color: red;'>&nbsp&nbspAND&nbsp&nbsp</span>")
-                return a
-            }
+            var a = value.replace(/ AND /g, "<span style='color: red;'>&nbsp&nbspAND&nbsp&nbsp</span>")
+            return a
         },
         tableRowClassName({ row, rowIndex }) {
             console.log(rowIndex)

@@ -4,6 +4,10 @@ const Layout = () => import('@/layout')
 const errorPage = () => import('@/pages/common/Error.vue')
 const NoPer = () => import('@/pages/common/NoPer.vue')
 const help_manual = () => import('@/pages/help_manual')
+// const demo = () => import('@/pages/demo.vue')
+
+const commandDrill = () =>
+    import('@/pages/defense_drill/commandDrill.vue')
 export default [
     {
         path: '/layout',
@@ -11,6 +15,14 @@ export default [
         component: Layout,
         meta: {
             title: ''
+        }
+    },
+    {
+        path: '/commandDrill',
+        name: 'commandDrill',
+        component: commandDrill,
+        meta: {
+            title: '演练态势'
         }
     },
     {

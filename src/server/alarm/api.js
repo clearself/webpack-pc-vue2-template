@@ -265,36 +265,3 @@ export const get_auto_work_template = (data) => {
         data: data.paramsData
     })
 }
-// 发起剧本
-export const saveAutoOrder = (data) => {
-    return request({
-        url: 'alarm/manage/alarmList/saveAutoOrder',
-        method: 'post',
-        params: data.queryData,
-        data: data.paramsData
-    })
-}
-export const get_threat_search = (data) => {
-    return request({
-        url: 'intelligence/manage/intelligenceQuery/query',
-        method: 'post',
-        params: data.queryData,
-        data: data.paramsData
-    })
-}
-export const get_threat_searchVenus = (data) => {
-    return request({
-        url: 'intelligence/manage/intelligenceQuery/queryByVenus',
-        method: 'post',
-        params: data.queryData,
-        data: data.paramsData
-    })
-}
-export const getStartConfig = (data) => {
-    return request({
-        url: 'intelligence/manage/collectConfig/getStartConfig',
-        method: 'post',
-        params: data.queryData,
-        data: data.paramsData
-    })
-}

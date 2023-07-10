@@ -1,3 +1,5 @@
+import axios from 'axios'
+import { getAjaxFile } from '@/utils/http'
 import request from '@/utils/server'
 
 // 获取自定义列表
@@ -217,6 +219,42 @@ export const getAllRolesOrder = (data) => {
         params: data.queryData
     })
 }
+
+// 所有工单任务
+
+// 获取所有人
+// export const getAllUsersAllTask = (data) => {
+//     return axios.request({
+//         url: 'work-order/manage/allOrder/getAllUsers',
+//         method: 'post',
+//         data: data
+//     }).then(result => {
+//         console.log(result)
+//         return getAjax(result)
+//     })
+// }
+// 获取所有部门
+// export const getAllDepAllTask = (data) => {
+//     return axios.request({
+//         url: 'work-order/manage/allOrder/getAllDep',
+//         method: 'post',
+//         data: data
+//     }).then(result => {
+//         console.log(result)
+//         return getAjax(result)
+//     })
+// }
+// 获取所有角色
+// export const getAllRolesAllTask = (data) => {
+//     return axios.request({
+//         url: 'work-order/manage/allOrder/getAllUserRoles',
+//         method: 'post',
+//         data: data
+//     }).then(result => {
+//         console.log(result)
+//         return getAjax(result)
+//     })
+// }
 // 所有工单任务 --列表
 export const get_all_workTaskAllTask = (data) => {
     return request({
@@ -262,16 +300,6 @@ export const delete_workTaskAllTask = (data) => {
     })
 }
 
-// 分页查询安全审查任务
-export const getSafetyTaskPage = (data) => {
-    return request({
-        url: 'work-order/manage/allOrder/getSafetyTaskPage',
-        method: 'post',
-        params: data.queryData,
-        data: data.paramsData
-    })
-}
-
 export const exportWorkTaskExcelAllTask = (data) => {
     return request({
         url: 'work-order/manage/allOrder/download',
@@ -282,5 +310,8 @@ export const exportWorkTaskExcelAllTask = (data) => {
         },
         data: data.paramsData,
         params: data.queryData
+    }).then(result => {
+        console.log(result)
+        return getAjaxFile(result)
     })
 }

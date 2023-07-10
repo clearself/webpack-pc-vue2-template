@@ -281,13 +281,6 @@ export default {
                     this.$refs.esForm.clearValidate('document_id')
                 }
             }
-        },
-        addNodeDialog: {
-            handler(newVal, oldVal) {
-                if (!newVal) {
-                    this.$refs.nodeForm.resetFields()
-                }
-            }
         }
     },
     methods: {
@@ -688,81 +681,6 @@ export default {
     // border-color: #1cd7fa;
     padding: 0 15px;
     // box-shadow: 0px 0px 7px #389bf7 inset;
-}
-.custom-star {
-    .event ::v-deep .el-tabs__header {
-        .el-tabs__active-bar {
-            background-color: #1cd7fa;
-        }
-        .el-tabs__item {
-            color: #fff;
-        }
-        .is-active {
-            color: #1cd7fa;
-        }
-    }
-    .drag-dialog__body  ::v-deep  .el-switch__label.is-active {
-        color: #78ddff;
-    }
-    .bg-config {
-        // background-color: #111D2B;
-        // background-image: url("/static/img/content_bg.png");
-        // background-repeat: no-repeat;
-        // background-position-x: right;
-        // background-position-y: 180px;
-
-    }
-    .tab-wrapper ::v-deep .el-tabs__item.is-active {
-        color: #1cd7fa;
-        opacity: 1;
-        height: 34px;
-        line-height: 34px;
-        box-shadow: none !important;
-        border: none !important;
-    }
-    .el-tabs ::v-deep .el-tabs__nav-wrap::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        height: 1px;
-        // background-color: rgba(28, 215, 250, 0.2);
-        z-index: 1;
-    }
-    .el-tabs ::v-deep .el-tabs__active-bar {
-        background: #387dee;
-        //margin-left: 14px;
-    }
-    .el-tabs ::v-deep .el-tabs__item {
-        color: #ffffff;
-        opacity: .5;
-    }
-
-    .event  ::v-deep .el-radio__input.is-checked+.el-radio__label {
-        color: #1bd7fa;
-    }
-    .event  ::v-deep .el-radio__input.is-checked .el-radio__inner::after {
-        background: #1bd7fa;
-    }
-    .event  ::v-deep .el-radio__inner {
-        border: 1px solid #1bd7fa;
-        background-color: rgba(0,0,0,0);
-    }
-    .event ::v-deep  .el-input-group__append button.el-button{
-        border-color: transparent !important;
-        background-color: transparent !important;
-        color: inherit;
-        border-top: 0;
-        border-bottom: 0;
-    }
-    .event ::v-deep  .el-input-group__append, .event ::v-deep  .el-input-group__prepend {
-        background-color: transparent;
-        // color: #1cd7fa;
-        // border-color: #1cd7fa;
-        padding: 0 15px;
-        // box-shadow: 0px 0px 7px #389bf7 inset;
-    }
 }
 </style>
 

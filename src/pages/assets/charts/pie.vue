@@ -49,7 +49,7 @@ export default {
                 show: true,
                 // x: 'right',
                 y: 'center',
-                right: 0,
+                right: 50,
                 icon: 'stack',
                 itemWidth: 15,
                 itemHeight: 5,
@@ -109,38 +109,38 @@ export default {
             myChart.resize()
         })
 
-        // setTimeout(function() {
-        //     myChart.dispatchAction({
-        //         type: 'highlight',
-        //         seriesIndex: 0,
-        //         dataIndex: 0
-        //     })
+        setTimeout(function() {
+            myChart.dispatchAction({
+                type: 'highlight',
+                seriesIndex: 0,
+                dataIndex: 0
+            })
 
-        //     myChart.on('mouseover', function(params) {
-        //         // console.log(params)
-        //         if (params.name == that.chartData[0].name) {
-        //             myChart.dispatchAction({
-        //                 type: 'highlight',
-        //                 seriesIndex: 0,
-        //                 dataIndex: 0
-        //             })
-        //         } else {
-        //             myChart.dispatchAction({
-        //                 type: 'downplay',
-        //                 seriesIndex: 0,
-        //                 dataIndex: 0
-        //             })
-        //         }
-        //     })
+            myChart.on('mouseover', function(params) {
+                // console.log(params)
+                if (params.name == that.chartData[0].name) {
+                    myChart.dispatchAction({
+                        type: 'highlight',
+                        seriesIndex: 0,
+                        dataIndex: 0
+                    })
+                } else {
+                    myChart.dispatchAction({
+                        type: 'downplay',
+                        seriesIndex: 0,
+                        dataIndex: 0
+                    })
+                }
+            })
 
-        //     myChart.on('mouseout', function(params) {
-        //         myChart.dispatchAction({
-        //             type: 'highlight',
-        //             seriesIndex: 0,
-        //             dataIndex: 0
-        //         })
-        //     })
-        // }, 1000)
+            myChart.on('mouseout', function(params) {
+                myChart.dispatchAction({
+                    type: 'highlight',
+                    seriesIndex: 0,
+                    dataIndex: 0
+                })
+            })
+        }, 1000)
     }
 }
 </script>

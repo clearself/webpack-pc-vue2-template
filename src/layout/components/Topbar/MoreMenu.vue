@@ -12,7 +12,7 @@
                         <div v-for="(_it) in item.menus" :key="_it.id">
                             <div class="third-menu-title ub">
                                 <i class="icon iconfont icon-fudongcaidanliebiaoshu"></i>
-                                <p style="margin-left: 16px;" @click.stop="handleRouter(_it)">{{_it.name}}</p>
+                                <p style="margin-left: 16px" @click.stop="handleRouter(_it)">{{_it.name}}</p>
                             </div>
                         </div>
                     </div>
@@ -54,40 +54,41 @@ export default {
 
 <style scoped lang="scss">
 .content {
-    float: left;
-    padding: 12px;
     width: auto;
     min-width: 700px;
     height: 500px;
+    padding: 12px;
+    float: left;
     writing-mode: vertical-lr;
+
     .menu-module {
-        display: inline-block;
         width: 120px;
+        display: inline-block;
         height: auto;
-        color: rgb(0 0 0 / 40%);
+        color: rgba(0,0,0,0.4);
         writing-mode: horizontal-tb;
     }
     .first-menu-title,.second-menu-title,.third-menu-title {
-        position: relative;
-        overflow: hidden;
-        margin-bottom: 8px;
-        width: 120px;
         height: 20px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
         line-height: 20px;
+        margin-bottom: 8px;
         cursor: pointer;
+        width: 120px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        position: relative;
     }
     .first-menu-title {
-        height: 32px;
         color: $dark-color;
-        line-height: 32px;
+        height: 32px;
+        line-height:32px;
     }
     .third-menu-title {
         .icon {
+            font-size: 14px;
             position: absolute;
             top: -5px;
-            font-size: 14px;
         }
     }
 }

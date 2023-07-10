@@ -192,11 +192,4 @@ export default {
 .click-btn:hover {
     background: #0d4873;
 }
-.custom-star #app .wrapper .title{
-    color: rgba(255, 255, 255, 0.9) !important;
-}
-
-.custom-star #app .loading-text {
-    color: rgba(255,255,255,.4) !important;
-}
 </style>

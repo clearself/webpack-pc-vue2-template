@@ -36,8 +36,6 @@
                                         :usersList="allUserList"
                                         :depList="allDepList"
                                         :rolesList="allRolesList"
-                                        :assetOrganizeList="assetOrganizeList"
-                                        :assetUserList="assetUserList"
                                         :dataList="dataList"
                                         :processList="processList"
                                         @confirmData="confirmData"
@@ -74,10 +72,6 @@ import {
     getAllDep,
     getAllRoles
 } from '../../../../server/works_order/define.js'
-import {
-    getWorkAssetsUser,
-    getWorkAssetsDep
-} from '@/server/works_order/api.js'
 export default {
     mixins: [mixinPanel],
     components: {
@@ -92,8 +86,6 @@ export default {
     },
     data() {
         return {
-            assetOrganizeList: [],
-            assetUserList: [],
             allUserList: [], // 所有人
             allDepList: [], // 所有部门
             allRolesList: [], // 所有角色
@@ -172,40 +164,6 @@ export default {
             this.get_dep()
             this.get_roles()
             this.get_users()
-            this.getTreeData()
-            this.getWorkAssetsUserData()
-        },
-        getTreeData() {
-            let data = {
-                queryData: {},
-                paramsData: {}
-            }
-            getWorkAssetsDep(data).then(res => {
-                this.assetOrganizeList = res
-                this.$setsessionStorage('assetOrganizeList', res)
-            }).catch(error => {
-                console.log('error' + error)
-            })
-        },
-        getWorkAssetsUserData() {
-            let data = {
-                queryData: {},
-                paramsData: {}
-            }
-            getWorkAssetsUser(data).then(res => {
-                console.log('所有资产用户', res)
-                this.assetUserList = res.map(item => {
-                    return {
-                        type: '5',
-                        id: item.id,
-                        name: item.name,
-                        account: item.account
-                    }
-                })
-                this.$setsessionStorage('assetUserList', this.assetUserList)
-            }).catch(error => {
-                console.log('error' + error)
-            })
         },
         get_users() {
             getAllUsers({ queryData: {}, paramsData: {}}).then(res => {
@@ -250,9 +208,7 @@ export default {
             let type0 = []
             let type1 = []
             let type2 = []
-            let type3 = []
-            let type5 = []
-            let type6 = []; let type4
+            let type3 = []; let type4
             this.formData.selectedList[index].users = []
             this.formData.selectedList[index]._users = val
             val.forEach(item => {
@@ -267,10 +223,6 @@ export default {
                     type3.push(item.id)
                 } else if (item.type === '4') {
                     type4 = true
-                } else if (item.type === '5') {
-                    type5.push(item.id)
-                } else if (item.type === '6') {
-                    type6.push(item.id)
                 }
             })
             type0.length && this.formData.selectedList[index].users.push({ type: '0', ids: type0 })
@@ -278,8 +230,6 @@ export default {
             type2.length && this.formData.selectedList[index].users.push({ type: '2', ids: type2 })
             type3.length && this.formData.selectedList[index].users.push({ type: '3', ids: type3 })
             type4 && this.formData.selectedList[index].users.push({ type: '4' })
-            type5.length && this.formData.selectedList[index].users.push({ type: '5', ids: type5 })
-            type6.length && this.formData.selectedList[index].users.push({ type: '6', ids: type6 })
             console.log(this.formData.selectedList[index].users, '提醒人列表')
         },
         changeSet() {
@@ -318,7 +268,7 @@ export default {
                         obj._users.map(tag => {
                             if (tag.type === '0') {
                                 names.push(tag.chineseName)
-                            } else if (tag.type === '1' || tag.type === '3' || tag.type === '4' || tag.type === '5' || tag.type === '6') {
+                            } else if (tag.type === '1' || tag.type === '3' || tag.type === '4') {
                                 names.push(tag.name)
                             } else if (tag.type === '2') {
                                 names.push(tag.roleName)

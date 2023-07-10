@@ -470,20 +470,19 @@ export default {
 <style type="text/css" lang="scss">
 .role-drawer-show {
     width: 37.5% !important;
-    border: solid 1px #1cd7fa !important;
-    // .header-border {
-    //     border-bottom: none !important;
-    //     background-color: #ebf1f5 !important;
-    // }
-    // .el-table--enable-row-hover .el-table__body .el-table__row .column-style {
-    //     background-color: #ebf1f5 !important;
-    // }
-    // .el-table--enable-row-hover .el-table__body tr:hover > td {
-    //     background-color: rgba(0, 0, 0, 0) !important;
-    // }
-    // .el-table--enable-row-hover .el-table__body .mouse_enter_td:hover {
-    //     background-color: #f5f7fa !important;
-    // }
+    .header-border {
+        border-bottom: none !important;
+        background-color: #ebf1f5 !important;
+    }
+    .el-table--enable-row-hover .el-table__body .el-table__row .column-style {
+        background-color: #ebf1f5 !important;
+    }
+    .el-table--enable-row-hover .el-table__body tr:hover > td {
+        background-color: rgba(0, 0, 0, 0) !important;
+    }
+    .el-table--enable-row-hover .el-table__body .mouse_enter_td:hover {
+        background-color: #f5f7fa !important;
+    }
 }
 </style>
 <style lang="scss" scoped>

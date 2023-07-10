@@ -203,30 +203,3 @@ export const needSelected = (data) => {
         data: data.paramsData
     })
 }
-
-export const copySave = (data) => {
-    return request({
-        url: 'work-order/manage/workOrder/copySave',
-        method: 'post',
-        params: data.queryData,
-        data: data.paramsData
-    })
-}
-
-export const getWorkAssetsUser = (data) => {
-    return request({
-        url: 'work-order/manage/workMould/getWorkAssetsUser',
-        method: 'post',
-        params: data.queryData,
-        data: data.paramsData
-    })
-}
-
-export const getWorkAssetsDep = (data) => {
-    return request({
-        url: 'work-order/manage/workMould/getWorkAssetsDep',
-        method: 'post',
-        params: data.queryData,
-        data: data.paramsData
-    })
-}

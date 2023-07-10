@@ -57,17 +57,17 @@
                                 <i class="el-icon-plus"></i>
                                 <div class="text">点击上传图片</div>
                             </el-upload>
-                            <div v-if="logoSrc !== ''" style="position: absolute;left: 150px;margin-left: 24px;width: 120px;height: 120px;">
+                            <div v-if="logoSrc !== ''" style="width:120px;height:120px;margin-left:24px;position:absolute;left:150px">
 
-                                <el-image  fit="fill"  style="width: 120px; height: 120px;" :src="logoSrc" lazy> </el-image>
+                                <el-image  fit="fill"  style="width: 120px; height: 120px" :src="logoSrc" lazy> </el-image>
                             </div>
                         </div>
-                        <div class="upload-tip"><span style="margin-right: 6px;" class="iconfont icon-zhushi"></span>上传logo尺寸为1:1，格式为png、jpg大小不超过5m</div>
+                        <div class="upload-tip"><span style="margin-right:6px" class="iconfont icon-zhushi"></span>上传logo尺寸为1:1，格式为png、jpg大小不超过5m</div>
                     </el-form-item>
                 </el-form>
             </div>
             <div class="btn ub ub-pc">
-                <el-button style="width: 120px;"  v-per="['base_theme_save']" type="primary" size="small" @click="submitThemeForm('themeForm')">保 存</el-button>
+                <el-button style="width:120px"  v-per="['base_theme_save']" type="primary" size="small" @click="submitThemeForm('themeForm')">保 存</el-button>
             </div>
         </div>
     </div>
@@ -81,7 +81,6 @@ import nav_unfold from '../../../assets/img/system/nav_unfold.png'
 import nav_fold from '../../../assets/img/system/nav_fold.png'
 import theme_color_default from '../../../assets/img/system/theme_color_default.png'
 import theme_color_purple from '../../../assets/img/system/theme_color_purple.png'
-import theme_color_star from '../../../assets/img/system/theme_color_star.png'
 import theme_color_dark from '../../../assets/img/system/theme_color_dark.png'
 import { mapMutations, mapGetters } from 'vuex'
 import { get_user_system_config } from '@/server/system/security_policy.js'
@@ -156,13 +155,6 @@ export default {
                     textTwo: '紫色',
                     typeData: 'purple',
                     isActive: false
-                },
-                {
-                    imgSrc: theme_color_star,
-                    textOne: '主题颜色',
-                    textTwo: '星空蓝',
-                    typeData: 'star',
-                    isActive: false
                 }
             ],
             formLabelWidth: '150px',
@@ -177,7 +169,7 @@ export default {
                 logoAddress: [
                     {
                         required: true,
-                        message: '请上传LOGO图片',
+                        message: '请输入系统名称',
                         trigger: 'blur'
                     }
                 ]
@@ -248,8 +240,6 @@ export default {
                 return 2
             } else if (val === 'purple') {
                 return 3
-            } else if (val === 'star') {
-                return 4
             }
         },
         setLayout(style) {
@@ -272,8 +262,6 @@ export default {
                 this.themeConfigValue = 'dark'
             } else if (colour === 3) {
                 this.themeConfigValue = 'purple'
-            } else if (colour === 4) {
-                this.themeConfigValue = 'star'
             }
             this.changeSetting({
                 key: 'themeSettings',
@@ -428,419 +416,201 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    .theme-manage {
-        .content {
-            //   width: 100%;
-            //   background: #fff;
-            //   box-shadow: 0px 0px 10px 0px rgba(41, 48, 66, 0.1);
-            //   border-radius: 4px;
-            //   box-sizing: border-box;
-            padding: 40px 178px 24px;
-            .title {
-                margin-bottom: 8px;
-                font-size: 20px;
-                font-family: PingFangSC-Medium;
-                text-align: center;
-                color: rgb(0 0 0 / 90%);
-                line-height: 28px;
-            }
-            .subhead {
-                margin-bottom: 32px;
-                font-size: 12px;
-                font-family: PingFangSC-Regular;
-                text-align: center;
-                color: rgb(0 0 0 / 60%);
-                line-height: 20px;
-            }
-            .line {
-                margin-bottom: 24px;
-                background-color: #021c31;
-            }
-            .layout-style {
-                display: flex;
-                margin-bottom: 54px;
-                .cell {
-                    margin-right: 40px;
-                    padding: 10px 10px 24px;
-                    width: 300px;
-                    height: 240px;
-                    border: solid 1px #dddddd;
-                    border-radius: 6px;
-                    background-color: #ffffff;
-                    box-shadow: 0 0 10px 0 rgb(0 0 0 / 5%);
-                    box-sizing: border-box;
-                    &:last-child {
-                        margin-right: 0;
-                    }
-                    &:hover {
-                        cursor: pointer;
-                        box-shadow: 0 0 10px 0 rgb(0 0 0 / 10%);
-                    }
-                    &:hover .text-sum .text-one {
-                        color: $high-color;
-                    }
-                    &:hover .text-sum .text-two {
-                        color: $high-color;
-                    }
-                    &.active {
-                        position: relative;
-                        border-color: $high-color;
-                        box-shadow: 0 0 10px 0 rgb(0 0 0 / 10%);
-                        cursor: pointer;
-                    }
-                    &.active::before {
-                        position: absolute;
-                        top: 5px;
-                        right: 5px;
-                        font-family: iconfont;
-                        color: $high-color;
-                        content: '\e7e6';
-                    }
-                    &.active .text-sum .text-one {
-                        color: $high-color;
-                    }
-                    &.active .text-sum .text-two {
-                        color: $high-color;
-                    }
-                    .image {
-                        margin-bottom: 20px;
-                        width: 280px;
-                        height: 164px;
-                    }
-                    .text-sum {
-                        font-size: 12px;
-                        text-align: center;
-                        .text-one {
-                            color: #999999;
-                        }
-                        .text-two {
-                            color: #191919;
-                        }
-                    }
-                }
-                .top-disabled {
-                    // cursor: not-allowed !important;
-                    pointer-events: none!important;
-                    border-color: rgb(0 0 0 / 0%)!important;
-                    box-shadow: 0 0 10px 0 rgb(0 0 0 / 0%)!important;
-                    &.active::before {
-                        content: '';
-                    }
-                    .image {
-                        opacity: 0.5;
-                    }
-                    .text-sum {
-                        .text-one {
-                            color: #999999 !important;
-                            opacity: 0.5;
-                        }
-                        .text-two {
-                            color: #191919 !important;
-                            opacity: 0.5;
-                        }
-                    }
-                }
-            }
-            .form {
-                margin-bottom: 64px;
-                .upload-tip {
-                    margin-top: 8px;
-                    font-size: 12px;
-                    color: rgb(0 0 0 / 26%);
-                    line-height: 20px;
-                    .iconfont {
-                        font-size: 12px;
-                    }
-                }
-            }
-        }
-        .el-divider--horizontal {
-            margin: 10px 0;
-        }
-        .el-divider__text,
-        .el-link {
-            font-size: 12px;
-            font-weight: normal;
-        }
-        .avatar-uploader .el-upload {
-            position: relative;
-            overflow: hidden;
-            border: 1px dashed #d9d9d9;
-            border-radius: 6px;
+  .theme-manage {
+    .content {
+      //   width: 100%;
+      //   background: #fff;
+      //   box-shadow: 0px 0px 10px 0px rgba(41, 48, 66, 0.1);
+      //   border-radius: 4px;
+      //   box-sizing: border-box;
+      padding: 40px 178px 24px 178px;
+      .title {
+        font-family: PingFangSC-Medium;
+        text-align: center;
+        font-size: 20px;
+        line-height: 28px;
+        color: rgba(0, 0, 0, 0.9);
+        margin-bottom: 8px;
+      }
+      .subhead {
+        text-align: center;
+        font-family: PingFangSC-Regular;
+        font-size: 12px;
+        line-height: 20px;
+        color: rgba(0, 0, 0, 0.6);
+        margin-bottom: 32px;
+      }
+      .line {
+        margin-bottom: 24px;
+      }
+      .layout-style {
+        display: flex;
+        margin-bottom: 54px;
+        .cell {
+          width: 300px;
+          height: 240px;
+          background-color: #ffffff;
+          box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.05);
+          border-radius: 6px;
+          border: solid 1px #dddddd;
+          margin-right: 40px;
+          box-sizing: border-box;
+          padding: 10px 10px 24px 10px;
+          &:last-child {
+            margin-right: 0;
+          }
+          &:hover {
             cursor: pointer;
-        }
-        .avatar-uploader .el-upload:hover {
-            border-color: #409eff;
-        }
-        .avatar-uploader-icon {
-            width: 178px;
-            height: 178px;
-            font-size: 28px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+          }
+          &:hover .text-sum .text-one {
+            color: $high-color;
+          }
+          &:hover .text-sum .text-two {
+            color: $high-color;
+          }
+          &.active {
+            cursor: pointer;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            border-color: $high-color;
+            position: relative;
+          }
+            &.active::before {
+                font-family: iconfont;
+                content: '\e7e6';
+                position: absolute;
+                right: 5px;
+                top: 5px;
+                color: $high-color;
+            }
+          &.active .text-sum .text-one {
+            color: $high-color;
+          }
+          &.active .text-sum .text-two {
+            color: $high-color;
+          }
+          .image {
+            width: 280px;
+            height: 164px;
+            margin-bottom: 20px;
+          }
+          .text-sum {
+            font-size: 12px;
             text-align: center;
-            color: #8c939d;
-            line-height: 178px;
-        }
-        .avatar {
-            display: block;
-            width: 178px;
-            height: 178px;
-        }
-        .el-upload__tip {
-            margin-top: 8px;
-            font-size: 12px;
-            color: #bebebe;
-            line-height: 20px;
-        }
-        // ::v-deep .el-upload--picture-card {
-        //   width: 120px;
-        //   height: 120px;
-        //   line-height: 118px;
-        // }
-        ::v-deep .el-upload-dragger {
-            width: 120px;
-            height: 120px;
-            .el-icon-plus {
-                margin-top: 40px;
-                font-size: 16px;
-                color: #387dee;
+            .text-one {
+              color: #999;
             }
-            .text {
-                font-size: 12px;
-                color: rgb(0 0 0 / 90%);
-                line-height: 20px;
+            .text-two {
+              color: #191919;
             }
-            &:hover .text {
-                color: #387dee;
+          }
+        }
+        .top-disabled {
+            // cursor: not-allowed !important;
+            pointer-events: none!important;
+           border-color: rgba(0, 0, 0, 0)!important;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0)!important;
+           &.active::before {
+                content: '';
             }
+            .image{
+                opacity: 0.5;
+            }
+          .text-sum {
+            .text-one {
+              color: #999 !important;
+              opacity: 0.5;
+            }
+            .text-two {
+              color: #191919 !important;
+              opacity: 0.5;
+            }
+          }
         }
-        ::v-deep.el-form--label-top .el-form-item__label {
-            font-size: 12px;
+      }
+      .form {
+        margin-bottom: 64px;
+        .upload-tip {
+          margin-top: 8px;
+          font-size: 12px;
+          color: rgba(0, 0, 0, 0.26);
+          line-height: 20px;
+          .iconfont {
+              font-size: 12px;
+          }
         }
-        ::v-deep .el-input--small .el-input__inner {
-            font-size: 12px;
-        }
+      }
     }
-    .custom-star {
-        .theme-manage {
-            background-color: #021c31;
-            // box-shadow: inset 0px 0px 18px 0px rgba(0, 180, 255, 0.5);
-            // border: 1px solid #50b0ff;
-            .content {
-                background-color: #021c31;
-                box-shadow: inset 0px 0px 18px 0px rgba(0, 180, 255, 0.5);
-                border: 1px solid #50b0ff;
-                //   width: 100%;
-                //   background: #fff;
-                //   box-shadow: 0px 0px 10px 0px rgba(41, 48, 66, 0.1);
-                //   border-radius: 4px;
-                //   box-sizing: border-box;
-                padding: 40px 178px 24px;
-                .title {
-                    margin-bottom: 8px;
-                    font-size: 20px;
-                    font-family: PingFangSC-Medium;
-                    text-align: center;
-                    color: rgb(0 0 0 / 90%);
-                    line-height: 28px;
-                }
-                .subhead {
-                    margin-bottom: 32px;
-                    font-size: 12px;
-                    font-family: PingFangSC-Regular;
-                    text-align: center;
-                    color: rgb(0 0 0 / 60%);
-                    line-height: 20px;
-                }
-                .line {
-                    margin-bottom: 24px;
-                    background-color: #1cd7fa;
-                }
-                .layout-style {
-                    display: flex;
-                    margin-bottom: 54px;
-                    .cell {
-                        margin-right: 40px;
-                        padding: 10px 10px 24px;
-                        width: 300px;
-                        height: 240px;
-                        border: solid 1px #50b0ff;
-                        border-radius: 6px;
-                        background-color: #021c31;
-                        box-shadow: 0 0 10px 0 rgb(0 0 0 / 5%);
-                        box-sizing: border-box;
-                        &:last-child {
-                            margin-right: 0;
-                        }
-                        &:hover {
-                            cursor: pointer;
-                            box-shadow: 0 0 10px 0 rgb(0 0 0 / 10%);
-                        }
-                        &:hover .text-sum .text-one {
-                            color: $high-color;
-                        }
-                        &:hover .text-sum .text-two {
-                            color: $high-color;
-                        }
-                        &.active {
-                            position: relative;
-                            border-color: $high-color;
-                            box-shadow: 0 0 10px 0 rgb(0 0 0 / 10%);
-                            cursor: pointer;
-                        }
-                        &.active::before {
-                            position: absolute;
-                            top: 5px;
-                            right: 5px;
-                            font-family: iconfont;
-                            color: $high-color;
-                            content: '\e7e6';
-                        }
-                        &.active .text-sum .text-one {
-                            color: $high-color;
-                        }
-                        &.active .text-sum .text-two {
-                            color: $high-color;
-                        }
-                        .image {
-                            margin-bottom: 20px;
-                            width: 280px;
-                            height: 164px;
-                        }
-                        .text-sum {
-                            font-size: 12px;
-                            text-align: center;
-                            .text-one {
-                                color: #fff;
-                            }
-                            .text-two {
-                                color: rgba(255, 255, 255, .6);
-                            }
-                        }
-                    }
-                    .top-disabled {
-                        // cursor: not-allowed !important;
-                        pointer-events: none!important;
-                        border-color: rgb(0 0 0 / 0%)!important;
-                        box-shadow: 0 0 10px 0 rgb(0 0 0 / 0%)!important;
-                        &.active::before {
-                            content: '';
-                        }
-                        .image {
-                            opacity: 0.5;
-                        }
-                        .text-sum {
-                            .text-one {
-                                color: #999999 !important;
-                                opacity: 0.5;
-                            }
-                            .text-two {
-                                color: #191919 !important;
-                                opacity: 0.5;
-                            }
-                        }
-                    }
-                }
-                .form {
-                    margin-bottom: 64px;
-                    .upload-tip {
-                        margin-top: 8px;
-                        font-size: 12px;
-                        color: rgb(0 0 0 / 26%);
-                        line-height: 20px;
-                        .iconfont {
-                            font-size: 12px;
-                        }
-                    }
-                }
-            }
-            ::v-deep .el-upload {
-                .el-upload-dragger {
-                    background-color: #021c31;
-                    box-shadow: inset 0px 0px 18px 0px rgba(0, 180, 255, 0.5);
-                    border: 1px solid #50b0ff;
-                    .text {
-                        color: #fff;
-                    }
-                    i {
-                        color: #1cd7fa;
-                    }
-                }
-            }
-            ::v-deep .el-image__placeholder {
-                background-color: rgba(255, 255, 255, 0);
-            }
-            .el-divider--horizontal {
-                margin: 10px 0;
-            }
-            .el-divider__text,
-            .el-link {
-                font-size: 12px;
-                font-weight: normal;
-                background-color: #021c31;
-                color: #1cd7fa;
-            }
-            .avatar-uploader .el-upload {
-                position: relative;
-                overflow: hidden;
-                border: 1px dashed #d9d9d9;
-                border-radius: 6px;
-                cursor: pointer;
-            }
-            .avatar-uploader .el-upload:hover {
-                border-color: #409eff;
-            }
-            .avatar-uploader-icon {
-                width: 178px;
-                height: 178px;
-                font-size: 28px;
-                text-align: center;
-                color: #8c939d;
-                line-height: 178px;
-            }
-            .avatar {
-                display: block;
-                width: 178px;
-                height: 178px;
-            }
-            .el-upload__tip {
-                margin-top: 8px;
-                font-size: 12px;
-                color: #bebebe;
-                line-height: 20px;
-            }
-            // ::v-deep .el-upload--picture-card {
-            //   width: 120px;
-            //   height: 120px;
-            //   line-height: 118px;
-            // }
-            ::v-deep .el-upload-dragger {
-                width: 120px;
-                height: 120px;
-                .el-icon-plus {
-                    margin-top: 40px;
-                    font-size: 16px;
-                    color: #387dee;
-                }
-                .text {
-                    font-size: 12px;
-                    color: rgb(0 0 0 / 90%);
-                    line-height: 20px;
-                }
-                &:hover .text {
-                    color: #387dee;
-                }
-            }
-            ::v-deep.el-form--label-top .el-form-item__label {
-                font-size: 12px;
-            }
-            ::v-deep .el-input--small .el-input__inner {
-                font-size: 12px;
-            }
-        }
+    .el-divider--horizontal {
+      margin: 10px 0;
     }
+    .el-divider__text,
+    .el-link {
+      font-weight: normal;
+      font-size: 12px;
+    }
+    .avatar-uploader .el-upload {
+      border: 1px dashed #d9d9d9;
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .avatar-uploader .el-upload:hover {
+      border-color: #409eff;
+    }
+    .avatar-uploader-icon {
+      font-size: 28px;
+      color: #8c939d;
+      width: 178px;
+      height: 178px;
+      line-height: 178px;
+      text-align: center;
+    }
+    .avatar {
+      width: 178px;
+      height: 178px;
+      display: block;
+    }
+    .el-upload__tip {
+      font-size: 12px;
+      color: #bebebe;
+      line-height: 20px;
+      margin-top: 8px;
+    }
+    // ::v-deep .el-upload--picture-card {
+    //   width: 120px;
+    //   height: 120px;
+    //   line-height: 118px;
+    // }
+    ::v-deep .el-upload-dragger {
+        width: 120px;
+        height: 120px;
+        .el-icon-plus {
+            margin-top: 40px;
+            font-size: 16px;
+            color: #387DEE;
+        }
+        .text {
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.9);
+            line-height:20px
+        }
+        &:hover .text{
+            color: #387DEE
+        }
+
+    }
+    ::v-deep.el-form--label-top .el-form-item__label {
+        font-size: 12px;
+    }
+    ::v-deep .el-input--small .el-input__inner {
+        font-size: 12px;
+    }
+  }
 </style>
 <style>
-    /* .el-form-item.is-required:not(.is-no-asterisk) .el-form-item__label-wrap > .el-form-item__label:before,
+  /* .el-form-item.is-required:not(.is-no-asterisk) .el-form-item__label-wrap > .el-form-item__label:before,
   .el-form-item.is-required:not(.is-no-asterisk) > .el-form-item__label:before {
     content: '';
     color: #f56c6c;

@@ -66,30 +66,4 @@ export default {
     .log-audit ::v-deep .wrapper  {
         border-radius: 0 0 4px 4px;
     }
-    .custom-star {
-        .log-audit ::v-deep .el-tabs__header {
-            margin-bottom: 0px;
-            background-color: #021c31;
-            padding-left: 10px;
-            border: 1px solid #1cd7fa;
-            // border-bottom: none;
-            border-radius: 4px 4px 0 0;
-            .el-tabs__active-bar {
-                background-color: #1cd7fa;
-            }
-            .el-tabs__item {
-                color: #fff;
-            }
-            .is-active {
-                color: #1cd7fa;
-            }
-        }
-        .log-audit ::v-deep .wrapper  {
-            border-radius: 0 0 4px 4px;
-        }
-        .log-audit ::v-deep .el-tabs__nav-wrap::after {
-            background-color: #1cd7fa;
-            height: 0px;
-        }
-    }
 </style>

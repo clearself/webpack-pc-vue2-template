@@ -45,15 +45,7 @@ export const sendVerifyCode = (data) => {
         data: data.paramsData
     })
 }
-// 跳转
-export const ssoloading = (data) => {
-    return request({
-        url: '/base-server/sso/loading',
-        method: 'post',
-        params: data.queryData,
-        data: data.paramsData
-    })
-}
+
 // 校验授权是否过期
 export const getCode = () => {
     return request({

@@ -193,8 +193,7 @@ module.exports = {
         hotOnly: false,
         proxy: { // 设置代理
             '/api': {
-                target: 'http://10.18.13.86:8080', // 新环境地址开发
-                // target: 'http://10.10.109.234:17999', // 新环境地址开发
+                target: 'http://10.10.110.48:17999', // 新环境地址开发
                 changeOrigin: true,
                 ws: true,
                 secure: false,

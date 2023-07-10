@@ -42,9 +42,7 @@
                 </el-table-column>
                 <el-table-column prop="name" label="网段">
                 </el-table-column>
-                <el-table-column prop="ipCount" label="IP数量" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="organizationName" label="所属组织" show-overflow-tooltip>
+                <el-table-column prop="borders" label="关联安全边界" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column prop="zones" label="关联安全域" show-overflow-tooltip>
                 </el-table-column>
@@ -60,38 +58,18 @@
         <!--增加内容开始-->
         <el-dialog title="添加网段" :visible.sync="addDomainDialog" width="700px" custom-class="common-dialog">
             <el-form :model="netSegmentForm" :rules="netRules" ref="netSegmentForm" label-width="110px" class="demo-ruleForm addUserForm" label-position="top" >
-                <div class="ub" style="margin-top:-10px;margin-bottom:10px;">
-                    <div style="width:80px;height:30px;border:1px solid #0079FE;text-align:center;line-height:30px" :class=" [ netSegmentForm.ipvIS == 1 ? 'ipsIS1' : 'ipsIS2' ] " @click="ipvChange(1)">IPV4</div>
-                    <div style="width:80px;height:30px;border:1px solid #0079FE;text-align:center;line-height:30px" :class=" [ netSegmentForm.ipvIS == 2 ? 'ipsIS1' : 'ipsIS2' ] " @click="ipvChange(2)">IPV6</div>
-                </div>
-                <el-form-item label="添加方式" prop="way" v-if="netSegmentForm.ipvIS == 1">
-                    <el-select style="width:652px;" size="small" v-model="netSegmentForm.way" clearable placeholder="请选择" @change="changeWay">
-                        <el-option label="IP区间" value="1"></el-option>
-                        <el-option label="子网掩码" value="2"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="网段：" prop="name" v-if="isWay==1 || netSegmentForm.ipvIS != 1">
+                <el-form-item label="网段名称：" prop="name">
                     <el-input style="width:317px;" size="small" v-model.trim="netSegmentForm.name1" placeholder="请输入" autocomplete="off"></el-input>
                     -
                     <el-input style="width:317px;" size="small" v-model.trim="netSegmentForm.name2" placeholder="请输入" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="子网掩码：" prop="name1" v-if="isWay==2 && netSegmentForm.ipvIS == 1">
-                    <el-input style="width:70px;" size="small" v-model.trim="netSegmentForm.maskName1" placeholder="" autocomplete="off" type="number" :min="0"  :max="255"></el-input>
-                    .
-                    <el-input style="width:70px;" size="small" v-model.trim="netSegmentForm.maskName2" placeholder="" autocomplete="off" type="number" :min="0"  :max="255"></el-input>
-                    .
-                    <el-input style="width:70px;" size="small" v-model.trim="netSegmentForm.maskName3" placeholder="" autocomplete="off" type="number" :min="0"  :max="255"></el-input>
-                    .
-                    <el-input style="width:70px;" size="small" v-model.trim="netSegmentForm.maskName4" placeholder="" autocomplete="off" type="number" :min="0" :max="255"></el-input>
-                    /
-                    <el-input style="width:70px;" size="small" v-model.trim="netSegmentForm.maskName5" placeholder="" autocomplete="off" type="number" :min="0" :max="32"></el-input>
+                <el-form-item label="关联安全边界：" prop="borders">
+                    <el-select style="width:652px;" size="small" v-model="netSegmentForm.borders" clearable placeholder="请选择" @change="changeAddBorder">
+                        <el-option v-for="item in borders" :key="item.id" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
-                <div style="font-size:12px;color:#6B7889" class="mb-1" v-if="netSegmentForm.ipvIS == 1">注：IP段格式为192.168.1.0-192.168.1.255;子网格式:192.168.1.0/24</div>
-                <div style="font-size:12px;color:#6B7889" class="mb-1" v-if="netSegmentForm.ipvIS == 2">注：IPV6格式:fe80::4bd:250:c487</div>
-                <el-form-item label="所属组织：">
-                    <Treeselect @input="treeChange" style="width: 652px" :options="treeData" :normalizer="normalizer" noChildrenText="当前分支无子节点" noOptionsText="无可用选项" placeholder="请选择" v-model="netSegmentForm.departmentId" />
-                </el-form-item>
-                <el-form-item label="关联安全域：" prop="zones" style="margin-bottom:100px">
+                <el-form-item label="关联安全域：" prop="zones">
                     <el-select style="width:652px;" size="small" v-model="netSegmentForm.zones" clearable placeholder="请选择">
                         <el-option v-for="item in zones" :key="item.id" :label="item.label" :value="item.value">
                         </el-option>
@@ -106,38 +84,18 @@
         <!--编辑内容-->
         <el-dialog title="修改网段" :visible.sync="editUserDialog" width="700px" custom-class="common-dialog">
             <el-form :model="assetsFormEdit" :rules="netRules" ref="assetsFormEdit" label-width="110px" class="demo-ruleForm addUserForm" label-position="top">
-                <div class="ub" style="margin-top:-10px;margin-bottom:10px;">
-                    <div style="width:80px;height:30px;border:1px solid #0079FE;text-align:center;line-height:30px" :class=" [ assetsFormEdit.ipvIS == 1 ? 'ipsIS1' : 'ipsIS2' ] " @click="ipvChange1(1)">IPV4</div>
-                    <div style="width:80px;height:30px;border:1px solid #0079FE;text-align:center;line-height:30px" :class=" [ assetsFormEdit.ipvIS == 2 ? 'ipsIS1' : 'ipsIS2' ] " @click="ipvChange1(2)">IPV6</div>
-                </div>
-                <el-form-item label="添加方式" prop="way" v-if="assetsFormEdit.ipvIS == 1">
-                    <el-select style="width:652px;" size="small" v-model="assetsFormEdit.way" clearable placeholder="请选择" @change="changeWay">
-                        <el-option label="IP区间" value="1"></el-option>
-                        <el-option label="子网掩码" value="2"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="网段：" prop="name" v-if="isWay==1 || assetsFormEdit.ipvIS != 1">
+                <el-form-item label="网段名称：" prop="name">
                     <el-input style="width:317px;" size="small" v-model.trim="assetsFormEdit.name1" placeholder="请输入" autocomplete="off"></el-input>
                     -
                     <el-input style="width:317px;" size="small" v-model.trim="assetsFormEdit.name2" placeholder="请输入" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="子网掩码：" prop="name1" v-if="isWay==2 && assetsFormEdit.ipvIS == 1">
-                    <el-input style="width:70px;" size="small" v-model.trim="assetsFormEdit.maskName1" placeholder="" autocomplete="off" type="number" :min="0" :max="255"></el-input>
-                    .
-                    <el-input style="width:70px;" size="small" v-model.trim="assetsFormEdit.maskName2" placeholder="" autocomplete="off" type="number" :min="0" :max="255"></el-input>
-                    .
-                    <el-input style="width:70px;" size="small" v-model.trim="assetsFormEdit.maskName3" placeholder="" autocomplete="off" type="number" :min="0" :max="255"></el-input>
-                    .
-                    <el-input style="width:70px;" size="small" v-model.trim="assetsFormEdit.maskName4" placeholder="" autocomplete="off" type="number" :min="0" :max="255"></el-input>
-                    /
-                    <el-input style="width:70px;" size="small" v-model.trim="assetsFormEdit.maskName5" placeholder="" autocomplete="off" type="number" :min="0" :max="32"></el-input>
+                <el-form-item label="关联安全边界：" prop="borders">
+                    <el-select style="width:652px;" size="small" v-model="assetsFormEdit.borders" clearable placeholder="请选择" @change='changeEditBorder'>
+                        <el-option v-for="item in borders" :key="item.id" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
-                <div style="font-size:12px;color:#6B7889" class="mb-1" v-if="assetsFormEdit.ipvIS == 1">注：IP段格式为192.168.1.0-192.168.1.255;子网格式:192.168.1.0/24</div>
-                <div style="font-size:12px;color:#6B7889" class="mb-1" v-if="assetsFormEdit.ipvIS == 2">注：IPV6格式:fe80::4bd:250:c487</div>
-                <el-form-item label="所属组织：">
-                    <Treeselect @input="treeChange" style="width: 652px" :options="treeData" :normalizer="normalizer" noChildrenText="当前分支无子节点" noOptionsText="无可用选项" placeholder="请选择" v-model="assetsFormEdit.organizationId" />
-                </el-form-item>
-                <el-form-item label="关联安全域：" prop="zones" style="margin-bottom:100px">
+                <el-form-item label="关联安全域：" prop="zones">
                     <el-select style="width:652px;" size="small" v-model="assetsFormEdit.zones" clearable placeholder="请选择">
                         <el-option v-for="item in zones" :key="item.value" :label="item.label" :value="item.value">
                         </el-option>
@@ -163,45 +121,21 @@ import {
     getNetSegment,
     delNetSegment
 } from '../../server/assets/api.js'
-import {
-    get_asset_tree
-} from '@/server/system/asset_users.js'
 import initData from '@/mixins/initData.js'
-import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 export default {
     name: 'NetSegment',
     mixins: [initData],
-    components: {
-        Treeselect
-    },
     data() {
         var validateNameAdd = (rule, value, callback) => {
-            if (this.addDomainDialog && ((this.netSegmentForm.name1 === '' || this.netSegmentForm.name2 === ''))) {
-                callback(new Error('请填写正确内容'))
+            if (this.addDomainDialog && (this.netSegmentForm.name1 === '' || this.netSegmentForm.name2 === '')) {
+                callback(new Error('请填写名称'))
             } else if (this.editUserDialog && (this.assetsFormEdit.name1 === '' || this.assetsFormEdit.name2 === '')) {
-                callback(new Error('请填写正确内容'))
-            } else {
-                callback()
-            }
-        }
-        var validateNameAdd1 = (rule, value, callback) => {
-            if (this.addDomainDialog && (this.netSegmentForm.maskName1 === '' || this.netSegmentForm.maskName2 === '' || this.netSegmentForm.maskName3 === '' || this.netSegmentForm.maskName4 === '' || this.netSegmentForm.maskName5 === '')) {
-                callback(new Error('请填写正确内容'))
-            } else if (this.editUserDialog && (this.assetsFormEdit.maskName1 === '' || this.assetsFormEdit.maskName2 === '' || this.assetsFormEdit.maskName3 === '' || this.assetsFormEdit.maskName4 === '' || this.assetsFormEdit.maskName5 === '')) {
-                callback(new Error('请填写正确内容'))
+                callback(new Error('请填写名称'))
             } else {
                 callback()
             }
         }
         return {
-            normalizer(node) {
-                return {
-                    id: node.id,
-                    label: node.name,
-                    children: node.childDepInfo
-                }
-            },
             tabHeight: document.body.clientHeight - 260,
             loading: true,
             total_num: 0,
@@ -224,30 +158,14 @@ export default {
                 name1: '',
                 name2: '',
                 zones: '',
-                borders: '',
-                way: '',
-                maskName1: '',
-                maskName2: '',
-                maskName3: '',
-                maskName4: '',
-                maskName5: '',
-                ipvIS: 1,
-                departmentId: null
+                borders: ''
             },
             assetsFormEdit: {
                 id: '',
                 name1: '',
                 name2: '',
                 zones: '',
-                borders: '',
-                way: '',
-                maskName1: '',
-                maskName2: '',
-                maskName3: '',
-                maskName4: '',
-                maskName5: '',
-                organizationId: '',
-                ipvIS: ''
+                borders: ''
             },
             rules: {
                 name: [{
@@ -261,34 +179,18 @@ export default {
                     required: true,
                     validator: validateNameAdd,
                     trigger: 'blur'
-                }, {
-                    pattern: /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/,
-                    message: '请填写正确的IP',
-                    trigger: 'blur'
-                }],
-                name1: [{
-                    required: true,
-                    validator: validateNameAdd1,
-                    trigger: 'blur'
                 }],
                 zones: [{
                     required: true,
                     message: '请选择安全域',
                     trigger: 'change'
                 }],
-                departmentId: [{
+                borders: [{
                     required: true,
-                    message: '请选择所属组织',
-                    trigger: 'change'
-                }],
-                way: [{
-                    required: true,
-                    message: '请选择添加方式',
+                    message: '请选择安全边界',
                     trigger: 'change'
                 }]
-            },
-            isWay: 0,
-            treeData: []
+            }
         }
     },
     watch: {
@@ -296,21 +198,6 @@ export default {
             handler(newVal, oldVal) {
                 if (!newVal) {
                     this.$refs.netSegmentForm.resetFields()
-                    this.netSegmentForm = {
-                        name1: '',
-                        name2: '',
-                        zones: '',
-                        borders: '',
-                        way: '',
-                        maskName1: '',
-                        maskName2: '',
-                        maskName3: '',
-                        maskName4: '',
-                        maskName5: '',
-                        ipvIS: 1,
-                        departmentId: null
-                    }
-                    this.isWay = 0
                 }
             }
         },
@@ -318,22 +205,6 @@ export default {
             handler(newVal, oldVal) {
                 if (!newVal) {
                     this.$refs.assetsFormEdit.resetFields()
-                    this.assetsFormEdit = {
-                        id: '',
-                        name1: '',
-                        name2: '',
-                        zones: '',
-                        borders: '',
-                        way: '',
-                        maskName1: '',
-                        maskName2: '',
-                        maskName3: '',
-                        maskName4: '',
-                        maskName5: '',
-                        ipvIS: '',
-                        organizationId: ''
-                    }
-                    this.isWay = 0
                 }
             }
         }
@@ -341,53 +212,11 @@ export default {
     mounted() {
         this.$nextTick(() => {
             // this.getTypes();
-            // this.initBorder()
-            this.initZone()
+            this.initBorder()
             this.get_data()
-            this.initTree()
         })
     },
     methods: {
-        treeChange(value, instanceId) {
-            if (!value) this.netSegmentForm.departmentId = null
-        },
-        initTree() {
-            let data = {
-                queryData: {},
-                paramsData: {}
-            }
-            get_asset_tree(data).then(res => {
-                this.treeData = res[0].childDepInfo
-            })
-        },
-        ipvChange(v) {
-            this.netSegmentForm.ipvIS = v
-            this.netSegmentForm.way = ''
-            this.netSegmentForm.name1 = ''
-            this.netSegmentForm.name2 = ''
-            this.netSegmentForm.maskName1 = ''
-            this.netSegmentForm.maskName2 = ''
-            this.netSegmentForm.maskName3 = ''
-            this.netSegmentForm.maskName4 = ''
-            this.netSegmentForm.maskName5 = ''
-            this.isWay = 0
-        },
-        ipvChange1(v) {
-            this.assetsFormEdit.ipvIS = v
-            this.assetsFormEdit.way = ''
-            this.assetsFormEdit.name1 = ''
-            this.assetsFormEdit.name2 = ''
-            this.assetsFormEdit.maskName1 = ''
-            this.assetsFormEdit.maskName2 = ''
-            this.assetsFormEdit.maskName3 = ''
-            this.assetsFormEdit.maskName4 = ''
-            this.assetsFormEdit.maskName5 = ''
-            this.isWay = 0
-        },
-        changeWay(value) {
-            console.log(value)
-            this.isWay = value
-        },
         tableRowClassName({ row, rowIndex }) {
             console.log(rowIndex)
             if (rowIndex % 2) {
@@ -490,7 +319,7 @@ export default {
                 if (res.records.length > 0) {
                     res.records.forEach(item => {
                         this.tableData.push({
-                            name: item.ipFormat == 0 ? item.networkStart + '-' + item.networkEnd : item.networkStart + '/' + item.networkEnd,
+                            name: item.networkStart + '-' + item.networkEnd,
                             networkEnd: item.networkEnd,
                             boundaryId: item.boundaryId,
                             createTime: item.createTime,
@@ -498,12 +327,7 @@ export default {
                             networkStart: item.networkStart,
                             id: item.id,
                             zones: item.zoneName,
-                            borders: item.boundaryName,
-                            ipFormat: item.ipFormat,
-                            ipType: item.ipType,
-                            ipCount: item.ipCount,
-                            organizationName: item.organizationName,
-                            organizationId: item.organizationId
+                            borders: item.boundaryName
                         })
                     })
                 }
@@ -527,24 +351,13 @@ export default {
             })
         },
         addAssets() {
-            let networkStart
-            let networkEnd
-            if (this.netSegmentForm.ipvIS == 1) {
-                networkStart = this.isWay == 1 ? this.netSegmentForm.name1 : `${this.netSegmentForm.maskName1}.${this.netSegmentForm.maskName2}.${this.netSegmentForm.maskName3}.${this.netSegmentForm.maskName4}`
-                networkEnd = this.isWay == 1 ? this.netSegmentForm.name2 : this.netSegmentForm.maskName5
-            } else {
-                networkStart = this.netSegmentForm.name1
-                networkEnd = this.netSegmentForm.name2
-            }
             let data = {
                 queryData: {},
                 paramsData: {
-                    networkStart: networkStart,
-                    networkEnd: networkEnd,
-                    zoneId: this.netSegmentForm.zones,
-                    organizationId: this.netSegmentForm.departmentId,
-                    ipType: this.netSegmentForm.ipvIS == 1 ? 0 : 1,
-                    ipFormat: this.isWay == 1 ? 0 : this.isWay == 2 ? 1 : 0
+                    networkStart: this.netSegmentForm.name1,
+                    networkEnd: this.netSegmentForm.name2,
+                    boundaryId: this.netSegmentForm.borders,
+                    zoneId: this.netSegmentForm.zones
                 }
             }
             addNetSegment(data).then(res => {
@@ -567,15 +380,10 @@ export default {
                 queryData: {},
                 paramsData: {
                     id: this.assetsFormEdit.id,
-                    // networkStart: this.assetsFormEdit.name1,
-                    // networkEnd: this.assetsFormEdit.name2,
-                    networkStart: this.isWay == 1 ? this.assetsFormEdit.name1 : `${this.assetsFormEdit.maskName1}.${this.assetsFormEdit.maskName2}.${this.assetsFormEdit.maskName3}.${this.assetsFormEdit.maskName4}`,
-                    networkEnd: this.isWay == 1 ? this.assetsFormEdit.name2 : this.assetsFormEdit.maskName5,
+                    networkStart: this.assetsFormEdit.name1,
+                    networkEnd: this.assetsFormEdit.name2,
                     boundaryId: this.assetsFormEdit.borders,
-                    zoneId: this.assetsFormEdit.zones,
-                    organizationId: this.assetsFormEdit.organizationId,
-                    ipType: this.assetsFormEdit.ipvIS == 1 ? 0 : 1,
-                    ipFormat: this.isWay == 1 ? 0 : this.isWay == 2 ? 1 : ''
+                    zoneId: this.assetsFormEdit.zones
                 }
             }
             updateNetSegment(data).then(res => {
@@ -665,52 +473,18 @@ export default {
             this.editUserDialog = true
             this.assetsFormEdit = {
                 id: row.id,
-                // name1: row.networkStart,
-                // name2: row.networkEnd,
+                name1: row.networkStart,
+                name2: row.networkEnd,
                 zones: row.zoneId,
-                borders: row.boundaryId,
-                way: row.ipFormat == 0 ? '1' : '2', // IP格式
-                ipvIS: row.ipType == 0 ? 1 : 2, // ip类型
-                organizationId: row.organizationId,
-                name1: '',
-                name2: '',
-                maskName1: '',
-                maskName2: '',
-                maskName3: '',
-                maskName4: '',
-                maskName5: ''
+                borders: row.boundaryId
             }
-            if (row.ipFormat == 0) {
-                console.log(0)
-                this.assetsFormEdit.name1 = row.networkStart
-                this.assetsFormEdit.name2 = row.networkEnd
-            } else if (row.ipFormat == 1) {
-                console.log(1)
-                this.assetsFormEdit.maskName1 = row.networkStart.split('.')[0]
-                this.assetsFormEdit.maskName2 = row.networkStart.split('.')[1]
-                this.assetsFormEdit.maskName3 = row.networkStart.split('.')[2]
-                this.assetsFormEdit.maskName4 = row.networkStart.split('.')[3]
-                this.assetsFormEdit.maskName5 = row.networkEnd
-            }
-            console.log(this.assetsFormEdit)
-            this.isWay = row.ipFormat == 0 ? 1 : 2
-            // this.initZone(this.assetsFormEdit.borders)
+            this.initZone(this.assetsFormEdit.borders)
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-    .ipsIS1{
-        background:#0079FE;
-        color:#fff;
-        cursor: pointer;
-    }
-    .ipsIS2{
-        background:#fff;
-        color:#0079FE;
-        cursor: pointer;
-    }
     .paginat {
         padding-top:10px;
     }

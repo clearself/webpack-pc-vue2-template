@@ -1,10 +1,10 @@
 <template>
-    <div class="wrapper connect-wrapper">
+    <div class="wrapper">
         <div class="ub ub-ac" v-for="(item,index) in treeData" :key="index">
             <!--规则组-->
             <div v-if="item.connect && item.children" class="ub ub-ac">
                 <div class="and-btn">
-                    <el-select style="width: 80px;" size="mini" v-model="item.connect" placeholder="请选择">
+                    <el-select style="width: 80px" size="mini" v-model="item.connect" placeholder="请选择">
                         <el-option label="AND" value="and"></el-option>
                         <el-option label="OR" value="or"></el-option>
                         <!-- <el-option label="NOT" value="not"></el-option> -->
@@ -25,7 +25,7 @@
                             </div>
                         </div>
                         <div v-else>
-                            <div class="ub ub-ac" :class="{'right-first': ix===0}" style="margin-bottom: 10px;">
+                            <div class="ub ub-ac" :class="{'right-first': ix===0}" style="margin-bottom: 10px">
                                 <el-select
                                     size="mini"
                                     v-model="it.field"
@@ -40,7 +40,7 @@
                                 </el-select>
                                 <el-select
                                     size="mini"
-                                    style="margin: 0 10px;"
+                                    style="margin: 0 10px"
                                     v-model="it.operator"
                                     placeholder="请选择">
                                     <el-option
@@ -53,7 +53,7 @@
                                     size="mini"
                                     v-model="it.dataType"
                                     @change="it.value = ''"
-                                    style="margin-right: 10px;width: 80px;"
+                                    style="margin-right: 10px;width: 80px"
                                     placeholder="请选择">
                                     <el-option label="常量" :value="1"></el-option>
                                     <el-option label="变量" :value="2"></el-option>
@@ -73,7 +73,7 @@
                                 <el-date-picker
                                     v-model="it.value"
                                     v-if="it.attrType === 3 && it.dataType !== 2"
-                                    style="width: 180px;font-size: 12px;"
+                                    style="width: 180px;font-size: 12px"
                                     class="handleTime"
                                     popper-class="handleDrop"
                                     type="datetime"
@@ -99,8 +99,8 @@
                                     placeholder="请输入值"
                                     size="mini"
                                     clearable
-                                    style="width: 180px;"></el-input>
-                                <i v-if="ix>=1" style="margin-left: 5px;font-size: 16px;cursor: pointer;" class="iconfont icon-liebiaoshanchu" @click="deleteItem(item, ix)"/>
+                                    style="width: 180px"></el-input>
+                                <i v-if="ix>=1" style="cursor: pointer;font-size:16px;margin-left: 5px" class="iconfont icon-liebiaoshanchu" @click="deleteItem(item, ix)"/>
                             </div>
                             <div v-if="ix === item.children.length-1" class="ub btn">
                                 <p @click="addItem(item)"><i class="el-icon-plus"></i>添加条件</p>
@@ -237,67 +237,67 @@ export default {
 
 <style scoped lang="scss">
     .wrapper {
+        background: #fff;
+        margin-bottom: 10px;
         // min-height: 100px;
         overflow: auto;
-        margin-bottom: 10px;
-        background: #ffffff;
     }
     .btn {
         p {
-            margin-right: 10px;
-            margin-bottom: 10px;
             height: 20px;
-            font-size: 12px;
-            color: rgb(0 0 0 / 40%);
             line-height: 20px;
             cursor: pointer;
+            color: rgba(0, 0, 0, 0.4);
+            margin-right: 10px;
+            margin-bottom: 10px;
+            font-size: 12px;
         }
-        p:hover {
-            color: #387dee;
+        p:hover{
+            color:#387dee;
         }
     }
     .el-icon-close {
-        color: rgb(0 0 0 / 40%);
+        color: rgba(0, 0, 0, 0.4);
     }
     .and-btn {
         position: relative;
         margin-top: -20px;
         margin-right: 20px;
     }
-    .and-btn::after {
+    .and-btn:after {
         position: absolute;
-        top: 48%;
         right: -10px;
+        top: 48%;
+        content: '';
         width: 10px;
         height: 1px;
         background: #dcdcdc;
-        content: '';
     }
-    .right-area {
+    .right-area{
         position: relative;
     }
-    .right-area::before {
+    .right-area:before {
         position: absolute;
+        left: -10px;
         top: 10px;
         bottom: 20px;
-        left: -10px;
+        content: '';
         width: 1px;
         background: #dcdcdc;
-        content: '';
     }
-    .btn {
+    .btn{
         position: relative;
     }
-    .btn::before {
+    .btn:before {
         position: absolute;
-        top: 10px;
-        left: -10px;
         width: 10px;
         height: 1px;
+        left: -10px;
         background: #dcdcdc;
         content: '';
+        top: 10px;
     }
-    .btn::after {
+    .btn:after {
         //position: absolute;
         //width: 10px;
         //left: -10px;
@@ -307,16 +307,16 @@ export default {
         //bottom: 0;
         //z-index: 99;
     }
-    .right-first {
-        position: relative;
+    .right-first{
+        position:relative;
     }
-    .right-first::before {
+    .right-first:before {
         position: absolute;
-        top: 10px;
-        left: -10px;
         width: 10px;
         height: 1px;
+        left: -10px;
         background: #dcdcdc;
         content: '';
+        top: 10px;
     }
 </style>

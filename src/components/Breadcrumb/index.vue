@@ -55,21 +55,19 @@ export default {
 </script>
 <style lang="scss" scoped>
 .app-breadcrumb.el-breadcrumb {
-    display: inline-block;
-    margin-left: 10px;
-    font-size: 12px;
-    color: #8d8e90;
-    line-height: 40px;
-    .no-redirect {
-        color: #171717;
-        cursor: text;
-    }
-}
-.custom-star #app .no-redirect {
-    color: #8d8e90;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 40px;
+  margin-left: 10px;
+  color: #8d8e90;
+
+  .no-redirect {
+    color: #171717;
+    cursor: text;
+  }
 }
 .el-breadcrumb__inner a, .el-breadcrumb__inner.is-link {
-    font-weight: normal;
     color: #8d8e90;
+    font-weight: normal;
 }
 </style>

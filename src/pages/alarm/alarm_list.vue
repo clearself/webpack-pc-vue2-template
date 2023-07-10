@@ -1,9 +1,9 @@
 <template>
-    <div class="list" style="overflow-y: hidden;">
+    <div class="list" style="overflow-y:hidden">
         <div class="ub w100 alarmm-wrapper">
             <LeftFold @getCurParams="getCurParams" @del="delCurSearch" :current-id="curSearchId" :list="searchList"></LeftFold>
             <div class="ub ub-ver ub-f1 right-wrapper">
-                <div class="event-content ub w100 starWrapper" style="padding: 11px 10px;border: solid 1px #dadee8;border-radius: 4px;background: #ffffff;">
+                <div class="event-content ub w100" style="background:#fff;border: solid 1px #dadee8;border-radius: 4px;padding: 11px 10px">
                     <div class="ub ub-ver ub-f1">
                         <div class="w100 search-box">
                             <div class="search-more ub ub-as">
@@ -19,7 +19,7 @@
                                                             @getCustomTime="getCustomTime"
                                                             @getDateData="getDateData"
                                                             @actualTime="actualTimeData"
-                                                            style="width: 100%;"
+                                                            style="width:100%"
                                                             @timeUnit="timeUnitData"
                                                             :empty="false"
                                                             :chartTimeRange="customTimeRange"
@@ -36,9 +36,8 @@
                                                             v-model="get_params.reportStatus"
                                                             placeholder="请选择"
                                                             filterable
-                                                            style="width: 100%;"
+                                                            style="width:100%"
                                                             multiple
-                                                            clearable
                                                             collapse-tags
                                                             size="small">
                                                             <el-option v-for="(item, index) in alarmStates" :key="index" :label="item.text" :value="item.value">
@@ -51,8 +50,8 @@
                                         <el-col   :span="6">
                                             <div class="mr-2">
                                                 <el-form :model="get_params" label-position="right" :label-width="labelWidth">
-                                                    <el-form-item label="源-姓名：">
-                                                        <el-input placeholder="请输入" clearable v-model="get_params.srcChineseName" size="small" style="width: 100%;">
+                                                    <el-form-item label="事件名称：">
+                                                        <el-input placeholder="请输入" clearable v-model="get_params.reportName" size="small" style="width:100%">
                                                         </el-input>
                                                     </el-form-item>
                                                 </el-form>
@@ -61,34 +60,33 @@
                                         <el-col   :span="6">
                                             <div class="mr-2">
                                                 <el-form :model="get_params" label-position="right" :label-width="labelWidth">
-                                                    <el-form-item label="目的-姓名：">
-                                                        <el-input placeholder="请输入" clearable v-model="get_params.desChineseName" size="small" style="width: 100%;">
-                                                        </el-input>
+                                                    <el-form-item label="事件等级：">
+                                                        <el-select
+                                                            v-model="get_params.reportLevel"
+                                                            style="width:100%"
+                                                            placeholder="请选择"
+                                                            multiple
+                                                            filterable
+                                                            size="small"
+                                                            collapse-tags
+                                                            clearable>
+                                                            <el-option v-for="(item, index) in levels" :key="index" :label="item.name" :value="item.value">
+                                                            </el-option>
+                                                        </el-select>
                                                     </el-form-item>
                                                 </el-form>
                                             </div>
                                         </el-col>
                                     </el-row>
-
                                     <el-row class="w100" style="height: 48px;">
                                         <el-col  :span="6">
                                             <div class="mr-2">
-                                                <el-form :model="get_params">
-                                                    <el-form-item :label-width="labelWidth" label="源-组织架构：" label-position="left">
-                                                        <div class="treeselect">
-                                                            <Treeselect
-                                                                @input="inputChange"
-                                                                :appendToBody="true"
-                                                                size="small"
-                                                                :options="treeData"
-                                                                :normalizer="normalizer"
-                                                                noChildrenText="当前分支无子节点"
-                                                                noOptionsText="无可用选项"
-                                                                noResultsText="无可用选项"
-                                                                placeholder="请选择"
-                                                                v-model="get_params.srcOrg"
-                                                            />
-                                                        </div>
+                                                <el-form :model="get_params" label-position="right" :label-width="labelWidth">
+                                                    <el-form-item label="事件类型：">
+                                                        <el-select size="small" v-model="get_params.reportType" multiple clearable placeholder="请选择" style="width:100%" collapse-tags>
+                                                            <el-option v-for="(item) in typeList" :key="item.id" :label="item.name" :value="item.id">
+                                                            </el-option>
+                                                        </el-select>
                                                     </el-form-item>
                                                 </el-form>
                                             </div>
@@ -97,7 +95,7 @@
                                             <div class="mr-2">
                                                 <el-form :model="get_params" label-position="right" :label-width="labelWidth">
                                                     <el-form-item label="源IP：">
-                                                        <el-input placeholder="请输入" clearable v-model="get_params.srcIp" size="small" style="width: 100%;">
+                                                        <el-input placeholder="请输入" clearable v-model="get_params.srcIp" size="small" style="width:100%">
                                                         </el-input>
                                                     </el-form-item>
                                                 </el-form>
@@ -107,30 +105,7 @@
                                             <div class="mr-2">
                                                 <el-form :model="get_params" label-position="right" :label-width="labelWidth">
                                                     <el-form-item label="源端口：">
-                                                        <el-input placeholder="请输入" clearable v-model="get_params.srcPort" size="small" style="width: 100%;">
-                                                        </el-input>
-                                                    </el-form-item>
-                                                </el-form>
-                                            </div>
-                                        </el-col>
-                                        <el-col  :span="6">
-                                            <div class="mr-2">
-                                                <el-form :model="get_params" label-position="right" :label-width="labelWidth">
-                                                    <el-form-item label="源-用户名：">
-                                                        <el-input placeholder="请输入" clearable v-model="get_params.srcName" size="small" style="width: 100%;">
-                                                        </el-input>
-                                                    </el-form-item>
-                                                </el-form>
-                                            </div>
-                                        </el-col>
-                                    </el-row>
-
-                                    <el-row class="w100" style="height: 48px;">
-                                        <el-col  :span="6">
-                                            <div class="mr-2">
-                                                <el-form :model="get_params" label-position="right" :label-width="labelWidth">
-                                                    <el-form-item label="源-手机号：">
-                                                        <el-input placeholder="请输入" clearable v-model="get_params.srcPhone" size="small" style="width: 100%;">
+                                                        <el-input placeholder="请输入" clearable v-model="get_params.srcPort" size="small" style="width:100%">
                                                         </el-input>
                                                     </el-form-item>
                                                 </el-form>
@@ -140,40 +115,19 @@
                                             <div class="mr-2">
                                                 <el-form :model="get_params" label-position="right" :label-width="labelWidth">
                                                     <el-form-item label="目的IP：">
-                                                        <el-input placeholder="请输入" clearable v-model="get_params.desIp" size="small" style="width: 100%;">
-                                                        </el-input>
-                                                    </el-form-item>
-                                                </el-form>
-                                            </div>
-                                        </el-col>
-                                        <el-col  :span="6">
-                                            <div class="mr-2">
-                                                <el-form :model="get_params" label-position="right" :label-width="labelWidth">
-                                                    <el-form-item label="目的端口：">
-                                                        <el-input placeholder="请输入" clearable v-model="get_params.desPort" size="small" style="width: 100%;">
-                                                        </el-input>
-                                                    </el-form-item>
-                                                </el-form>
-                                            </div>
-                                        </el-col>
-                                        <el-col  :span="6">
-                                            <div class="mr-2">
-                                                <el-form :model="get_params" label-position="right" :label-width="labelWidth">
-                                                    <el-form-item label="目的-用户名：">
-                                                        <el-input placeholder="请输入" clearable v-model="get_params.desName" size="small" style="width: 100%;">
+                                                        <el-input placeholder="请输入" clearable v-model="get_params.desIp" size="small" style="width:100%">
                                                         </el-input>
                                                     </el-form-item>
                                                 </el-form>
                                             </div>
                                         </el-col>
                                     </el-row>
-
                                     <el-row class="w100" style="height: 48px;">
                                         <el-col  :span="6">
                                             <div class="mr-2">
                                                 <el-form :model="get_params" label-position="right" :label-width="labelWidth">
-                                                    <el-form-item label="目的-手机号：">
-                                                        <el-input placeholder="请输入" clearable v-model="get_params.desPhone" size="small" style="width: 100%;">
+                                                    <el-form-item label="目的端口：">
+                                                        <el-input placeholder="请输入" clearable v-model="get_params.desPort" size="small" style="width:100%">
                                                         </el-input>
                                                     </el-form-item>
                                                 </el-form>
@@ -182,19 +136,32 @@
                                         <el-col  :span="6">
                                             <div class="mr-2">
                                                 <el-form :model="get_params" label-position="right" :label-width="labelWidth">
-                                                    <el-form-item label="事件名称：">
-                                                        <el-input placeholder="请输入" clearable v-model="get_params.reportName" size="small" style="width: 100%;">
-                                                        </el-input>
+                                                    <el-form-item label="攻击结果：">
+                                                        <el-select filterable size="small" v-model="get_params.attackResult" multiple clearable placeholder="请选择" style="width:100%" collapse-tags>
+                                                            <el-option v-for="(item) in attackResultList" :key="item.id" :label="item.name" :value="item.name">
+                                                            </el-option>
+                                                        </el-select>
                                                     </el-form-item>
                                                 </el-form>
                                             </div>
                                         </el-col>
-
                                         <el-col  :span="6">
                                             <div class="mr-2">
                                                 <el-form :model="get_params" label-position="right" :label-width="labelWidth">
-                                                    <el-form-item label="触发规则：">
-                                                        <el-select filterable size="small" v-model="get_params.ruleIds" clearable placeholder="请选择" style="width: 100%;" multiple collapse-tags>
+                                                    <el-form-item label="事件来源：">
+                                                        <el-select size="small" v-model="get_params.reportFrom" clearable placeholder="请选择" style="width:100%" multiple collapse-tags>
+                                                            <el-option v-for="(item) in reportFromList" :key="item.id" :label="item.name" :value="item.id">
+                                                            </el-option>
+                                                        </el-select>
+                                                    </el-form-item>
+                                                </el-form>
+                                            </div>
+                                        </el-col>
+                                        <el-col  :span="6">
+                                            <div class="mr-2">
+                                                <el-form :model="get_params" label-position="right" :label-width="labelWidth">
+                                                    <el-form-item label="关联规则：">
+                                                        <el-select filterable size="small" v-model="get_params.ruleIds" clearable placeholder="请选择" style="width:100%" multiple collapse-tags>
                                                             <el-option v-for="(item) in relevanceRuleList" :key="item.id" :label="item.name" :value="item.id">
                                                             </el-option>
                                                         </el-select>
@@ -209,24 +176,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="ub ub-pe" style="margin-top: 4px;width: 180px;">
+                    <div class="ub ub-pe" style="width:180px;margin-top: 4px">
                         <div class="iconfont icon-sousuotiaojianbaocun ub ub-ac ub-pc save-btn" @click="saveSearch"></div>
                         <Debounce :time='1500' :isDebounce="2">
-                            <el-button style="min-width: 60px !important;" size="small"  @click.native="resetFun">重 置</el-button>
-                            <!--                            <div class="ub ub-ac ub-pc reset-btn" @click="resetFun">重 置</div>-->
+                            <div class="ub ub-ac ub-pc reset-btn" @click="resetFun">重 置</div>
                         </Debounce>
                         <Debounce :time='1500' :isDebounce="2">
-                            <el-button style="min-width: 60px !important;" :loading="loading" size="small" type="primary" @click.native="searchCheck">搜 索</el-button>
-                            <!--                            <el-button class="search" style="padding: 8px 15px;min-width: 60px;height: 30px;" title="搜 索" @click.native="searchCheck" size="small" type="primary">搜 索</el-button>-->
+                            <el-button class="search" style="min-width: 60px;height:30px;padding: 8px 15px;" title="搜 索" @click.native="searchCheck" size="small" type="primary">搜 索</el-button>
                         </Debounce>
                     </div>
                 </div>
-                <div class="tab-button ub" v-show="false" style="padding: 0 10px;border: 1px solid #dadee8;border-bottom: none;background: #ffffff;">
-                    <div class="draft-btn" v-for=" (item,index) in types" :key="index" @click="tabClick(item,index)" :class="{ 'tab-active': item.isActive }">
-                        {{item.name}}
-                    </div>
-                </div>
-                <div style="margin-top: 5px;" class="w100 list-container" v-if="activeData==1">
+                <div class="w100 list-container">
                     <div class="ub ub-pj list-tips ststistic-nav">
                         <div class="ub">
                             <div class="left-tongji">统计</div>
@@ -237,32 +197,32 @@
                         </div>
                         <div class="right-up" @click="isChartOpen=!isChartOpen"><span>{{isChartOpen?'收起':'展开'}}</span><i class="el-icon-arrow-up" :class="{'el-icon-arrow-down':!isChartOpen}"></i></div>
                     </div>
-                    <div v-show="isChartOpen" class="chart-row" style="margin-bottom: 10px;">
-                        <!--                        <div class="chart-left">-->
-                        <!--                            <div class="chart-box">-->
-                        <!--                                <div class="ub ub-pj ub-ac w100 chart-top" style="padding: 0 10px;box-sizing: border-box;">-->
-                        <!--                                    <div class="title">事件等级统计</div>-->
-                        <!--                                </div>-->
-                        <!--                                <div class="chart-map">-->
-                        <!--                                    &lt;!&ndash;  v-loading="load_loading" &ndash;&gt;-->
-                        <!--                                    <div style="height: 230px;" v-loading="load_loading" element-loading-background="transparent">-->
-                        <!--                                        <div v-if="load_no_data" class="ub ub-f1 ub-ac ub-pc" style="height: 100%;font-size: 14px;color: rgb(144 147 153);">-->
-                        <!--                                            暂无数据-->
-                        <!--                                        </div>-->
-                        <!--                                        <pie v-if="levelData.length>0" type="1" :chartData="levelData" />-->
-                        <!--                                    </div>-->
-                        <!--                                </div>-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
+                    <div v-show="isChartOpen" class="chart-row" style="margin-bottom:10px;">
+                        <div class="chart-left">
+                            <div class="chart-box">
+                                <div class="ub ub-pj ub-ac w100 chart-top" style="padding:0 10px;box-sizing: border-box;">
+                                    <div class="title">事件等级统计</div>
+                                </div>
+                                <div class="chart-map">
+                                    <!--  v-loading="load_loading" -->
+                                    <div style="height:230px;" v-loading="load_loading" element-loading-background="transparent">
+                                        <div v-if="load_no_data" class="ub ub-f1 ub-ac ub-pc" style="height:100%;color:rgb(144, 147, 153);font-size:14px;">
+                                            暂无数据
+                                        </div>
+                                        <pie v-if="levelData.length>0" type="1" :chartData="levelData" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="chart-right">
                             <div class="chart-box">
-                                <div class="ub ub-pj ub-ac w100 chart-top" style="padding: 0 10px;box-sizing: border-box;">
+                                <div class="ub ub-pj ub-ac w100 chart-top" style="padding:0 10px;box-sizing: border-box;">
                                     <div class="title">事件趋势统计</div>
                                 </div>
                                 <div class="chart-map">
                                     <!-- v-loading="load_loading1"  -->
-                                    <div class="ub ub-f1" style="height: 230px;" v-loading="load_loading1" element-loading-background="transparent">
-                                        <div v-if="load_no_data1" class="ub ub-f1 ub-ac ub-pc" style="height: 100%;font-size: 14px;color: rgb(144 147 153);">
+                                    <div class="ub ub-f1" style="height:230px;" v-loading="load_loading1" element-loading-background="transparent">
+                                        <div v-if="load_no_data1" class="ub ub-f1 ub-ac ub-pc" style="height:100%;color:rgb(144, 147, 153);font-size:14px;">
                                             暂无数据
                                         </div>
                                         <brokenLine v-if="load_data.length>0" :chartData="load_data" :sayTimes="sayTimes" />
@@ -275,13 +235,12 @@
                         <div class="ub w100 ub-pj mb-1 ub-ac">
                             <div class="list-tips">列表内容</div>
                             <div>
-                                <el-button style="color: #ffffff;background: #00a870;borer-color:#00a870" icon="el-icon-sort" @click="changeAllState" v-per="['alarm_event_status']" type="primary" size="small">状态变更</el-button>
-                                <!--                                <el-button icon="el-icon-plus" @click="handleAlarm" size="small" type="primary">发起事件</el-button>-->
-                                <el-button style="margin-right: 10px;" :loading="downLoading" icon="iconfont icon-daochu"  size="small" type="primary" @click="handleExport">导出内容</el-button>
-
-                                <el-dropdown trigger="click" :hide-on-click="false" >
-                                    <el-button icon="el-icon-edit-outline" size="small"  type="primary"  style="color: #ffffff;background: #b500ff;border-color:#b500ff">配置列</el-button>
-                                    <el-dropdown-menu slot="dropdown" style="padding-left: 10px;">
+                                <el-button icon="el-icon-plus" @click="handleAlarm" size="small" type="primary" v-per="['alarm_event_add']">发起事件</el-button>
+                                <el-button :loading="downLoading" icon="iconfont icon-daochu"  size="small" type="primary" @click="handleExport" v-per="['alarm_event_export']">导出内容</el-button>
+                                <el-button style="margin-right: 10px;background:#00a870;color:#fff" icon="el-icon-sort" @click="changeAllState" size="small" v-per="['alarm_event_status']">状态变更</el-button>
+                                <el-dropdown trigger="click" :hide-on-click="false" style="margin-right: 5px">
+                                    <el-button icon="el-icon-edit-outline" size="small" style="background:#b500ff;color:#fff" v-per="['alarm_event_cf']">配置列</el-button>
+                                    <el-dropdown-menu slot="dropdown" style="padding-left: 10px">
                                         <div class="left-tip"><i class="el-icon-info"></i><span>拖拽字段进行排序</span></div>
                                         <el-checkbox-group v-model="checkList" @change="changeHeader">
                                             <draggable class="w100" tag="div" v-model="checkListAll" v-bind="{scroll: true,animation: 150}" @end="onEnd">
@@ -293,12 +252,13 @@
                                         </el-checkbox-group>
                                     </el-dropdown-menu>
                                 </el-dropdown>
+                                <el-button style="margin-left:5px" icon="el-icon-delete" size="small" type="danger" @click="judgeDelete" v-per="['alarm_event_del']">删除</el-button>
                             </div>
                         </div>
                     </div>
                     <div :style="{'height':tabHeight,'overflow-y':'auto'}">
                         <el-table
-                            style="width: 100%;"
+                            style="width:100%;"
                             ref="multipleTable1"
                             v-loading="loading"
                             class='bigTable fixedTable'
@@ -372,25 +332,20 @@
                                                     </div>
                                                 </div>
                                                 <div slot="reference">
-                                                    <span v-if="scope.row.reportLevel == 0" style="color: #03864f;">低</span>
-                                                    <span v-if="scope.row.reportLevel == 1" style="color: #0052d9;">中低</span>
-                                                    <span v-if="scope.row.reportLevel == 2" style="color: #ddd000;">中</span>
-                                                    <span v-if="scope.row.reportLevel == 3" style="color: #e47700;">中高</span>
-                                                    <span v-if="scope.row.reportLevel == 4" style="color: #e47700;">高</span>
+                                                    <span v-if="scope.row.reportLevel == 0" style="color:#03864f">低</span>
+                                                    <span v-if="scope.row.reportLevel == 1" style="color:#0052d9">中低</span>
+                                                    <span v-if="scope.row.reportLevel == 2" style="color:#ddd000">中</span>
+                                                    <span v-if="scope.row.reportLevel == 3" style="color:#e47700">中高</span>
+                                                    <span v-if="scope.row.reportLevel == 4" style="color:#e47700">高</span>
                                                 </div>
                                             </el-popover>
                                         </div>
                                     </template>
                                 </el-table-column>
-                                <el-table-column v-if="it === 'ATT&CK'" :key="index" prop="attCk" label="ATT&CK" min-width="160"></el-table-column>
-                                <el-table-column v-if="it === '组织级别'" :key="index" prop="orgLevel" label="组织级别" min-width="160"></el-table-column>
-                                <el-table-column v-if="it === '组织架构'" :key="index" prop="orgName" label="组织架构" min-width="160"></el-table-column>
-                                <el-table-column v-if="it === '攻击链阶段'" :key="index" prop="attChain" label="攻击链阶段" min-width="160">
-                                </el-table-column>
                                 <el-table-column v-if="it === '发起工单'"  label="发起工单" :key="index" min-width="120" align="center">
                                     <template slot-scope="scope">
                                         <div>
-                                            <span style="color: #c1c1c1;" v-if="scope.row.isStart === 0">否</span>
+                                            <span style="color:#c1c1c1;" v-if="scope.row.isStart === 0">否</span>
                                             <span v-else>是</span>
                                         </div>
                                     </template>
@@ -484,21 +439,21 @@
                                                         <span>复制</span>
                                                     </div>
                                                     <p
-                                                        style="margin-top: 10px;"
+                                                        style="margin-top:10px"
                                                         @click="jumpAsset(scope.row.srcIp)"
                                                         class="ub ub-ac click-btn"
                                                     >
-                                                        <i class="iconfont icon-chaxunzichan" style="font-size: 12px;"></i>
+                                                        <i class="iconfont icon-chaxunzichan" style="font-size:12px"></i>
                                                         <span>查询资产</span>
                                                     </p>
-                                                    <!--                                                    <p-->
-                                                    <!--                                                        style="margin-top:10px"-->
-                                                    <!--                                                        @click="jumpThreat(scope.row.srcIp)"-->
-                                                    <!--                                                        class="ub ub-ac click-btn"-->
-                                                    <!--                                                    >-->
-                                                    <!--                                                        <i class="iconfont icon-chaxunqingbao" style="font-size:12px"></i>-->
-                                                    <!--                                                        <span>查询情报</span>-->
-                                                    <!--                                                    </p>-->
+                                                    <p
+                                                        style="margin-top:10px"
+                                                        @click="jumpThreat(scope.row.srcIp)"
+                                                        class="ub ub-ac click-btn"
+                                                    >
+                                                        <i class="iconfont icon-chaxunqingbao" style="font-size:12px"></i>
+                                                        <span>查询情报</span>
+                                                    </p>
                                                 </div>
                                                 <p
                                                     style="cursor: pointer; text-decoration: underline; color: #0052d9;"
@@ -560,21 +515,21 @@
                                                         <span>复制</span>
                                                     </div>
                                                     <p
-                                                        style="margin-top: 10px;"
+                                                        style="margin-top:10px"
                                                         @click="jumpAsset(scope.row.desIp)"
                                                         class="ub ub-ac click-btn"
                                                     >
-                                                        <i class="iconfont icon-chaxunzichan" style="font-size: 12px;"></i>
+                                                        <i class="iconfont icon-chaxunzichan" style="font-size:12px"></i>
                                                         <span>查询资产</span>
                                                     </p>
-                                                    <!--                                                    <p-->
-                                                    <!--                                                        style="margin-top:10px"-->
-                                                    <!--                                                        @click="jumpThreat(scope.row.desIp)"-->
-                                                    <!--                                                        class="ub ub-ac click-btn"-->
-                                                    <!--                                                    >-->
-                                                    <!--                                                        <i class="iconfont icon-chaxunqingbao" style="font-size:12px"></i>-->
-                                                    <!--                                                        <span>查询情报</span>-->
-                                                    <!--                                                    </p>-->
+                                                    <p
+                                                        style="margin-top:10px"
+                                                        @click="jumpThreat(scope.row.desIp)"
+                                                        class="ub ub-ac click-btn"
+                                                    >
+                                                        <i class="iconfont icon-chaxunqingbao" style="font-size:12px"></i>
+                                                        <span>查询情报</span>
+                                                    </p>
                                                 </div>
                                                 <p
                                                     style="cursor: pointer; text-decoration: underline; color: #0052d9;"
@@ -690,7 +645,7 @@
                                                         <div>已确认</div>
                                                     </div>
                                                     <div v-if="scope.row.reportStatus == 2" class="ub ub-ac ub-pc alarm-state three">
-                                                        <div>已处理</div>
+                                                        <div>已处置</div>
                                                     </div>
                                                     <div v-if="scope.row.reportStatus == 3" class="ub ub-ac ub-pc alarm-state four">
                                                         <div>已驳回</div>
@@ -709,23 +664,15 @@
                                         </div>
                                     </template>
                                 </el-table-column>
-
-                                <el-table-column v-if="it === '源-姓名'" :key="index" prop="srcChineseName" label="源-姓名" min-width="100" show-overflow-tooltip></el-table-column>
-                                <el-table-column v-if="it === '目的-姓名'" :key="index" prop="desChineseName" label="目的-姓名" min-width="100" show-overflow-tooltip></el-table-column>
-                                <el-table-column v-if="it === '源-用户名'" :key="index" prop="srcName" label="源-用户名" min-width="100" show-overflow-tooltip></el-table-column>
-                                <el-table-column v-if="it === '目的-用户名'" :key="index" prop="srcName" label="目的-用户名" min-width="100" show-overflow-tooltip></el-table-column>
-                                <el-table-column v-if="it === '源-手机号'" :key="index" prop="srcPhone" label="源-手机号" min-width="100" show-overflow-tooltip></el-table-column>
-                                <el-table-column v-if="it === '目的-手机号'" :key="index" prop="desPhone" label="目的-手机号" min-width="100" show-overflow-tooltip></el-table-column>
-                                <el-table-column v-if="it === '源-组织架构'" :key="index" prop="srcOrg" label="源-组织架构" min-width="100" show-overflow-tooltip></el-table-column>
-                                <el-table-column v-if="it === '目的-组织架构'" :key="index" prop="desOrg" label="目的-组织架构" min-width="100" show-overflow-tooltip></el-table-column>
                             </template>
-                            <el-table-column label="操作" align="center" width="100" fixed="right" class-name="deepBg">
+                            <el-table-column label="操作" align="center" width="160" fixed="right" class-name="deepBg">
                                 <template slot-scope="scope">
                                     <div>
-                                        <el-button  style="margin: 0 0 0 5px;" @click="handleSee(scope.row)" size="small" v-per="['alarm_event_look']" type="text">查看</el-button>
-                                        <el-dropdown trigger="click" :hide-on-click="true" style="margin: 0 0 0 10px;">
+                                        <el-button @click="handleSee(scope.row)" size="small" type="text" v-per="['alarm_event_look']">查看</el-button>
+                                        <el-button :disabled="scope.row.reportFrom==1" size="small" type="text" @click="changeOption(2,scope.row)" v-per="['alarm_event_edit']">编辑</el-button>
+                                        <el-dropdown trigger="click" :hide-on-click="true" style="margin: 0 10px">
                                             <el-button size="small" type="text">更多</el-button>
-                                            <el-dropdown-menu slot="dropdown" style="width: 90px;">
+                                            <el-dropdown-menu slot="dropdown" style="width:90px">
                                                 <el-dropdown-item command="a">
                                                     <el-button size="small" type="text" :disabled="scope.row.isStart==1" @click="changeOption(1,scope.row)" v-per="['alarm_event_order']">发起工单</el-button>
                                                 </el-dropdown-item>
@@ -734,12 +681,14 @@
                                                 </el-dropdown-item>
                                             </el-dropdown-menu>
                                         </el-dropdown>
+                                        <el-button :disabled="scope.row.isStart==1" size="small" type="text" @click="changeOption(4,scope.row)" v-per="['alarm_event_del']">删除</el-button>
                                     </div>
                                 </template>
                             </el-table-column>
+
                         </el-table>
                     </div>
-                    <div v-show="tableData.length>0" class="pagination pag mt-1" style="margin-top: 10px;padding: 0 !important;text-align: right;">
+                    <div v-show="tableData.length>0" class="pagination pag mt-1" style="padding: 0px !important;text-align: right;margin-top:10px">
                         <el-pagination
                             background
                             @size-change="handleSizeChange"
@@ -747,8 +696,7 @@
                             :current-page="get_params.page"
                             :page-sizes="[10, 20, 30, 50]"
                             :page-size="get_params.size"
-                            layout="slot,sizes, prev, next,pager,jumper"
-                            :total="total_num"
+                            layout="slot,sizes, prev, next"
                             prev-text="＜ 上一页"
                             next-text="下一页 ＞"></el-pagination>
                     </div>
@@ -758,11 +706,11 @@
         </div>
 
         <el-drawer :visible.sync="seeDialog" direction="rtl" :size="1200" :wrapperClosable="false" title="详情">
-            <div id="drawer-content" class="drawer-content event" ref="drawerContent">
-                <div style="position: relative;top: 0;left: 0;">
+            <div class="drawer-content event">
+                <div style="position: relative;left:0;top:0;width:100%;height:100%;overflow-y: auto;">
                     <div class="ub ub-pj w100">
                         <div class="list-tip">
-                            <span style="font-weight: 600;">{{ seeForm.reportName }}</span>
+                            <span style="font-weight:600">{{ seeForm.reportName }}</span>
                             <span v-if="seeForm.reportLevel == 0" class="title-level zero">低</span>
                             <span v-if="seeForm.reportLevel == 1" class="title-level one">中低</span>
                             <span v-if="seeForm.reportLevel == 2" class="title-level two">中</span>
@@ -771,39 +719,40 @@
 
                             <span
                                 v-if="seeForm.reportStatus == 0"
-                                style="padding: 3px 15px;font-size: 12px;border-radius: 16px;color: #e47700;background: rgb(255 186 0 / 30%);line-height: 1;">待确认</span>
+                                style="color:#e47700;background:rgba(255,186,0,0.3);font-size: 12px;border-radius: 16px;line-height: 1;padding: 3px 15px;">待确认</span>
                             <span
                                 v-if="seeForm.reportStatus == 1"
-                                style="padding: 3px 15px;font-size: 12px;border-radius: 16px;color: #03864f;background: rgb(0 255 0 / 30%);line-height: 1;">已确认</span>
+                                style="color:#03864f;background:rgba(0,255,0,0.3);font-size: 12px;border-radius: 16px;line-height: 1;padding: 3px 15px;">已确认</span>
                             <span
                                 v-if="seeForm.reportStatus == 2"
-                                style="padding: 3px 15px;font-size: 12px;border-radius: 16px;color: #0052d9;background: rgb(0 192 255 / 30%);line-height: 1;">已处理</span>
+                                style="color:#0052d9;background:rgba(0,192,255,0.3);font-size: 12px;border-radius: 16px;line-height: 1;padding: 3px 15px;">已处置</span>
                             <span
                                 v-if="seeForm.reportStatus == 3"
-                                style="padding: 3px 15px;font-size: 12px;border-radius: 16px;color: #aa0202;background: rgb(255 58 58 / 30%);line-height: 1;">已驳回</span>
+                                style="color:#aa0202;background:rgba(255,58,58,0.3);font-size: 12px;border-radius: 16px;line-height: 1;padding: 3px 15px;">已驳回</span>
                         </div>
                         <div class="ub">
                             <div>
                                 <el-button style="margin-right: 5px;" icon="el-icon-plus" :disabled="currentRow.isStart==1" type="primary" title="发起工单" @click="changeOption(1,currentRow)" size="small">发起工单</el-button>
-                                <el-button style="margin-right: 5px;color: #ffffff;background: #00a870;"  icon="el-icon-sort" type="primary" title="状态变更"  @click="changeOption(3,currentRow)" size="small">状态变更</el-button>
+                                <el-button style="margin-right: 5px;background:#00a870;color:#fff"  icon="el-icon-sort" type="primary" title="状态变更"  @click="changeOption(3,currentRow)" size="small">状态变更</el-button>
+                                <el-button :disabled="currentRow.reportFrom==1" style="margin-right: 5px;" icon="el-icon-edit" type="primary" title="编辑事件"  @click="changeOption(2,currentRow)" size="small">编辑事件</el-button>
                             </div>
                         </div>
                     </div>
                     <div class="drawer-pad">
                         <el-tabs v-model="activeName" @tab-click="handleClick">
                             <el-tab-pane label="基本信息" name="first">
-                                <BasicInfo :seeForm="seeForm" v-if="seeDialog"></BasicInfo>
+                                <BasicInfo :seeForm="seeForm"></BasicInfo>
                             </el-tab-pane>
                             <el-tab-pane label="工单详情" name="two" @click.stop>
                                 <WorkInfo :workFlowInfo="workFlowInfo"></WorkInfo>
-                                <div v-if="bpmRecord.length>0" style="margin-top: 20px;font-size: 12px;color: rgb(0 0 0 / 90%);">流转记录</div>
-                                <el-row v-if="bpmRecord.length>0" style="margin-bottom: 20px;width: 99%;" type="flex" justify="center">
-                                    <el-form :model="passForm" class="w100" ref="passForm" :inline="true" style="color: rgb(0 0 0 / 90%);">
-                                        <el-form-item class="record-item" label="" prop="" style="width: 100%;">
+                                <div v-if="bpmRecord.length>0" style="margin-top:20px;font-size: 12px;color: rgba(0,0,0,0.9);">流转记录</div>
+                                <el-row v-if="bpmRecord.length>0" style='margin-bottom:20px;width:99%;' type="flex" justify="center">
+                                    <el-form :model="passForm" class="w100" ref="passForm" :inline="true" style="color: rgba(0,0,0,.9)">
+                                        <el-form-item class="record-item" label="" prop="" style="width:100%;">
                                             <div
                                                 class="work-record"
-                                                style="padding-top: 10px;width: 100%;box-sizing: border-box;">
-                                                <el-timeline style="margin-left: 88px;width: 94%;box-sizing: border-box;">
+                                                style="width:100%;padding-top:10px;box-sizing: border-box;">
+                                                <el-timeline style="width:94%;margin-left: 88px;box-sizing: border-box;">
                                                     <el-timeline-item
                                                         v-for="(activity, index) in bpmRecord"
                                                         :key="index"
@@ -816,12 +765,12 @@
                                                         placement="top">
                                                         <div class="ub ub-pj ub-ac time-box">
                                                             <div class="ub" style="width: 50%;">
-                                                                <h4 style="font-size: 16px;color: rgb(0 0 0 / 90%);">{{activity.userName|NullStr}}<sub style="margin-left: 10px;font-size: 12px;font-weight: normal;color: rgb(0 0 0 / 90%);opacity: 0.6;vertical-align: bottom;">{{activity.userRole|NullStr}}</sub></h4>
+                                                                <h4 style="color: rgba(0,0,0,0.9);font-size: 16px;">{{activity.userName|NullStr}}<sub style="font-size:12px;color: rgba(0,0,0,0.9);opacity: 0.6;margin-left: 10px;vertical-align: bottom;font-weight:normal">{{activity.userRole|NullStr}}</sub></h4>
                                                             </div>
                                                             <div class="time-right" style="width: 150px;text-align: right;">
                                                                 <el-button
                                                                     type="text"
-                                                                    style="font-size: 12px;text-decoration: underline;"
+                                                                    style="text-decoration: underline;font-size:12px;"
                                                                     :class="{'el-icon-arrow-down':activity.isOpen,'el-icon-arrow-up':!activity.isOpen}"
                                                                     @click="look(activity,index)"
                                                                 >展开查看</el-button>
@@ -949,10 +898,10 @@
                                                             </div>
                                                         </div>
                                                         <div class="ub w100" style="margin-top: 8px;">
-                                                            <div class="time-text-box-bottom"><i class="iconfont icon-jiediankaishishijian" style="font-size: 14px;color: #266fe8;"></i> <span>开始：{{activity.receiveTime|NullStr}}</span></div>
-                                                            <div class="time-text-box-bottom"><i class="iconfont icon-jiediantingliushijian" style="font-size: 14px;color: #266fe8;"></i> <span>停留时长：<strong>{{activity.stayTime|NullStr}}</strong></span></div>
-                                                            <div class="time-text-box-bottom"><i class="iconfont icon-jiediantingliushijian" style="font-size: 14px;color: #266fe8;"></i> <span>超时时长：<strong>{{activity.allTime|NullStr}}</strong></span></div>
-                                                            <div class="time-text-box-bottom" style="font-size: 14px;color: #266fe8;"><i class="iconfont icon-chuliren"></i> <span>处理人：<strong class="users">{{activity.players|NullStr}}</strong></span></div>
+                                                            <div class="time-text-box-bottom"><i class="iconfont icon-jiediankaishishijian" style="color:#266fe8;font-size:14px"></i> <span>开始：{{activity.receiveTime|NullStr}}</span></div>
+                                                            <div class="time-text-box-bottom"><i class="iconfont icon-jiediantingliushijian" style="color:#266fe8;font-size:14px"></i> <span>停留时长：<strong>{{activity.stayTime|NullStr}}</strong></span></div>
+                                                            <div class="time-text-box-bottom"><i class="iconfont icon-jiediantingliushijian" style="color:#266fe8;font-size:14px"></i> <span>超时时长：<strong>{{activity.allTime|NullStr}}</strong></span></div>
+                                                            <div class="time-text-box-bottom" style="color:#266fe8;font-size:14px"><i class="iconfont icon-chuliren"></i> <span>处理人：<strong class="users">{{activity.players|NullStr}}</strong></span></div>
                                                         </div>
                                                     </el-timeline-item>
                                                 </el-timeline>
@@ -961,6 +910,74 @@
                                     </el-form>
 
                                 </el-row>
+                            </el-tab-pane>
+                            <el-tab-pane label="资产信息" name="three">
+                                <AssetInfo :assetsInfo="assetsInfo"></AssetInfo>
+                                <div v-if="assetsInfo.ips&&assetsInfo.ips.length>0" type="flex" justify="start" class="mt-1">
+                                    <el-table
+                                        ref="ipstiple"
+                                        class='bigTable'
+                                        :data="assetsInfo.ips"
+                                        border
+                                        stripe
+                                        :row-style="{ height: '32px' }"
+                                        :header-row-style="{ height: '32px' }"
+                                        tooltip-effect="dark">
+                                        <el-table-column prop="assetsIp" label="IP">
+                                        </el-table-column>
+                                        <el-table-column label="端口">
+                                            <template slot-scope="scope">
+                                                <div v-if="scope.row.ports.length>0">
+                                                    <span style="margin: 10px;" v-for="(item,index) in scope.row.ports" :key="index">{{item.port}}</span>
+                                                </div>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
+                                </div>
+                            </el-tab-pane>
+                            <el-tab-pane label="原始日志" name="four">
+                                <Logs ref="logs" :logIds="logIds" :alarmId="alarmId" :tabindex="activeName"></Logs>
+                            </el-tab-pane>
+                            <el-tab-pane label="归并事件" name="five">
+                                <el-table
+                                    ref="multipleTable4"
+                                    class='bigTable'
+                                    :data="reportTableData"
+                                    border
+                                    stripe
+                                    :row-style="{ height: '32px' }"
+                                    :header-row-style="{ height: '32px' }"
+                                    tooltip-effect="dark">
+                                    <el-table-column
+                                        align="center"
+                                        type="index"
+                                        width="50"
+                                        :index="indexMethod"
+                                        label="序号">
+                                    </el-table-column>
+                                    <el-table-column prop="createTime" label="事件时间" width="140">
+                                    </el-table-column>
+                                    <el-table-column prop="reportName" label="事件名称" show-overflow-tooltip>
+                                    </el-table-column>
+                                    <!-- <el-table-column prop="pid" label="父事件ID" width="140">
+                                    </el-table-column> -->
+                                    <el-table-column prop="srcIp" label="源ip" width="120">
+                                    </el-table-column>
+                                    <el-table-column prop="srcPort" label="源端口" width="100">
+                                    </el-table-column>
+                                    <el-table-column prop="desIp" label="目的ip" width="120">
+                                    </el-table-column>
+                                    <el-table-column prop="desPort" label="目的端口" width="100">
+                                    </el-table-column>
+                                    <el-table-column prop="reportTypeName" label="事件类型"  show-overflow-tooltip>
+                                    </el-table-column>
+                                    <el-table-column align="center" label="操作" fixed="right" class-name="deepBg" width="120">
+                                        <template slot-scope="scope">
+                                            <el-button type="text" @click="detailReportData(scope.row)">详情</el-button>
+                                        </template>
+                                    </el-table-column>
+                                </el-table>
+                                <pagination :total="total_report_num" :page.sync="report_params.page" :limit.sync="report_params.size"  style="padding-top:10px" @pagination="get_report_data"/>
                             </el-tab-pane>
                         </el-tabs>
                     </div>
@@ -984,7 +1001,7 @@
                 </el-form-item>
                 <el-form-item label="目的IP：" prop="desIp" :label-width="formLabelWidth">
                     <el-input placeholder="请输入目的IP" v-model="addForm.desIp" size="small">
-                        <i slot="suffix" @click="getAsset_add" style="cursor: pointer;" class="el-input__icon el-icon-search"></i>
+                        <i slot="suffix" @click="getAsset_add" style="cursor: pointer" class="el-input__icon el-icon-search"></i>
                     </el-input>
                 </el-form-item>
                 <el-form-item label="事件等级：" :label-width="formLabelWidth" prop="reportLevel">
@@ -1010,7 +1027,6 @@
                         placeholder="请输入源端口"
                         clearable
                         v-model="addForm.srcPort"
-                        :min="0"
                         type="number"
                         onKeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))"
                         size="small"></el-input>
@@ -1020,17 +1036,16 @@
                         placeholder="请输入目的端口"
                         clearable
                         v-model="addForm.desPort"
-                        :min="0"
                         type="number"
                         onKeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))"
                         size="small"></el-input>
                 </el-form-item>
                 <el-form-item label="">
                     <div class="ub w100">
-                        <div style="width: 100px;text-align: right;">
+                        <div style="width:100px;text-align:right">
                             事件描述：
                         </div>
-                        <div style="width: 760px;">
+                        <div style='width:760px'>
                             <div class="ub ub-pc ub-f1">
                                 <vue-ueditor-wrap v-model="addForm.reportDesc" :config="myConfig"></vue-ueditor-wrap>
                             </div>
@@ -1063,7 +1078,7 @@
                 </el-form-item>
                 <el-form-item label="目的IP：" prop="desIp" :label-width="formLabelWidth">
                     <el-input placeholder="请输入目的IP" v-model="editForm.desIp" size="small">
-                        <i slot="suffix" @click="getAsset_edit" style="cursor: pointer;" class="el-input__icon el-icon-search"></i>
+                        <i slot="suffix" @click="getAsset_edit" style="cursor: pointer" class="el-input__icon el-icon-search"></i>
                     </el-input>
                 </el-form-item>
                 <el-form-item label="事件等级：" :label-width="formLabelWidth" prop="reportLevel">
@@ -1092,7 +1107,6 @@
                         type="number"
                         onKeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))"
                         clearable
-                        :min="0"
                         v-model="editForm.srcPort"
                         size="small"></el-input>
                 </el-form-item>
@@ -1102,7 +1116,6 @@
                         type="number"
                         onKeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))"
                         clearable
-                        :min="0"
                         v-model="editForm.desPort"
                         size="small"></el-input>
                 </el-form-item>
@@ -1111,7 +1124,7 @@
                         <div>
                             事件描述：
                         </div>
-                        <div style='width: 90%;'>
+                        <div style='width:90%'>
                             <div class="ub ub-pc ub-f1">
                                 <vue-ueditor-wrap v-model="editForm.reportDesc" :config="myConfig"></vue-ueditor-wrap>
                             </div>
@@ -1126,42 +1139,32 @@
         </el-dialog>
         <!--状态变更内容开始-->
         <el-dialog v-dialogDrag title="事件状态变更" :visible.sync="stateDialog" width="700px" custom-class="common-dialog">
-            <p style="margin-bottom: 10px;font-size: 12px;color: rgb(0 0 0 / 26%);"><span class="iconfont icon-zhushi"></span>“状态变更后列表5秒后生效”</p>
+            <p style="margin-bottom:10px;color: rgba(0, 0, 0, 0.26);font-size:12px"><span class="iconfont icon-zhushi"></span>“状态变更后列表5秒后生效”</p>
             <el-form :model="stateForm" :rules="rules" ref="stateForm" label-position="top">
-                <el-form-item style="width: 100%;" label="事件状态：" :label-width="formLabelWidth" prop="reportStatus">
-                    <el-select size="small" style="width: 100%;" v-model="stateForm.reportStatus" placeholder="请选择">
+                <el-form-item style="width:100%;" label="事件状态：" :label-width="formLabelWidth" prop="reportStatus">
+                    <el-select size="small" style="width:100%" v-model="stateForm.reportStatus" placeholder="请选择">
                         <el-option label="待确认" value="0"></el-option>
                         <el-option label="已确认" value="1"></el-option>
-                        <el-option label="已处理" value="2"></el-option>
+                        <el-option label="已处置" value="2"></el-option>
                         <el-option label="已驳回" value="3"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item style="width: 100%;" label="处置动作：" :label-width="formLabelWidth" prop="actionKey">
-                    <el-radio v-model="stateForm.actionKey" label="1">加黑</el-radio>
-                    <el-radio v-model="stateForm.actionKey" label="0">加白</el-radio>
-                </el-form-item>
-                <el-form-item style="width: 100%;" label="处置IP：" :label-width="formLabelWidth" prop="actionValue">
-                    <el-select size="small" style="width: 100%;" v-model="stateForm.actionValue" placeholder="请选择">
-                        <el-option label="源IP" value="0"></el-option>
-                        <el-option label="目的IP" value="1"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item v-if="stateForm.reportStatus==0||stateForm.reportStatus==1" style="width: 100%;" label="变更原因：" :label-width="formLabelWidth">
+                <el-form-item v-if="stateForm.reportStatus==0||stateForm.reportStatus==1" style="width:100%;" label="变更原因：" :label-width="formLabelWidth">
                     <div class="ub ub-pc ub-f1">
                         <vue-ueditor-wrap v-model="stateForm.remark" :config="myConfig"></vue-ueditor-wrap>
                     </div>
                 </el-form-item>
-                <el-form-item v-if="stateForm.reportStatus==2" style="width: 100%;" label="处置结果：" :label-width="formLabelWidth">
+                <el-form-item v-if="stateForm.reportStatus==2" style="width:100%;" label="处置结果：" :label-width="formLabelWidth">
                     <div class="ub ub-pc ub-f1">
                         <vue-ueditor-wrap v-model="stateForm.actionResults" :config="myConfig"></vue-ueditor-wrap>
                     </div>
                 </el-form-item>
-                <el-form-item v-if="stateForm.reportStatus==3" style="width: 100%;" label="驳回理由：" :label-width="formLabelWidth">
+                <el-form-item v-if="stateForm.reportStatus==3" style="width:100%;" label="驳回理由：" :label-width="formLabelWidth">
                     <div class="ub ub-pc ub-f1">
                         <vue-ueditor-wrap v-model="stateForm.rejectReason" :config="myConfig"></vue-ueditor-wrap>
                     </div>
                 </el-form-item>
-                <el-form-item v-if="stateForm.reportStatus==3" style="width: 100%;" label="分析过程：" :label-width="formLabelWidth">
+                <el-form-item v-if="stateForm.reportStatus==3" style="width:100%;" label="分析过程：" :label-width="formLabelWidth">
                     <div class="ub ub-pc ub-f1">
                         <vue-ueditor-wrap v-model="stateForm.analyzePro" :config="myConfig"></vue-ueditor-wrap>
                     </div>
@@ -1187,18 +1190,13 @@
                         <el-option label="低" value="3"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="模板类型：" prop="mouldType" :label-width="formLabelWidth">
-                    <el-select placeholder="请选择" style="width: 100%;" v-model="taskForm.mouldType" size="small" @change="changeMouldType">
-                        <el-option v-for="(item, index) in mouldTypeList" :key="index" :label="item.name" :value="item.id"></el-option>
-                    </el-select>
-                </el-form-item>
                 <el-form-item label="工单模板：" prop="workMouldId" :label-width="formLabelWidth">
                     <el-select placeholder="请选择" style="width: 100%;" v-model="taskForm.workMouldId" size="small">
                         <el-option v-for="(item) in allTemplate" :key="item.id" :label="item.name" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item style="width: 100%;" label="工单描述：" :label-width="formLabelWidth">
-                    <div style="width: 100%;">
+                <el-form-item style="width:100%;" label="工单描述：" :label-width="formLabelWidth">
+                    <div style="width:100%;">
                         <vue-ueditor-wrap v-model="taskForm.workOrderContent" :config="myConfig"></vue-ueditor-wrap>
                     </div>
                 </el-form-item>
@@ -1221,7 +1219,7 @@
             @cancel="delDialog = false">
         </DeleteDialog>
         <el-dialog v-dialogDrag title="原始日志详情" :visible.sync="detailDialog" width="65%" custom-class="attendance-dialog">
-            <div style="display: flex;margin: 0 auto;width: 90%;flex-wrap: wrap;">
+            <div style="width:90%;margin: 0 auto;display: flex;flex-wrap: wrap">
                 <div class="table-container" v-for="(val,key) in detailArr" :key="key">
                     <div class="table-left">{{ fieldToChinese(key) }}</div>
                     <div class="table-right" v-html="val"></div>
@@ -1229,7 +1227,7 @@
             </div>
         </el-dialog>
         <el-dialog v-dialogDrag title="归并事件详情" :visible.sync="reportDetailDialog" width="65%" custom-class="attendance-dialog">
-            <div style="display: flex;margin: 0 auto;width: 90%;flex-wrap: wrap;">
+            <div style="width:90%;margin: 0 auto;display: flex;flex-wrap: wrap">
                 <div class="table-container" v-for="(val,key) in detailReportArr" :key="key">
                     <div class="table-left">{{ fieldToChinese(key) }}</div>
                     <div class="table-right" v-html="val"></div>
@@ -1249,47 +1247,14 @@
         </el-dialog>
         <Alarm :alarm-dialog="alarmDialog"  @addAlarmSucess="addAlarmSucess" ref="alarmRef"></Alarm>
         <AlarmDetail :alarmSeeDialog="alarmSeeDialog" :seeForm="alarmDetailData" ref="alarmDetail"></AlarmDetail>
-        <!-- 发起剧本 -->
-        <el-dialog v-dialogDrag title="发起剧本" :visible.sync="scriptDialog" width="700px" custom-class="common-dialog">
-            <el-form :model="scriptForm" :rules="scriptRules" ref="scriptForm" label-position="top">
-                <el-form-item label="剧本类型：" prop="type" :label-width="formLabelWidth">
-                    <el-select placeholder="请选择" style="width: 100%;" v-model="scriptForm.type" size="small" @change="changeType">
-                        <el-option label="分析处置" value="0"></el-option>
-                        <el-option label="应急响应" value="1"></el-option>
-                        <el-option label="运维支持" value="2"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="剧本名称：" prop="autoMouldId" :label-width="formLabelWidth">
-                    <el-select placeholder="请选择" style="width: 100%;" v-model="scriptForm.autoMouldId" size="small">
-                        <el-option v-for="item in actionTemplateList" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item style="width: 100%;" label="任务描述：" :label-width="formLabelWidth">
-                    <div style="width: 100%;">
-                        <vue-ueditor-wrap v-model="scriptForm.autoOrderContent" :config="myConfig"></vue-ueditor-wrap>
-                    </div>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="scriptDialog=false" size="small">取消</el-button>
-                <Debounce :time='1500' :isDebounce="2">
-                    <el-button  type="primary" @click.native="scriptTaskForm('scriptForm')" size="small" :loading="isSubmitTask">确认</el-button>
-                </Debounce>
-            </span>
-        </el-dialog>
     </div>
 </template>
 
 <script>
-import Attck from '@/pages/alarm/alarm_list_components/attck.vue'
-import Chain from '@/pages/alarm/alarm_list_components/chain.vue'
-import ChainTwo from '@/pages/alarm/alarm_list_components/chain_two.vue'
 import AlarmDetail from '@/pages/alarm/new_alarm/components/AlarmDetail.vue'
 import Refresh from '@/pages/alarm/new_alarm/components/refresh/index.vue'
 import Alarm from '@/pages/alarm/new_alarm/components/alarm/index.vue'
 import CustomDate from '@/pages/alarm/new_alarm/components/custom_date/index.vue'
-import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import {
     search_alarms,
     save_header_list,
@@ -1314,25 +1279,12 @@ import {
     getSearchResultData,
     getSearchRulesData,
     download,
-    getMenace,
-    getAttCk,
-    getAttChain,
-    getTreeOrg,
-    getAttCkChart,
-    getAttCkTotal,
-    getAttChainNum,
-    getAttChainChart,
-    getSortFieldAlarm,
-    getOrgLevel
-} from '../../server/alarm/alarm_analysis.js'
+    getMenace
+} from '../../server/alarm/alarm.js'
 import {
     get_time
 } from '../../server/common.js'
-import { get_auto_work_template } from '../../server/alarm/auto_script_config.js'
-// import {
-//     getTreeOrg
-// } from '@/server/assets/api.js'
-import { get_threat_search, getStartConfig, get_threat_searchVenus, saveAutoOrder } from '@/server/alarm/api.js'
+import { get_threat_search } from '@/server/intelligence/api.js'
 import LeftFold from '@/pages/alarm/new_alarm/components/leftFold.vue'
 import draggable from 'vuedraggable'
 import brokenLine from '@/pages/alarm/new_alarm/components/brokenLine.vue'
@@ -1345,10 +1297,9 @@ import BasicInfo from './seeTabs/BasicInfo'
 import WorkInfo from './seeTabs/WorkInfo'
 import AssetInfo from './seeTabs/AssetInfo'
 import Logs from './seeTabs/Logs'
-import ChartContent from '@/pages/data_manage/chart_option/components/ChartContent'
-import AttackChain from './seeTabs/AttackChain'
 import 'vant/lib/index.css'
-import auto_response from '@/pages/alarm/seeTabs/auto_response.vue'
+import Treeselect from '@riophae/vue-treeselect'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import {
     ImagePreview
 } from 'vant'
@@ -1356,28 +1307,21 @@ export default {
     name: 'AlarmList',
     mixins: [ueditorConfig],
     components: {
-        // AttackChain,
-        // Attck,
-        // Chain,
-        // ChainTwo,
         Refresh,
         Alarm,
         CustomDate,
         VueUeditorWrap,
         // middleLine,
         brokenLine,
-        // pie,
+        pie,
         draggable,
         // Treeselect,
         BasicInfo,
         WorkInfo,
-        // AssetInfo,
-        // Logs,
+        AssetInfo,
+        Logs,
         LeftFold,
-        AlarmDetail,
-        Treeselect
-        // ChartContent,
-        // auto_response
+        AlarmDetail
     },
     data() {
         var validateDesIp = (rule, value, callback) => {
@@ -1390,143 +1334,9 @@ export default {
             }
         }
         return {
-            orgLevelList: [],
-            startData: [],
-            actionTemplateList: [],
-            mouldTypeList: [
-                {
-                    id: 0,
-                    name: '分析'
-                },
-                {
-                    id: 1,
-                    name: '应急'
-                },
-                {
-                    id: 2,
-                    name: '通报'
-                }
-            ],
-            chainTwoData: [
-                {
-                    endTime: '2023-02-14 15:35:12',
-                    nodeTime: '2023-02-14 15:34:52',
-                    num: 0,
-                    startTime: '2023-02-14 15:34:52',
-                    type: 7
-                },
-                {
-                    endTime: '2023-02-14 15:35:12',
-                    nodeTime: '2023-02-14 15:35:52',
-                    num: 0,
-                    startTime: '2023-02-14 15:34:52',
-                    type: 7
-
-                },
-                {
-                    endTime: '2023-02-14 15:35:12',
-                    nodeTime: '2023-02-14 15:36:52',
-                    num: 0,
-                    startTime: '2023-02-14 15:34:52',
-                    type: 7
-
-                },
-                {
-                    endTime: '2023-02-14 15:35:12',
-                    nodeTime: '2023-02-14 15:37:52',
-                    num: 7,
-                    startTime: '2023-02-14 15:34:52',
-                    type: 7
-
-                }
-
-            ],
-            chainData: {
-                total: 0,
-                oneData: {
-                    id: '',
-                    name: '侦查追踪',
-                    xData: [],
-                    val: [],
-                    areaColor: ['#F1F1F1', '#E2E2E2'],
-                    maxData: 0,
-                    sum: 0
-                },
-                twoData: {
-                    id: '',
-                    name: '武器构建',
-                    xData: [],
-                    val: [],
-                    areaColor: ['#FBFBFB', '#ECECEC'],
-                    maxData: 0,
-                    sum: 0
-                },
-                threeData: {
-                    id: '',
-                    name: '载荷投递',
-                    xData: [],
-                    val: [],
-                    areaColor: ['#F1F1F1', '#E2E2E2'],
-                    maxData: 0,
-                    sum: 0
-                },
-                fourData: {
-                    id: '',
-                    name: '漏洞利用',
-                    xData: [],
-                    val: [],
-                    areaColor: ['#FBFBFB', '#ECECEC'],
-                    maxData: 0,
-                    sum: 0
-                },
-                fiveData: {
-                    id: '',
-                    name: '安装植入',
-                    xData: [],
-                    val: [],
-                    areaColor: ['#F1F1F1', '#E2E2E2'],
-                    maxData: 0,
-                    sum: 0
-                },
-                sixData: {
-                    id: '',
-                    name: '持续控制',
-                    xData: [],
-                    val: [],
-                    areaColor: ['#FBFBFB', '#ECECEC'],
-                    maxData: 0,
-                    sum: 0
-                },
-                sevenData: {
-                    id: '',
-                    name: '目标达成',
-                    xData: [],
-                    val: [],
-                    areaColor: ['#F1F1F1', '#E2E2E2'],
-                    maxData: 0,
-                    sum: 0
-                }
-            },
-            activeDataTwo: 1,
-            typesTwo: [
-                {
-                    id: 1,
-                    name: 'ATT&CK',
-                    isActive: true,
-                    component: 'Attck'
-                },
-                {
-                    id: 2,
-                    name: '攻击链分析',
-                    isActive: false,
-                    component: 'Chain'
-                }
-            ],
-            activeData: 1,
             downLoading: false,
             isSubmitTask: false,
-            tabHeight: 'calc(100vh - 600px)',
-            chartHeight: 'calc(100vh - 256px)',
+            tabHeight: 'calc(100vh - 585px)',
             alarmDetailData: {},
             alarmSeeDialog: false,
             isChartOpen: true,
@@ -1555,7 +1365,7 @@ export default {
                 }
             ],
             attackResultList: [],
-            labelWidth: '100px',
+            labelWidth: '80px',
             searchList: [],
             curSearchId: '',
             alarmId: '',
@@ -1648,8 +1458,7 @@ export default {
                 workOrderName: '',
                 workMouldId: '',
                 level: '',
-                workOrderContent: '',
-                mouldType: ''
+                workOrderContent: ''
             },
             taskDialog: false,
             delId: '',
@@ -1660,9 +1469,7 @@ export default {
                 actionResults: '',
                 analyzePro: '',
                 rejectReason: '',
-                remark: '',
-                actionKey: '',
-                actionValue: ''
+                remark: ''
             },
             stateDialog: false,
             stateId: '',
@@ -1671,7 +1478,7 @@ export default {
                 reportName: '',
                 reportType: '',
                 reportLevel: '',
-                reportStatus: [],
+                reportStatus: '0',
                 asset: '',
                 srcIp: '',
                 srcPort: '',
@@ -1712,11 +1519,6 @@ export default {
                 status: [{
                     required: true,
                     message: '请选择变更状态',
-                    trigger: 'change'
-                }],
-                mouldType: [{
-                    required: true,
-                    message: '请选择模板类型',
                     trigger: 'change'
                 }],
                 desIp: [{
@@ -1818,7 +1620,7 @@ export default {
                     value: 1
                 },
                 {
-                    text: '已处理',
+                    text: '已处置',
                     value: 2
                 }, {
                     text: '已驳回',
@@ -1906,7 +1708,6 @@ export default {
             load_loading: true,
             load_no_data: true,
             load_loading1: true,
-            load_chain_loading: true,
             load_no_data1: true,
             levelData: [],
             load_data: [],
@@ -1969,11 +1770,7 @@ export default {
                 actionType: '',
                 actionResults: '',
                 appendProposal: '',
-                rejectReason: '',
-                srcIpIsSpite: '',
-                srcIpVenusIsSpite: '',
-                desIpIsSpite: '',
-                desIpVenusIsSpite: ''
+                rejectReason: ''
             },
             templateId: '',
             deleteDialog: false,
@@ -1991,56 +1788,33 @@ export default {
             sayTimes: [],
             valueConsistsOf: 'LEAF_PRIORITY',
             normalizer(node) {
+                if (node.sub && !node.sub.length) {
+                    delete node.sub
+                }
                 return {
-                    id: node.id,
+                    id: node.codeNum,
                     label: node.name,
                     children: node.sub
-                }
-            },
-            normalizerAtt(node) {
-                return {
-                    id: node.id,
-                    label: node.name,
-                    children: node.child
                 }
             },
             optionsCanSelect: [],
             options: [],
             get_params: {
-                // id: '',
+                id: '',
                 page: 1,
                 size: 20,
-                // reportName: '',
-                // reportLevel: [],
-                // reportFrom: [],
-                // reportStatus: [],
-                // srcIp: '',
-                // srcPort: '',
-                // desIp: '',
-                // desPort: '',
-                // reportType: [],
-                // attackResult: [],
-                // ruleIds: [],
-                // ids: [],
-                // orgId: null,
-                // attCk: null,
-                // attChain: '',
-                // orgLevel: ''
-
+                reportName: '',
+                reportLevel: [],
+                reportFrom: [],
                 reportStatus: [],
-                srcChineseName: '',
-                desChineseName: '',
-                srcOrg: null,
                 srcIp: '',
                 srcPort: '',
-                srcName: '',
-                srcPhone: '',
                 desIp: '',
                 desPort: '',
-                desName: '',
-                desPhone: '',
-                reportName: '',
-                ruleIds: []
+                reportType: [],
+                attackResult: [],
+                ruleIds: [],
+                ids: []
             },
             report_params: {
                 id: '',
@@ -2052,50 +1826,7 @@ export default {
             timer: null,
             timestrId: '',
             timestrIdData: '',
-            oldTime: '',
-            types: [
-                {
-                    id: 1,
-                    name: '事件列表',
-                    isActive: true
-                },
-                {
-                    id: 2,
-                    name: '事件分析',
-                    isActive: false
-                },
-                {
-                    id: 3,
-                    name: '图表视图',
-                    isActive: false
-                }
-            ],
-            treeData: [],
-            treeDataAtt: [],
-            attCkTreeData: [],
-            attChainList: [],
-            firstAttCk: true,
-            attCkTotal: null,
-            sortFieldObj: null,
-            scriptDialog: false,
-            scriptForm: {
-                type: '',
-                autoMouldId: '',
-                autoOrderContent: ''
-            },
-            scriptRules: {
-                type: [{
-                    required: true,
-                    message: '请选择剧本类型',
-                    trigger: 'change'
-                }],
-                autoMouldId: [{
-                    required: true,
-                    message: '请选择剧本名称',
-                    trigger: 'change'
-                }]
-            },
-            scriptIds: []
+            oldTime: ''
         }
     },
     computed: {
@@ -2125,30 +1856,28 @@ export default {
                 if (this.isOpen) {
                     this.tabHeight = 'calc(100vh - 689px)'
                 } else {
-                    this.tabHeight = 'calc(100vh - 620px)'
+                    this.tabHeight = 'calc(100vh - 585px)'
                 }
             } else {
                 if (this.isOpen) {
-                    this.tabHeight = 'calc(100vh - 482px)'
+                    this.tabHeight = 'calc(100vh - 399px)'
                 } else {
-                    this.tabHeight = 'calc(100vh - 330px)'
+                    this.tabHeight = 'calc(100vh - 295px)'
                 }
             }
         },
         isOpen(val) {
             if (val) {
-                this.chartHeight = 'calc(100vh - 408px)'
                 if (this.isChartOpen) {
-                    this.tabHeight = 'calc(100vh - 772px)'
+                    this.tabHeight = 'calc(100vh - 689px)'
                 } else {
-                    this.tabHeight = 'calc(100vh - 482px)'
+                    this.tabHeight = 'calc(100vh - 399px)'
                 }
             } else {
-                this.chartHeight = 'calc(100vh - 256px)'
                 if (this.isChartOpen) {
-                    this.tabHeight = 'calc(100vh - 620px)'
+                    this.tabHeight = 'calc(100vh - 585px)'
                 } else {
-                    this.tabHeight = 'calc(100vh - 330px)'
+                    this.tabHeight = 'calc(100vh - 295px)'
                 }
             }
         },
@@ -2221,9 +1950,7 @@ export default {
                         actionResults: '',
                         analyzePro: '',
                         rejectReason: '',
-                        remark: '',
-                        actionKey: '',
-                        actionValue: ''
+                        remark: ''
                     }
                 }
             }
@@ -2236,8 +1963,7 @@ export default {
                         workOrderName: '',
                         workMouldId: '',
                         level: '',
-                        workOrderContent: '',
-                        mouldType: ''
+                        workOrderContent: ''
                     }
                 }
             }
@@ -2314,18 +2040,6 @@ export default {
                     this.alarmDisposalForm.noticeType = []
                     this.alarmDisposalForm.noticeUser = []
                     this.alarmDisposalForm.customUser = []
-                }
-            }
-        },
-        scriptDialog: {
-            handler(newVal, oldVal) {
-                if (!newVal) {
-                    this.$refs.scriptForm.resetFields()
-                    this.scriptForm = {
-                        type: '',
-                        autoMouldId: '',
-                        autoOrderContent: ''
-                    }
                 }
             }
         }
@@ -2439,7 +2153,7 @@ export default {
             } else if (status == 1) {
                 return '已确认'
             } else if (status == 2) {
-                return '已处理'
+                return '已处置'
             } else if (status == 3) {
                 return '已驳回'
             }
@@ -2459,8 +2173,6 @@ export default {
             // console.log('currentTime', this.sayTimes)
         }
         this.$nextTick(() => {
-            // this.getStartConfigData()
-            this.initTree()
             // this.initIndex()
             this.initSearchData()
             // 获取搜索结果列表
@@ -2471,10 +2183,6 @@ export default {
             this.get_chart()
             this.getHeader()
             this.getAlarmType()
-            this.getSortFieldFn()
-            this.getAttCkFn()
-            this.getAttChainFn()
-            this.initLevel()
         })
     },
     beforeDestroy() {
@@ -2484,377 +2192,6 @@ export default {
         }
     },
     methods: {
-        initLevel() {
-            getOrgLevel({
-                queryData: {},
-                paramsData: {}
-            }).then(res => {
-                console.log('tree', res)
-                this.orgLevelList = []
-                for (let i = 1; i < Number(res) + 1; i++) {
-                    this.orgLevelList.push({
-                        label: `级别${i}`,
-                        value: i
-                    })
-                }
-            }).catch(error => {
-                console.log('error' + error)
-            })
-        },
-        // getStartConfigData() {
-        //     getStartConfig({ queryData: {}, paramsData: {}}).then(res => {
-        //         this.startData = res
-        //     })
-        // },
-        changeType(val) {
-            if (val) {
-                this.actionTemplateList = []
-                this.scriptForm.autoMouldId = ''
-                this.getActionTemplate()
-            } else {
-                this.actionTemplateList = []
-                this.scriptForm.autoMouldId = ''
-            }
-        },
-        getActionTemplate() {
-            let data = {
-                paramsData: {
-                    mouldType: this.scriptForm.type
-                },
-                queryData: {}
-            }
-            get_auto_work_template(data).then(res => {
-                this.actionTemplateList = res
-            }).catch(err => {
-                console.log(err)
-            })
-        },
-        scriptTaskForm(form) {
-            console.log(this.scriptIds)
-            this.$refs[form].validate((valid) => {
-                this.isSubmitTask = true
-                if (valid) {
-                    let data = {
-                        queryData: {},
-                        paramsData: {
-                            sourceIds: this.scriptIds,
-                            mouldType: this.scriptForm.type,
-                            autoMouldId: this.scriptForm.autoMouldId,
-                            autoOrderContent: this.scriptForm.autoOrderContent
-                        }
-                    }
-                    saveAutoOrder(data).then(res => {
-                        this.scriptDialog = false
-                        this.isSubmitTask = false
-                        this.scriptIds = []
-                        this.multipleSelection = []
-                        this.$message({
-                            message: '发起剧本成功',
-                            type: 'success'
-                        })
-                        setTimeout(() => {
-                            this.get_data()
-                        }, 500)
-                    }).catch(err => {
-                        console.log(err)
-                        this.scriptDialog = false
-                        this.isSubmitTask = false
-                    })
-                }
-            })
-            // this.scriptIds = []
-        },
-        handleScript() {
-            if (this.multipleSelection.length < 1) {
-                this.$message({
-                    message: '请至少选择一条数据！',
-                    type: 'warning'
-                })
-            } else {
-                console.log(this.multipleSelection)
-                let ids = this.multipleSelection.map(item => {
-                    return item.id
-                })
-                this.scriptIds = ids
-                this.scriptDialog = true
-            }
-        },
-        getSortFieldFn() {
-            getSortFieldAlarm({ queryData: {}, paramsData: {}}).then(res => {
-                console.log(res)
-                this.sortFieldObj = res
-            })
-        },
-        changeMouldType(val) {
-            if (val !== '') {
-                this.get_workMound()
-            } else {
-                this.allTemplate = []
-            }
-        },
-        tabChange(data) {
-            this.get_params.attCk = data.id
-            this.tabClick(this.types[0], 0)
-            this.searchCheck()
-        },
-        getAttChainChartData() {
-            this.load_chain_loading = true
-            let data = {
-                queryData: {
-                },
-                paramsData: {
-                    id: this.get_params.id,
-                    reportFrom: this.get_params.reportFrom, // 事件来源
-                    reportStatus: this.get_params.reportStatus, // 事件状态
-                    reportName: this.get_params.reportName, // 事件名称
-                    reportLevel: this.get_params.reportLevel, // 事件等级
-                    reportType: this.get_params.reportType, // 事件类型
-                    startTime: this.sayTimes.length === 0 ? '' : this.sayTimes[0], // 开始时间
-                    endTime: this.sayTimes.length === 0 ? '' : this.sayTimes[1], // 结束时间
-                    srcIp: this.get_params.srcIp, // 源IP
-                    srcPort: this.get_params.srcPort, // 源端口
-                    desIp: this.get_params.desIp, // 目的IP
-                    desPort: this.get_params.desPort, // 目的端口
-                    attackResult: this.get_params.attackResult, // 攻击结果
-                    ruleIds: this.get_params.ruleIds, // 规则集合
-                    spare: this.translationHeader(this.checkList),
-                    orgId: this.get_params.orgId != null ? this.get_params.orgId : '',
-                    attCk: this.get_params.attCk != null ? this.get_params.attCk : '',
-                    attChain: this.get_params.attChain,
-                    orgLevel: this.get_params.orgLevel
-                }
-            }
-            getAttChainChart(data).then(res => {
-                this.load_chain_loading = false
-                let oneNum = this.getNum(res[0].child)
-                this.chainData.oneData.val = this.getVal(oneNum)
-                this.chainData.oneData.maxData = res[0].maxNum
-                this.chainData.oneData.xData = this.getXdata(res[0].child)
-
-                let twoNum = this.getNum(res[1].child)
-                this.chainData.twoData.val = this.getVal(twoNum)
-                this.chainData.twoData.maxData = res[1].maxNum
-                this.chainData.twoData.xData = this.getXdata(res[1].child)
-
-                let threeNum = this.getNum(res[2].child)
-                this.chainData.threeData.val = this.getVal(threeNum)
-                this.chainData.threeData.maxData = res[2].maxNum
-                this.chainData.threeData.xData = this.getXdata(res[2].child)
-
-                let fourNum = this.getNum(res[3].child)
-                this.chainData.fourData.val = this.getVal(fourNum)
-                this.chainData.fourData.maxData = res[3].maxNum
-                this.chainData.fourData.xData = this.getXdata(res[3].child)
-
-                let fiveNum = this.getNum(res[4].child)
-                this.chainData.fiveData.val = this.getVal(fiveNum)
-                this.chainData.fiveData.maxData = res[4].maxNum
-                this.chainData.fiveData.xData = this.getXdata(res[4].child)
-
-                let sixNum = this.getNum(res[5].child)
-                this.chainData.sixData.val = this.getVal(sixNum)
-                this.chainData.sixData.maxData = res[5].maxNum
-                this.chainData.sixData.xData = this.getXdata(res[5].child)
-
-                let sevenNum = this.getNum(res[6].child)
-                this.chainData.sevenData.val = this.getVal(sevenNum)
-                this.chainData.sevenData.maxData = res[6].maxNum
-                this.chainData.sevenData.xData = this.getXdata(res[6].child)
-            }).catch(error => {
-                this.load_chain_loading = false
-                console.log('error' + error)
-            })
-        },
-        getVal(val) {
-            let data = val.map((item, index) => [0, index, item])
-            return data
-        },
-        getNum(val) {
-            let data = val.map(item => item.num)
-            return data
-        },
-        getXdata(val) {
-            let data = val.map(item => item.time.split('~')[0])
-            return data
-        },
-        getAttChainNumData() {
-            let data = {
-                queryData: {
-                },
-                paramsData: {
-                    id: this.get_params.id,
-                    reportFrom: this.get_params.reportFrom, // 事件来源
-                    reportStatus: this.get_params.reportStatus, // 事件状态
-                    reportName: this.get_params.reportName, // 事件名称
-                    reportLevel: this.get_params.reportLevel, // 事件等级
-                    reportType: this.get_params.reportType, // 事件类型
-                    startTime: this.sayTimes.length === 0 ? '' : this.sayTimes[0], // 开始时间
-                    endTime: this.sayTimes.length === 0 ? '' : this.sayTimes[1], // 结束时间
-                    srcIp: this.get_params.srcIp, // 源IP
-                    srcPort: this.get_params.srcPort, // 源端口
-                    desIp: this.get_params.desIp, // 目的IP
-                    desPort: this.get_params.desPort, // 目的端口
-                    attackResult: this.get_params.attackResult, // 攻击结果
-                    ruleIds: this.get_params.ruleIds, // 规则集合
-                    spare: this.translationHeader(this.checkList),
-                    orgId: this.get_params.orgId != null ? this.get_params.orgId : '',
-                    attCk: this.get_params.attCk != null ? this.get_params.attCk : '',
-                    attChain: this.get_params.attChain,
-                    orgLevel: this.get_params.orgLevel
-                }
-            }
-            getAttChainNum(data).then(res => {
-                this.chainData.total = res.total
-                this.chainData.oneData.sum = res.child[0].num
-                this.chainData.twoData.sum = res.child[1].num
-                this.chainData.threeData.sum = res.child[2].num
-                this.chainData.fourData.sum = res.child[3].num
-                this.chainData.fiveData.sum = res.child[4].num
-                this.chainData.sixData.sum = res.child[5].num
-                this.chainData.sevenData.sum = res.child[6].num
-            })
-        },
-        // getAttackChain() {
-        //     let data = this.chainTwoData.map(item => item.num)
-        //     this.chainData.sevenData.maxData = Math.max(...data)
-        //     this.chainData.sevenData.sum = data.reduce((n, m) => n + m)
-        //     this.chainData.sevenData.val = this.chainTwoData.map((item, index) => [0, index, item.num])
-        //     this.chainData.sevenData.xData = this.chainTwoData.map(item => item.nodeTime)
-        // },
-        initTree() {
-            let data = {
-                queryData: {},
-                paramsData: {}
-            }
-            getTreeOrg(data).then(res => {
-                console.log('tree', res)
-                this.treeData = res
-                console.log(this.organizationIds)
-            }).catch(error => {
-                console.log('error' + error)
-            })
-        },
-        getAttCkFn() {
-            getAttCk({}).then(res => {
-                console.log(res)
-                this.treeDataAtt = res
-                this.attCkTreeData = this.$lodash.cloneDeep(this.treeDataAtt)
-            }).catch(err => {
-                console.log(err)
-            })
-        },
-        getAttCkTotalFn() {
-            let data = {
-                queryData: {
-                },
-                paramsData: {
-                    id: this.get_params.id,
-                    reportFrom: this.get_params.reportFrom, // 事件来源
-                    reportStatus: this.get_params.reportStatus, // 事件状态
-                    reportName: this.get_params.reportName, // 事件名称
-                    reportLevel: this.get_params.reportLevel, // 事件等级
-                    reportType: this.get_params.reportType, // 事件类型
-                    startTime: this.sayTimes.length === 0 ? '' : this.sayTimes[0], // 开始时间
-                    endTime: this.sayTimes.length === 0 ? '' : this.sayTimes[1], // 结束时间
-                    srcIp: this.get_params.srcIp, // 源IP
-                    srcPort: this.get_params.srcPort, // 源端口
-                    desIp: this.get_params.desIp, // 目的IP
-                    desPort: this.get_params.desPort, // 目的端口
-                    attackResult: this.get_params.attackResult, // 攻击结果
-                    ruleIds: this.get_params.ruleIds, // 规则集合
-                    spare: this.translationHeader(this.checkList),
-                    orgId: this.get_params.orgId != null ? this.get_params.orgId : '',
-                    attCk: this.get_params.attCk != null ? this.get_params.attCk : '',
-                    attChain: this.get_params.attChain,
-                    orgLevel: this.get_params.orgLevel
-                }
-            }
-            getAttCkTotal(data).then(res => {
-                this.attCkTotal = res
-            })
-        },
-        getAllAttCk() {
-            this.attCkTreeData.forEach(item => {
-                this.getAttCkChartFn(item.id)
-            })
-        },
-        getAttCkChartFn(pid) {
-            let data = {
-                queryData: {
-                },
-                paramsData: {
-                    id: this.get_params.id,
-                    reportFrom: this.get_params.reportFrom, // 事件来源
-                    reportStatus: this.get_params.reportStatus, // 事件状态
-                    reportName: this.get_params.reportName, // 事件名称
-                    reportLevel: this.get_params.reportLevel, // 事件等级
-                    reportType: this.get_params.reportType, // 事件类型
-                    startTime: this.sayTimes.length === 0 ? '' : this.sayTimes[0], // 开始时间
-                    endTime: this.sayTimes.length === 0 ? '' : this.sayTimes[1], // 结束时间
-                    srcIp: this.get_params.srcIp, // 源IP
-                    srcPort: this.get_params.srcPort, // 源端口
-                    desIp: this.get_params.desIp, // 目的IP
-                    desPort: this.get_params.desPort, // 目的端口
-                    attackResult: this.get_params.attackResult, // 攻击结果
-                    ruleIds: this.get_params.ruleIds, // 规则集合
-                    spare: this.translationHeader(this.checkList),
-                    orgId: this.get_params.orgId != null ? this.get_params.orgId : '',
-                    attCk: this.get_params.attCk != null ? this.get_params.attCk : '',
-                    attChain: this.get_params.attChain,
-                    attCkParentId: pid,
-                    orgLevel: this.get_params.orgLevel
-                }
-            }
-            getAttCkChart(data).then(res => {
-                this.attCkTreeData.filter(item => item.id == pid)[0].child = res.child
-                console.log(this.attCkTreeData)
-                console.log(res)
-            }).catch(err => {
-                console.log(err)
-            })
-        },
-        getAttChainFn() {
-            getAttChain({}).then(res => {
-                this.attChainList = res
-            }).catch(err => {
-                console.log(err)
-            })
-        },
-        inputChange() {
-        },
-        tabTwoClick(item, index) {
-            this.typesTwo = this.typesTwo.map(e => {
-                e.isActive = false
-                return e
-            })
-            item.isActive = true
-            this.activeDataTwo = item.id
-            this.getAttCkTotalFn()
-            this.getAllAttCk()
-            this.getAttChainNumData()
-            this.getAttChainChartData()
-            console.log('点击', item)
-        },
-        tabClick(item, index) {
-            this.types = this.types.map(e => {
-                e.isActive = false
-                return e
-            })
-            item.isActive = true
-            this.activeData = item.id
-            if (index == 1) {
-                // 首次进入事件分析，默认进入ATT&CK
-                // this.firstAttCk = false
-                this.getAttCkTotalFn()
-                this.getAllAttCk()
-                this.getAttChainNumData()
-                this.getAttChainChartData()
-            } else if (index == 0) {
-                this.get_data()
-                this.get_chart()
-            }
-            console.log('点击123', index)
-        },
         tableRowClassName({ row, rowIndex }) {
             if (rowIndex % 2) {
                 return 'table-row2'
@@ -2866,38 +2203,25 @@ export default {
             this.$setsessionStorage('currentPath', '/assets/assets_asset_info?ip=' + value)
             window.open(window.location.origin + '/#' + '/assets/assets_asset_info?ip=' + value)
         },
-        // jumpThreat(value) {
-        //     console.log(value)
-        //     let obj = {
-        //         queryData: {},
-        //         paramsData: { value }
-        //     }
-        //     if (this.startData.includes(1)) {
-        //         this.searchWeibu(obj, value)
-        //     } else if (this.startData.includes(0)) {
-        //         this.searchVenus(obj, value)
-        //     }
-        // },
-        searchWeibu(obj, value) {
+        jumpThreat(value) {
+            console.log(value)
+            let obj = {
+                queryData: { value },
+                paramsData: {}
+            }
             get_threat_search(obj)
                 .then(res => {
                     console.log(res)
                     this.$setsessionStorage('search-item', res)
-                    window.open(window.location.origin + '/#' + '/intelligence/threat_detail?searchStr=' + value)
+                    let route = this.$router.resolve({
+                        name: 'intelligence_threat_detail',
+                        query: {
+                            searchStr: value
+                        }
+                    })
+                    window.open(route.href, '_blank')
                 })
                 .catch(err => {
-                    console.log(err + 'err')
-                })
-        },
-        searchVenus(obj, value) {
-            get_threat_searchVenus(obj, value)
-                .then(res => {
-                    console.log(res)
-                    this.$setsessionStorage('search-item', res)
-                    window.open(window.location.origin + '/#' + '/intelligence/threat_detail?searchStr=' + value)
-                })
-                .catch(err => {
-                    this.btnLoading = false
                     console.log(err + 'err')
                 })
         },
@@ -2920,25 +2244,20 @@ export default {
                 paramsData: {
                     ids: ids,
                     id: this.get_params.id,
+                    reportFrom: this.get_params.reportFrom, // 事件来源
+                    reportStatus: this.get_params.reportStatus, // 事件状态
+                    reportName: this.get_params.reportName, // 事件名称
+                    reportLevel: this.get_params.reportLevel, // 事件等级
+                    reportType: this.get_params.reportType, // 事件类型
                     startTime: this.sayTimes.length === 0 ? '' : this.sayTimes[0], // 开始时间
                     endTime: this.sayTimes.length === 0 ? '' : this.sayTimes[1], // 结束时间
-                    reportStatus: this.get_params.reportStatus,
-                    srcChineseName: this.get_params.srcChineseName,
-                    desChineseName: this.get_params.desChineseName,
-                    srcOrg: this.get_params.srcOrg != null ? this.get_params.srcOrg : '',
                     srcIp: this.get_params.srcIp, // 源IP
                     srcPort: this.get_params.srcPort, // 源端口
                     desIp: this.get_params.desIp, // 目的IP
                     desPort: this.get_params.desPort, // 目的端口
-                    reportName: this.get_params.reportName,
-                    ruleIds: this.get_params.ruleIds,
-                    titleList: this.translationHeader(this.checkList),
-
-                    srcName: this.get_params.srcName,
-                    srcPhone: this.get_params.srcPhone,
-                    desName: this.get_params.desName,
-                    desPhone: this.get_params.desPhone,
-                    desOrg: this.get_params.desOrg != null ? this.get_params.srcOrg : ''
+                    attackResult: this.get_params.attackResult, // 攻击结果
+                    ruleIds: this.get_params.ruleIds, // 规则集合
+                    spare: this.translationHeader(this.checkList)
                 }
             }
             download(data).then(res => {
@@ -3060,9 +2379,7 @@ export default {
         initSearchData() {
             let data = {
                 queryData: {},
-                paramsData: {
-                    type: this.activeData
-                }
+                paramsData: {}
             }
             getSearchData(data).then(res => {
                 console.log('获取搜索条件列表', res)
@@ -3110,7 +2427,6 @@ export default {
                     let data = {
                         queryData: {},
                         paramsData: {
-                            type: this.activeData,
                             name: this.searchForm.name,
                             detail: JSON.stringify(searchData)
                         }
@@ -3228,18 +2544,15 @@ export default {
         },
         resetFun() {
             this.get_params.reportStatus = []
-            this.get_params.srcChineseName = ''
-            this.get_params.desChineseName = ''
-            this.get_params.srcOrg = null
+            this.get_params.reportName = ''
+            this.get_params.reportLevel = []
+            this.get_params.reportType = []
             this.get_params.srcIp = ''
             this.get_params.srcPort = ''
-            this.get_params.srcName = ''
-            this.get_params.srcPhone = ''
             this.get_params.desIp = ''
             this.get_params.desPort = ''
-            this.get_params.desName = ''
-            this.get_params.desPhone = ''
-            this.get_params.reportName = ''
+            this.get_params.attackResult = []
+            this.get_params.reportFrom = []
             this.get_params.ruleIds = []
             this.$refs.customDate.handleRecently({ value: 3, name: '最近1天' }, 3)
         },
@@ -3252,7 +2565,6 @@ export default {
                 this.customTimeRange = JSON.parse(val.detail).dateData.split('~')
                 this.dateMode = JSON.parse(val.detail).dateMode
                 this.sayTimes = this.customTimeRange
-                console.log('this.sayTimes', this.sayTimes)
                 this.$refs.customDate.isSelectRelative = null
                 this.$refs.customDate.isSelectRecently = null
                 this.$refs.customDate.isSelectOther = null
@@ -3503,7 +2815,6 @@ export default {
                             workOrderName: this.taskForm.workOrderName,
                             level: this.taskForm.level,
                             workMouldId: this.taskForm.workMouldId,
-                            mouldType: this.taskForm.mouldType,
                             workOrderContent: this.taskForm.workOrderContent,
                             type: 1
                         }
@@ -3546,12 +2857,11 @@ export default {
                 }
             })
         },
-        get_workMound() {
+        get_workMound(id) {
             let data = {
                 queryData: {},
                 paramsData: {
-                    id: this.sourceId,
-                    mouldType: this.taskForm.mouldType
+                    id: id
                 }
             }
             getAlarmTemp(data).then(res => {
@@ -3585,9 +2895,7 @@ export default {
                         queryData: {},
                         paramsData: {
                             ids: ids,
-                            reportStatus: this.stateForm.reportStatus,
-                            actionKey: this.stateForm.actionKey,
-                            actionValue: this.stateForm.actionValue
+                            reportStatus: this.stateForm.reportStatus
                         }
                     }
                     if (this.stateForm.reportStatus == 0 || this.stateForm.reportStatus == 1) {
@@ -3631,6 +2939,7 @@ export default {
                     return
                 }
                 this.sourceId = row.id
+                this.get_workMound(row.id)
                 this.taskForm.workOrderName = row.reportName + '--' + row.createTime ?? ''
                 this.taskDialog = true
             } else if (val == 2) {
@@ -3658,9 +2967,6 @@ export default {
                 // 删除
                 this.delId = row.id
                 this.delDialog = true
-            } else if (val == 5) {
-                this.scriptIds = [row.id]
-                this.scriptDialog = true
             }
         },
         // 发起事件
@@ -3793,9 +3099,7 @@ export default {
         },
         handleClick(tab, event) {
             console.log(tab, event)
-            if (tab.name === 'six') {
-                this.$refs.attackChain.getChartData()
-                this.$refs.attackChain.resetFun()
+            if (tab.name === 'four') {
                 // this.$refs.logs.getMinute()
                 // this.$refs.logs.isSearch = false
                 // this.$refs.logs.initIndex()
@@ -3880,37 +3184,27 @@ export default {
         translationHeader(arr) {
             let obj = {
                 事件ID: 'id',
+                事件名称: 'reportName',
                 事件等级: 'reportLevel',
                 事件类型: 'reportTypeName',
                 受影响资产: 'asset',
                 事件来源: 'reportFrom',
+                源IP: 'srcIp',
+                源端口: 'srcPort',
+                目的IP: 'desIp',
+                目的端口: 'desPort',
                 域名: 'domainName',
                 安全域: 'securityDomain',
                 归并量: 'gbNum',
                 攻击结果: 'attackResult',
                 事件时间: 'createTime',
+                事件状态: 'reportStatus',
                 是否溯源: 'isTrace',
                 溯源状态: 'isTraceEnd',
                 是否封禁: 'isBanned',
                 日志来源: 'dt',
                 审核状态: 'checkStatus',
-                发起工单: 'isStart',
-                '目的-组织架构': 'desOrg',
-
-                事件状态: 'reportStatus',
-                '源-姓名': 'srcChineseName',
-                '目的-姓名': 'desChineseName',
-                '源-组织架构': 'srcOrg',
-                源IP: 'srcIp',
-                源端口: 'srcPort',
-                '源-用户名': 'srcName',
-                '源-手机号': 'srcPhone',
-                目的IP: 'desIp',
-                目的端口: 'desPort',
-                '目的-用户名': 'desName',
-                '目的-手机号': 'desPhone',
-                事件名称: 'reportName'
-
+                发起工单: 'isStart'
             }
             let newArr = []
             arr.forEach(item => {
@@ -3918,6 +3212,7 @@ export default {
                     newArr.push(obj[item])
                 }
             })
+
             return newArr
         },
         getAlarmType() {
@@ -4049,24 +3344,20 @@ export default {
                 queryData: {},
                 paramsData: {
                     id: this.get_params.id,
+                    reportFrom: this.get_params.reportFrom, // 事件来源
+                    reportStatus: this.get_params.reportStatus, // 事件状态
+                    reportName: this.get_params.reportName, // 事件名称
+                    reportLevel: this.get_params.reportLevel, // 事件等级
+                    reportType: this.get_params.reportType, // 事件类型
                     startTime: this.sayTimes.length === 0 ? '' : this.sayTimes[0], // 开始时间
                     endTime: this.sayTimes.length === 0 ? '' : this.sayTimes[1], // 结束时间
-                    reportStatus: this.get_params.reportStatus,
-                    srcChineseName: this.get_params.srcChineseName,
-                    desChineseName: this.get_params.desChineseName,
-                    srcOrg: this.get_params.srcOrg != null ? this.get_params.srcOrg : '',
                     srcIp: this.get_params.srcIp, // 源IP
                     srcPort: this.get_params.srcPort, // 源端口
                     desIp: this.get_params.desIp, // 目的IP
                     desPort: this.get_params.desPort, // 目的端口
-                    reportName: this.get_params.reportName,
-                    ruleIds: this.get_params.ruleIds,
+                    attackResult: this.get_params.attackResult, // 攻击结果
+                    ruleIds: this.get_params.ruleIds // 规则集合
 
-                    srcName: this.get_params.srcName,
-                    srcPhone: this.get_params.srcPhone,
-                    desName: this.get_params.desName,
-                    desPhone: this.get_params.desPhone,
-                    desOrg: this.get_params.desOrg != null ? this.get_params.srcOrg : ''
                 }
             }
             console.log('data', data)
@@ -4078,6 +3369,15 @@ export default {
                 this.load_loading = false
                 this.load_loading1 = false
                 let list = res
+                if (list.pie.length > 0) {
+                    this.load_no_data = false
+                    list.pie.forEach((item, index) => {
+                        let level = {}
+                        level.value = item.num
+                        level.name = item.name
+                        this.levelData.push(level)
+                    })
+                }
                 if (list.line.length > 0) {
                     this.load_no_data1 = false
                     list.line.forEach((item, index) => {
@@ -4087,6 +3387,28 @@ export default {
                         this.load_data.push(level)
                     })
                 }
+
+                // this.load_data = [
+                //     {
+                //         name: '2022-02',
+                //         value: 123
+                //     }, {
+                //         name: '2022-03',
+                //         value: 153
+                //     }, {
+                //         name: '2022-04',
+                //         value: 173
+                //     }, {
+                //         name: '2022-05',
+                //         value: 183
+                //     }, {
+                //         name: '2022-06',
+                //         value: 153
+                //     }, {
+                //         name: '2022-07',
+                //         value: 123
+                //     }
+                // ]
             }).catch(error => {
                 this.load_loading = false
                 this.load_no_data = false
@@ -4141,8 +3463,7 @@ export default {
                         }
                     })
                     console.log(srcIpIsSpite)
-                    this.alarmDetailData.srcIpVenusIsSpite = srcIpIsSpite[0]
-                    this.alarmDetailData.srcIpIsSpite = srcIpIsSpite[1]
+                    this.alarmDetailData.srcIpIsSpite = srcIpIsSpite
                 } catch (e) {
                     console.log(e)
                 }
@@ -4155,8 +3476,7 @@ export default {
                         }
                     })
                     // console.log(desIpIsSpite)
-                    this.alarmDetailData.desIpVenusIsSpite = desIpIsSpite[0]
-                    this.alarmDetailData.desIpIsSpite = desIpIsSpite[1]
+                    this.alarmDetailData.desIpIsSpite = desIpIsSpite
                 } catch (e) {
                     console.log(e)
                 }
@@ -4254,7 +3574,6 @@ export default {
             }
         },
         async handleSee(row) {
-            console.log('row', row)
             this.alarmId = row.id
             this.logType = row.logType
             this.timeDiffer = row.createTime
@@ -4269,9 +3588,8 @@ export default {
                             value: row.srcIp
                         }
                     })
-                    console.log(srcIpIsSpite, 'srcIpIsSpite')
-                    this.seeForm.srcIpVenusIsSpite = srcIpIsSpite[0]
-                    this.seeForm.srcIpIsSpite = srcIpIsSpite[1]
+                    console.log(srcIpIsSpite)
+                    this.seeForm.srcIpIsSpite = srcIpIsSpite
                 } catch (e) {
                     console.log(e)
                 }
@@ -4283,9 +3601,8 @@ export default {
                             value: row.desIp
                         }
                     })
-                    console.log(desIpIsSpite, 'desIpIsSpite')
-                    this.seeForm.desIpVenusIsSpite = desIpIsSpite[0]
-                    this.seeForm.desIpIsSpite = desIpIsSpite[1]
+                    // console.log(desIpIsSpite)
+                    this.seeForm.desIpIsSpite = desIpIsSpite
                 } catch (e) {
                     console.log(e)
                 }
@@ -4295,12 +3612,9 @@ export default {
             this.alarmDisposalForm.reportFrom = row.reportFrom
             this.msg = row.msg
             if (row.msg) {
-                try {
-                    let msgData = JSON.parse(row.msg)
-                    if (msgData.length > 0) this.logIds = [...new Set(msgData.map(item => item.id))]
-                } catch (e) {
-                    console.log(e)
-                }
+                console.log('msgmsg', JSON.parse(row.msg))
+                let msgData = JSON.parse(row.msg)
+                if (msgData.length > 0) this.logIds = [...new Set(msgData.map(item => item.id))]
             } else {
                 this.logIds = []
             }
@@ -4433,48 +3747,11 @@ export default {
             this.get_params.page = 1
             console.log('this.get_params22222222', this.get_params)
             setTimeout(() => {
-                if (this.activeData == 1) {
-                    // 事件列表
-                    this.get_data()
-                    this.get_chart()
-                } else if (this.activeData == 2) {
-                    // this.getAttCkFn()
-                    // this.getAttChainFn()
-                    this.getAttCkTotalFn()
-                    this.getAllAttCk()
-                    this.getAttChainNumData()
-                    this.getAttChainChartData()
-                }
+                this.get_data()
+                this.get_chart()
             }, 100)
         },
-        getSearchParams() {
-            return {
-                queryData: {
-                },
-                paramsData: {
-                    id: this.get_params.id,
-                    reportFrom: this.get_params.reportFrom, // 事件来源
-                    reportStatus: this.get_params.reportStatus, // 事件状态
-                    reportName: this.get_params.reportName, // 事件名称
-                    reportLevel: this.get_params.reportLevel, // 事件等级
-                    reportType: this.get_params.reportType, // 事件类型
-                    startTime: this.sayTimes.length === 0 ? '' : this.sayTimes[0], // 开始时间
-                    endTime: this.sayTimes.length === 0 ? '' : this.sayTimes[1], // 结束时间
-                    srcIp: this.get_params.srcIp, // 源IP
-                    srcPort: this.get_params.srcPort, // 源端口
-                    desIp: this.get_params.desIp, // 目的IP
-                    desPort: this.get_params.desPort, // 目的端口
-                    attackResult: this.get_params.attackResult, // 攻击结果
-                    ruleIds: this.get_params.ruleIds, // 规则集合
-                    orgId: this.get_params.orgId != null ? this.get_params.orgId : '',
-                    attCk: this.get_params.attCk != null ? this.get_params.attCk : '',
-                    attChain: this.get_params.attChain,
-                    orgLevel: this.get_params.orgLevel,
-                    time: this.$getsessionStorage('temporaryAlarm').actualTime ? this.$getsessionStorage('temporaryAlarm').actualTime : this.dateData,
-                    timeStatus: this.$getsessionStorage('temporaryAlarm').timeUnit ? this.$getsessionStorage('temporaryAlarm').timeUnit : ''
-                }
-            }
-        },
+
         get_data() {
             this.setDate()
             // let uid = this.timestrIdData = new Date().getTime()
@@ -4492,24 +3769,19 @@ export default {
                 },
                 paramsData: {
                     id: this.get_params.id,
+                    reportFrom: this.get_params.reportFrom, // 事件来源
+                    reportStatus: this.get_params.reportStatus, // 事件状态
+                    reportName: this.get_params.reportName, // 事件名称
+                    reportLevel: this.get_params.reportLevel, // 事件等级
+                    reportType: this.get_params.reportType, // 事件类型
                     startTime: this.sayTimes.length === 0 ? '' : this.sayTimes[0], // 开始时间
                     endTime: this.sayTimes.length === 0 ? '' : this.sayTimes[1], // 结束时间
-                    reportStatus: this.get_params.reportStatus,
-                    srcChineseName: this.get_params.srcChineseName,
-                    desChineseName: this.get_params.desChineseName,
-                    srcOrg: this.get_params.srcOrg != null ? this.get_params.srcOrg : '',
                     srcIp: this.get_params.srcIp, // 源IP
                     srcPort: this.get_params.srcPort, // 源端口
                     desIp: this.get_params.desIp, // 目的IP
                     desPort: this.get_params.desPort, // 目的端口
-                    reportName: this.get_params.reportName,
-                    ruleIds: this.get_params.ruleIds,
-
-                    srcName: this.get_params.srcName,
-                    srcPhone: this.get_params.srcPhone,
-                    desName: this.get_params.desName,
-                    desPhone: this.get_params.desPhone,
-                    desOrg: this.get_params.desOrg != null ? this.get_params.srcOrg : ''
+                    attackResult: this.get_params.attackResult, // 攻击结果
+                    ruleIds: this.get_params.ruleIds // 规则集合
 
                 }
             }
@@ -4521,7 +3793,7 @@ export default {
                 // }
                 this.loading = false
                 this.total_count = res.total
-                // let total = res.total
+                let total = res.total
                 this.total_num = res.total
                 /* 动态设置总页数*/
                 // if (this.get_params.page < 4 && total > 7 * this.get_params.size) {
@@ -4534,11 +3806,8 @@ export default {
                 let list = res.records
                 if (list.length > 0) {
                     list.forEach(item => {
-                        let obj = {
-                            ...item
-                        }
+                        let obj = {}
                         obj.id = item.id
-                        obj.autoStatus = item.autoStatus
                         obj.count = item.count ? item.count : ''
                         obj.assetName = item.assetName
                         obj.alarm_from = item.reportFrom
@@ -4581,7 +3850,7 @@ export default {
                         obj.isAnalysis = item.isAnalysis
                         obj.isBanned = item.isBanned === '0' ? 0 : item.isBanned
                         obj.isStart = item.isStart
-                        obj.ruleIds = item.ruleIds
+                        obj.ruleName = item.ruleName
                         obj.ruleId = item.ruleId
                         obj.srcIp = item.srcIp
                         obj.srcPort = item.srcPort
@@ -4597,10 +3866,6 @@ export default {
                         obj.taskType = item.taskType ? item.taskType : ''
                         obj.checkStatus = item.checkStatus === '0' ? 0 : item.checkStatus
                         obj.records = item.records
-                        obj.attCk = item.attCk
-                        obj.attChain = item.attChain
-                        obj.orgName = item.orgName
-                        obj.orgLevel = item.orgLevel
 
                         this.tableData.push(obj)
                     })
@@ -4725,7 +3990,7 @@ export default {
                 reportTypeName: '事件类型名',
                 checkStatus: '审核状态',
                 isBanned: '是否封禁',
-                ruleIds: '规则名称',
+                ruleName: '规则名称',
                 ruleId: '规则id'
 
             }
@@ -4747,414 +4012,385 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.treeselect {
-    ::v-deep .vue-treeselect__menu {
-        margin-top: 5px;
-        width: 400px;
-        max-height: 300px;
-        border: 1px solid #cccccc;
-        border-radius: 4px;
-    }
-}
-$zero: #03864f;
-$one: #0052d9;
-$two: #ddd000;
-$three: #e47700;
-$fore: #e47700;
 
-$status1: #ffdd00;
-$status2: #01ff01;
-$status3: #00e1fd;
-$status4: #e1e2e4;
-.list {
-    .list-container {
-        margin-top: 0;
-        border-radius: 0 0 4px 4px;
-        box-shadow: none;
-        .components {
+    $zero: #03864f;
+    $one: #0052d9;
+    $two: #ddd000;
+    $three: #e47700;
+    $fore: #e47700;
+
+    $status1: #ffdd00;
+    $status2: #01ff01;
+    $status3: #00e1fd;
+    $status4: #e1e2e4;
+    .fixedTable{
+        ::-webkit-scrollbar {
+            width: 20px;          /* 纵向滚动条 宽度 */
+            height: 5px;         /* 横向滚动条 高度 */
+            border-radius: 10px;  /* 整体 圆角 */
         }
     }
-}
-.fixedTable {
-    ::-webkit-scrollbar {
-        width: 20px;          /* 纵向滚动条 宽度 */
-        height: 5px;         /* 横向滚动条 高度 */
-        border-radius: 10px;  /* 整体 圆角 */
+    .list-tip{
+        height: 24px;
+        line-height: 24px;
+        font-size: 14px;
+        color: #1c1c1c;
+        position: relative;
     }
-}
-.list-tip {
-    position: relative;
-    height: 24px;
-    font-size: 14px;
-    color: #1c1c1c;
-    line-height: 24px;
-}
-.alarm-state {
-    padding: 2px 5px;
-    width: 80px;
-    height: 18px;
-    border-radius: 11px;
-    &.one {
-        color: #de7400;
-        background-color: #fde6d8;
+    .alarm-state{
+        width:80px;
+        height:18px;
+        padding:2px 5px;
+        border-radius: 11px;
+        &.one{
+            background-color: #fde6d8;
+            color:#de7400;
+        }
+        &.two{
+            background-color: #ccf6e4;
+            color:#03864f;
+        }
+        &.three{
+            background-color: #d5e5fa;
+            color:#0052d9;
+        }
+        &.four{
+            background-color: #fad7dd;
+            color:#aa0202;
+        }
     }
-    &.two {
-        color: #03864f;
-        background-color: #ccf6e4;
-    }
-    &.three {
-        color: #0052d9;
-        background-color: #d5e5fa;
-    }
-    &.four {
-        color: #aa0202;
-        background-color: #fad7dd;
-    }
-}
-.click-btn {
-    cursor: pointer;
-    font-size: 12px;
-    i {
-        margin-right: 5px;
-        color: #1cd7fa;
-    }
-    span.val {
+    .click-btn {
+        cursor: pointer;
         font-size: 12px;
-        color: #1cd7fa;
+        i {
+            margin-right: 5px;
+            color: #1cd7fa;
+        }
+        span.val {
+            color: #1cd7fa;
+            font-size:12px;
+        }
     }
-}
-.click-btn:hover {
-    // background: #0d4873;
-}
-.alarm-list {
-    overflow: hidden;
-    width: 100%;
-    .report-from {
-        color: #00ffe4;
+    .click-btn:hover {
+        // background: #0d4873;
     }
-}
-.alarm-list  ::v-deep  .el-table__empty-text {
-    line-height: 34px;
-}
-.alarm-list  ::v-deep  .el-table__empty-block {
-    min-height: 34px;
-}
-.alarmm-wrapper {
-    overflow: hidden;
-    height: calc(100vh - 70px);
-    .right-wrapper {
+    .alarm-list{
+        width:100%;
         overflow: hidden;
-        overflow-y: hidden;
-        height: 100%;
-        .tab-button {
-            margin-top: 10px;
-            height: 30px;
-            border-radius: 4px;
-            background-color: rgb(19 109 172 / 20%);
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-            & div {
-                margin-right: 10px;
-                padding: 0 10px;
-                height: 30px;
-                font-size: 14px;
-                border-radius: 2px;
-                text-align: center;
-                color: rgb(0 0 0 / 60%);
-                background-size: 100%;
-                line-height: 30px;
-                cursor: pointer;
-                box-sizing: border-box;
-                &.tab-active {
-                    border-bottom: 2px solid #266fe8;
-                    color: #266fe8;
-                    background-size: 100%;
-                }
-            }
-        }
-        .tab-button-two {
-            margin-top: 10px;
-            padding-bottom: 40px;
-            height: 30px;
-            box-shadow: 0 6px 3px -6px rgb(140 152 164 / 40%);
-            & div {
-                margin-right: 10px;
-                padding: 0 22px;
-                height: 30px;
-                font-size: 12px;
-                border: 1px solid rgb(0 82 217 / 100%);
-                border-radius: 3px;
-                text-align: center;
-                color: #0052d9;
-                background-size: 100%;
-                line-height: 30px;
-                cursor: pointer;
-                box-sizing: border-box;
-                &.tab-active {
-                    color: #ffffff;
-                    background: #0052d9;
-                }
-            }
+        .report-from {
+            color: #00ffe4;
         }
     }
-}
-.chart-top {
-    /* position: absolute;
+    .alarm-list  ::v-deep  .el-table__empty-text {
+        line-height: 34px;
+    }
+    .alarm-list  ::v-deep  .el-table__empty-block {
+        min-height: 34px;
+    }
+    .alarmm-wrapper{
+        height: calc(100vh - 70px);
+        overflow: hidden;
+        .right-wrapper{
+            height:100%;
+            overflow: hidden;
+            overflow-y: hidden;
+        }
+    }
+     .chart-top {
+        /* position: absolute;
         left: 0;
         top: 0; */
-    height: 30px;
-    .title {
-        // color: #fff;
-        font-size: 12px;
+        height: 30px;
+        .title {
+            // color: #fff;
+            font-size: 12px;
+            /*font-weight: bold;*/
+            // text-shadow: 0px 0px 6px #00cffb, 0px 0px 6px #00cffb;
+        }
+    }
+    .record-item ::v-deep .el-form-item__content{
+        width: 90%!important;
+    }
+    .haveStart{
+        color:rgb(102, 102, 102);
+    }
+    .left-tip {
+        margin-bottom: 10px;
+        font-size: 0;
 
-        /* font-weight: bold; */
-        // text-shadow: 0px 0px 6px #00cffb, 0px 0px 6px #00cffb;
+        >i {
+            vertical-align: middle;
+            font-size: 12px;
+            color: rgba(0,0,0,.9);
+            margin-right: 5px;
+        }
+
+        >span {
+            vertical-align: middle;
+            font-size: 10px;
+            color: rgba(0,0,0,.9);
+        }
     }
-}
-.record-item ::v-deep .el-form-item__content {
-    width: 90%!important;
-}
-.haveStart {
-    color: rgb(102 102 102);
-}
-.left-tip {
-    margin-bottom: 10px;
-    font-size: 0;
-    >i {
-        margin-right: 5px;
+    .event ::v-deep .el-divider {
+        background-color: #50b0ff;
+        opacity: 0.5;
+    }
+    .event-btn-col{
+        margin-bottom: 10px;
+    }
+    .searchData ::v-deep .el-form-item {
+        margin-bottom: 0;
+    }
+
+    .title-level {
+        // border: 1px solid $zero;
+        // background: rgba($zero, .2);
+        color: $zero;
         font-size: 12px;
-        color: rgb(0 0 0 / 90%);
-        vertical-align: middle;
-    }
-    >span {
-        vertical-align: middle;
-        font-size: 10px;
-        color: rgb(0 0 0 / 90%);
-    }
-}
-.event ::v-deep .el-divider {
-    background-color: #50b0ff;
-    opacity: 0.5;
-}
-.event-btn-col {
-    margin-bottom: 10px;
-}
-.searchData ::v-deep .el-form-item {
-    margin-bottom: 0;
-}
-.title-level {
-    margin: 0 5px;
-    padding: 2px 10px;
-    font-size: 12px;
-    border-radius: 3px;
-    // border: 1px solid $zero;
-    // background: rgba($zero, .2);
-    color: $zero;
-    line-height: 1;
-    &.one {
-        // border-color: $one;
-        // background: rgba($one, .2);
-        color: $one;
-    }
-    &.two {
-        // border-color: $two;
-        // background: rgba($two, .2);
-        color: $two;
-    }
-    &.three {
-        // border-color: $three;
-        // background: rgba($three, .2);
-        color: $three;
-    }
-    &.fore {
-        // border-color: $fore;
-        // background: rgba($fore, .2);
-        color: $fore;
-    }
-}
-.title-status {
-    padding: 2px 10px;
-    font-size: 12px;
-    border: 1px solid $status1;
-    border-radius: 3px;
-    color: #ffffff;
-    background: $status1;
-    line-height: 1;
-    &.one {
-        border-color: $status2;
-        background: $status2;
-    }
-    &.two {
-        border-color: $status3;
-        background: $status3;
-    }
-    &.three {
-        border-color: $status4;
-        background: $status4;
-    }
-}
-.text-color {
-    color: #ffffff;
-}
-.el-input.ips {
-    display: block;
-    width: 100%;
-}
-.el-link {
-    cursor: pointer;
-}
-.drawer-pad {
-    overflow-y: auto;
-    // padding: 0 20px;
-    height: calc(100% - 53px);
-    & ::v-deep img {
-        max-width: 600px;
-        max-height: 600px;
-    }
-    &::-webkit-scrollbar, li::-webkit-scrollbar, ul::-webkit-scrollbar {
-        width: 4px;
-    }
-    &::-webkit-scrollbar-track, li::-webkit-scrollbar-track, ul::-webkit-scrollbar-track {
-        background: none;
-    }
-}
-.drawer-pad ::v-deep.el-form-item__content {
-    font-size: 12px;
-}
-.drawer-pad ::v-deep .el-form-item__label {
-    font-size: 12px;
-    color: #999999!important;
-}
-.domain-add {
-    line-height: 1;
-    position: relative;
-    padding: 0 20px;
-    color: #1cd7fa;
-    .el-button {
-        position: absolute;
-        top: 0;
-        right: 20px;
-        padding: 0;
-        color: #1cd7fa;
-    }
-}
-.domain-list {
-    margin: 3px 0 20px;
-    padding: 20px 0 1px;
-    background: rgb(0 0 0 / 30%);
-    .list-tit {
-        width: 100px;
-        text-align: right;
-    }
-    .ub {
-        margin-bottom: 20px;
-    }
-    .list-btn {
-        padding-left: 20px;
-        .el-button {
-            color: #f56c6c;
+        border-radius: 3px;
+        line-height: 1;
+        padding: 2px 10px;
+        margin: 0 5px;
+
+        &.one {
+            // border-color: $one;
+            // background: rgba($one, .2);
+            color: $one;
+        }
+
+        &.two {
+            // border-color: $two;
+            // background: rgba($two, .2);
+            color: $two;
+        }
+
+        &.three {
+            // border-color: $three;
+            // background: rgba($three, .2);
+            color: $three;
+        }
+
+        &.fore {
+            // border-color: $fore;
+            // background: rgba($fore, .2);
+            color: $fore;
         }
     }
-}
-.el-select ::v-deep .el-tag {
-    background-color: transparent;
-    // border-color: #1bd7fa;
-    // color: #1bd7fa;
-}
-.event ::v-deep .el-checkbox__inner {
-    //background: rgba(225, 225, 225,0.7);
-}
-.event ::v-deep .el-range-input {
-    color: #ffffff;
-    background-color: rgb(0 0 0 / 0%);
-}
-.event ::v-deep .el-range-separator {
-    color: #ffffff;
-}
-.event ::v-deep .el-radio__label,
-.event ::v-deep .el-checkbox__label {
-    // color: #fff;
-}
-.bigTable {
-    ::v-deep .sort-caret.ascending {
-        border-bottom-color: #c0c4cc;
+
+    .title-status {
+        border: 1px solid $status1;
+        background: $status1;
+        color: #fff;
+        font-size: 12px;
+        border-radius: 3px;
+        line-height: 1;
+        padding: 2px 10px;
+
+        &.one {
+            border-color: $status2;
+            background: $status2;
+        }
+
+        &.two {
+            border-color: $status3;
+            background: $status3;
+        }
+
+        &.three {
+            border-color: $status4;
+            background: $status4;
+        }
     }
-    ::v-deep .sort-caret.descending {
-        border-top-color: #c0c4cc;
+
+    .text-color {
+        color: #fff;
     }
-    ::v-deep .descending .sort-caret.descending {
-        border-top-color: #3aa6e4;
+
+    .el-input.ips {
+        display: block;
+        width: 100%;
     }
-    ::v-deep .ascending .sort-caret.ascending {
-        border-bottom-color: #3aa6e4;
+
+    .el-link {
+        cursor: pointer;
     }
-}
-.white-hteme .bigTable {
-    ::v-deep .sort-caret.ascending {
-        border-bottom-color: #ffffff;
+
+    .drawer-pad {
+        // padding: 0 20px;
+        height: calc(100% - 53px);
+        overflow-y: auto;
+
+        & ::v-deep img {
+            max-width: 600px;
+            max-height: 600px;
+        }
+        &::-webkit-scrollbar, li::-webkit-scrollbar, ul::-webkit-scrollbar {
+            width: 4px;
+        }
+        &::-webkit-scrollbar-track, li::-webkit-scrollbar-track, ul::-webkit-scrollbar-track {
+            background: none;
+        }
     }
-    ::v-deep .sort-caret.descending {
-        border-top-color: #ffffff;
+    .drawer-pad ::v-deep.el-form-item__content {
+        font-size: 12px;
     }
-    ::v-deep .descending .sort-caret.descending {
-        border-top-color: #01fdfe;
+    .drawer-pad ::v-deep .el-form-item__label{
+        font-size: 12px;
+        color: #999!important
     }
-    ::v-deep .ascending .sort-caret.ascending {
-        border-bottom-color: #01fdfe;
-    }
-}
-.div-table {
-    border: 1px solid #1a5c92;
-    color: #ffffff;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    .table-title {
-        line-height: 48px;
-        padding: 0 30px;
-        border-bottom: 1px solid #1a5c92;
-        background: rgb(29 65 105 / 50%);
-    }
-    dl {
+    .domain-add {
+        line-height: 1;
         position: relative;
-        height: 46px;
-        border-bottom: 1px solid #1a5c92;
-        background: rgb(3 50 84 / 50%);
-        box-shadow: 0 0 3px rgb(0 186 255 / 73%) inset;
-        line-height: 46px;
-        dt {
+        padding: 0 20px;
+        color: #1cd7fa;
+
+        .el-button {
             position: absolute;
-            padding: 0 30px;
-            width: 50%;
-            border-right: 1px solid #1a5c92;
-            box-sizing: border-box;
-        }
-        dd {
-            padding-left: calc(50% + 30px);
-        }
-        &:nth-child(2n+1) {
-            background: rgb(29 65 105 / 50%);
+            right: 20px;
+            top: 0;
+            padding: 0;
+            color: #1cd7fa;
         }
     }
-}
-.search-box {
+
+    .domain-list {
+        background: rgba(0, 0, 0, .3);
+        margin: 3px 0 20px;
+        padding: 20px 0 1px;
+
+        .list-tit {
+            width: 100px;
+            text-align: right;
+        }
+
+        .ub {
+            margin-bottom: 20px;
+        }
+
+        .list-btn {
+            padding-left: 20px;
+
+            .el-button {
+                color: #F56C6C;
+            }
+        }
+    }
+
+    .el-select ::v-deep .el-tag {
+        background-color: transparent;
+        // border-color: #1bd7fa;
+        // color: #1bd7fa;
+    }
+    .event ::v-deep .el-checkbox__inner {
+        //background: rgba(225, 225, 225,0.7);
+    }
+    .event ::v-deep .el-range-input {
+        background-color: rgba(0, 0, 0, 0);
+        color: #fff;
+    }
+
+    .event ::v-deep .el-range-separator {
+        color: #fff;
+    }
+
+    .event ::v-deep .el-radio__label,
+    .event ::v-deep .el-checkbox__label {
+        // color: #fff;
+    }
+
+    .bigTable {
+         ::v-deep .sort-caret.ascending {
+            border-bottom-color: #C0C4CC;
+        }
+
+        ::v-deep .sort-caret.descending {
+            border-top-color: #C0C4CC;
+        }
+
+        ::v-deep .descending .sort-caret.descending {
+            border-top-color: #3aa6e4;
+        }
+
+        ::v-deep .ascending .sort-caret.ascending {
+            border-bottom-color: #3aa6e4;
+        }
+    }
+    .white-hteme .bigTable {
+        ::v-deep .sort-caret.ascending {
+            border-bottom-color: #fff;
+        }
+
+        ::v-deep .sort-caret.descending {
+            border-top-color: #fff;
+        }
+
+        ::v-deep .descending .sort-caret.descending {
+            border-top-color: #01fdfe;
+        }
+
+        ::v-deep .ascending .sort-caret.ascending {
+            border-bottom-color: #01fdfe;
+        }
+    }
+
+    .div-table {
+        color: #fff;
+        border: 1px solid #1a5c92;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+
+        .table-title {
+            line-height: 48px;
+            padding: 0 30px;
+            border-bottom: 1px solid #1a5c92;
+            background: rgba(29, 65, 105, 0.5);
+        }
+
+        dl {
+            position: relative;
+            line-height: 46px;
+            height: 46px;
+            background: rgba(3, 50, 84, 0.5);
+            box-shadow: 0 0 3px rgba(0, 186, 255, .73) inset;
+            border-bottom: 1px solid #1a5c92;
+
+            dt {
+                position: absolute;
+                width: 50%;
+                padding: 0 30px;
+                border-right: 1px solid #1a5c92;
+                box-sizing: border-box;
+            }
+
+            dd {
+                padding-left: calc(50% + 30px);
+            }
+
+            &:nth-child(2n+1) {
+                background: rgba(29, 65, 105, 0.5);
+            }
+        }
+    }
+
+    .search-box {
     .search-more {
         display: flex;
         flex-wrap: wrap;
-        .el-select {
-            ::v-deep .el-input {
+        .el-select{
+            ::v-deep .el-input{
                 // height:32px !important;
             }
         }
-        .has-more {
-            overflow-y: hidden;
+        .has-more{
             height: 40px !important;
+            overflow-y: hidden;
         }
         .search-more-left {
             display: flex;
             flex-wrap: wrap;
             div {
-                margin-right: 20px;
                 padding: 5px 0;
+                margin-right: 20px;
                 ::v-deep.el-select {
                     width: 253px;
                 }
@@ -5169,13 +4405,13 @@ $status4: #e1e2e4;
         }
         .search-text {
             display: block;
-            margin-top: 10px;
             width: 80px;
-            height: 30px;
-            font-size: 12px;
-            text-align: right;
-            color: rgb(0 0 0 / 40%);
+            color:rgba(0,0,0,0.4);
             cursor: pointer;
+            font-size:12px;
+            height: 30px;
+            margin-top: 10px;
+            text-align: right;
         }
     }
     & ::v-deep .el-form-item__label {
@@ -5184,450 +4420,424 @@ $status4: #e1e2e4;
     & ::v-deep .el-form-item__content {
         line-height: 40px !important;
     }
-}
-.drawer-content {
-    overflow-y: auto;
-    padding: 10px 20px;
-    height: calc(100vh - 40px);
-}
-::v-deep {
-    .el-drawer__body {
-        padding: 0!important;
+
     }
-}
-.reset-btn, .sql-btn {
-    margin-right: 10px;
-    width: 60px;
-    height: 30px;
-    font-size: 12px;
-    border: solid 1px #dcdcdc;
-    border-radius: 5px;
-    border-radius: 4px;
-    color: rgb(0 0 0 / 40%);
-    background-color: #ffffff;
-    line-height: 15px;
-    letter-spacing: 1px;
-    cursor: pointer;
-    box-sizing: border-box;
-}
-.save-btn {
-    margin-right: 10px;
-    width: 30px;
-    height: 30px;
-    font-size: 12px;
-    border: solid 1px #dcdcdc;
-    border-radius: 5px;
-    border-radius: 4px;
-    color: rgb(0 0 0 / 40%);
-    background-color: #ffffff;
-    line-height: 15px;
-    letter-spacing: 1px;
-    cursor: pointer;
-    box-sizing: border-box;
-}
-.chart-row {
-    position: relative;
-    //padding-left: 380px;
-    .chart-left {
+    .reset-btn, .sql-btn{
+        width: 60px;
+        height: 30px;
+        font-size: 12px;
+        line-height: 15px;
+        letter-spacing: 1px;
+        color: rgba(0,0,0,0.4);
+        border-radius: 5px;
+        margin-right: 10px;
+        cursor: pointer;
+        box-sizing: border-box;
+        background-color: #ffffff;
+        border-radius: 4px;
+        border: solid 1px #dcdcdc;
+    }
+    .save-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+        line-height: 15px;
+        letter-spacing: 1px;
+        color: rgba(0,0,0,.4);
+        border-radius: 5px;
+        margin-right: 10px;
+        cursor: pointer;
+        box-sizing: border-box;
+        background-color: #ffffff;
+        border-radius: 4px;
+        border: solid 1px #dcdcdc;
+    }
+
+    .chart-row {
+        position: relative;
+        padding-left: 380px;
+
+        .chart-left {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 368px;
+        }
+    }
+
+    .chart-box {
+        position: relative;
+        height: 280px;
+        background:rgba(56,125,238,0.05);
+        border-radius: 6px;
+        .chart-title {
+            margin: 20px 0 20px 20px;
+        }
+        .title{
+            color:rgba(0,0,0,0.9);
+        }
+    }
+
+    .tabsForm {
+        margin-bottom: 40px;
+
+        .el-form-item {
+            margin: 10px 0;
+        }
+    }
+
+    .home .el-table {
+        min-height: 0;
+    }
+
+    .el-tabs ::v-deep .el-tabs__nav-wrap::after {
+        content: "";
         position: absolute;
-        top: 0;
         left: 0;
-        width: 368px;
+        bottom: 0;
+        width: 100%;
+        height: 1px;
+        // background-color: rgba(28, 215, 250, 0.2);
+        z-index: 1;
     }
-}
-.chart-box {
-    position: relative;
-    height: 280px;
-    border-radius: 6px;
-    background: rgb(56 125 238 / 5%);
-    .chart-title {
-        margin: 20px 0 20px 20px;
+
+    .el-tabs ::v-deep .el-tabs__active-bar {
+        background: #387dee;
+        // margin-left: 14px;
     }
-    .title {
-        color: rgb(0 0 0 / 90%);
+
+    .el-tabs ::v-deep .el-tabs__item.is-active {
+        color: #387dee;
+        height: 34px;
+        line-height: 34px;
+        border: none !important;
+        box-shadow: none !important;
     }
-}
-.tabsForm {
-    margin-bottom: 40px;
-    .el-form-item {
-        margin: 10px 0;
+
+    .originTable {
+        margin: 40px 0;
+        color: #fff;
+        border: 1px solid #1a5c92;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        border-collapse: collapse;
+        table-layout: fixed;
+
+        & .title {
+            text-align: center;
+        }
+
+        & td {
+            /*width: 50%;*/
+            height: 40px;
+            padding: 0 20px;
+            border-bottom: 1px solid #1a5c92;
+            border-right: 1px solid #1a5c92;
+        }
+
+        tr:nth-child(odd) {
+            background: rgba(3, 50, 84, 0.5);
+            color: #fff;
+            box-shadow: 0 0 6px rgba(0, 186, 255, .73) inset;
+        }
+
+        //奇数
+        tr:nth-child(even) {
+            box-shadow: 0 0 6px rgba(0, 186, 255, .73) inset;
+        }
+
+        //偶数
     }
-}
-.home .el-table {
-    min-height: 0;
-}
-.el-tabs ::v-deep .el-tabs__nav-wrap::after {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    // background-color: rgba(28, 215, 250, 0.2);
-    z-index: 1;
-    width: 100%;
-    height: 1px;
-    content: '';
-}
-.el-tabs ::v-deep .el-tabs__active-bar {
-    background: #387dee;
-    // margin-left: 14px;
-}
-.el-tabs ::v-deep .el-tabs__item.is-active {
-    height: 34px;
-    border: none !important;
-    color: #387dee;
-    box-shadow: none !important;
-    line-height: 34px;
-}
-.originTable {
-    margin: 40px 0;
-    border: 1px solid #1a5c92;
-    color: #ffffff;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border-collapse: collapse;
-    table-layout: fixed;
-    & .title {
+
+    ._el-item ::v-deep .el-form-item__content {
+        margin-left: 0 !important;
+    }
+
+    .table-container {
+        display: flex;
+        justify-content: flex-start;
+        width: 50%;
+
+        &:nth-child(2n) {
+            background: rgba(29, 65, 105, 0.5);
+        }
+
+    }
+
+    .table-left,
+    .table-right {
+        font-size: 16px;
+        border: 1px solid #1a5c92;
+        padding: 4px 10px;
+        background: rgba(3, 50, 84, 0.5);
+    }
+
+    .table-left {
+        color: #fff;
+        opacity: .6;
+        flex-shrink: 0;
+        border-right: none;
+        padding-right: 10px;
+        text-align: right;
+        width: 160px !important;
+        /*white-space: nowrap;*/
+    }
+
+    .table-right {
+        width: calc(100% - 160px);
+    }
+
+    .event ::v-deep .el-checkbox-button--small .el-checkbox-button__inner {
+        padding: 9px 10px;
+    }
+
+    .el-dropdown-menu{
+        width:240px;
+    }
+
+    .el-dropdown-menu ::v-deep .el-checkbox__label {
+        color: rgba(0,0,0,.9);
+        width: 72px;
+        box-sizing: border-box;
+        font-size:12px;
+    }
+    .el-dropdown-menu ::v-deep .el-checkbox__label:hover {
+        color: #0052d9;
+        width: 72px;
+        box-sizing: border-box;
+    }
+    .el-dropdown-menu ::v-deep .el-checkbox__label:active {
+        color: #0052d9;
+        width: 72px;
+        box-sizing: border-box;
+    }
+
+    .el-dropdown-menu ::v-deep .el-checkbox {
+        margin-right: 22px;
+    }
+
+    // .el-dropdown-menu ::v-deep .el-checkbox__input.is-checked+.el-checkbox__label {
+    //     color: rgba(0,0,0,.9);
+    // }
+    .el-dropdown-menu ::v-deep .el-checkbox__input.is-checked+.el-checkbox__label {
+        color: #0052d9;
+    }
+
+    // .el-dropdown-menu ::v-deep .el-checkbox__input.is-checked .el-checkbox__inner::after {
+    //     border-color: rgba(0,0,0,.9);
+    // }
+
+    // .el-dropdown-menu ::v-deep .el-checkbox__input.is-checked .el-checkbox__inner,
+    // .el-dropdown-menu ::v-deep .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+    //     background-color: transparent;
+    //     border-color: #0052d9;
+    // }
+    // .el-dropdown-menu ::v-deep .el-checkbox__input.is-indeterminate .el-checkbox__inner:hover {
+    //     background-color: #0052d9;
+    //     border-color: #0052d9;
+    // }
+
+    // .el-dropdown-menu ::v-deep .el-checkbox__input.is-disabled .el-checkbox__inner,
+    // .el-dropdown-menu ::v-deep .el-checkbox__inner {
+    //     background-color: transparent;
+    //     border-color: #dcdcdc;
+    // }
+    .access_state {
+        span {
+            color: #fff;
+            margin-right: 6px;
+        }
+        i {
+            font-size: 15px;
+            color: #387dee;
+        }
+    }
+    .close-box {
+        width: 26px;
+        // height: 100%;
         text-align: center;
-    }
-    & td {
-        padding: 0 20px;
-
-        /* width: 50%; */
-        height: 40px;
-        border-right: 1px solid #1a5c92;
-        border-bottom: 1px solid #1a5c92;
-    }
-    tr:nth-child(odd) {
-        color: #ffffff;
-        background: rgb(3 50 84 / 50%);
-        box-shadow: 0 0 6px rgb(0 186 255 / 73%) inset;
-    }
-
-    //奇数
-    tr:nth-child(even) {
-        box-shadow: 0 0 6px rgb(0 186 255 / 73%) inset;
-    }
-
-    //偶数
-}
-._el-item ::v-deep .el-form-item__content {
-    margin-left: 0 !important;
-}
-.table-container {
-    display: flex;
-    justify-content: flex-start;
-    width: 50%;
-    &:nth-child(2n) {
-        background: rgb(29 65 105 / 50%);
-    }
-}
-.table-left,
-.table-right {
-    padding: 4px 10px;
-    font-size: 16px;
-    border: 1px solid #1a5c92;
-    background: rgb(3 50 84 / 50%);
-}
-.table-left {
-    padding-right: 10px;
-    width: 160px !important;
-    border-right: none;
-    text-align: right;
-    color: #ffffff;
-    opacity: 0.6;
-    flex-shrink: 0;
-
-    /* white-space: nowrap; */
-}
-.table-right {
-    width: calc(100% - 160px);
-}
-.event ::v-deep .el-checkbox-button--small .el-checkbox-button__inner {
-    padding: 9px 10px;
-}
-.el-dropdown-menu {
-    width: 240px;
-}
-.el-dropdown-menu ::v-deep .el-checkbox__label {
-    width: 72px;
-    font-size: 12px;
-    color: rgb(0 0 0 / 90%);
-    box-sizing: border-box;
-}
-.el-dropdown-menu ::v-deep .el-checkbox__label:hover {
-    width: 72px;
-    color: #0052d9;
-    box-sizing: border-box;
-}
-.el-dropdown-menu ::v-deep .el-checkbox__label:active {
-    width: 72px;
-    color: #0052d9;
-    box-sizing: border-box;
-}
-.el-dropdown-menu ::v-deep .el-checkbox {
-    margin-right: 22px;
-}
-
-// .el-dropdown-menu ::v-deep .el-checkbox__input.is-checked+.el-checkbox__label {
-//     color: rgba(0,0,0,.9);
-// }
-.el-dropdown-menu ::v-deep .el-checkbox__input.is-checked+.el-checkbox__label {
-    color: #0052d9;
-}
-
-// .el-dropdown-menu ::v-deep .el-checkbox__input.is-checked .el-checkbox__inner::after {
-//     border-color: rgba(0,0,0,.9);
-// }
-
-// .el-dropdown-menu ::v-deep .el-checkbox__input.is-checked .el-checkbox__inner,
-// .el-dropdown-menu ::v-deep .el-checkbox__input.is-indeterminate .el-checkbox__inner {
-//     background-color: transparent;
-//     border-color: #0052d9;
-// }
-// .el-dropdown-menu ::v-deep .el-checkbox__input.is-indeterminate .el-checkbox__inner:hover {
-//     background-color: #0052d9;
-//     border-color: #0052d9;
-// }
-
-// .el-dropdown-menu ::v-deep .el-checkbox__input.is-disabled .el-checkbox__inner,
-// .el-dropdown-menu ::v-deep .el-checkbox__inner {
-//     background-color: transparent;
-//     border-color: #dcdcdc;
-// }
-.access_state {
-    span {
-        margin-right: 6px;
-        color: #ffffff;
-    }
-    i {
-        font-size: 15px;
+        line-height: 26px;
+        cursor: pointer;
         color: #387dee;
     }
-}
-.close-box {
-    width: 26px;
-    // height: 100%;
-    text-align: center;
-    line-height: 26px;
-    cursor: pointer;
-    color: #387dee;
-}
-.event ::v-deep .el-timeline-item__timestamp.is-top {
-    position: absolute;
-    top: 0;
-    left: -93px;
-    margin-bottom: 8px;
-    padding-top: 3px;
-    width: 80px;
-    font-size: 12px;
-    text-align: right;
-    // color: #fff;
-}
-.event ::v-deep .pic-wrapper {
-    overflow: auto;
-    height: 500px;
-    border: 1px solid rgb(0 0 0 / 10%);
-}
-.record-item ::v-deep .el-timeline-item__tail {
-    border-left: 2px solid #387dee !important;
-}
-.event ::v-deep .el-timeline-item__icon.el-icon-circle-check {
-    font-size: 20px;
-}
-.event ::v-deep .el-timeline-item__icon.icon-circle {
-    font-size: 16px !important;
-    font-weight: 500;
-}
-.time-box {
-    width: 100%;
-}
-.time-left>h4 {
-    font-weight: 500;
-    color: rgb(0 0 0 / 90%);
-}
-.time-left>p {
-    margin-top: 5px;
-    font-size: 12px;
-    color: #999999;
-}
-.time-right>div.one {
-    color: #c0c0c0;
-}
-.time-right>div.two {
-    color: #fdb900;
-}
-.time-right>div.three {
-    color: #00bffe;
-}
-.time-right>p {
-    margin-top: 5px;
-    font-size: 12px;
-    color: rgb(0 0 0 / 90%);
-}
-.time-text-box {
-    padding: 5px;
-    background-color: #f5f8fe;
-}
-.time-text-box-item {
-    margin: 10px 0;
-}
-.time-text-box-left {
-    margin-right: 10px;
-    min-width: 70px;
-    font-size: 12px;
-    text-align: right;
-    color: rgb(0 0 0 / 40%);
-    letter-spacing: 1px;
-    vertical-align: top;
-}
-.time-text-box-right {
-    font-size: 12px;
-    color: rgb(0 0 0 / 90%);
-    vertical-align: top;
-    img {
-        max-width: 50% !important;
+    .event ::v-deep .el-timeline-item__timestamp.is-top {
+        margin-bottom: 8px;
+        padding-top: 3px;
+        position: absolute;
+        left: -93px;
+        top: 0;
+        font-size: 12px;
+        width: 80px;
+        text-align: right;
+        // color: #fff;
     }
-}
-.time-text-box-bottom {
-    margin-right: 40px;
-    >i {
-        font-size: 10px;
-        color: #999999;
+    .event ::v-deep .pic-wrapper {
+        height: 500px;
+        overflow: auto;
+        border: 1px solid rgba(0,0,0,.1);
     }
-    >span {
-        font-size: 10px;
-        color: #999999;
+    .record-item ::v-deep .el-timeline-item__tail {
+        border-left: 2px solid #387dee !important;
     }
-    strong {
-        font-size: 10px;
-        font-weight: normal;
-        color: #0052d9;
+    .event ::v-deep .el-timeline-item__icon.el-icon-circle-check {
+        font-size: 20px;
     }
-    strong.users {
-        color: #0052d9;
+    .event ::v-deep .el-timeline-item__icon.icon-circle {
+        font-size: 16px !important;
+        font-weight: 500;
     }
-}
-.report-message {
-    padding: 20px;
-    height: 100%;
-    border: 1px solid rgb(28 215 250 / 50%);
-    border-radius: 4px;
-    background-color: #031e31;
-    box-sizing: border-box;
-    .message-item {
-        .message-title {
-            padding-left: 10px;
-            height: 34px;
-            font-size: 14px;
-            font-weight: bold;
-            border: 1px solid rgb(28 215 250 / 60%);
-            border-radius: 4px 4px 0 0;
-            color: #ffffff;
-            background-color: #00466d;
-            box-shadow: 0 0 6px rgb(0 186 255 / 73%) inset;
-            line-height: 34px;
-        }
-        .message-body {
-            padding: 10px;
-            height: 100px;
-            font-size: 12px;
-            border: solid 1px #1a5c92;
-            border-radius: 0 0 4px 4px;
-            color: #ffffff;
-            background-color: #033254;
-            box-shadow: 0 0 2px rgb(0 186 255 / 73%) inset;
-            word-wrap: break-word;
+    .time-box {
+        width: 100%;
+    }
+    .time-left>h4 {
+        color: rgba(0,0,0,.9);
+        font-weight: 500;
+    }
+    .time-left>p {
+        color: #999;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+    .time-right>div.one {
+        color: #c0c0c0;
+    }
+    .time-right>div.two {
+        color: #fdb900;
+    }
+    .time-right>div.three {
+        color: #00bffe;
+    }
+    .time-right>p {
+        color: rgba(0,0,0,.9);
+        font-size: 12px;
+        margin-top: 5px;
+    }
+    .time-text-box {
+        padding: 5px;
+        background-color: #f5f8fe;
+    }
+    .time-text-box-item {
+        margin: 10px 0;
+    }
+
+    .time-text-box-left {
+        text-align: right;
+        min-width: 70px;
+        font-size: 12px;
+        letter-spacing: 1px;
+        color: rgba(0,0,0,.4);
+        margin-right: 10px;
+        vertical-align: top;
+    }
+
+    .time-text-box-right {
+        font-size: 12px;
+        color: rgba(0,0,0,.9);
+        vertical-align: top;
+        img {
+            max-width: 50% !important;
         }
     }
-}
-.ststistic-nav {
-    margin-bottom: 10px;
-    padding-right: 5px;
+
+    .time-text-box-bottom {
+        margin-right: 40px;
+        >i {
+            font-size: 10px;
+            color: #999;
+        }
+        >span {
+            font-size: 10px;
+            color: #999;
+        }
+        strong {
+            font-size: 10px;
+            color: #0052d9;
+            font-weight: normal;
+        }
+        strong.users {
+            color: #0052d9;
+        }
+    }
+    .report-message {
+        border: 1px solid rgba(28,215,250,.5);
+        background-color: #031e31;
+        border-radius: 4px;
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+
+        .message-item {
+            .message-title {
+                border: 1px solid rgba(28,215,250,.6);
+                background-color: #00466d;
+                box-shadow: 0 0 6px rgba(0, 186, 255, 0.73) inset;
+                border-radius: 4px 4px 0 0;
+                font-size: 14px;
+                font-weight: bold;
+                height: 34px;
+                line-height: 34px;
+                padding-left: 10px;
+                color: #fff;
+            }
+            .message-body {
+                height: 100px;
+                padding: 10px;
+                font-size: 12px;
+                color: #fff;
+                background-color: #033254;
+                border-radius: 0px 0px 4px 4px;
+                border: solid 1px #1a5c92;
+                box-shadow: 0 0 2px rgba(0, 186, 255, 0.73) inset;
+                word-wrap: break-word;
+            }
+        }
+    }
+.ststistic-nav{
+    margin-bottom:10px;
+    padding-right:5px;
     box-sizing: border-box;
     border-radius: 4px;
-    background-color: rgb(56 125 238 / 10%);
-    .left-tongji {
-        span {
+    background-color: rgba(56, 125, 238, 0.1);
+    .left-tongji{
+        span{
             font-size: 13px;
-            color: #ffffff;
+            color: #fff;
         }
     }
     .left-refresh {
         margin-left: 20px;
         font-size: 12px;
     }
-    .right-up {
+    .right-up{
         cursor: pointer;
-        span {
+        span{
             font-size: 12px;
             color: #0052d9;
         }
-        i {
-            margin-right: 3px;
+        i{
             font-size: 14px;
+            margin-right:3px;
             color: #0052d9;
         }
     }
 }
-.desIp-popover {
-    i {
-        margin-right: 10px;
-        font-size: 12px;
-        color: #0052d9;
+
+.desIp-popover{
+    i{
+        font-size:12px;
+        margin-right:10px;
         cursor: pointer;
-        &:hover {
-            opacity: 0.8;
+        color: #0052d9;
+        &:hover{
+            opacity:0.8;
         }
     }
-    span {
-        font-size: 12px;
-        color: rgb(0 0 0 / 90%);
+    span{
+        font-size:12px;
+        color: rgba(0,0,0,.9);
     }
-    >div:nth-child(1) {
-        margin-bottom: 10px;
-    }
-}
-.chain {
-    overflow: auto;
-    padding-top: 30px;
-    .title {
-        margin-bottom: 20px;
-        font-size: 18px;
-        font-weight: 400;
-        text-align: left;
-        color: rgb(0 0 0 / 90%);
-        line-height: 20px;
-    }
-    .unit {
-        margin-bottom: 12px;
-        font-size: 10px;
-        font-weight: 400;
-        text-align: left;
-        color: rgb(0 0 0 / 60%);
-        line-height: 12px;
-    }
-    .chart-box-row {
-        .chart-box-cell {
-            width: 96%;
-            height: 64px;
-        }
-        .chart-box-cell-two {
-            width: 96%;
-            height: 100px;
-        }
-        .cell-text {
-            padding-top: 20px;
-            width: 4%;
-            font-size: 12px;
-            color: rgb(0 0 0 / 90%);
-        }
+    >div:nth-child(1){
+        margin-bottom:10px;
     }
 }
-
-.custom-star #app .search-text {
-    color: rgba(255 255 255 / 80%);
-}
-.custom-star #app .alarmm-wrapper .tab-button {
-
-}
-
 </style>

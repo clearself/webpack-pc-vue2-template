@@ -1,8 +1,11 @@
 <template>
-    <div class="btn_box"  @click="searchBtn" :class="{'isAggary':bgc==='no_aggary','onlyRead':loading === true}">
-        <div class="btn_inner_box ub">
+    <div @click="searchBtn" :class="{'isAggary':bgc==='no_aggary','onlyRead':loading === true,'btn_box':!isReuse,'reuseBtn':isReuse}">
+        <div v-if="!isReuse" class="btn_inner_box ub">
             <div v-if="loading" class="el-icon-loading"></div>
             <p>{{title}}</p>
+        </div>
+        <div v-else>
+            <el-button size="small" type="primary">{{title}}</el-button>
         </div>
     </div>
 </template>
@@ -22,6 +25,10 @@ export default {
         loading: {
             type: Boolean,
             default: false
+        },
+        isReuse: {
+            type: Boolean,
+            default: (val) => Boolean(val)
         }
     },
     data() {
@@ -39,6 +46,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.reuseBtn {
+    display: inline-block;
+
+}
 .btn_box.onlyRead {
     pointer-events: none
 }

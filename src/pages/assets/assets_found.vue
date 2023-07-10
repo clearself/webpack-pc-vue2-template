@@ -28,7 +28,7 @@
         </SearchTop>
         <div class="list-container">
             <div class="ub ub-pj w100 mb-1 ub-ac">
-                <div class="list-tips" style="margin-top: 4px;">资产发现</div>
+                <div class="list-tips" style="margin-top: 4px">资产发现</div>
                 <div></div>
             </div>
             <el-table
@@ -67,33 +67,33 @@
             <el-form :model="deviceForm" :rules="rules" ref="deviceForm" :inline="true" class="unit" label-position="top">
                 <div class="ub ub-pj">
                     <el-form-item label="资产名称：" prop="deviceName" :label-width="formLabelWidth">
-                        <el-input @focus="onFocus" size="small" v-model="deviceForm.deviceName" placeholder="请输入资产名称" autocomplete="off" style="width: 300px;"></el-input>
+                        <el-input @focus="onFocus" size="small" v-model="deviceForm.deviceName" placeholder="请输入资产名称" autocomplete="off" style="width:300px"></el-input>
                     </el-form-item>
                     <el-form-item label="资产标识：" prop="uniqueCode" :label-width="formLabelWidth">
-                        <el-input @focus="onFocus" size="small" v-model="deviceForm.uniqueCode" placeholder="请输入资产标识" autocomplete="off" style="width: 300px;"></el-input>
+                        <el-input @focus="onFocus" size="small" v-model="deviceForm.uniqueCode" placeholder="请输入资产标识" autocomplete="off" style="width:300px"></el-input>
                     </el-form-item>
                 </div>
                 <div class="ub ub-pj">
                     <el-form-item label="业务系统：" :label-width="formLabelWidth">
-                        <el-select v-model="deviceForm.systemId" size="small" placeholder="请选择业务系统" style="width: 300px;">
+                        <el-select v-model="deviceForm.systemId" size="small" placeholder="请选择业务系统" style="width:300px">
                             <el-option v-for="(item,index) in systems" :key="index" :label="item.system_name" :value="item.id"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="所属安全域：" :label-width="formLabelWidth">
-                        <el-select @focus="onFocus" size="small" v-model="deviceForm.zoneId" clearable placeholder="请选择" style="width: 300px;">
+                        <el-select @focus="onFocus" size="small" v-model="deviceForm.zoneId" clearable placeholder="请选择" style="width:300px">
                             <el-option v-for="(item,index) in zoneIds" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </el-form-item>
                 </div>
                 <div class="ub ub-pj">
                     <el-form-item label="设备类型：" prop="deviceTypeId" :label-width="formLabelWidth">
-                        <el-select @focus="onFocus" size="small" v-model="deviceForm.deviceTypeId" clearable placeholder="请选择" style="width: 300px;">
+                        <el-select @focus="onFocus" size="small" v-model="deviceForm.deviceTypeId" clearable placeholder="请选择" style="width:300px">
                             <el-option v-for="item in types" :key="item.value" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="厂商：" :label-width="formLabelWidth">
-                        <el-select @focus="onFocus" size="small" v-model="deviceForm.manufacturerId" clearable placeholder="请选择" style="width: 300px;">
+                        <el-select @focus="onFocus" size="small" v-model="deviceForm.manufacturerId" clearable placeholder="请选择" style="width:300px">
                             <el-option v-for="item in storeOp" :key="item.id" :label="item.name" :value="item.id">
                             </el-option>
                         </el-select>
@@ -101,15 +101,15 @@
                 </div>
                 <div class="ub ub-pj">
                     <el-form-item label="型号：" :label-width="formLabelWidth">
-                        <el-input @focus="onFocus" size="small" v-model="deviceForm.modelInfo" placeholder="请输入型号" autocomplete="off" style="width: 300px;"></el-input>
+                        <el-input @focus="onFocus" size="small" v-model="deviceForm.modelInfo" placeholder="请输入型号" autocomplete="off" style="width:300px"></el-input>
                     </el-form-item>
                     <el-form-item label="操作系统：" :label-width="formLabelWidth">
-                        <el-input @focus="onFocus" size="small" v-model="deviceForm.pcSystem" placeholder="请输入系统" autocomplete="off" style="width: 300px;"></el-input>
+                        <el-input @focus="onFocus" size="small" v-model="deviceForm.pcSystem" placeholder="请输入系统" autocomplete="off" style="width:300px"></el-input>
                     </el-form-item>
                 </div>
                 <div class="ub ub-pj">
                     <el-form-item label="系统版本：" :label-width="formLabelWidth">
-                        <el-input @focus="onFocus" size="small" v-model="deviceForm.pcSystemVersion" placeholder="请输入系统" autocomplete="off" style="width: 300px;"></el-input>
+                        <el-input @focus="onFocus" size="small" v-model="deviceForm.pcSystemVersion" placeholder="请输入系统" autocomplete="off" style="width:300px"></el-input>
                     </el-form-item>
                 </div>
                 <div class="domain-add">
@@ -123,13 +123,13 @@
                         border
                         stripe
                         tooltip-effect="dark"
-                        style="width: 100%;"
+                        style="width: 100%"
                         :row-style="{ height: '32px' }"
                         :header-row-style="{ height: '32px' }">
                         <el-table-column type="index" width="50" label="序号" align="center"></el-table-column>
                         <el-table-column label="IP">
                             <template slot="header">
-                                <div>IP <i style="color: #f56c6c;">*</i></div>
+                                <div>IP <i style="color: #F56C6C;">*</i></div>
                             </template>
                             <template slot-scope="scope">
                                 <el-form-item :prop="'ips.'+scope.$index+'.ip'" class="mb0" :rules="rules.ip">
@@ -140,7 +140,7 @@
                         <el-table-column label="端口">
                             <template slot="header">
                                 <el-tooltip class="item" effect="dark" content="可批量输入，用','分隔" placement="top">
-                                    <div>端口 <i class="el-icon-question" style="color: #0052d9;"></i></div>
+                                    <div>端口 <i class="el-icon-question" style="color: #0052d9"></i></div>
                                 </el-tooltip>
                             </template>
                             <template slot-scope="scope">
@@ -172,12 +172,12 @@
                         </el-table-column>
                         <el-table-column label="操作" width="50" align="center">
                             <template slot-scope="scope">
-                                <el-button size="mini" icon="el-icon-remove-outline" class="del-btn" type="text" @click="deleteIp('add',scope.$index)" style="font-size: 16px;color: #f56c6c;"></el-button>
+                                <el-button size="mini" icon="el-icon-remove-outline" class="del-btn" type="text" @click="deleteIp('add',scope.$index)" style="font-size: 16px;color: #F56C6C;"></el-button>
                             </template>
                         </el-table-column>
                     </el-table>
                 </div>
-                <div class="w100" v-if="existIp!=''" style="line-height: 20px;vertical-align: top;word-wrap: break-word;word-break: break-all;white-space: normal;color: red;">
+                <div class="w100" v-if="existIp!=''" style="line-height:20px;vertical-align: top;word-wrap:break-word;word-break:break-all;white-space:normal;color:red;">
                     {{existIp}} 已存在
                 </div>
                 <div class="domain-add">
@@ -191,7 +191,7 @@
                         border
                         stripe
                         tooltip-effect="dark"
-                        style="width: 100%;"
+                        style="width: 100%"
                         :row-style="{ height: '32px' }"
                         :header-row-style="{ height: '32px' }">
                         <el-table-column type="index" width="50" label="序号" align="center"></el-table-column>
@@ -211,7 +211,7 @@
                         </el-table-column>
                         <el-table-column prop="address" label="操作" width="50" align="center">
                             <template slot-scope="scope">
-                                <el-button size="mini" icon="el-icon-remove-outline" class="del-btn" type="text" @click="deleteApplication('add',scope.$index)" style="font-size: 16px;color: #f56c6c;"></el-button>
+                                <el-button size="mini" icon="el-icon-remove-outline" class="del-btn" type="text" @click="deleteApplication('add',scope.$index)" style="font-size: 16px;color: #F56C6C;"></el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -964,69 +964,77 @@ export default {
 
 <style lang="scss" scoped>
 .paginat {
-    padding-top: 10px;
+    padding-top:10px;
 }
-.el-form--inline  ::v-deep .mb0 {
+.el-form--inline  ::v-deep .mb0{
     margin: 0!important;
-    font-size: 12px;
+    font-size:12px;
 }
-.el-form--inline  ::v-deep .mb0 {
-    input {
-        height: 28px;
-        font-size: 12px;
+.el-form--inline  ::v-deep .mb0{
+    input{
+        height:28px;
+        font-size:12px;
     }
 }
-.mb0  ::v-deep .el-form-item__error {
+.mb0  ::v-deep .el-form-item__error{
     position: static!important;
 }
 .bigTable ::v-deep .el-tag.el-tag--success {
+    background-color: transparent;
     border-color: #01c5ff;
     color: #00fdff;
-    background-color: transparent;
 }
+
 .el-input.ips {
     display: block;
     width: 100%;
 }
+
 .drawer-pad {
     padding: 0 20px;
 }
+
 .domain-add {
+    line-height: 1;
     position: relative;
     padding: 10px 0;
-    font-size: 12px;
-    color: rgb(0 0 0 / 90%);
-    line-height: 1;
-    .domain-title {
+    color: rgba(0,0,0,.9);
+    font-size:12px;
+    .domain-title{
         display: inline-block;
         // width: 100px;
         text-align: right;
     }
+
     .el-button {
         position: absolute;
-        top: 10px;
         right: 20px;
+        top: 10px;
         padding: 0;
         color: #0052d9;
     }
 }
+
 .domain-list {
     margin: 3px 0 20px;
     .list-tit {
         width: 100px;
         text-align: right;
     }
+
     .ub {
         margin-bottom: 20px;
     }
+
     .list-btn {
         padding-left: 20px;
+
         .el-button {
-            color: #f56c6c;
+            color: #F56C6C;
         }
     }
 }
-.input-div {
+.input-div{
     width: 180px;
 }
 </style>

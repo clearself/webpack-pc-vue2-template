@@ -40,26 +40,6 @@
                         <el-checkbox v-for="(item,index) in rolesList" :key="index + 'b'" :label="JSON.stringify(item)" style="display: block">{{item.roleName}}</el-checkbox>
                     </el-checkbox-group>
                 </el-tab-pane>
-                <el-tab-pane label="资产组织架构" name="six">
-                    <span slot="label" style="position: relative">资产组织架构<span class="red-num" style="left:68px;">{{checkAssetOrganize.length}}</span></span>
-                    <el-tree
-                        ref="tree"
-                        :default-expand-all="true"
-                        :highlight-current="true"
-                        :data="assetOrganizeList"
-                        show-checkbox
-                        node-key="id"
-                        @node-click="handleNodeClick"
-                        @check="handleNodeClick"
-                        :props="defaultProps">
-                    </el-tree>
-                </el-tab-pane>
-                <el-tab-pane label="资产用户" name="seven">
-                    <span slot="label" style="position: relative">资产用户<span class="red-num"  style="left:40px;">{{checkAssetUser.length}}</span></span>
-                    <el-checkbox-group v-model="checkAssetUser">
-                        <el-checkbox v-for="(item,index) in assetUserList" :key="index" :label="JSON.stringify(item)" style="display: block">{{`${item.name}     ${item.account}`}}</el-checkbox>
-                    </el-checkbox-group>
-                </el-tab-pane>
             </el-tabs>
         </div>
     </div>
@@ -75,23 +55,16 @@ export default {
             showMore: false,
             checkUsers: [],
             checkDeps: [],
-            checkRoles: [],
-            checkAssetOrganize: [],
-            checkAssetUser: [],
-            defaultProps: {
-                id: 'id',
-                children: 'sub',
-                label: 'name'
-            }
+            checkRoles: []
 
         }
     },
-    props: ['usersList', 'depList', 'rolesList', 'usersShow', 'index', 'assetOrganizeList', 'assetUserList'],
+    props: ['usersList', 'depList', 'rolesList', 'usersShow', 'index'],
 
     computed: {
         selectList: {
             get() {
-                let msg = this.checkUsers.concat(this.checkRoles, this.checkDeps, this.checkAssetOrganize, this.checkAssetUser)
+                let msg = this.checkUsers.concat(this.checkRoles, this.checkDeps)
                 console.log(msg)
                 this.$emit('confirmData', {
                     val: msg,
@@ -122,7 +95,7 @@ export default {
             }
             if (tag.type === '0') {
                 return tag.chineseName
-            } else if (tag.type === '1' || tag.type === '4' || tag.type === '5') {
+            } else if (tag.type === '1') {
                 return tag.name
             } else if (tag.type === '2') {
                 return tag.roleName
@@ -130,20 +103,6 @@ export default {
         }
     },
     methods: {
-        handleNodeClick(node) {
-            let nodeData = this.$refs.tree.getCheckedNodes()
-            if (nodeData.length > 0) {
-                let cell = nodeData.map(item => {
-                    return {
-                        id: item.id,
-                        name: item.name,
-                        type: '4'
-                    }
-                })
-                this.checkAssetOrganize = cell.map(item => JSON.stringify(item))
-            }
-            console.log('nodeData', nodeData)
-        },
         handleClose(tag) {
             tag = JSON.parse(tag)
             console.log(this.selectList.indexOf(tag))
@@ -153,19 +112,12 @@ export default {
                 (this.checkDeps.indexOf(JSON.stringify(tag)) !== -1) && this.checkDeps.splice(this.checkDeps.indexOf(JSON.stringify(tag)), 1)
             } else if (tag.type === '2') {
                 (this.checkRoles.indexOf(JSON.stringify(tag)) !== -1) && this.checkRoles.splice(this.checkRoles.indexOf(JSON.stringify(tag)), 1)
-            } else if (tag.type === '4') {
-                (this.checkAssetOrganize.indexOf(JSON.stringify(tag)) !== -1) && this.checkAssetOrganize.splice(this.checkAssetOrganize.indexOf(JSON.stringify(tag)), 1)
-                this.$refs.tree.setCheckedNodes(this.checkAssetOrganize)
-            } else if (tag.type === '5') {
-                (this.checkAssetUser.indexOf(JSON.stringify(tag)) !== -1) && this.checkAssetUser.splice(this.checkAssetUser.indexOf(JSON.stringify(tag)), 1)
             }
         },
         splitShow(val) {
             this.checkUsers = []
             this.checkDeps = []
             this.checkRoles = []
-            this.checkAssetOrganize = []
-            this.checkAssetUser = []
             val.forEach(tag => {
                 console.log(tag)
                 tag = JSON.parse(tag)
@@ -175,10 +127,6 @@ export default {
                     this.checkDeps.push(JSON.stringify(tag))
                 } else if (tag.type === '2') {
                     this.checkRoles.push(JSON.stringify(tag))
-                } else if (tag.type === '4') {
-                    this.checkAssetOrganize.push(JSON.stringify(tag))
-                } else if (tag.type === '5') {
-                    this.checkAssetUser.push(JSON.stringify(tag))
                 }
             })
             console.log('33333333333', this.checkUsers)

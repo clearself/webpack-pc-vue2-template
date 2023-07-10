@@ -1,9 +1,12 @@
 <template>
-    <div class="btn_box add" :class="{'dis-add' :disabled,'onlyRead':loading === true}" @click="searchBtn">
-        <div class="ub ub-ac ub-pc btn_inner_box">
+    <div @click="searchBtn" :class="{'dis-add' :disabled,'onlyRead':loading === true,'btn_box':!isReuse,'reuseBtn':isReuse}">
+        <div v-if="!isReuse" class="ub ub-ac ub-pc btn_inner_box">
             <div v-if="loading" class="el-icon-loading"></div>
             <i v-if="icon!=''"  :class="icon"></i>
             <span>{{title}}</span>
+        </div>
+        <div v-else>
+            <el-button size="small" :icon="icon" type="primary">{{title}}</el-button>
         </div>
     </div>
 </template>
@@ -27,6 +30,10 @@ export default {
         loading: {
             type: Boolean,
             default: false
+        },
+        isReuse: {
+            type: Boolean,
+            default: (val) => Boolean(val)
         }
     },
     data() {
@@ -44,6 +51,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.reuseBtn {
+    display: inline-block;
+}
 .btn_box.onlyRead {
     pointer-events: none
 }
@@ -90,7 +100,7 @@ export default {
         left: -5px;
     }
 }
-.dis-add {
+.btn_box.dis-add {
     cursor: not-allowed;
     opacity: .5 !important;
     & div, i, span {

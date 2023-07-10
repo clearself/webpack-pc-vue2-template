@@ -35,7 +35,7 @@
                                                 @click="top10Show(element)"
                                                 aria-hidden="true"></i>
                                         </div>
-                                        <div class="ub ub-f1 line1" style="font-size: 12px;">
+                                        <div class="ub ub-f1 line1" style="font-size:12px;">
                                             {{element.name}}
                                         </div>
                                         <div class="close-box" @click="$parent.delFileds(element)">
@@ -55,13 +55,13 @@
                         </draggable>
                     </div>
                     <div class="left-title ub" v-if="listCanSelect.length > 0 && list.length > 0">
-                        <div class="left-mark mr-1" style="background-color: #dcdcdc;"></div>
+                        <div class="left-mark mr-1" style="background-color: #dcdcdc"></div>
                         <div>可选字段</div>
                     </div>
-                    <el-input v-if="listCanSelect.length>0" placeholder="请输入字段" style="margin: 10px 0 0;width: 180px;" size="small" v-model="filterCanFields" clearable>
+                    <el-input v-if="listCanSelect.length>0" placeholder="请输入字段" style="width: 180px;margin: 10px 0 0 0px" size="small" v-model="filterCanFields" clearable>
                         <i slot="suffix" class="iconfont icon-sousuo"></i>
                     </el-input>
-                    <div class="w100 drag" style="margin-top: 10px;margin-bottom: 40px;max-height: 3000px;">
+                    <div class="w100 drag" style="margin-top: 10px;margin-bottom: 40px;max-height: 3000px">
                         <ul>
                             <li class="list-group-item1 w100" v-for="(element,index) in (filterCanFields.trim() ? listCanSelect.filter(it =>it.name.includes(filterCanFields.trim())) : listCanSelect)" :key="index">
                                 <div class="ub ub-ac list-title">
@@ -73,7 +73,7 @@
                                             @click="top10Show(element)"
                                             aria-hidden="true"></i>
                                     </div>
-                                    <div class="ub ub-f1 line1" style="font-size: 12px;">
+                                    <div class="ub ub-f1 line1" style="font-size:12px;">
                                         {{element.name}}
                                     </div>
                                     <div class="close-box" @click="$parent.addFileds(element)">
@@ -92,13 +92,13 @@
                 </div>
             </div>
         </div>
-        <div class="ub ub-f1 ub-ver expert-right" style="overflow-x: hidden;">
+        <div class="ub ub-f1 ub-ver expert-right" style="overflow-x:hidden;">
             <div class="ub ub-pj w100 mb-1">
-                <div class="list-tips active">告警查询</div>
-                <div style="flex: 1;text-align: right;">
+                <div class="list-tips active">日志查询</div>
+                <div style="flex:1;text-align:right">
                     <el-button style="border-radius: 4px;" v-per="['data_agg_start']" size="small" icon="iconfont icon-fasongyoujian1" type="primary" @click="handleAlarm">发起事件</el-button>
-                    <el-button  v-per="['data_agg_storage']" size="small" icon="iconfont icon-sousuotiaojianbaocun" type="primary" @click="handleSaveLogIds" style="border-radius: 4px;background: #00a870;">暂 存</el-button>
-                    <el-button v-per="['data_agg_storage_list']"  size="small" icon="iconfont icon-zancunliebiao" type="primary" @click="handleSaveList" style="border-radius: 4px;background: #00a870;">暂存列表</el-button>
+                    <el-button  v-per="['data_agg_storage']" size="small" icon="iconfont icon-sousuotiaojianbaocun" type="primary" @click="handleSaveLogIds" style="background:#00a870;border-radius: 4px;">暂 存</el-button>
+                    <el-button v-per="['data_agg_storage_list']"  size="small" icon="iconfont icon-zancunliebiao" type="primary" @click="handleSaveList" style="background:#00a870;border-radius: 4px;">暂存列表</el-button>
                     <el-button style="border-radius: 4px;" v-per="['data_agg_pcap']" size="small" icon="iconfont icon-tianjia" type="primary" @click="createAllPackTask">创建PCAP包任务</el-button>
                     <el-dropdown trigger="click" @command="handleCommand">
                         <span class="el-dropdown-link">
@@ -109,13 +109,13 @@
                             <el-dropdown-item command="1">导出excel</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
-                    <el-button v-per="['data_agg_highlight']" style="margin-left: 10px;border-radius: 4px;background: #b500ff;" size="small" icon="iconfont icon-shezhi" type="primary" @click="$parent.highlightDialog = true">配置高亮词</el-button>
+                    <el-button v-per="['data_agg_highlight']" style="margin-left: 10px;background:#b500ff;border-radius: 4px;" size="small" icon="iconfont icon-shezhi" type="primary" @click="$parent.highlightDialog = true">配置高亮词</el-button>
                 </div>
             </div>
             <div :style="{'height':heigRight,'overflow-y':'auto'}">
                 <el-table
                     :row-class-name="tableRowClassName"
-                    style="width: 100%;"
+                    style="width:100%;"
                     ref="multipleTable"
                     @expand-change="handleExpand"
                     class='bigTable expert-table'
@@ -167,7 +167,7 @@
                                         <p
                                             v-if="item.fieldName !== 'message' && item.fieldName !== 'dt'"
                                             class="ub ub-ac click-btn"
-                                            style="margin: 10px 0;"
+                                            style="margin: 10px 0"
                                             @click="unequalVal({
                                                 key: item.fieldName,
                                                 attrType: item.type,
@@ -189,24 +189,24 @@
                                             <span>复制</span>
                                         </p>
                                         <p
-                                            style="margin-top: 10px;"
+                                            style="margin-top:10px"
                                             v-if="item.fieldName == 'srcIp' || item.fieldName == 'desIp'"
                                             @click="jumpAsset(item, scope.row[item.fieldName])"
                                             class="ub ub-ac click-btn">
-                                            <i class="el-icon-s-promotion" style="font-size: 12px;"></i>
+                                            <i class="el-icon-s-promotion" style="font-size:12px"></i>
                                             <span>跳转到资产</span>
                                         </p>
                                         <p
-                                            style="margin-top: 10px;"
+                                            style="margin-top:10px"
                                             v-if="['ip', 'url', '域名'].some(keyWord => item.fieldName.toLowerCase().includes(keyWord))"
                                             @click="jumpThreat(item, scope.row[item.fieldName])"
                                             class="ub ub-ac click-btn"
                                         >
-                                            <i class="iconfont icon-chaxunqingbao" style="font-size: 12px;"></i>
+                                            <i class="iconfont icon-chaxunqingbao" style="font-size:12px"></i>
                                             <span>查询情报</span>
                                         </p>
                                     </div>
-                                    <p class="highlighted" slot="reference" v-html="scope.row[item.fieldName]" v-if="item.fieldName==='aDate'" style="color: #00c0ff;"></p>
+                                    <p class="highlighted" slot="reference" v-html="scope.row[item.fieldName]" v-if="item.fieldName==='aDate'" style="color:#00c0ff"></p>
                                     <p
                                         v-else
                                         class="highlighted"
@@ -232,7 +232,7 @@
                     </el-table-column>
                 </el-table>
             </div>
-            <div v-show="tableData.length>0" class="pagination pag" style="z-index: 20;padding: 0 !important;text-align: right;">
+            <div v-show="tableData.length>0" class="pagination pag" style="padding: 0px !important;text-align: right;z-index:20">
                 <el-pagination
                     background
                     @size-change="handleSizeChange"
@@ -241,7 +241,6 @@
                     :page-sizes="[30,50,100]"
                     :page-size="$parent.get_params.size"
                     layout="slot,sizes, prev, next"
-                    :total="$parent.total_num"
                     prev-text="＜ 上一页"
                     next-text="下一页 ＞"></el-pagination>
             </div>
@@ -282,7 +281,7 @@ import seeDetail from '@/pages/alarm_log/new_search/components/see_detail/index.
 import draggable from 'vuedraggable'
 import RankChart from '@/pages/alarm_log/new_search/components/chart/RankChart'
 import EventBus from '@/assets/js/bus'
-import { get_threat_search, getStartConfig, get_threat_searchVenus } from '@/server/alarm/api.js'
+import { get_threat_search } from '@/server/intelligence/api.js'
 import {
     getExpandLog,
     saveLogIds,
@@ -336,7 +335,6 @@ export default {
     },
     data() {
         return {
-            startData: [],
             downLoading: false,
             leftFold: false,
             tabsValue: '',
@@ -456,14 +454,8 @@ export default {
         }
     },
     mounted() {
-        this.getStartConfigData()
     },
     methods: {
-        getStartConfigData() {
-            getStartConfig({ queryData: {}, paramsData: {}}).then(res => {
-                this.startData = res
-            })
-        },
         tableRowClassName({ row, rowIndex }) {
             if (rowIndex % 2) {
                 return 'table-row2'
@@ -477,42 +469,29 @@ export default {
             }
             console.log('ip', item.fieldName, value)
             let obj = {
-                queryData: {},
-                paramsData: { value }
+                queryData: {
+                    value
+                },
+                paramsData: {}
             }
-            console.log(this.startData)
-            if (this.startData.includes(1)) {
-                this.searchWeibu(obj, value)
-            } else if (this.startData.includes(0)) {
-                this.searchVenus(obj, value)
-            }
-        },
-        searchWeibu(obj, value) {
             get_threat_search(obj)
                 .then(res => {
                     console.log(res)
                     this.$setsessionStorage('search-item', res)
-                    window.open(window.location.origin + '/#' + '/intelligence/threat_detail?searchStr=' + value)
+                    let route = this.$router.resolve({
+                        name: 'intelligence_threat_detail',
+                        query: {
+                            searchStr: value
+                        }
+                    })
+                    window.open(route.href, '_blank')
                 })
                 .catch(err => {
-                    console.log(err + 'err')
-                })
-        },
-        searchVenus(obj, value) {
-            get_threat_searchVenus(obj, value)
-                .then(res => {
-                    console.log(res)
-                    this.$setsessionStorage('search-item', res)
-                    window.open(window.location.origin + '/#' + '/intelligence/threat_detail?searchStr=' + value)
-                })
-                .catch(err => {
-                    this.btnLoading = false
                     console.log(err + 'err')
                 })
         },
         handleSee(row) {
             this.$refs.seeDetails.init(row, this.list)
-            this.$refs.seeDetails.startData = this.startData
         },
         jumpAsset(item, value) {
             if (item.fieldName !== 'srcIp' && item.fieldName !== 'desIp') {
@@ -523,7 +502,6 @@ export default {
             window.open(window.location.origin + '/#' + '/assets/assets_asset_info?ip=' + value)
         },
         handleSaveList() {
-            // this.$parent.startData = this.startData
             this.$parent.saveListDialog = true
         },
         handleCommand(command) {
@@ -900,20 +878,15 @@ export default {
 }
 </script>
 
-<style lang="scss">
-    .el-tooltip__popper {
-        max-width: 50vw;
-    }
-</style>
 <style scoped lang="scss">
-@import '../../../../../assets/css/pacap';
+@import '../../../../../assets/css/pacap.scss';
 i.fold {
     position: absolute;
-    top: 18px;
-    right: 15px;
-    font-size: 12px;
-    color: #999999;
     cursor: pointer;
+    color: #999999;
+    right: 15px;
+    top: 18px;
+    font-size: 12px;
 }
 .pag {
     ::v-deep .el-input__inner {
@@ -929,7 +902,7 @@ i.fold {
             color: #676a71 !important;
         }
         span:hover {
-            color: #0052d9 !important;
+            color: #0052D9 !important;
         }
     }
     ::v-deep .btn-next {
@@ -941,7 +914,7 @@ i.fold {
             color: #676a71 !important;
         }
         span:hover {
-            color: #0052d9 !important;
+            color: #0052D9 !important;
         }
     }
 }
@@ -952,14 +925,14 @@ i.fold {
     background-size: 100% 100%;
 }
 .expert-left {
-    position: relative;
-    padding: 10px 0;
     width: 190px;
-    border: solid 1px #ffffff;
-    background-color: #ffffff;
+    padding: 10px 0;
+    background-color: #fff;
+    position: relative;
+    border: solid 1px #fff;
+    box-sizing: border-box;
     // margin-right: 10px;
     transition: width 0.2s linear;
-    box-sizing: border-box;
     ::v-deep .el-input__suffix-inner {
         line-height: 32px;
     }
@@ -967,18 +940,20 @@ i.fold {
 .expert-left.left-fold {
     width: 30px;
     transition: width 0.2s linear;
+
     i.fold {
-        right: 8px;
         color: #999999;
+        right: 8px;
         transform: rotate(180deg);
     }
 }
+
 .expert-right {
     padding: 10px 0 10px 10px;
-    border: solid 1px #ffffff;
-    background-color: #ffffff;
+    background-color: #fff;
+    border: solid 1px #fff;
     ::v-deep .el-button--primary {
-        border-color: #ffffff;
+        border-color: #FFF;
     }
     ::v-deep .el-button--text {
         // color: #0052d9;
@@ -991,44 +966,50 @@ i.fold {
 .left-mark {
     width: 5px;
     height: 24px;
-    border-radius: 4px;
     background-color: #387dee;
+    border-radius: 4px;
 }
 .left-tip {
     margin-top: 10px;
     margin-bottom: 10px;
     font-size: 0;
+
     > i {
-        margin-right: 5px;
+        vertical-align: middle;
         font-size: 12px;
         color: #bdbdbd;
-        vertical-align: middle;
+        margin-right: 5px;
     }
+
     > span {
         vertical-align: middle;
         font-size: 10px;
         color: #bdbdbd;
     }
 }
+
 .list-group {
     min-height: 26px;
 }
+
 .list-title {
-    // margin-left: 6px;
-    position: relative;
     width: 180px;
     height: 26px;
+    // margin-left: 6px;
+    position: relative;
     border-radius: 4px;
     // background-image: url(../../../../../assets/img/field_bg.jpg);
     // background-size: 100% 100%;
     // background-repeat: no-repeat;
     // background-position: left top;
+
     .vertical-line {
         position: absolute;
-        left: -6px;
         width: 2px;
         height: 26px;
-        background: rgb(255 255 255 / 20%);
+        background: rgba(255, 255, 255, 0.2);
+        left: -6px;
+
         &.active {
             // background: #fff;
             // box-shadow: 0 0 4px #00d0ff, 0 0 6px #00d0ff;
@@ -1040,19 +1021,21 @@ i.fold {
         // background: red;
     }
 }
+
 .list-group-item {
-    margin: 4px 0;
     color: #ffffff;
     cursor: move;
+    margin: 4px 0;
     // padding:0 10px;
     box-sizing: border-box;
     .list-title {
         background-color: #387dee;
     }
 }
+
 .list-group-item1 {
-    margin: 8px 0;
     color: #616161;
+    margin: 8px 0;
     // padding:0 10px;
     box-sizing: border-box;
     .list-title {
@@ -1063,27 +1046,31 @@ i.fold {
         color: #5c5c5c;
     }
 }
+
 .list-group-item i,
 .list-group-item1 i {
     cursor: pointer;
 }
+
 .open-box,
 .close-box {
     width: 26px;
     height: 100%;
+    color: #fff;
     text-align: center;
-    color: #ffffff;
     line-height: 26px;
 }
+
 .list-inner-tip {
-    margin: 6px 0;
     font-size: 12px;
-    color: #0052d9;
     line-height: 15px;
+    color: #0052D9;
+    margin: 6px 0;
 }
+
 .list-inner {
-    margin: 10px 0;
     width: 170px;
+    margin: 10px 0;
 }
 div ::v-deep .store.btn_box {
     background-image: url('../../../../../components/modules/colorBtn/images/downloadBg.png');
@@ -1093,10 +1080,10 @@ div ::v-deep .store.btn_box {
     font-size: 12px;
     i {
         margin-right: 5px;
-        color: #0052d9;
+        color: #0052D9;
     }
     span.val {
-        color: #0052d9;
+        color: #0052D9;
     }
 }
 .click-btn:hover {
@@ -1106,8 +1093,8 @@ div ::v-deep .store.btn_box {
     width: 0 !important;
 }
 div ::v-deep .el-table__expand-column.expand-col {
-    width: 30px;
     border: none;
+    width: 30px;
 }
 .el-dropdown-menu {
     width: 120px !important;

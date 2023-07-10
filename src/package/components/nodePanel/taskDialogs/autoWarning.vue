@@ -28,7 +28,7 @@
                                     <el-option label="站内消息" value="0"></el-option>
                                     <el-option label="邮件" value="1"></el-option>
                                     <el-option label="短信" value="2"></el-option>
-                                    <el-option label="蓝信" value="3"></el-option>
+                                    <el-option label="蓝鲸快信" value="3"></el-option>
                                 </el-select>
                             </el-form-item>
                             <div>
@@ -81,8 +81,6 @@
                                             style="width: 100%;"
                                             :usersList="allUserList"
                                             :depList="allDepList"
-                                            :assetOrganizeList="assetOrganizeList"
-                                            :assetUserList="assetUserList"
                                             :rolesList="allRolesList"
                                             :usersShow="item.usersName"
                                             :index="index"
@@ -141,8 +139,6 @@ export default {
             allUserList: [],
             allDepList: [],
             allRolesList: [],
-            assetOrganizeList: [],
-            assetUserList: [],
             dataList: [
                 {
                     name: '资产负责人',
@@ -185,17 +181,6 @@ export default {
         this.$getsessionStorage('allUserList') && (this.allUserList = this.$getsessionStorage('allUserList'))
         this.$getsessionStorage('allRolesList') && (this.allRolesList = this.$getsessionStorage('allRolesList'))
         this.$getsessionStorage('allDepList') && (this.allDepList = this.$getsessionStorage('allDepList'))
-        this.$getsessionStorage('assetOrganizeList') && (this.assetOrganizeList = this.$getsessionStorage('assetOrganizeList'))
-        if (this.$getsessionStorage('assetUserList')) {
-            this.assetUserList = this.$getsessionStorage('assetUserList').map(item => {
-                return {
-                    type: '5',
-                    id: item.id,
-                    name: item.name,
-                    account: item.account || ''
-                }
-            })
-        }
         this.formData.groups = this.$deepCopy(this.usersName.length == 0 ? [
             {
                 warnUserType: '',
@@ -264,8 +249,6 @@ export default {
             let type0 = []
             let type1 = []
             let type2 = []
-            let type4 = []
-            let type5 = []
             this.formData.groups[index].users = []
             val.forEach(item => {
                 item = JSON.parse(item)
@@ -275,18 +258,12 @@ export default {
                     type1.push(item.id)
                 } else if (item.type === '2') {
                     type2.push(item.id)
-                } else if (item.type === '4') {
-                    type4.push(item.id)
-                } else if (item.type === '5') {
-                    type5.push(item.id)
                 }
             })
             this.formData.groups[index].usersName = val || []
             type0.length && this.formData.groups[index].users.push({ type: '0', ids: type0 })
             type1.length && this.formData.groups[index].users.push({ type: '1', ids: type1 })
             type2.length && this.formData.groups[index].users.push({ type: '2', ids: type2 })
-            type4.length && this.formData.groups[index].users.push({ type: '4', ids: type4 })
-            type5.length && this.formData.groups[index].users.push({ type: '5', ids: type5 })
             console.log(this.formData.groups[index].users, '提醒人列表')
         },
         updateWarn() {

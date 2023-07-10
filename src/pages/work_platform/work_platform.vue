@@ -9,7 +9,7 @@
                             <div class="ub">
                                 <div class="timer-box"><el-checkbox size="mini" style="margin-right: 10px;" v-model="isTimeChected">60s刷新一次</el-checkbox></div>
                                 <span>统计范围：</span>
-                                <span style="margin-right: 10px;" @click="changeWorkTime(1)" :class="{ 'change-time': this.pageDate == 1 }">周</span>
+                                <span style="margin-right: 10px" @click="changeWorkTime(1)" :class="{ 'change-time': this.pageDate == 1 }">周</span>
                                 <span @click="changeWorkTime(2)" :class="{ 'change-time': this.pageDate == 2 }">月</span>
                             </div>
                         </div>
@@ -30,7 +30,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="icon"><img src="../../assets/img/work_platform/tongji.png" alt="" /></div>
+                                    <div class="icon">
+                                        <img src="../../assets/img/work_platform/tongji.png" alt="">
+                                    </div>
                                 </div>
                             </div>
                             <div class="ub ub-f1 chart-box bg">
@@ -49,7 +51,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="icon"><img src="../../assets/img/work_platform/wancheng.png" alt="" /></div>
+                                    <div class="icon">
+                                        <img src="../../assets/img/work_platform/wancheng.png" alt="">
+                                    </div>
                                 </div>
                             </div>
                             <div class="ub ub-f1 chart-box bg">
@@ -68,7 +72,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="icon"><img src="../../assets/img/work_platform/daichuli.png" alt="" /></div>
+                                    <div class="icon">
+                                        <img src="../../assets/img/work_platform/daichuli.png" alt="">
+                                    </div>
                                 </div>
                             </div>
                             <div class="ub ub-f1 chart-box bg">
@@ -87,46 +93,57 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="icon"><img src="../../assets/img/work_platform/chaoshi.png" alt="" /></div>
+                                    <div class="icon">
+                                        <img src="../../assets/img/work_platform/chaoshi.png" alt="">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="ub ub-pj w100">
-                            <div class="chart-box bg" style="padding-top: 15px; width: calc(75% - 5px);height: 350px;">
+                            <div class="chart-box bg" style="height:350px;padding-top:15px; width: calc(75% - 5px)">
                                 <div>
-                                    <div class="ub work-title" style="box-sizing: border-box;">
-                                        <div class="ub work-title-todo" style="padding: 0 20px;box-sizing: border-box;"><div style="font-size: 14px;color: rgb(0 0 0 / 90%);">我的待办</div></div>
+                                    <div class="ub ub-pj ub-ae work-title" style="box-sizing: border-box;">
+                                        <div class="ub" style="padding:0 20px;box-sizing: border-box;"><div style="font-size:14px;color:rgba(0,0,0,.9)">我的待办</div></div>
                                         <div class="ub work-box">
-                                            <div class="work-item">
-                                                <el-badge class="item">
-                                                    <p class="work-type-title" :class="{ isCurrent: currentNum === '' }" @click="getCurrentTable('')">工单</p>
+                                            <div class="work-item" v-for="(item, index) in myWorkList.slice(0, this.screenShow)" :key="index">
+                                                <el-badge :value="item.num" class="item" :hidden="!item.num">
+                                                    <p class="work-type-title" :class="{ isCurrent: currentNum === item.id }"   @click="getCurrentTable(item.id)">{{ item.name }}</p>
                                                 </el-badge>
                                             </div>
-                                        </div>
-                                        <div class="ub-f1"></div>
-                                        <div class="ub ub-pe workOrderType">
-                                            <el-form v-if="workOrderType">
-                                                <el-form-item label="工单类型：" label-width="80px">
-                                                    <el-select placeholder="请选择" style="width: 150px;" v-model="type" size="small"  @change="changType" clearable>
-                                                        <el-option  v-for="(item, index) in myWorkList.slice(0, this.screenShow)" :key="index" :label="item.name" :value="item.id"></el-option>
-                                                    </el-select>
-                                                </el-form-item>
-                                            </el-form>
-                                            <div class="page-box text-right mr-2 ml-2">
-                                                <el-pagination
-                                                    :page-size="10"
-                                                    :pager-count="5"
-                                                    @current-change="handleCurrentChange"
-                                                    :current-page="get_params.page"
-                                                    layout="prev, pager, next"
-                                                    :total="totalPages"
-                                                ></el-pagination>
+                                            <div v-if="myWorkList.length > this.screenShow" class="">
+                                                <el-dropdown trigger="click">
+                                                    <p class="el-dropdown-link" style="color: #2c3e50">
+                                                        更多分类
+                                                        <i class="el-icon-arrow-down el-icon--right"></i>
+                                                    </p>
+                                                    <el-dropdown-menu slot="dropdown" style="width: auto !important;" class="work-drop">
+                                                        <el-dropdown-item v-for="(item, index) in myWorkList.slice(this.screenShow)"   :key="index">
+                                                            <el-badge :value="item.num" class="item" :hidden="!item.num">
+                                                                <p
+                                                                    class="work-type-title"
+                                                                    :class="{ isCurrent: currentNum === item.id }"
+                                                                    style="color: #666"
+                                                                    @click="getCurrentTable(item.id)">{{ item.name }}</p>
+                                                            </el-badge>
+                                                        </el-dropdown-item>
+                                                    </el-dropdown-menu>
+                                                </el-dropdown>
                                             </div>
+                                        </div>
+                                        <div class="page-box ub-f1 text-right mr-2">
+                                            <el-pagination
+                                                :page-size="10"
+                                                :pager-count="5"
+                                                @current-change="handleCurrentChange"
+                                                :current-page="get_params.page"
+                                                layout="prev, pager, next"
+                                                :total="totalPages"
+                                            ></el-pagination>
                                         </div>
                                     </div>
                                 </div>
-                                <div v-if="currentNum != 'securityReview' && currentNum != '111111'" class="work-table" style="overflow: scroll;padding: 0 20px;height: 284px;">
-                                    <el-table ref="multipleTable" v-loading="loading" :data="tableData" :row-class-name="showRowClass" style="min-height: 0;">
+                                <div class="work-table" style="padding:0 20px;height: 284px;overflow: scroll;">
+                                    <el-table ref="multipleTable" v-loading="loading" :data="tableData" :row-class-name="showRowClass" style="min-height: 0px">
                                         <el-table-column align="center" type="index" width="50" :index="indexMethod" label="序号"></el-table-column>
                                         <el-table-column prop="workOrderName" label="工单名称"></el-table-column>
                                         <el-table-column prop="name" label="当前节点">
@@ -139,11 +156,11 @@
                                         </el-table-column>
                                         <el-table-column prop="currentTime" label="当前节点状态" width="100">
                                             <template slot-scope="{ row }">
-                                                <div style="line-height: 34px;">
-                                                    <div v-if="row.currentTime < row.outTime || !row.outTime" class="ub ub-ac work-state" style="background-color: #fdf6d8;">
+                                                <div style="line-height:34px">
+                                                    <div v-if="row.currentTime < row.outTime || !row.outTime" class="ub ub-ac work-state" style="background-color:#fdf6d8;">
                                                         <div class="one">待处理</div>
                                                     </div>
-                                                    <div v-if="row.currentTime > row.outTime" class="ub ub-ac work-state" style="background-color: #fad7dd;">
+                                                    <div v-if="row.currentTime > row.outTime" class="ub ub-ac work-state" style="background-color:#fad7dd;">
                                                         <div class="two">已超时</div>
                                                     </div>
                                                 </div>
@@ -153,54 +170,15 @@
                                         <el-table-column align="center" label="操作" width="80">
                                             <template slot-scope="scope">
                                                 <!-- <i @click="gotoWork(scope.row)" class="operate iconfont icon-quchuli"></i> -->
-                                                <el-button type="text" size="small" @click="gotoWork(scope.row)" >去处理</el-button>
-                                            </template>
-                                        </el-table-column>
-                                    </el-table>
-                                </div>
-                                <div v-if="currentNum == 'securityReview'" class="work-table" style="overflow: scroll;padding: 0 20px;height: 284px;">
-                                    <el-table ref="multipleTable" v-loading="loading" :data="tableData" :row-class-name="showRowClass" style="min-height: 0;">
-                                        <el-table-column align="center" type="index" width="50" :index="indexMethod" label="序号"></el-table-column>
-                                        <el-table-column prop="taskName" label="任务名称"></el-table-column>
-                                        <el-table-column prop="time" label="任务起止时间" width="260"></el-table-column>
-                                        <el-table-column align="center" label="操作" width="80">
-                                            <template slot-scope="scope">
-                                                <el-button :disabled="new Date().getTime() > new Date(scope.row.endDate + ' 23:59:59').getTime() || new Date().getTime() < new Date(scope.row.startDate).getTime()" type="text" size="small" @click="gotoSecurity(scope.row)">去处理</el-button>
-                                            </template>
-                                        </el-table-column>
-                                    </el-table>
-                                </div>
-                                <div v-if="currentNum == '111111'" class="work-table" style="overflow: scroll;padding: 0 20px;height: 284px;">
-                                    <el-table ref="multipleTable" v-loading="loading" :data="tableData" :row-class-name="showRowClass" style="min-height: 0;">
-                                        <el-table-column align="center" type="index" width="50" :index="indexMethod" label="序号"></el-table-column>
-                                        <el-table-column prop="autoName" label="任务名称"></el-table-column>
-                                        <el-table-column prop="time" label="任务起止时间" width="300"></el-table-column>
-                                        <el-table-column prop="mission" label="状态" width="120" align="left">
-                                            <template slot-scope="scope">
-                                                <div style="line-height: 34px;">
-                                                    <div v-if="new Date(scope.row.tillTime).getTime() > new Date().getTime()" class="ub ub-ac work-state" style="background-color: #ccf5e4;">
-                                                        <div class="one" style="color: #03864f !important;">进行中</div>
-                                                    </div>
-                                                    <div v-else-if="new Date(scope.row.tillTime).getTime() < new Date().getTime()" class="ub ub-ac work-state" style="background-color: #fad7dd;">
-                                                        <div class="two">已超时</div>
-                                                    </div>
-                                                    <div v-else  class="ub ub-ac work-state" style="background-color: #ccf5e4;">
-                                                        <div class="one" style="color: #03864f !important;">进行中</div>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                        </el-table-column>
-                                        <el-table-column align="center" label="操作" width="80">
-                                            <template slot-scope="scope">
-                                                <el-button type="text" size="small" @click="gotoAuto(scope.row)">去处理</el-button>
+                                                <el-button type="text" size="small" @click="gotoWork(scope.row)">去处理</el-button>
                                             </template>
                                         </el-table-column>
                                     </el-table>
                                 </div>
                             </div>
-                            <div class="chart-box bg" style="padding-top: 30px; width: calc(25% - 5px);height: 350px;">
-                                <div class="ub ub-pj ub-ac w100 chart-top" style="padding: 0 20px;box-sizing: border-box;"><div class="title">通知</div></div>
-                                <div class="page-box ub ub-pe" style="position: absolute;top: 0;right: 0;padding: 0 20px;box-sizing: border-box;">
+                            <div class="chart-box bg" style="height:350px;padding-top:30px; width: calc(25% - 5px);">
+                                <div class="ub ub-pj ub-ac w100 chart-top" style="padding:0 20px;box-sizing: border-box;"><div class="title">通知</div></div>
+                                <div class="page-box ub ub-pe" style="padding:0 20px;box-sizing: border-box;position: absolute;top: 0;right:0;">
                                     <el-pagination
                                         :page-size="message.size"
                                         @current-change="handleCurrentChangeMessage"
@@ -209,11 +187,7 @@
                                         :total="totalPagesMessage"
                                     ></el-pagination>
                                 </div>
-                                <div class="tabs">
-                                    <span class="tab" :class="{'active-message': readStatus == 0}" @click="changeStatus(0)">未读</span>
-                                    <span class="tab" :class="{'active-message': readStatus == 1}" @click="changeStatus(1)">已读</span>
-                                </div>
-                                <div class="news-box" v-loading="loading_message" style="overflow: scroll;padding: 0 20px;width: 100%;height: 278px;box-sizing: border-box;">
+                                <div class="news-box" v-loading="loading_message" style="width:100%;padding:0 20px;box-sizing: border-box;height: 306px;overflow: scroll;">
                                     <div
                                         class="news-item w100"
                                         :class="{ unread: item.status != 1 }"
@@ -225,30 +199,32 @@
                                         <div class="work-time ub ub-pj">
                                             <p class="w100" style="">工单任务</p>
                                             <p class="w100" style="text-align: right;">{{ item.create_time }}</p>
-                                            <!-- <div class="point" :class="{ 'unread-point': item.status != 1 }"></div> -->
+                                            <div class="point" :class="{ 'unread-point': item.status != 1 }"></div>
                                         </div>
                                         <div class="news-icon ub">
-                                            <p class="left-news">{{ item.title }}</p>
+                                            <p class="left-news">
+                                                {{ item.title }}
+                                            </p>
                                         </div>
                                     </div>
-                                    <div v-if="newsList.length == 0" class="ub ub-f1 ub-ac ub-pc" style="height: 100%;font-size: 14px;color: #909399; cursor: pointer;">暂无数据</div>
+                                    <div v-if="newsList.length == 0" class="ub ub-f1 ub-ac ub-pc" style="height:100%;color:#909399;font-size:14px; cursor: pointer;">暂无数据</div>
                                 </div>
                             </div>
                         </div>
                         <div class="ub ub-pj w100">
-                            <div class="chart-box bg" style="margin-top: 10px;padding-top: 30px;width: calc(30% - 5px);height: 320px;">
-                                <div class="ub ub-pj ub-ac w100 chart-top" style="padding: 0 20px;box-sizing: border-box;"><div class="title">工单类型量总计</div></div>
-                                <div v-loading="loading_pie" style="width: 100%;height: 100%;">
-                                    <div v-if="workTypeSum.length == 0" class="ub ub-f1 ub-ac ub-pc" style="height: 100%;font-size: 14px;color: #909399; cursor: pointer;">
+                            <div class="chart-box bg" style="width:calc(30% - 5px);margin-top: 10px;height:320px;padding-top:30px;">
+                                <div class="ub ub-pj ub-ac w100 chart-top" style="padding:0 20px;box-sizing: border-box;"><div class="title">工单类型量总计</div></div>
+                                <div v-loading="loading_pie" style="width:100%;height:100%;">
+                                    <div v-if="workTypeSum.length == 0" class="ub ub-f1 ub-ac ub-pc" style="height:100%;color:#909399;font-size:14px; cursor: pointer;">
                                         暂无数据
                                     </div>
                                     <pie v-if="workTypeSum.length > 0" :chartData="workTypeSum" />
                                 </div>
                             </div>
-                            <div class="chart-box bg" style="margin-top: 10px;padding-top: 30px;width: calc(70% - 5px);height: 320px;">
-                                <div class="ub ub-pj ub-ac w100 chart-top" style="padding: 0 20px;box-sizing: border-box;"><div class="title">工单趋势统计</div></div>
-                                <div v-loading="loading_line" style="width: 100%;height: 100%;">
-                                    <div v-if="workLineData.length == 0" class="ub ub-f1 ub-ac ub-pc" style="height: 100%;font-size: 14px;color: #909399; cursor: pointer;">
+                            <div class="chart-box bg" style="width:calc(70% - 5px);margin-top: 10px;height:320px;padding-top:30px;">
+                                <div class="ub ub-pj ub-ac w100 chart-top" style="padding:0 20px;box-sizing: border-box;"><div class="title">工单趋势统计</div></div>
+                                <div v-loading="loading_line" style="width:100%;height:100%;">
+                                    <div v-if="workLineData.length == 0" class="ub ub-f1 ub-ac ub-pc" style="height:100%;color:#909399;font-size:14px; cursor: pointer;">
                                         暂无数据
                                     </div>
                                     <brokenLineMut v-if="workLineData.length > 0" :chartData="workLineData" />
@@ -256,10 +232,10 @@
                             </div>
                         </div>
                         <div class="ub ub-pj w100">
-                            <div class="chart-box bg" style="margin-top: 10px;padding-top: 30px;width: calc(30% - 5px);height: 320px;">
-                                <div class="ub ub-pj ub-ac w100 chart-top" style="padding: 0 20px;box-sizing: border-box;"><div class="title">工单类型统计</div></div>
-                                <div v-loading="loading_bar" style="width: 100%;height: 100%;">
-                                    <div v-if="workTypeBar.length == 0" class="ub ub-f1 ub-ac ub-pc" style="height: 100%;font-size: 14px;color: #909399; cursor: pointer;">
+                            <div class="chart-box bg" style="width:calc(30% - 5px);margin-top: 10px;height:320px;padding-top:30px;">
+                                <div class="ub ub-pj ub-ac w100 chart-top" style="padding:0 20px;box-sizing: border-box;"><div class="title">工单类型统计</div></div>
+                                <div v-loading="loading_bar" style="width:100%;height:100%;">
+                                    <div v-if="workTypeBar.length == 0" class="ub ub-f1 ub-ac ub-pc" style="height:100%;color:#909399;font-size:14px; cursor: pointer;">
                                         暂无数据
                                     </div>
                                     <bar v-if="workTypeBar.length > 0" :chartData="workTypeBar" />
@@ -272,8 +248,8 @@
         </div>
         <el-dialog title="通知" width="700px" :visible.sync="messageDetailDialog" custom-class="attendance-dialog">
             <div class="ub">
-                <div class="work_plat_content" style="width: 46px;text-align: left;color: #606266;">内容：</div>
-                <div style="word-break: break-all; width: 560px;">{{ oneMessage }}</div>
+                <div class="work_plat_content" style="width: 46px;text-align: left;color: #606266">内容：</div>
+                <div style="word-break: break-all; width: 560px">{{ oneMessage }}</div>
             </div>
             <div slot="footer" class="dialog-footer"><el-button size="small" @click="messageDetailDialog = false">取 消</el-button></div>
         </el-dialog>
@@ -294,15 +270,12 @@ import {
     markRead,
     get_work_trend,
     get_work_pie,
-    get_work_bar,
-    getSafetyTask,
-    getAutoTask
+    get_work_bar
 } from '@/server/work_platform/work_platform.js'
 import pie from './charts/pie.vue'
 import brokenLineMut from './charts/brokenLineMut.vue'
 import bar from './charts/bar.vue'
 
-import { accAdd } from '@/assets/js/public_fun.js'
 export default {
     name: 'Home',
     components: {
@@ -312,9 +285,6 @@ export default {
     },
     data() {
         return {
-            workOrderType: false,
-            type: '',
-            readStatus: 0,
             messages: [],
             messagePageInfo: null,
             baseInfo: '',
@@ -385,8 +355,7 @@ export default {
             work_end_time: ''
         }
     },
-    created() {
-    },
+    created() {},
     mounted() {
         this.$nextTick(() => {
             /*  this.get_sys_info();
@@ -398,7 +367,7 @@ export default {
     computed: {
         screenShow() {
             if (window.screen.width > 1680) {
-                return 7
+                return 6
             } else {
                 return 3
             }
@@ -431,10 +400,6 @@ export default {
         }
     },
     methods: {
-        changType(val) {
-            console.log(val)
-            this.getCurrentTable(val, 'selChange')
-        },
         get_sys_info() {
             let data = {
                 queryData: {},
@@ -521,68 +486,20 @@ export default {
                 return
             }
             console.log(row)
-            if (row.workOrderObj != '6') {
-                this.$router.push({
-                    path: '/works_order/work_task_detail',
-                    query: {
-                        id: row.workOrderId,
-                        taskId: row.taskId,
-                        designee: row.designee,
-                        userNum: row.userIds ? row.userIds.length : 0,
-                        type: '1'
-                    }
-                })
-                // document.title = '工单任务详情'
-            } else if (row.workOrderObj == '6') {
-                this.$router.push({
-                    path: '/safe_notice/list',
-                    query: {
-                        id: row.workOrderId
-                    }
-                })
-                // document.title = '通知公告'
-            }
-        },
-        gotoSecurity(row) {
-            if (!this.$isModular('/safety_review/task_fill')) {
-                this.$message({
-                    message: '该用户没有安全审查任务填报权限',
-                    type: 'warning'
-                })
-                return
-            }
             this.$router.push({
-                path: '/safety_review/task_fill',
+                path: '/works_order/work_task_detail',
                 query: {
-                    type: '1',
-                    id: row.id
+                    id: row.workOrderId,
+                    taskId: row.taskId,
+                    designee: row.designee,
+                    userNum: row.userIds ? row.userIds.length : 0,
+                    type: '1'
                 }
             })
-        },
-        gotoAuto(row) {
-            if (!this.$isModular('/auto_respond/execution_list')) {
-                this.$message({
-                    message: '该用户没有自动化响应填报权限',
-                    type: 'warning'
-                })
-                return
-            }
-            let atdata = this.$getsessionStorage('autoResponseData') || {}
-            atdata[row.autoOrderId] = JSON.stringify(row)
-            this.$setsessionStorage('autoResponseData', atdata)
-            console.log(atdata)
-            this.$router.push({
-                path: '/auto_respond/execution_list',
-                query: {
-                    id: row.autoOrderId
-                }
-            })
+            document.title = '工单任务详情'
         },
         getWorkNum() {
-            get_three_work_num({
-                queryData: {},
-                paramsData: {}
-            })
+            get_three_work_num({ queryData: {}, paramsData: {}})
                 .then(res => {
                     console.log(res, '工单数量')
                     this.allOrder = res.allOrder
@@ -597,10 +514,7 @@ export default {
                 .catch(err => {
                     console.log(err, 'err')
                 })
-            get_out_work_num({
-                queryData: {},
-                paramsData: {}
-            })
+            get_out_work_num({ queryData: {}, paramsData: {}})
                 .then(res => {
                     console.log(res, '超时工单')
                     this.outToDoOrder = res.outToDoOrder
@@ -611,30 +525,16 @@ export default {
                 })
         },
         getWorkTypeNum() {
-            get_work_type_num({
-                queryData: {},
-                paramsData: {}
-            })
+            get_work_type_num({ queryData: {}, paramsData: {}})
                 .then(res => {
                     console.log(res, '列表头')
-                    if (res) {
-                        this.myWorkList = this.$deepCopy(res)
-                    }
+                    this.myWorkList = this.$deepCopy(res)
                 })
                 .catch(err => {
                     console.log(err, 'err')
                 })
         },
-        getCurrentTable(id = '', tp) {
-            if (id != '111111') {
-                this.workOrderType = true
-                // this.type = ''
-            } else {
-                if (tp != 'selChange') {
-                    this.workOrderType = false
-                }
-                // this.type = id
-            }
+        getCurrentTable(id = '') {
             this.currentNum = id
             this.loading = true
 
@@ -648,93 +548,49 @@ export default {
                     workOrderObj: id
                 }
             }
-            if (id == '111111') {
-                // 自动化响应，特殊处理
-                getAutoTask(data).then(res => {
+            get_current_workTable(data)
+                .then(res => {
+                    console.log(res, '当前选中表格')
                     if (this.config_table_id != uid) {
                         return
                     }
                     this.loading = false
-                    this.totalPages = res ? res.total : 0
-                    this.tableData = res ? res.records : []
-                    this.tableData.forEach(item => {
-                        item.time = `${item.runningTime}~${item.tillTime}`
-                    })
-                })
-            } else {
-                get_current_workTable(data)
-                    .then(res => {
-                        console.log(res, '当前选中表格')
-                        if (this.config_table_id != uid) {
-                            return
-                        }
-                        this.loading = false
-                        this.tableData = []
-                        this.totalPages = res.total
-                        let content = res.records
-                        if (content.length) {
-                            content.forEach(item => {
-                                let obj = {}
-                                obj.processInstanceId = item.processInstanceId
-                                obj.isNew = item.isNew
-                                obj.dealType = item.dealType
-                                obj.runningNodeName = item.runningNodeName
-                                obj.deploymentId = item.deploymentId
-                                obj.receiveTime = item.receiveTime
-                                obj.currentTime = item.currentTime
-                                obj.outTime = item.outTime
-                                obj.name = item.name
-                                obj.designee = item.designee
-                                obj.userIds = item.userIds
-                                obj.workOrderName = item.workOrderName
-                                obj.workOrderId = item.workOrderId
-                                obj.fields = item.fields
-                                obj.nodeId = item.nodeId
-                                obj.taskId = item.taskId
-                                obj.workOrderObj = item.workOrderObj
-                                obj.url = item.url
-                                this.tableData.push(obj)
-                            })
-                        }
-                    })
-                    .catch(err => {
-                        console.log(err, 'err')
-                        this.loading = false
-                    })
-            }
-        },
-        getSecurityReview() {
-            this.currentNum = 'securityReview'
-            this.workOrderType = false
-            this.loading = true
-            let data = {
-                queryData: {
-                    page: this.get_params.page,
-                    pageSize: this.get_params.size
-                },
-                paramsData: {}
-            }
-            getSafetyTask(data)
-                .then(res => {
-                    this.loading = false
-                    this.totalPages = res ? res.total : 0
-                    this.tableData = res ? res.records : []
-                    this.tableData.forEach(item => {
-                        item.time = `${item.startDate}~${item.endDate}`
-                    })
+                    this.tableData = []
+                    this.totalPages = res.total
+                    let content = res.records
+                    if (content.length) {
+                        content.forEach(item => {
+                            let obj = {}
+                            obj.processInstanceId = item.processInstanceId
+                            obj.isNew = item.isNew
+                            obj.dealType = item.dealType
+                            obj.runningNodeName = item.runningNodeName
+                            obj.deploymentId = item.deploymentId
+                            obj.receiveTime = item.receiveTime
+                            obj.currentTime = item.currentTime
+                            obj.outTime = item.outTime
+                            obj.name = item.name
+                            obj.designee = item.designee
+                            obj.userIds = item.userIds
+                            obj.workOrderName = item.workOrderName
+                            obj.workOrderId = item.workOrderId
+                            obj.fields = item.fields
+                            obj.nodeId = item.nodeId
+                            obj.taskId = item.taskId
+                            obj.url = item.url
+
+                            this.tableData.push(obj)
+                        })
+                    }
                 })
                 .catch(err => {
                     console.log(err, 'err')
                     this.loading = false
                 })
         },
-        changeStatus(status) {
-            this.readStatus = status
-            this.message.page = 1
-            this.getCurrentMessage()
-        },
         getCurrentMessage() {
             this.loading_message = true
+
             let uid = (this.config_message_id = new Date().getTime())
             let data = {
                 queryData: {
@@ -743,8 +599,7 @@ export default {
                 },
                 paramsData: {
                     begin: this.work_start_time,
-                    end: this.work_end_time,
-                    status: this.readStatus
+                    end: this.work_end_time
                 }
             }
             get_message_list(data)
@@ -760,10 +615,10 @@ export default {
                     if (list.length) {
                         list.forEach(item => {
                             let obj = {}
-                            obj.create_time = item.createTime
-                            obj.update_time = item.updateTime
-                            obj.create_user = item.createUser
-                            obj.receive_user = item.receiveUser
+                            obj.create_time = item.create_time
+                            obj.update_time = item.update_time
+                            obj.create_user = item.create_user
+                            obj.receive_user = item.receive_user
                             obj.mes = item.mes
                             obj.id = item.id
                             obj.title = item.title
@@ -793,11 +648,10 @@ export default {
                     console.log(res, '折线图')
                     this.loading_line = false
                     this.workLineData = []
-                    if (res) {
-                        setTimeout(() => {
-                            this.workLineData = this.$deepCopy(res.workLineData)
-                        }, 50)
-                    }
+
+                    setTimeout(() => {
+                        this.workLineData = this.$deepCopy(res.workLineData)
+                    }, 50)
                 })
                 .catch(err => {
                     this.loading_line = false
@@ -821,7 +675,7 @@ export default {
                     this.loading_pie = false
                     this.workTypeSum = []
                     setTimeout(() => {
-                        if (res && res.workTypeSum.length) {
+                        if (res.workTypeSum.length) {
                             this.workTypeSum = res.workTypeSum.map(item => {
                                 return {
                                     // id: item.id,
@@ -853,11 +707,9 @@ export default {
                     console.log(res, '柱形图')
                     this.loading_bar = false
                     this.workTypeBar = []
-                    if (res) {
-                        setTimeout(() => {
-                            this.workTypeBar = this.$deepCopy(res.workTypeBar)
-                        }, 50)
-                    }
+                    setTimeout(() => {
+                        this.workTypeBar = this.$deepCopy(res.workTypeBar)
+                    }, 50)
                 })
                 .catch(err => {
                     this.loading_bar = false
@@ -979,11 +831,7 @@ export default {
         handleCurrentChange(val) {
             this.get_params.page = val
             console.log(this.currentNum)
-            if (this.currentNum != 'securityReview') {
-                this.getCurrentTable(this.currentNum)
-            } else {
-                this.getSecurityReview()
-            }
+            this.getCurrentTable(this.currentNum)
         },
         handleCurrentChangeMessage(val) {
             this.message.page = val
@@ -1001,38 +849,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.workOrderType {
-    ::v-deep .el-form-item__label {
-        line-height: 32px !important;
-    }
-}
-.tabs {
-    margin-bottom: 10px;
-    padding: 0 20px;
-    .tab {
-        display: inline-block;
-        margin-right: 10px;
-        padding-bottom: 4px;
-        font-size: 14px;
-        cursor: pointer;
-    }
-    .active-message {
-        border-bottom: 2px solid #387dee;
-        color: #387dee;
-    }
-}
-.work-state {
-    margin-top: 9px;
-    padding-left: 20px;
+.work-state{
     width: 80px;
     height: 16px;
     border-radius: 8px;
     line-height: 16px;
-    .one {
+    margin-top:9px;
+    padding-left:20px;
+    .one{
         // background-color: #fdf6d8;
-        color: #de7400;
+        color:#de7400;
     }
-    .two {
+    .two{
         // background-color: #fad7dd;
         color: #aa0202;
     }
@@ -1042,12 +870,10 @@ export default {
     left: 0px;
     top: 0px;
     right: 0px;
-    bottom: 20px; */
-
-    /* z-index: 1; */
+    bottom: 20px;*/
+    /*z-index: 1;*/
     min-width: 950px;
-
-    /* overflow-y: auto; */
+    /*overflow-y: auto;*/
     ::v-deep .el-table th.el-table__cell.is-leaf {
         border-bottom: none !important;
     }
@@ -1062,50 +888,58 @@ $status2: #01ff01;
 $status3: #00e1fd;
 $status4: #e1e2e4;
 .num-statistic > div {
+    height: 80px;
     margin-right: 20px;
     margin-bottom: 10px;
-    height: 80px;
 }
+
 .num-statistic > div:last-child {
-    margin-right: 0;
+    margin-right: 0px;
 }
+
 .chart-box {
     position: relative;
+    box-shadow: 0px 2px 8px 0px rgba(140, 152, 164, 0.2);
     border-radius: 4px;
-    box-shadow: 0 2px 8px 0 rgb(140 152 164 / 20%);
 }
+
 .chart-box.border {
     border: 1px solid #00274e;
 }
+
 .chart-box.bg {
     position: relative;
-    background: #ffffff;
+    background: #fff;
 }
+
 .statistic-item > .icon {
     i {
         font-size: 40px !important;
-        color: #ffffff;
+        color: #fff;
     }
 }
+
 .statistic-item .text {
     font-size: 14px;
-    text-indent: 2px;
     color: #8b8b8b;
+    text-indent: 2px;
 }
+
 .statistic-item .num {
     margin-top: 10px;
     font-size: 24px;
     line-height: 26px;
-    color: #ffffff;
+    color: #fff;
 }
+
 .chart-top {
     position: absolute;
-    top: 0;
     left: 0;
+    top: 0;
     height: 30px;
     .title {
+        color: rgba(0, 0, 0, 0.9);
         font-size: 14px;
-        color: rgb(0 0 0 / 90%);
     }
     .options {
         font-size: 0;
@@ -1113,52 +947,54 @@ $status4: #e1e2e4;
     .options > div {
         display: inline-block;
         padding: 0 8px;
+        color: #666;
         font-size: 12px;
-        color: #666666;
         cursor: pointer;
     }
     .options > div.active {
-        color: #ffffff;
+        color: #fff;
     }
 }
+
 .title-level {
-    margin: 0 5px;
-    padding: 2px 10px;
-    font-size: 12px;
     border: 1px solid $zero;
-    border-radius: 3px;
-    color: $zero;
     background: rgba($zero, 0.2);
+    color: $zero;
+    font-size: 12px;
+    border-radius: 3px;
     line-height: 1;
+    padding: 2px 10px;
+    margin: 0 5px;
     &.one {
         border-color: $one;
-        color: $one;
         background: rgba($one, 0.2);
+        color: $one;
     }
     &.two {
         border-color: $two;
-        color: $two;
         background: rgba($two, 0.2);
+        color: $two;
     }
     &.three {
         border-color: $three;
-        color: $three;
         background: rgba($three, 0.2);
+        color: $three;
     }
     &.fore {
         border-color: $fore;
-        color: $fore;
         background: rgba($fore, 0.2);
+        color: $fore;
     }
 }
+
 .title-status {
-    padding: 2px 10px;
-    font-size: 12px;
     border: 1px solid $status1;
-    border-radius: 3px;
-    color: #ffffff;
     background: $status1;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 3px;
     line-height: 1;
+    padding: 2px 10px;
     &.one {
         border-color: $status2;
         background: $status2;
@@ -1175,21 +1011,26 @@ $status4: #e1e2e4;
         margin: 20px 0 20px 20px;
     }
 }
+
 .text-color {
-    color: #ffffff;
+    color: #fff;
 }
+
 .el-input.ips {
     display: block;
     width: 100%;
 }
+
 .el-link {
     cursor: pointer;
 }
+
 .drawer-pad {
-    overflow-y: auto;
     padding: 0 20px;
     height: calc(100% - 53px);
+    overflow-y: auto;
 }
+
 .domain-add {
     line-height: 1;
     position: relative;
@@ -1197,16 +1038,17 @@ $status4: #e1e2e4;
     color: #1cd7fa;
     .el-button {
         position: absolute;
-        top: 0;
         right: 20px;
+        top: 0;
         padding: 0;
         color: #1cd7fa;
     }
 }
+
 .domain-list {
+    background: rgba(0, 0, 0, 0.3);
     margin: 3px 0 20px;
     padding: 20px 0 1px;
-    background: rgb(0 0 0 / 30%);
     .list-tit {
         width: 100px;
         text-align: right;
@@ -1221,28 +1063,32 @@ $status4: #e1e2e4;
         }
     }
 }
+
 .event::v-deep.el-range-input {
-    color: #ffffff;
-    background-color: rgb(0 0 0 / 0%);
+    background-color: rgba(0, 0, 0, 0);
+    color: #fff;
 }
+
 .event::v-deep.el-range-separator {
-    color: #ffffff;
+    color: #fff;
 }
+
 .event::v-deep.el-radio__label,
 .event::v-deep.el-checkbox__label {
-    color: #ffffff;
+    color: #fff;
 }
+
 .bigTable {
     ::v-deep.caret-wrapper {
         height: 22px;
     }
     ::v-deep.sort-caret.ascending {
+        border-bottom-color: #fff;
         top: 0;
-        border-bottom-color: #ffffff;
     }
     ::v-deep.sort-caret.descending {
+        border-top-color: #fff;
         bottom: 0;
-        border-top-color: #ffffff;
     }
     ::v-deep.descending .sort-caret.descending {
         border-top-color: #01fdfe;
@@ -1251,28 +1097,29 @@ $status4: #e1e2e4;
         border-bottom-color: #01fdfe;
     }
 }
+
 .div-table {
+    color: #fff;
     border: 1px solid #1a5c92;
-    color: #ffffff;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     .table-title {
         line-height: 48px;
         padding: 0 30px;
         border-bottom: 1px solid #1a5c92;
-        background: rgb(29 65 105 / 50%);
+        background: rgba(29, 65, 105, 0.5);
     }
     dl {
         position: relative;
-        height: 46px;
-        border-bottom: 1px solid #1a5c92;
-        background: rgb(3 50 84 / 50%);
-        box-shadow: 0 0 3px rgb(0 186 255 / 73%) inset;
         line-height: 46px;
+        height: 46px;
+        background: rgba(3, 50, 84, 0.5);
+        box-shadow: 0 0 3px rgba(0, 186, 255, 0.73) inset;
+        border-bottom: 1px solid #1a5c92;
         dt {
             position: absolute;
-            padding: 0 30px;
             width: 50%;
+            padding: 0 30px;
             border-right: 1px solid #1a5c92;
             box-sizing: border-box;
         }
@@ -1280,55 +1127,63 @@ $status4: #e1e2e4;
             padding-left: calc(50% + 30px);
         }
         &:nth-child(2n + 1) {
-            background: rgb(29 65 105 / 50%);
+            background: rgba(29, 65, 105, 0.5);
         }
     }
 }
+
 .search-box {
     margin: 60px 0 20px;
 }
+
 .chart-row {
     position: relative;
     padding-left: 380px;
     .chart-left {
         position: absolute;
-        top: 0;
         left: 0;
+        top: 0;
         width: 340px;
     }
 }
+
 .statistic-item {
     .iconfont {
-        display: inline-block;
-        margin-right: 6px;
-        margin-left: 20px;
-        height: 19px;
         font-size: 14px;
+        display: inline-block;
+        height: 19px;
         line-height: 19px;
+        margin-left: 20px;
+        margin-right: 6px;
     }
 }
 .statistic-item .color1 {
     color: #8b8b8b;
 }
+
 .statistic-item .color2 {
     color: #387dee;
 }
+
 .statistic-item .color3 {
     color: #f2995f;
 }
+
 .statistic-item .color4 {
     color: #bd50d3;
 }
+
 span.change-time {
     color: #0052d9 !important;
 }
+
 .plat-title {
     height: 40px;
     line-height: 40px;
     div:nth-child(1) {
-        margin-left: -2px;
         font-size: 14px;
-        color: #ffffff;
+        margin-left: -2px;
+        color: #fff;
     }
     div:nth-child(2) {
         margin-right: -2px;
@@ -1336,7 +1191,7 @@ span.change-time {
         color: #1cd7fa;
     }
     span {
-        color: #666666;
+        color: #666;
         cursor: pointer;
     }
     span:nth-child(1) {
@@ -1347,7 +1202,8 @@ span.change-time {
     margin-left: 18px;
     div {
         font-size: 12px;
-        color: rgb(0 0 0 / 40%);
+        color: rgba(0, 0, 0, 0.4);
+
         i,
         p {
             color: #e34d59;
@@ -1355,17 +1211,17 @@ span.change-time {
         i {
             transform: rotate(180deg);
             display: inline-block;
-            margin: 0 !important;
+            margin: 0!important;
         }
     }
-
     vertical-align: bottom;
 }
 .work-title {
-    margin-bottom: 10px;
     height: 30px;
-    border-bottom: 1px solid rgb(255 255 255 / 10%);
     line-height: 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+
     ::v-deep .el-badge__content {
         border: none;
     }
@@ -1376,23 +1232,25 @@ span.change-time {
         height: 100%;
     }
     p {
+        color: #666;
         font-size: 14px;
-        color: #666666;
         cursor: pointer;
     }
 }
 .page-box {
     height: 30px;
     line-height: 30px;
+
     ::v-deep .el-pagination {
-        font-weight: normal;
         background: transparent;
+        font-weight: normal;
+
         .btn-next,
         .btn-prev,
         .el-pager li {
-            min-width: 26px;
-            color: #666666;
             background-color: transparent;
+            color: #666;
+            min-width: 26px;
         }
         .btn-next:hover,
         .btn-prev:hover,
@@ -1402,36 +1260,26 @@ span.change-time {
         }
     }
 }
-@media screen and (max-width: 1366px) {
-    .chart-box .page-box {
-        ::v-deep .el-pagination {
-            .btn-next,
-            .btn-prev,
-            .el-pager li {
-                min-width: 16px;
-            }
-        }
-    }
-}
 .work-table {
     ::v-deep .el-table {
-        position: relative;
         background: transparent;
+        position: relative;
+
         .el-table__header-wrapper {
-            margin-bottom: 6px;
             border-radius: 3px;
+            margin-bottom: 6px;
             .cell {
                 font-weight: 400;
             }
         }
         .el-table__header tr {
             background: transparent;
-            background-color: rgb(56 125 238 / 10%);
+            background-color: rgba(56, 125, 238, 0.1);
         }
         .cell {
             height: 34px !important;
             line-height: 34px;
-            color: rgb(0 0 0 / 90%);
+            color: rgba(0, 0, 0, 0.9);
         }
         td {
             padding: 0;
@@ -1439,9 +1287,9 @@ span.change-time {
         }
         th {
             padding: 0;
-            font-size: 12px;
-            color: rgb(0 0 0 / 90%);
+            color: rgba(0, 0, 0, 0.9);
             background-color: transparent;
+            font-size: 12px;
         }
         th.is-leaf {
             border-color: transparent;
@@ -1453,7 +1301,7 @@ span.change-time {
             // }
             td {
                 // border: none;
-                border-bottom: 6px solid #ffffff !important;
+                border-bottom: 6px solid #fff !important;
                 .operate {
                     cursor: pointer;
                     color: #387dee;
@@ -1463,68 +1311,68 @@ span.change-time {
                 border-radius: 4px 0 0 4px;
             }
             td:last-child {
-                border-radius: 0 4px 4px 0;
+                border-radius: 0px 4px 4px 0;
             }
-
             background: #f3f3f3;
         }
         .el-table__body-wrapper {
             tr {
                 &:hover {
-                    background-color: #ffffff;
+                    background-color: #fff;
                 }
             }
         }
     }
     ::v-deep .el-table::before {
-        right: 2px;
+        background: rgba(0, 168, 255, 0.2);
         left: 2px;
-        background: rgb(0 168 255 / 20%);
+        right: 2px;
     }
     ::v-deep .el-table--enable-row-hover .el-table__body tr:hover > td {
         background: transparent !important;
     }
 }
 .news-box {
+    color: rgba(0, 0, 0, 0.9);
     overflow: hidden;
-    color: rgb(0 0 0 / 90%);
     .news-item {
-        position: relative;
-        margin-bottom: 6px;
+        background: rgba(243, 243, 243, 0.5);
+        border-radius: 4px;
         padding: 14px 10px 14px 26px;
+        box-sizing: border-box;
         height: 70px;
         font-size: 12px;
-        border-radius: 4px;
-        background: rgb(243 243 243 / 50%);
-        box-sizing: border-box;
+        margin-bottom: 6px;
+        position: relative;
+
         .news-icon {
             p {
-                color: rgb(0 0 0 / 90%);
+                color: rgba(0, 0, 0, 0.9);
             }
             .left-news {
-                overflow: hidden;
                 max-width: 100%;
-                height: 22px;
-                font-size: 14px;
+                overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
-                color: rgb(0 0 0 / 90%);
+                height: 22px;
                 line-height: 22px;
+                color: rgba(0, 0, 0, 0.9);
+                font-size: 14px;
             }
         }
         .work-time {
-            position: relative;
             height: 20px;
-            color: rgb(0 0 0 / 40%);
             line-height: 20px;
+            color: rgba(0, 0, 0, 0.4);
+            position: relative;
             .point {
                 position: absolute;
-                top: 7px;
                 left: -16px;
+                top: 7px;
                 width: 6px;
                 height: 6px;
                 border-radius: 50%;
-                background-color: #a6a6a6;
+                background-color: #a6a6a6;;
             }
             .unread-point {
                 background-color: #387dee;
@@ -1532,54 +1380,16 @@ span.change-time {
         }
     }
     .news-item.unread {
-        background-color: rgb(56 125 238 / 5%);
+        background-color: rgba(56, 125, 238, .05);
     }
 }
 .timer-box ::v-deep .el-checkbox__label {
     font-size: 12px;
-    color: #666666;
+    color: #666;
 }
 .timer-box ::v-deep .el-checkbox__input.is-checked + .el-checkbox__label {
     color: #0052d9;
 }
-.custom-star {
-    .chart-box.bg {
-        background: #052942;
-    }
-    .chart-top .title {
-        color: #ffffff;
-    }
-    .work-title-todo {
-        >div {
-            color: #ffffff!important;
-        }
-    }
-    .work-table ::v-deep {
-        .el-table {
-            .cell {
-                color: #ffffff!important;
-            }
-        }
-    }
-    .page-box {
-        ::v-deep .el-pagination {
-            font-weight: normal;
-            background: transparent;
-            .btn-next,
-            .btn-prev,
-            .el-pager li {
-                color: #ffffff;
-            }
-        }
-    }
-    .tabs .tab {
-        color: #ffffff;
-    }
-    .tabs .active-message {
-        color: #387dee;
-    }
-}
-
 </style>
 <style>
 .work-type-title:hover {

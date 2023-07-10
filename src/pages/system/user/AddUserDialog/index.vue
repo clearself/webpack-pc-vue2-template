@@ -29,34 +29,19 @@
                     <el-form-item size="small" label="所属部门:" prop="departmentId" :label-width="formLabelWidth">
                         <!-- <el-input size="small" v-model="userForm.department" placeholder="请输入内容" autocomplete="off"></el-input> -->
                         <div class="treeselect">
-                            <Treeselect @input="treeChange" style="width: 100%;" :options="treeData" :normalizer="normalizer" noChildrenText="暂无数据" noOptionsText="无可用选项" placeholder="请选择" v-model="userForm.departmentId" noResultsText="无可用选项"/>
+                            <Treeselect @input="treeChange" style="width: 100%" :options="treeData" :normalizer="normalizer" noChildrenText="当前分支无子节点" noOptionsText="无可用选项" placeholder="请选择" v-model="userForm.departmentId" />
                         </div>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row :gutter="50">
                 <el-col :span="12">
-                    <el-form-item size="small" label="数据权限配置:" :label-width="formLabelWidth" prop="adminAssets" class="treeSel" style="position: relative;">
-                        <div class="treeselect">
-                            <Treeselect
-                                class="treeselect-main"
-                                style="width: 312px;height: 20px !important;"
-                                :options="treeData1"
-                                :normalizer="normalizer1"
-                                multiple
-                                clearable
-                                value-consists-of="ALL"
-                                noChildrenText="暂无数据"
-                                noResultsText="无可用选项"
-                                :limit="1"
-                                :limitText="limitTextShow"
-                                noOptionsText="无可用选项"
-                                placeholder="请选择"
-                                :appendToBody="false"
-                                @input="adminAssetsChange"
-                                v-model="userForm.adminAssets"
-                            />
-                        </div>
+                    <el-form-item size="small" label="直接上级:" prop="parentId" :label-width="formLabelWidth">
+                        <!-- <el-input size="small" v-model="userForm.parentId" placeholder="请输入内容" autocomplete="off"></el-input> -->
+                        <el-select filterable v-model="userForm.parentId" placeholder="请选择" size="small" style="width: 100%">
+                            <el-option v-for="item in parentList" :key="item.id" :label="item.chineseName" :value="item.id">
+                            </el-option>
+                        </el-select>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
@@ -73,7 +58,7 @@
                 </el-col>
                 <el-col :span="12">
                     <el-form-item size="small" label="设置用户角色:" prop="roles" :label-width="formLabelWidth">
-                        <el-select v-model="userForm.roles" placeholder="请选择" size="small" style="width: 100%;" multiple clearable>
+                        <el-select v-model="userForm.roles" placeholder="请选择" size="small" style="width: 100%" multiple>
                             <el-option v-for="item in roleList" :key="item.id" :label="item.name" :value="item.id">
                             </el-option>
                         </el-select>
@@ -81,34 +66,14 @@
                     </el-form-item>
                 </el-col>
             </el-row>
-            <el-row :gutter="50">
-                <el-col :span="12">
-                    <el-form-item size="small" label="直接上级:" prop="parentId" :label-width="formLabelWidth">
-                        <!-- <el-input size="small" v-model="userForm.parentId" placeholder="请输入内容" autocomplete="off"></el-input> -->
-                        <el-select filterable v-model="userForm.parentId" placeholder="请选择" size="small" style="width: 100%;">
-                            <el-option v-for="item in parentList" :key="item.id" :label="item.chineseName" :value="item.id">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item size="small" label="设置资产联系人:" :label-width="formLabelWidth" style="position: relative;">
-                        <el-select v-model="userForm.assetUser" placeholder="请输入姓名" size="small" style="width: 100%;" clearable filterable :remote-method="changeAssetUser" remote @clear="clearAssetUser">
-                            <el-option v-for="item in assetUserList" :key="item.id" :label="item.allName || item.name" :value="item.id">
-                            </el-option>
-                        </el-select>
-                        <i class="el-icon-search" style="position: absolute;top: 10px;right: 25px;color: #cccccc;"></i>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-form-item size="small" label="IP地址登录:" prop="isLimit" :label-width="formLabelWidth" style="margin-top: 16px;">
+            <el-form-item size="small" label="IP地址登录:" prop="isLimit" :label-width="formLabelWidth">
                 <el-radio-group v-model="userForm.isLimit">
                     <el-radio :label="0">不限定IP地址登录</el-radio>
                     <el-radio :label="1">仅特定IP地址可登录</el-radio>
                 </el-radio-group>
             </el-form-item>
             <template v-if="userForm.isLimit == 1">
-                <el-form-item size="small" v-for="(item, index) in userForm.ips" :key="index" :label="'IP地址' + (index + 1) + '：'" :prop="'ips.' + index + '.value'" :rules="rules.ip" style="position: relative;" :label-width="formLabelWidth">
+                <el-form-item size="small" v-for="(item, index) in userForm.ips" :key="index" :label="'IP地址' + (index + 1) + '：'" :prop="'ips.' + index + '.value'" :rules="rules.ip" style="position: relative" :label-width="formLabelWidth">
                     <i v-if="index !== 0 && index === userForm.ips.length - 1" class="delete-btn iconfont icon-shanchu" @click="deleteIp"></i>
                     <el-input size="small" v-model="item.value"></el-input>
                 </el-form-item>
@@ -127,13 +92,10 @@
 
 <script>
 import md5 from 'js-md5'
-import { add_user, update_user, getAllAssetsUser } from '@/server/system/user.js'
+import { add_user, update_user } from '@/server/system/user.js'
 import myRules from '@/utils/rules.js'
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-import {
-    get_asset_tree
-} from '@/server/system/asset_users.js'
 export default {
     name: 'Index',
     props: {
@@ -170,8 +132,6 @@ export default {
     // if (initInfoData) {
     //     this.rules.password = Object.assign(myRules.loginPwd[0], initInfoData.pwd)
     // }
-        this.initTree()
-        this.initAssetUser()
     },
     data() {
         return {
@@ -182,51 +142,21 @@ export default {
                     children: node.sub
                 }
             },
-            normalizer1(node) {
-                return {
-                    id: node.id,
-                    label: node.name,
-                    children: node.childDepInfo,
-                    disabled: (node) => {
-                        if (node.id == '') {
-                            return false
-                        } else {
-                            return true
-                        }
-                    }
-                }
-            },
-            propsData: {
-                children: 'childDepInfo',
-                label: 'name'
-            },
-            treeData1: [],
             formLabelWidth: '80px',
             userForm: {
                 id: '',
                 username: '',
                 chineseName: '',
                 password: '',
+                departmentId: null,
                 parentId: '',
                 phone: '',
                 mailbox: '',
                 roles: '',
                 isLimit: 0,
-                ips: [{ value: '' }],
-                departmentId: '',
-                adminAssets: [],
-                assetUser: '',
-                orgType: 0,
-                assetsUserName: ''
+                ips: [{ value: '' }]
             },
             rules: {
-                adminAssets: [
-                    {
-                        required: true,
-                        message: '请选择数据来源',
-                        trigger: 'change'
-                    }
-                ],
                 username: [
                     {
                         required: true,
@@ -253,7 +183,7 @@ export default {
                     {
                         required: true,
                         message: '请输入角色',
-                        trigger: ['change', 'blur']
+                        trigger: 'blur'
                     }
                 ],
                 ip: myRules.ip,
@@ -265,83 +195,18 @@ export default {
                     }
                 ],
                 mailbox: Object.assign(myRules.mail[0], { required: true })
-            },
-            assetUserList: []
+            }
         }
     },
     watch: {
         dialogVisible(val) {
-            console.log(this.userForm)
             if (!val) {
                 this.reset()
                 this.userForm.departmentId = null
-                this.userForm.adminAssets = []
-                this.userForm.assetUser = ''
-                this.assetUserList = []
-            } else {
-                if (this.type != 'add' && this.userForm.assetsUserName) {
-                    this.changeAssetUser(this.userForm.assetsUserName)
-                }
-                if (this.type == 'add') {
-                    this.userForm.adminAssets = []
-                    this.userForm.assetUser = ''
-                    this.assetUserList = []
-                }
             }
         }
     },
     methods: {
-        clearAssetUser() {
-            this.assetUserList = []
-        },
-        changeAssetUser(query) {
-            let data = {
-                queryData: {},
-                paramsData: {
-                    userName: query
-                }
-            }
-            this.assetUserList = []
-            getAllAssetsUser(data).then(res => {
-                console.log(res)
-                this.assetUserList = res
-            })
-        },
-        initAssetUser() {
-            let data = {
-                queryData: {},
-                paramsData: {
-                    userName: ''
-                }
-            }
-            this.assetUserList = []
-            getAllAssetsUser(data).then(res => {
-                console.log(res)
-                this.assetUserList = res
-            })
-        },
-        initTree() {
-            let data = {
-                queryData: {},
-                paramsData: {}
-            }
-            get_asset_tree(data).then(res => {
-                console.log('tree', res)
-                this.treeData1 = res
-            }).catch(error => {
-                console.log('error' + error)
-            })
-        },
-        limitTextShow(count) {
-            return `共 ${count + 1} 条`
-        },
-        adminAssetsChange(value, instanceId) {
-            if (value.length > 0) {
-                this.$refs.userForm.clearValidate('adminAssets')
-            } else {
-                this.$refs.userForm.validateField('adminAssets')
-            }
-        },
         treeChange(value, instanceId) {
             if (!value) this.userForm.departmentId = null
         },
@@ -358,13 +223,6 @@ export default {
             this.$refs.userForm.resetFields()
         },
         submit() {
-            console.log(this.userForm)
-            if (this.userForm.adminAssets.indexOf('') != -1) {
-                this.userForm.orgType = 1
-                // this.userForm.adminAssets.splice(0, 1)
-            } else {
-                this.userForm.orgType = 0
-            }
             this.$refs.userForm.validate(valid => {
                 if (valid) {
                     if (this.type === 'edit') {
@@ -385,7 +243,6 @@ export default {
                     return item.value
                 })
             }
-            console.log(this.userForm)
             let data = {
                 queryData: {},
                 paramsData: {
@@ -398,10 +255,7 @@ export default {
                     parentId: this.userForm.parentId,
                     isLimit: this.userForm.isLimit,
                     roles: this.userForm.roles,
-                    ips: ipsData,
-                    userOrg: this.userForm.adminAssets.map(item => { return { orgId: item } }),
-                    assetUser: this.userForm.assetUser,
-                    orgType: this.userForm.orgType
+                    ips: ipsData
                 }
             }
             add_user(data)
@@ -425,7 +279,6 @@ export default {
                     return item.value
                 })
             }
-            console.log(this.userForm.adminAssets)
             let data = {
                 queryData: {},
                 paramsData: {
@@ -439,10 +292,7 @@ export default {
                     parentId: this.userForm.parentId,
                     isLimit: this.userForm.isLimit,
                     roles: this.userForm.roles,
-                    ips: ipsData,
-                    userOrg: this.userForm.adminAssets.map(item => { return { orgId: item } }),
-                    assetUser: this.userForm.assetUser,
-                    orgType: this.userForm.orgType
+                    ips: ipsData
                 }
             }
             update_user(data)
@@ -464,58 +314,37 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.treeselect {
-    ::v-deep .vue-treeselect__menu {
-        margin-top: 12px !important;
-    }
-}
-.treeSel {
-    ::v-deep .el-form-item__error {
-        margin-top: 13px !important;
-    }
-}
-.treeselect-main {
-    width: 100%;
-    line-height: 16px;
-    ::v-deep .vue-treeselect__control {
-        line-height: 16px !important;
-    }
-    ::v-deep .vue-treeselect__multi-value-item {
-        height: 16px;
-        line-height: 16px;
-    }
-}
-.add-ip {
-    width: 76px;
-    color: $high-color;
+  .add-ip {
     cursor: pointer;
+    color: $high-color;
+    width: 76px;
     i {
-        margin-right: 2px;
-        font-size: 14px;
+      font-size: 14px;
+      margin-right: 2px;
     }
     span {
-        font-size: 12px;
+      font-size: 12px;
     }
-}
-.delete-btn {
-    position: absolute;
-    top: -40px;
-    right: 0;
-    font-size: 14px;
+  }
+  .delete-btn {
     color: $danger-color;
+    position: absolute;
+    right: 0;
+    top: -40px;
+    font-size: 14px;
     cursor: pointer;
-}
-.treeselect {
+  }
+  .treeselect {
     padding: 0;
     ::v-deep .vue-treeselect__control {
-        height: 30px;
-        line-height: 30px;
+      height: 30px;
+      line-height: 30px;
     }
     ::v-deep .vue-treeselect__input {
-        vertical-align: middle;
+      vertical-align: middle;
     }
-}
-::v-deep .custom-purple .el-radio__label {
+  }
+  ::v-deep .custom-purple .el-radio__label {
     font-size: 12px !important;
 }
 
@@ -523,5 +352,6 @@ export default {
 <style>
 .common-dialog.user-dialog .el-dialog__body {
     height: 500px !important;
+    background-color: #fff;
 }
 </style>

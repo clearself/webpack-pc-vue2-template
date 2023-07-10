@@ -50,43 +50,41 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.top-nav, .el-menu {
+.top-nav, .el-menu  {
     @include themeify {
         background: themed('top-nav-bg');
     }
 }
 .logo {
-    margin-right: 10px;
-    margin-left: 10px;
-    // width: 256px;
+    width: 256px;
     height: 40px;
-    // margin-left: -10px;
 }
 .nav-menu {
-    overflow: hidden;
     height: 40px;
+    overflow: hidden;
 }
 .tool-bar {
     width: 300px;
     height: 40px;
 }
-.operation {
-    margin-left: 40px;
-}
+ .operation {
+        margin-left: 40px;
+    }
 .more-btn {
-    margin-right: 24px;
     width: 20px;
     height: 40px;
+    margin-right: 24px;
     cursor: pointer;
     .operation-icon {
         color: #95aac9;
     }
-    & i {
+
+    & i{
         @include themeify {
             color: themed('top-font-color');
         }
     }
-    &:hover, &:hover i {
+    &:hover, &:hover i{
         @include themeify {
             color: themed('top-hover-font-color') !important;
         }

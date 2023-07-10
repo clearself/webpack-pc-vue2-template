@@ -364,7 +364,7 @@ export default {
                     label: '短信',
                     value: '2'
                 }, {
-                    label: '蓝信',
+                    label: '蓝鲸快信',
                     value: '3'
                 }
             ]; let arr = []

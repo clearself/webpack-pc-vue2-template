@@ -94,7 +94,6 @@
                                 <span v-if="row.type == 7">富文本</span>
                                 <span v-if="row.type == 8">单选</span>
                                 <span v-if="row.type == 9">多选</span>
-                                <span v-if="row.type == 10">城市级联</span>
                             </div>
                         </template>
                     </el-table-column>
@@ -422,10 +421,6 @@ export default {
                 {
                     label: '多选',
                     value: '9'
-                },
-                {
-                    label: '城市级联',
-                    value: '10'
                 }
             ],
             addAttrForm: {

@@ -72,16 +72,7 @@ export default {
                     }
                 },
                 axisLabel: {
-                    formatter: function(value) {
-                        var result = ''
-                        for (let i = 0; i < value.length; i++) {
-                            result += value[i]
-                            if ((i + 1) % 6 == 0) result += '\n'
-                            // 一行显示几个
-                        }
-
-                        return result
-                    },
+                    formatter: '{value}',
                     color: legendColor,
                     fontSize: 12,
                     interval: 0

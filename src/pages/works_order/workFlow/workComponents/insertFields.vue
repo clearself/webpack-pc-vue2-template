@@ -274,7 +274,7 @@ export default {
     overflow-y: hidden;
     white-space: nowrap;
     padding: 0 5px;
-    margin-left: 44px;
+    text-indent: 40px;
     font-size: 12px;
 }
 .head-tip {

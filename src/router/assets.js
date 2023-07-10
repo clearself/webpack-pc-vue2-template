@@ -22,9 +22,6 @@ const assets_img = () =>
     import('@/pages/assets/img.vue')
 const assets_add_tmap_before = () =>
     import('@/pages/assets/add_tmap_before.vue')
-const assets_find = () =>
-    import('@/pages/assets/assets_find.vue')
-
 export default [
     {
         path: '/assets',
@@ -35,7 +32,6 @@ export default [
         },
         redirect: '/assets/assets_overview',
         children: [
-
             {
                 path: 'assets_overview',
                 name: 'assets_overview',
@@ -48,7 +44,7 @@ export default [
                 name: 'assets_asset_info',
                 component: assets_asset_info,
                 meta: {
-                    title: '资产库'
+                    title: '资产信息库'
                 }
             },
             {
@@ -64,7 +60,7 @@ export default [
                 name: 'assets_found',
                 component: assets_found,
                 meta: {
-                    title: '无主资产库'
+                    title: '资产发现'
                 }
             },
             {
@@ -96,7 +92,7 @@ export default [
                 name: 'assets_system',
                 component: assets_system,
                 meta: {
-                    title: '业务系统库'
+                    title: '业务系统管理'
                 }
             },
             {
@@ -112,7 +108,7 @@ export default [
                 name: 'assets_img',
                 component: assets_img,
                 meta: {
-                    title: '拓扑管理'
+                    title: '拓扑图管理'
                 }
             },
             {
@@ -129,14 +125,6 @@ export default [
                 component: demo,
                 meta: {
                     title: '拓扑图'
-                }
-            },
-            {
-                path: 'assets_find',
-                name: 'assets_find',
-                component: assets_find,
-                meta: {
-                    title: '无主资产库'
                 }
             }
         ]

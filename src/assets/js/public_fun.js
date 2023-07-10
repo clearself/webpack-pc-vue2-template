@@ -10,8 +10,7 @@ export const Format = (time, fmt) => { //author: meizz
     };
     if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (time.getFullYear() + "").substr(4 - RegExp.$1.length));
     for (var k in o)
-        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : ((
-            "00" + o[k]).substr(("" + o[k]).length)));
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 
 }
@@ -160,6 +159,7 @@ export const getlocalStorage = (keys) => {
     if (localStorage && localStorage['jsom'] != undefined) {
         var jsom = localStorage['jsom'];
         if (jsom && jsom != '') {
+            console.log(jsom)
             var mp = JSON.parse(jsom);
             if (mp[keys] && mp[keys] != '') {
                 return mp[keys];
@@ -218,11 +218,11 @@ const _typeOf = (obj) => {
     return map[toString.call(obj)];
 }
 export const typeOf = _typeOf;
-export const getObjectValue = function(obj, text) {
+export const getObjectValue = function (obj, text) {
     try {
         if ((_typeOf(obj) === 'object' || _typeOf(obj) === 'array') && text) {
             let textArray = text.split('.');
-            let get_value = function(obj, textArray) {
+            let get_value = function (obj, textArray) {
                 let key = textArray.shift();
                 if (key.length < 5 && parseInt(key)) {
                     key = parseInt(key);
@@ -243,7 +243,7 @@ export const getObjectValue = function(obj, text) {
         console.log(error);
     }
 }
-export const nativeBack = function() {
+export const nativeBack = function () {
     setTimeout(() => {
         try {
             window.webkit.messageHandlers.goBack.postMessage("");
@@ -289,15 +289,15 @@ export const uni = (arr) => {
     return arr1;
 }
 
-export const numChange = function(value) {
+export const numChange = function (value) {
     let num;
-    if (value > 9999 && value < 99999999) { //大于9999显示x.xx万
+    if (value > 9999 && value < 99999999) {//大于9999显示x.xx万
         num = (Math.floor(value / 1000) / 10);
     } else if (value > 99999999) {
         num = (Math.floor(value / 10000000) / 10);
     } else if (value < 9999 && value > -9999) {
         num = value
-    } else if (value < -9999) { //小于-9999显示-x.xx万
+    } else if (value < -9999) {//小于-9999显示-x.xx万
         num = -(Math.floor(Math.abs(value) / 1000) / 10);
     }
     return num;
@@ -322,8 +322,8 @@ export const setCookie = (key, val, time) => { //设置cookie方法
 }
 export const formatJSON = (str) => {
     var stack = []; //栈-用于括号匹配
-    var tmpStr = ''; //新格式化JSON字符串
-    var len = str.length; //原始JSON长度
+    var tmpStr = '';    //新格式化JSON字符串
+    var len = str.length;   //原始JSON长度
 
     //遍历每一个字符
     for (let i = 0; i < len; i++) {
@@ -354,7 +354,8 @@ export const formatJSON = (str) => {
         else if (str[i] == ',') {
             //逗号后方直接换行，以及下一行的缩进处理
             tmpStr += str[i] + "\n" + "\t".repeat(stack.length);
-        } else {
+        }
+        else {
             //其他字符直接复制
             tmpStr += str[i];
         }
@@ -373,10 +374,10 @@ export const accDiv = (arg1, arg2) => {
         r1, r2;
     try {
         t1 = arg1.toString().split(".")[1].length
-    } catch (e) {}
+    } catch (e) { }
     try {
         t2 = arg2.toString().split(".")[1].length
-    } catch (e) {}
+    } catch (e) { }
     r1 = Number(arg1.toString().replace(".", ""))
     r2 = Number(arg2.toString().replace(".", ""))
     return (r1 / r2) * Math.pow(10, t2 - t1);
@@ -395,10 +396,10 @@ export const accMul = (arg1, arg2) => {
         s2 = arg2.toString();
     try {
         m += s1.split(".")[1].length
-    } catch (e) {}
+    } catch (e) { }
     try {
         m += s2.split(".")[1].length
-    } catch (e) {}
+    } catch (e) { }
     return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
 }
 //javascript精度加法处理
@@ -423,8 +424,8 @@ export const accAdd = (arg1, arg2) => {
 };
 
 export const VueDebounce = (func, wait = 200, immediate = true) => {
-    let timeout = null; // 定时器
-    return function() {
+    let timeout = null;  // 定时器
+    return function () {
         let that = this, // this对象
             args = arguments; // 参数
         if (timeout) clearTimeout(timeout);
@@ -437,7 +438,8 @@ export const VueDebounce = (func, wait = 200, immediate = true) => {
                 // func.apply(that, args); // 普通用法
                 that[func](...args); // vue用法
             }
-        } else { // 非立即执行
+        }
+        else { // 非立即执行
             timeout = setTimeout(() => {
                 // func.apply(this, args); // 普通用法
                 that[func](...args); // vue用法
@@ -447,7 +449,7 @@ export const VueDebounce = (func, wait = 200, immediate = true) => {
 }
 export const VueThrottle = (func, wait = 200) => {
     let previous = 0;
-    return function() {
+    return function () {
         let that = this;
         let args = arguments;
         let now = Date.now();
@@ -463,10 +465,9 @@ export const VueThrottle = (func, wait = 200) => {
  * @param radix 基数
  * @returns {string}
  */
-export const uuid = function(len, radix) {
+export const uuid = function (len, radix) {
     var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
-    var uuid = [],
-        i;
+    var uuid = [], i;
     radix = radix || chars.length;
 
     if (len) {
@@ -508,9 +509,7 @@ export const flatten = (arr, childName = 'children') => {
             newArr.push(...flatten(oldArr[i][childName]))
             delete oldArr[i][childName]
         }
-        newArr.push({
-            ...oldArr[i]
-        })
+        newArr.push({ ...oldArr[i] })
     }
     return newArr
 }
@@ -556,55 +555,5 @@ export const getAllButtons = (arr, childName = 'children') => {
     }
     return newArr
 }
-
-export const color16 = () => { //十六进制颜色随机
-    var hex = Math.floor(Math.random() * 16777216).toString(16); //生成ffffff以内16进制数
-    while (hex.length < 6) { //while循环判断hex位数，少于6位前面加0凑够6位
-        hex = '0' + hex;
-    }
-    return '#' + hex; //返回‘#’开头16进制颜色
-}
-
-export const toHump = (name) => {
-    return name.replace(/\_(\w)/g, function(all, letter){
-        return letter.toUpperCase();
-    });
-}
-
-export const toLine = (name) => {
-  return name.replace(/([A-Z])/g,"_$1").toLowerCase();
-}
-
-function getStyle(obj, sAttr) {
-    return obj.currentStyle ? parseFloat(obj.currentStyle[sAttr]) : parseFloat(getComputedStyle(obj)[sAttr])
-}
-export const getOffset = (obj) => {
-    var iLeft = 0
-    var iTop = 0
-    // 刚调用此函数，保存一下当前元素的左边框宽度和上边框宽度
-    var bL = parseInt(getStyle(obj, 'borderLeftWidth'))
-    var bT = parseInt(getStyle(obj, 'borderLeftWidth'))
-    bL = isNaN(bL) ? 0 : bL
-    bT = isNaN(bT) ? 0 : bT
-    while (obj) {
-        // obj左边的边框width
-        var borderL = parseInt(getStyle(obj, 'borderLeftWidth'))
-        borderL = isNaN(borderL) ? 0 : borderL
-        // obj顶部的边框width
-        var borderT = parseInt(getStyle(obj, 'borderTopWidth'))
-        borderT = isNaN(borderT) ? 0 : borderT
-
-        iLeft += obj.offsetLeft + borderL
-        iTop += obj.offsetTop + borderT
-        obj = obj.offsetParent
-    }
-    return {
-        left: iLeft - bL,
-        top: iTop - bT
-    }
-}
-
-
-
 
 

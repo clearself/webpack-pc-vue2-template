@@ -6,7 +6,7 @@
             :key="123"
             popper-class="custom-date-picker"
             placement="bottom-start"
-            width="672"
+            width="650"
             trigger="click"
             @hide="popoverHide"
             @show="popoverShow"

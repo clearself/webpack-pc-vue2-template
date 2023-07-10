@@ -3,13 +3,13 @@
         <div class="event-content w100" v-loading="loading">
             <div class="ub w100 relative" style="margin-bottom: 20px;">
                 <div class="title-created">新建模板</div>
-                <div class="ub" style="margin-left: 20px;">
+                <div class="ub" style="margin-left: 20px">
                     <el-steps :space="100" :active="activeStep">
                         <el-step><i class="step1 step1Finish" slot="icon">工单基本信息</i></el-step>
                         <el-step><i class="step2 step2Active" slot="icon">配置流程信息</i></el-step>
                     </el-steps>
                 </div>
-                <div class="btn-wrap" style="font-size: 0;">
+                <div class="btn-wrap" style="font-size: 0">
                     <el-button size="small" @click="cancel">取 消</el-button>
                     <el-button size="small" @click="goBack">上一步</el-button>
                     <!-- <cancel-btn title="取 消" @click="cancel"></cancel-btn> -->
@@ -24,7 +24,7 @@
                     </Debounce>
                 </div>
             </div>
-            <div class="w100 pic-wrapper" style="color: #ffffff;">
+            <div class="w100 pic-wrapper" style="color: #fff;">
                 <bpmn-modeler
                     ref="refNode"
                     :xml="xml"
@@ -163,28 +163,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .custom-star {
-        .work-config {
-            border: solid 1px #50b0ff;
-            background-color: #111d2b;
-            box-shadow: -4px 0 14px 0
-                rgb(0 0 0 / 20%),
-                inset 0 0 28px 0
-                #00b4ff;
-            .event-content {
-                background-color: #111d2b;
-                .title-created {
-                    color: #ffffff;
-                }
-            }
-        }
-    }
     .work-config {
         margin: 10px;
         padding: 20px;
     }
-    .event-content {
-        background-color: #ffffff;
+    .event-content{
+        background-color: #fff;
     }
     .work-config ::v-deep .el-form {
         .el-form-item__label {
@@ -199,17 +183,18 @@ export default {
         }
     }
     .title-created {
-        height: 28px;
         font-size: 14px;
-        color: rgb(0 0 0 / 90%);
+        color: rgba(0, 0, 0, 0.9);
+        height: 28px;
         line-height: 28px;
     }
+
     .work-config ::v-deep .is-disabled {
         .el-textarea__inner {
-            border: 1px solid #1cd7fa;
-            color: #cccccc;
             background: transparent;
-            box-shadow: 0 0 7px #389bf7 inset;
+            border: 1px solid #1cd7fa;
+            box-shadow: 0px 0px 7px #389bf7 inset;
+            color: #ccc;
         }
     }
     .work-config ::v-deep .el-steps {
@@ -217,199 +202,201 @@ export default {
             .el-step__head {
                 .el-step__line {
                     display: none;
-                    height: 0;
+                    height: 0px;
                 }
                 .is-text {
-                    margin-left: 20px;
-                    width: 200px;
-                    height: 28px;
-                    border-style: hidden;
-                    background-color: transparent !important;
+                   height: 28px;
+                   width: 200px;
+                   margin-left: 20px;
+                   border-style: hidden;
+                   background-color:transparent !important;
                 }
             }
             .step1, .step2, .step3 {
-                width: 200px;
-                height: 28px;
+                color: rgba(0, 0, 0, 0.26);
                 text-indent: 20px;
-                color: rgb(0 0 0 / 26%);
-                background-color: #f3f3f3;
+                width: 200px;
                 line-height: 28px;
                 font-style: normal;
+                height: 28px;
+                background-color: #f3f3f3;
             }
             .step2, .step3 {
                 text-indent: 40px;
             }
             .step1Active {
-                position: relative;
-                color: #ffffff;
+                color: #fff;
                 background-color: #387dee;
-                &::after {
+                position: relative;
+                &:after {
                     position: absolute;
                     top: 0;
                     right: -20px;
+                    content: '';
                     width: 0;
                     height: 0;
-                    border-top: 14px solid transparent;
-                    border-right: none;
-                    border-bottom: 14px solid transparent;
                     border-left: 20px solid #387dee;
-                    content: '';
+                    border-top: 14px solid transparent;
+                    border-bottom: 14px solid transparent;
+                    border-right: none;
                 }
             }
             .step2Active,.step3Active {
-                color: #ffffff;
+                color: #fff;
                 background-color: #387dee;
-                &::after {
+                &:after {
                     position: absolute;
                     top: 0;
                     right: -20px;
+                    content: '';
                     width: 0;
                     height: 0;
-                    border-top: 14px solid transparent;
-                    border-right: none;
-                    border-bottom: 14px solid transparent;
                     border-left: 20px solid #387dee;
-                    content: '';
+                    border-top: 14px solid transparent;
+                    border-bottom: 14px solid transparent;
+                    border-right: none;
                 }
-                &::before {
+                &:before {
                     position: absolute;
                     top: 0;
                     left: 0;
+                    content: '';
                     width: 0;
                     height: 0;
+                    border-left: 20px solid #fff;
                     border-top: 14px solid transparent;
-                    border-right: none;
                     border-bottom: 14px solid transparent;
-                    border-left: 20px solid #ffffff;
-                    content: '';
+                    border-right: none;
                 }
             }
             .step1Finish {
-                position: relative;
-                color: #ffffff;
+                color: #fff;
                 background-color: #387dee;
-                &::after {
+                position: relative;
+                &:after {
                     position: absolute;
                     top: 0;
                     right: -20px;
+                    content: '';
                     width: 0;
                     height: 0;
-                    border-top: 14px solid transparent;
-                    border-right: none;
-                    border-bottom: 14px solid transparent;
                     border-left: 20px solid #387dee;
-                    content: '';
+                    border-top: 14px solid transparent;
+                    border-bottom: 14px solid transparent;
+                    border-right: none;
                 }
             }
             .step2Finish,.step3Finish {
-                color: #ffffff;
+                color: #fff;
                 background-color: #387dee;
-                &::after {
+                &:after {
                     position: absolute;
                     top: 0;
                     right: -20px;
+                    content: '';
                     width: 0;
                     height: 0;
-                    border-top: 14px solid transparent;
-                    border-right: none;
-                    border-bottom: 14px solid transparent;
                     border-left: 20px solid #387dee;
-                    content: '';
+                    border-top: 14px solid transparent;
+                    border-bottom: 14px solid transparent;
+                    border-right: none;
                 }
-                &::before {
+                &:before {
                     position: absolute;
                     top: 0;
                     left: 0;
+                    content: '';
                     width: 0;
                     height: 0;
+                    border-left: 20px solid #fff;
                     border-top: 14px solid transparent;
-                    border-right: none;
                     border-bottom: 14px solid transparent;
-                    border-left: 20px solid #ffffff;
-                    content: '';
+                    border-right: none;
                 }
             }
-            .step1Ready {
-                color: rgb(0 0 0 / 26%);
+            .step1Ready{
                 background-color: #f3f3f3;
-                &::after {
+                color: rgba(0, 0, 0, 0.26);
+                &:after {
                     position: absolute;
                     top: 0;
                     right: -20px;
+                    content: '';
                     width: 0;
                     height: 0;
-                    border-top: 14px solid transparent;
-                    border-right: none;
-                    border-bottom: 14px solid transparent;
                     border-left: 20px solid #f3f3f3;
-                    content: '';
+                    border-top: 14px solid transparent;
+                    border-bottom: 14px solid transparent;
+                    border-right: none;
                 }
             }
             .step2Ready,.step3Ready {
-                color: rgb(0 0 0 / 26%);
                 background-color: #f3f3f3;
-                &::after {
+                color: rgba(0, 0, 0, 0.26);
+                &:after {
                     position: absolute;
                     top: 0;
                     right: -20px;
+                    content: '';
                     width: 0;
                     height: 0;
-                    border-top: 14px solid transparent;
-                    border-right: none;
-                    border-bottom: 14px solid transparent;
                     border-left: 20px solid #f3f3f3;
-                    content: '';
+                    border-top: 14px solid transparent;
+                    border-bottom: 14px solid transparent;
+                    border-right: none;
                 }
-                &::before {
+                &:before {
                     position: absolute;
                     top: 0;
                     left: 0;
+                    content: '';
                     width: 0;
                     height: 0;
+                    border-left: 20px solid #fff;
                     border-top: 14px solid transparent;
-                    border-right: none;
                     border-bottom: 14px solid transparent;
-                    border-left: 20px solid #ffffff;
-                    content: '';
+                    border-right: none;
                 }
             }
         }
     }
+
     .title {
         line-height: 2;
         border-bottom: 1px solid #00e9ff;
         .t1 {
             display: inline-block;
-            margin-left: 23px;
             font-size: 14px;
-            border-bottom: 1px solid #00e9ff;
-            color: #ffffff;
             letter-spacing: 1px;
+            border-bottom: 1px solid #00e9ff;
+            margin-left: 23px;
+            color: #fff;
         }
         .tips {
-            margin-left: 30px;
             font-size: 12px;
+            letter-spacing: 0px;
             color: #ffffff;
             opacity: 0.8;
-            letter-spacing: 0;
+            margin-left: 30px;
             .iconfont {
                 font-size: 12px;
             }
         }
     }
     .pic-wrapper {
-        overflow: auto;
         height: calc(100vh - 186px);
+        overflow: auto;
         border: 1px solid #dddddd;
     }
     .arrow {
-        display: inline-block;
-        margin-right: 84px;
-        margin-left: 84px;
         width: 52px;
         height: 31px;
+        display: inline-block;
+        margin-left: 84px;
+        margin-right: 84px;
         background-image: url(../../../assets/img/work_order/arrow.png);
     }
+
     .dis {
         cursor: no-drop;
     }

@@ -40,7 +40,7 @@
         <transition name="el-zoom-in-top">
             <div class="select-two" v-show="selectTwoShow">
                 <div class="select-cell" @click="saveTask(1)">保存查询记录</div>
-                <!-- <div class="select-cell" @click="saveTask(2)">保存离线任务</div> -->
+                <div class="select-cell" @click="saveTask(2)">保存离线任务</div>
                 <div class="select-cell" @click="saveTask(3)">保存输出图表</div>
             </div>
         </transition>

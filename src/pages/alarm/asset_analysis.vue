@@ -41,27 +41,6 @@
                     </el-form-item>
                 </el-form>
             </el-col>
-            <el-col :md="12" :lg="8" :xl="6">
-                <el-form :model="get_params">
-                    <el-form-item label-width="65px" label="组织架构:" label-position="left">
-                        <div class="treeselect">
-                            <Treeselect
-                                @input="inputChange"
-                                :appendToBody="true"
-                                size="small"
-                                style="width:100%;"
-                                :options="treeData"
-                                :normalizer="normalizer"
-                                noChildrenText="当前分支无子节点"
-                                noOptionsText="无可用选项"
-                                noResultsText="无可用选项"
-                                placeholder="请选择"
-                                v-model="get_params.orgId"
-                            />
-                        </div>
-                    </el-form-item>
-                </el-form>
-            </el-col>
         </SearchTop>
         <div class="list-container">
             <div class="ub ub-pj w100 isunfold ">
@@ -206,11 +185,6 @@
                         <el-option label="低" value="3"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="模板类型:" prop="mouldType" :label-width="formLabelWidth">
-                    <el-select style="width: 100%;" size="small" v-model="taskForm.mouldType" clearable placeholder="请选择"  @change="changeMouldType">
-                        <el-option v-for="(item, index) in mouldTypeList" :key="index" :label="item.name" :value="item.id"></el-option>
-                    </el-select>
-                </el-form-item>
                 <el-form-item label="工单模板：" prop="workMouldId" :label-width="formLabelWidth">
                     <el-select
                         placeholder="请选择"
@@ -330,8 +304,6 @@ import pie from './charts/assetAnalysis/pie'
 import VueUeditorWrap from '../../components/vue-ueditor-wrap.vue' // ES6 Module
 import ueditorConfig from '../../mixins/ueditorConfig'
 import list from './alarm_detail_drawer/alarm_list.vue'
-import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import {
     getAssetList,
     getAlarmTemplate,
@@ -346,9 +318,6 @@ import {
     assetsInfo1,
     assetsAnalysisAdd_workTask
 } from '../../server/alarm/define.js'
-import {
-    getTreeOrg
-} from '../../server/alarm/alarm.js'
 export default {
     name: 'AssetAnalysis',
     components: {
@@ -356,26 +325,11 @@ export default {
         pie,
         VueUeditorWrap,
         list,
-        CustomDate,
-        Treeselect
+        CustomDate
     },
     mixins: [ueditorConfig],
     data() {
         return {
-            mouldTypeList: [
-                {
-                    id: 0,
-                    name: '分析'
-                },
-                {
-                    id: 1,
-                    name: '应急'
-                },
-                {
-                    id: 2,
-                    name: '通报'
-                }
-            ],
             isSubmitTask: false,
             tabHeight: document.body.clientHeight - 580,
             isReset: false,
@@ -454,8 +408,7 @@ export default {
                 sortField: 'num',
                 order: 'DESC',
                 desIp: '',
-                reportType: '',
-                orgId: null
+                reportType: ''
             },
             // 弃用
             alarm_total_num: 0,
@@ -470,7 +423,6 @@ export default {
             alarmTypeList: [],
             taskDialog: false,
             taskForm: {
-                mouldType: '',
                 workOrderName: '',
                 workMouldId: '',
                 level: '',
@@ -527,24 +479,11 @@ export default {
                     message: '请选择优先级',
                     trigger: 'change'
                 }],
-                mouldType: [{
-                    required: true,
-                    message: '请选择模板类型',
-                    trigger: 'change'
-                }],
                 workMouldId: [{
                     required: true,
                     message: '请选择工单模板',
                     trigger: 'change'
                 }]
-            },
-            treeData: [],
-            normalizer(node) {
-                return {
-                    id: node.id,
-                    label: node.name,
-                    children: node.children
-                }
             },
             orderType: '',
             allTemplate: [],
@@ -554,8 +493,7 @@ export default {
     },
     mounted() {
         this.$nextTick(() => {
-            this.initTree()
-            // this.get_asset_template()
+            this.get_asset_template()
             this.get_data()
             this.getAlarmList()
             this.getAssetChartBar()
@@ -572,7 +510,6 @@ export default {
                         workOrderName: '',
                         workMouldId: '',
                         level: '',
-                        mouldType: '',
                         workOrderContent: ''
                     }
                 }
@@ -624,28 +561,6 @@ export default {
         }
     },
     methods: {
-        changeMouldType(val) {
-            if (val !== '') {
-                this.get_asset_template()
-            } else {
-                this.allTemplate = []
-            }
-        },
-        initTree() {
-            let data = {
-                queryData: {},
-                paramsData: {}
-            }
-            getTreeOrg(data).then(res => {
-                console.log('tree', res)
-                this.treeData = res
-                console.log(this.organizationIds)
-            }).catch(error => {
-                console.log('error' + error)
-            })
-        },
-        inputChange() {
-        },
         tableRowClassName({ row, rowIndex }) {
             console.log(rowIndex)
             if (rowIndex % 2) {
@@ -685,8 +600,7 @@ export default {
                 sortField: 'num',
                 order: 'DESC',
                 desIp: '',
-                reportType: '',
-                orgId: null
+                reportType: ''
             }
             this.sayTimes = null
             this.isReset = true
@@ -695,9 +609,6 @@ export default {
             }, 300)
             this.get_params.page = 1
             this.get_data()
-            this.getAssetChartBar()
-            this.getAssetChartPie3()
-            this.getAssetChartPie1()
         },
         handleSee(row) {
             console.log(row)
@@ -745,11 +656,8 @@ export default {
         // 图表一
         getAssetChartPie1() {
             this.loading_safe = true
-            getAssetBarPie({
-                orgId: this.get_params.orgId != null ? this.get_params.orgId : ''
-            }).then(res => {
+            getAssetBarPie({}).then(res => {
                 this.loading_safe = false
-                this.safetyData = []
                 this.securityDomainData = []
                 this.systemNameData = []
                 if (res.getSystems.length) {
@@ -784,9 +692,7 @@ export default {
         // 图表三
         getAssetChartPie3() {
             this.loading_asset_pie = true
-            getAssetBarPie3({
-                orgId: this.get_params.orgId != null ? this.get_params.orgId : ''
-            }).then(res => {
+            getAssetBarPie3({}).then(res => {
                 this.loading_asset_pie = false
                 this.assetPie = []
                 if (res.length) {
@@ -809,8 +715,7 @@ export default {
         getAssetChartBar() {
             this.loading_asset_bar = true
             let obj = {
-                type: this.currentBar2,
-                orgId: this.get_params.orgId != null ? this.get_params.orgId : ''
+                type: this.currentBar2
             }
             this.assetBar = []
             getAssetBar2(obj).then(res => {
@@ -850,7 +755,6 @@ export default {
                             sourceId: this.recordId,
                             workOrderName: this.taskForm.workOrderName,
                             level: this.taskForm.level,
-                            mouldType: this.taskForm.mouldType,
                             workMouldId: this.taskForm.workMouldId,
                             workOrderContent: this.taskForm.workOrderContent,
                             type: this.orderType
@@ -904,28 +808,26 @@ export default {
             })
         },
         get_alarm_template(row) {
-            // this.alarmTemplate = []
+            this.alarmTemplate = []
             let obj = {
-                id: 4,
-                mouldType: this.taskForm.mouldType
+                id: row.id
             }
             getAlarmTemplate(obj).then(res => {
                 console.log('事件模板', res)
-                // this.alarmTemplate = res
-                this.allTemplate = res
-                // this.allTemplate = this.$deepCopy(this.alarmTemplate)
+                this.alarmTemplate = res
+                this.allTemplate = this.$deepCopy(this.alarmTemplate)
             }).catch(err => {
                 console.log(err)
             })
         },
         get_asset_template(row) {
+            this.attackTemplate = []
             let obj = {
-                id: 3,
-                mouldType: this.taskForm.mouldType
+                id: 3
             }
             getAssetTemplate(obj).then(res => {
-                this.allTemplate = res
                 console.log('资产模板', res)
+                this.attackTemplate = res
             }).catch(err => {
                 console.log(err)
             })
@@ -944,8 +846,7 @@ export default {
                     desIp: this.get_params.desIp,
                     reportType: this.get_params.reportType,
                     startTime: this.sayTimes && this.sayTimes.length > 0 ? this.sayTimes[0] : '',
-                    endTime: this.sayTimes && this.sayTimes.length > 0 ? this.sayTimes[1] : '',
-                    orgId: this.get_params.orgId != null ? this.get_params.orgId : ''
+                    endTime: this.sayTimes && this.sayTimes.length > 0 ? this.sayTimes[1] : ''
                 }
             }
             getAssetList(data).then(res => {
@@ -988,11 +889,7 @@ export default {
         },
         searchCheck() {
             this.get_params.page = 1
-            this.safetyData = []
             this.get_data()
-            this.getAssetChartBar()
-            this.getAssetChartPie3()
-            this.getAssetChartPie1()
         },
         handleSizeChange(val) {
             this.get_params.size = val
@@ -1063,7 +960,7 @@ export default {
         handleEdit(row) {
             console.log(row, 1111111111)
             this.recordId = row.desIp
-            this.allTemplate = this.attackTemplate
+            this.allTemplate = this.$deepCopy(this.attackTemplate)
             this.taskDialog = true
             this.orderType = 3
         },

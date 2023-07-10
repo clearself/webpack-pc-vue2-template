@@ -4,7 +4,7 @@
             <el-col :md="12" :lg="8" :xl="6">
                 <el-form :model="searchForm">
                     <el-form-item label="用户角色:" label-width="64px">
-                        <el-select  size="small" style="width:100%;" clearable v-model="searchForm.roleId" placeholder="请选择">
+                        <el-select @change="search" size="small" style="width:100%;" clearable v-model="searchForm.roleId" placeholder="请选择">
                             <el-option v-for="item in roles" :key="item.value" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
@@ -19,13 +19,13 @@
                             style="width:100%;"
                             :clearable="false"
                             v-model="searchForm.time"
-                            type="datetimerange"
-                            value-format="yyyy-MM-dd HH:mm:ss"
-                            format="yyyy-MM-dd HH:mm:ss"
+                            type="daterange"
+                            value-format="yyyy-MM-dd"
                             prefix-icon="iconfont icon-riqi"
                             range-separator="~"
                             start-placeholder="开始日期"
                             end-placeholder="结束日期"
+                            @change="search"
                         >
                         </el-date-picker>
                     </el-form-item>
@@ -137,7 +137,7 @@ export default {
             }
             export_option_logos(data).then(res => {
                 console.log(res, this, '----------数据')
-                // this.download(res)
+                this.download(res)
             })
         },
         download(data) {

@@ -5,7 +5,8 @@ export default {
                 toolbars: [
                     ['source', '|', 'undo', 'redo', '|',
                         'bold', 'italic', 'underline', 'strikethrough', 'removeformat',
-                        'formatmatch', 'blockquote', '|', 'forecolor', 'backcolor', '|',
+                        'formatmatch', 'blockquote', '|', 'forecolor', 'backcolor', 'insertorderedlist',
+                        'insertunorderedlist', '|',
                         'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
                         'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
                         'link', '|',

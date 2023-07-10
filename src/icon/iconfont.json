@@ -6,48 +6,6 @@
   "description": "",
   "glyphs": [
     {
-      "icon_id": "34619133",
-      "name": "指标",
-      "font_class": "zhibiao",
-      "unicode": "e885",
-      "unicode_decimal": 59525
-    },
-    {
-      "icon_id": "34360141",
-      "name": "饼图",
-      "font_class": "bingtu",
-      "unicode": "e86d",
-      "unicode_decimal": 59501
-    },
-    {
-      "icon_id": "34360142",
-      "name": "柱状图",
-      "font_class": "zhuzhuangtu",
-      "unicode": "e86e",
-      "unicode_decimal": 59502
-    },
-    {
-      "icon_id": "34360143",
-      "name": "折线图",
-      "font_class": "zhexiantu",
-      "unicode": "e86f",
-      "unicode_decimal": 59503
-    },
-    {
-      "icon_id": "34360144",
-      "name": "堆叠图",
-      "font_class": "duidietu",
-      "unicode": "e870",
-      "unicode_decimal": 59504
-    },
-    {
-      "icon_id": "34360145",
-      "name": "表格",
-      "font_class": "biaoge",
-      "unicode": "e871",
-      "unicode_decimal": 59505
-    },
-    {
       "icon_id": "33101878",
       "name": "批量图标",
       "font_class": "piliangtubiao",

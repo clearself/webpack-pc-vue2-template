@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="自定表头" :visible.sync="transferDialog" width="700px" custom-class="common-dialog" :before-close="cancel" :append-to-body="true">
+    <el-dialog title="自定表头" :visible.sync="transferDialog" width="700px" custom-class="common-dialog" :before-close="cancel">
         <div class="content" style="width:100%;">
             <MyTransfer v-model="selectData" :inputList="listAll" :alias="{key: 'fieldId',label: 'name'}"></MyTransfer>
         </div>

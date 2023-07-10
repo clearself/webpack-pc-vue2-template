@@ -4,7 +4,7 @@ import request from '@/utils/server'
 export const findSearchTypeChart = (data) => {
     return request({
         url: 'data-center/manage/groupManage/findSearchType',
-        method: 'post',
+        method: 'get',
         params: data.queryData,
         data: data.paramsData
     })

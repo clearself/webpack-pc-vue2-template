@@ -14,27 +14,27 @@
             <el-form-item label="设备名称" prop="name">
                 <el-input maxlength="20" v-model="ruleForm.name"></el-input>
             </el-form-item>
-            <el-form-item label="设备类型" prop="type">
+            <!-- <el-form-item label="设备类型" prop="type">
                 <el-select style="width: 100%" clearable v-model="ruleForm.type" placeholder="请选择设备类型">
                     <el-option filterable v-for="item in typeList" :label="item.name" :value="item.id" :key="item.id"></el-option>
-                </el-select>
-                <!--                <el-select style="width:100%;" ref="edit-select" placeholder="请选择" v-model="editForm.id"-->
-                <!--                           size="small">-->
-                <!--                    <el-option label="作为顶级类型" value="null"></el-option>-->
-                <!--                    <el-option :label="editLabel" :value="editValue" style="overflow:scroll;height: 200px">-->
-                <!--                        <el-tree ref="tree_addUser" node-key="id" :default-expand-all="true" :highlight-current="true"-->
-                <!--                                 :data="treeData" :props='propsData' @node-click="handleNodeClick_edit"-->
-                <!--                                 :check-strictly="true" :expand-on-click-node="false" :indent='indent'>-->
-                <!--                                <span class="custom-tree-node" slot-scope="{ node, data }">-->
-                <!--                                    <span style="font-size:12px;">{{ node.label }}</span>-->
-                <!--                                </span>-->
-                <!--                        </el-tree>-->
-                <!--                    </el-option>-->
-                <!--                </el-select>-->
-            </el-form-item>
+                </el-select> -->
+            <!--                <el-select style="width:100%;" ref="edit-select" placeholder="请选择" v-model="editForm.id"-->
+            <!--                           size="small">-->
+            <!--                    <el-option label="作为顶级类型" value="null"></el-option>-->
+            <!--                    <el-option :label="editLabel" :value="editValue" style="overflow:scroll;height: 200px">-->
+            <!--                        <el-tree ref="tree_addUser" node-key="id" :default-expand-all="true" :highlight-current="true"-->
+            <!--                                 :data="treeData" :props='propsData' @node-click="handleNodeClick_edit"-->
+            <!--                                 :check-strictly="true" :expand-on-click-node="false" :indent='indent'>-->
+            <!--                                <span class="custom-tree-node" slot-scope="{ node, data }">-->
+            <!--                                    <span style="font-size:12px;">{{ node.label }}</span>-->
+            <!--                                </span>-->
+            <!--                        </el-tree>-->
+            <!--                    </el-option>-->
+            <!--                </el-select>-->
+            <!-- </el-form-item>
             <el-form-item label="设备单位" prop="company">
                 <el-input maxlength="20" v-model="ruleForm.company"></el-input>
-            </el-form-item>
+            </el-form-item> -->
         </el-form>
         <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="showDia = false">取 消</el-button>

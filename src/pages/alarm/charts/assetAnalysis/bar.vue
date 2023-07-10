@@ -81,10 +81,10 @@ export default {
                     color: '#aeaeae',
                     fontSize: 10,
                     // interval:0,
-                    rotate: 45,
-                    formatter: function(name) {
-                        return (name.length > 7 ? (name.slice(0, 7) + '...') : name)
-                    }
+                    rotate: 45
+                    // formatter: function(name) {
+                    //     return (name.length > 7 ? (name.slice(0, 7) + '...') : name)
+                    // }
                 },
                 splitLine: {
                     show: false

@@ -167,7 +167,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .in-coder-panel{
     flex-grow: 1;
     display: flex;

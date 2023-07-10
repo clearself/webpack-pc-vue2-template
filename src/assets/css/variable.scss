@@ -1,212 +1,158 @@
 // 全局变量，不涉及切换
-$high-color: #387dee;
-$dark-color: rgb(0 0 0 / 90%);
+$high-color: #387DEE;
+$dark-color: rgba(0,0,0,0.9);
 $danger-color: #e34d59;
 
 
 // 1.主题定义
 $custom-default: (
+    theme-color:#387DEE,
     font-size: 14px,
+    /*基础高亮蓝色字体*/
+    font-color-high: #387DEE,
+    /*基础普通黑色字体*/
+    font-color-dark: rgba(0,0,0,0.9),
+    /*基础下拉背景色*/
+    drop-item-bg: rgba(56, 125, 238, .1),
+    /*基础页面背景色*/
+    page-bg: #E8EEF7,
 
-    font-color-high: #387dee,
-
-    font-color-dark: rgb(0 0 0 / 90%),
-
-    drop-item-bg: rgb(56 125 238 / 10%),
-
-    page-bg: #e8eef7,
-
-
+    /*顶部背景色*/
     top-bar-bg: #387dee,
-
-    top-font-color: rgb(255 255 255 / 70%),
-
-    top-hover-font-color: #ffffff,
-
-    top-logo-text-color: rgb(255 255 255 / 90%),
-
-    top-tool-font-color: #ffffff,
-
-    top-tool-high-color:  #ffffff,
-
+    /*顶部字体色*/
+    top-font-color: rgba(255,255,255,0.7),
+    /*顶部高亮字体颜色*/
+    top-hover-font-color: #fff,
+    /*顶部logo字体颜色*/
+    top-logo-text-color: rgba(255,255,255,0.9),
+    /*顶部右侧工具栏字体色*/
+    top-tool-font-color: #fff,
+    /*顶部工具栏设置图标颜色*/
+    top-tool-high-color:  #fff,
+    /*左侧菜单背景颜色*/
     left-nav-bg: #387dee,
-
-    left-font-color: rgb(255 255 255 / 70%),
-
-    left-hover-font-color: #ffffff,
-
-    top-nav-bg: #ffffff,
-
+    /*左侧菜单字体颜色*/
+    left-font-color: rgba(255,255,255,0.7),
+    /*左侧菜单hover时字体颜色*/
+    left-hover-font-color: #fff,
+    /*顶部Nav背景色*/
+    top-nav-bg: #fff,
+    /*顶部Nav logo字体颜色*/
     top-nav-logo-text-color: #191919,
-
-    top-menu-logo-text-color: #ffffff,
-
-    top-nav-tool-font-color: #95aac9,
-
-    top-nav-tool-high-color:  #c65edb,
-
-    list-tips-color:  #387dee,
-
-    close-color:#387dee,
-
-    save-btn-color: #00a870,
-
-    config-high-btn-color: #b500ff,
-    breadcrumb:#e8eef7,
-    el-dropdown-link-color:rgb(0 0 0 / 90%)
+    /*顶部menu logo字体颜色*/
+    top-menu-logo-text-color: #fff,
+    /*顶部Nav右侧工具栏字体色*/
+     top-nav-tool-font-color: #95aac9,
+     /*顶部Nav工具栏设置图标颜色*/
+     top-nav-tool-high-color:  #c65edb,
+     /*list-tips颜色*/
+     list-tips-color:  #387dee,
+    /*关闭叉叉颜色*/
+     close-color:#387dee,
+    /*暂存按钮颜色*/
+     save-btn-color: #00a870,
+     /*配置高亮词按钮颜色*/
+     config-high-btn-color: #b500ff
 );
 
 $custom-dark: (
+    theme-color:#2a3142,
     font-size: 14px,
+    /*基础高亮蓝色字体*/
+    font-color-high: #387DEE,
+    /*基础普通黑色字体*/
+    font-color-dark: rgba(0,0,0,0.9),
+    /*基础下拉背景色*/
+    drop-item-bg: rgba(56, 125, 238, .1),
+    /*基础页面背景色*/
+    page-bg: #E8EEF7,
 
-    font-color-high: #387dee,
-
-    font-color-dark: rgb(0 0 0 / 90%),
-
-    drop-item-bg: rgb(56 125 238 / 10%),
-
-    page-bg: #e8eef7,
-
-
-    top-bar-bg: #2a3142,
-
-    top-font-color: rgb(255 255 255 / 70%),
-
-    top-hover-font-color: #ffffff,
-
-    top-logo-text-color: rgb(255 255 255 / 90%),
-
-    top-tool-font-color: #ffffff,
-
-    top-tool-high-color:  #ffffff,
-
+    /*顶部背景色*/
+    top-bar-bg: #2A3142,
+    /*顶部字体色*/
+    top-font-color: rgba(255,255,255,0.7),
+    /*顶部高亮字体颜色*/
+    top-hover-font-color: #fff,
+    /*顶部logo字体颜色*/
+    top-logo-text-color: rgba(255,255,255,0.9),
+    /*顶部右侧工具栏字体色*/
+    top-tool-font-color: #fff,
+    /*顶部工具栏设置图标颜色*/
+    top-tool-high-color:  #fff,
+    /*左侧菜单背景颜色*/
     left-nav-bg: #387dee,
-
-    left-font-color: rgb(255 255 255 / 70%),
-
-    left-hover-font-color: #ffffff,
-
-    top-nav-bg: #ffffff,
-
+    /*左侧菜单字体颜色*/
+    left-font-color: rgba(255,255,255,0.7),
+    /*左侧菜单hover时字体颜色*/
+    left-hover-font-color: #fff,
+    /*顶部Nav背景色*/
+    top-nav-bg: #fff,
+    /*顶部Nav logo字体颜色*/
     top-nav-logo-text-color: #191919,
-
-    top-menu-logo-text-color: #ffffff,
-
+    /*顶部menu logo字体颜色*/
+    top-menu-logo-text-color: #fff,
+    /*顶部Nav右侧工具栏字体色*/
     top-nav-tool-font-color: #95aac9,
-
+    /*顶部Nav工具栏设置图标颜色*/
     top-nav-tool-high-color:  #c65edb,
-
-    list-tips-color:  #2a3142,
-
-    close-color:#2a3142,
-
+    /*list-tips颜色*/
+    list-tips-color:  #2A3142,
+    /*关闭叉叉颜色*/
+    close-color:#2A3142,
+    /*暂存按钮颜色*/
     save-btn-color: #2a3142,
-
-    config-high-btn-color: #2a3142,
-    breadcrumb-bg-color:#e8eef7,
-    el-dropdown-link-color:rgb(0 0 0 / 90%)
+    /*配置高亮词按钮颜色*/
+    config-high-btn-color: #2a3142
 );
 
 $custom-purple: (
+    theme-color:#7d55f8,
     font-size: 14px,
+    /*基础高亮蓝色字体*/
+    font-color-high: #387DEE,
+    /*基础普通黑色字体*/
+    font-color-dark: rgba(0,0,0,0.9),
+    /*基础下拉背景色*/
+    drop-item-bg: rgba(56, 125, 238, .1),
+    /*基础页面背景色*/
+    page-bg: #E8EEF7,
 
-    font-color-high: #387dee,
-
-    font-color-dark: rgb(0 0 0 / 90%),
-
-    drop-item-bg: rgb(56 125 238 / 10%),
-
-    page-bg: #e8eef7,
-
-
-    top-bar-bg: linear-gradient(to bottom, #5657f7 0%, #7d55f8 100%),
-
-    top-font-color: rgb(255 255 255 / 70%),
-
-    top-hover-font-color: #ffffff,
-
-    top-logo-text-color: rgb(255 255 255 / 90%),
-
-    top-tool-font-color: #ffffff,
-
-    top-tool-high-color:  #ffffff,
-
+    /*顶部背景色*/
+    top-bar-bg: linear-gradient(to bottom,  #5657F7 0%,#7D55F8 100%),
+    /*顶部字体色*/
+    top-font-color: rgba(255,255,255,0.7),
+    /*顶部高亮字体颜色*/
+    top-hover-font-color: #fff,
+    /*顶部logo字体颜色*/
+    top-logo-text-color: rgba(255,255,255,0.9),
+    /*顶部右侧工具栏字体色*/
+    top-tool-font-color: #fff,
+    /*顶部工具栏设置图标颜色*/
+    top-tool-high-color:  #fff,
+    /*左侧菜单背景颜色*/
     left-nav-bg: #387dee,
-
-    left-font-color: rgb(255 255 255 / 70%),
-
-    left-hover-font-color: #ffffff,
-
-    top-nav-bg: #ffffff,
-
+    /*左侧菜单字体颜色*/
+    left-font-color: rgba(255,255,255,0.7),
+    /*左侧菜单hover时字体颜色*/
+    left-hover-font-color: #fff,
+    /*顶部Nav背景色*/
+    top-nav-bg: #fff,
+    /*顶部Nav logo字体颜色*/
     top-nav-logo-text-color: #191919,
-
-    top-menu-logo-text-color: #ffffff,
-
+    /*顶部menu logo字体颜色*/
+    top-menu-logo-text-color: #fff,
+    /*顶部Nav右侧工具栏字体色*/
     top-nav-tool-font-color: #95aac9,
-
+    /*顶部Nav工具栏设置图标颜色*/
     top-nav-tool-high-color:  #c65edb,
-
-    list-tips-color:  linear-gradient(to bottom, #5657f7 0%, #7d55f8 100%),
-
-    close-color:#7d55f8,
-
-    save-btn-color: #7d55f8,
-
-    config-high-btn-color: #7d55f8,
-    breadcrumb-bg-color:#e8eef7,
-    el-dropdown-link-color:rgb(0 0 0 / 90%)
-);
-
-$custom-star: (
-    font-size: 14px,
-
-    font-color-high: #387dee,
-
-    font-color-dark: rgb(0 0 0 / 90%),
-
-    drop-item-bg: rgb(56 125 238 / 10%),
-
-    page-bg: transparent,
-
-
-    top-bar-bg: url('../../../assets/img/custom_star/top_bg.png') no-repeat center,
-
-    top-font-color: rgb(255 255 255 / 70%),
-
-    top-hover-font-color: #ffffff,
-
-    top-logo-text-color: rgb(255 255 255 / 90%),
-
-    top-tool-font-color: #ffffff,
-
-    top-tool-high-color:  #ffffff,
-
-    left-nav-bg: #387dee,
-
-    left-font-color: rgb(255 255 255 / 70%),
-
-    left-hover-font-color: #ffffff,
-
-    top-nav-bg: url('../../../assets/img/custom_star/top_bg.png') no-repeat center,
-
-    top-nav-logo-text-color: #ffffff,
-
-    top-menu-logo-text-color: #ffffff,
-
-    top-nav-tool-font-color: #95aac9,
-
-    top-nav-tool-high-color:  #1cd7fa,
-
-    list-tips-color:  #1cd7fa,
-
-    close-color: #50dcff,
-
-    save-btn-color: #1cd7fa,
-
-    config-high-btn-color: #1cd7fa,
-    breadcrumb-bg-color:transparent,
-    el-dropdown-link-color:#ffffff
+    /*list-tips颜色*/
+    list-tips-color:  linear-gradient(to bottom,  #5657F7 0%,#7D55F8 100%),
+    /*关闭叉叉颜色*/
+    close-color:#7D55F8,
+    /*暂存按钮颜色*/
+    save-btn-color: #7D55F8,
+    /*配置高亮词按钮颜色*/
+    config-high-btn-color: #7D55F8
 );
 
 
@@ -215,5 +161,4 @@ $themes:(
     custom-default:$custom-default,
     custom-dark:$custom-dark,
     custom-purple:$custom-purple,
-    custom-star:$custom-star,
-);
+)

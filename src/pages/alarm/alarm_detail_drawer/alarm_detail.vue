@@ -530,8 +530,7 @@ import {
     changeAlarmState,
     getAlarmTemp,
     get_workFlowInfo,
-    add_workTask,
-    getMenace
+    add_workTask
 } from '@/server/alarm/alarm.js'
 import {
     get_time
@@ -1553,7 +1552,7 @@ export default {
             }
         },
         // 初始化数据的方法
-        async handleSee(row) {
+        handleSee(row) {
             this.alarmId = row.id
             this.logType = row.logType
             this.timeDiffer = row.createTime
@@ -1561,35 +1560,6 @@ export default {
             this.$set(this, 'currentRow', row)
             this.activeName = 'first'
             this.seeForm = row
-            if (this.seeForm.srcIp) {
-                try {
-                    let srcIpIsSpite = await getMenace({
-                        queryData: {
-                            value: row.srcIp
-                        }
-                    })
-                    console.log(srcIpIsSpite)
-                    this.seeForm.srcIpVenusIsSpite = srcIpIsSpite[0]
-                    this.seeForm.srcIpIsSpite = srcIpIsSpite[1]
-                } catch (e) {
-                    console.log(e)
-                }
-            }
-            if (this.seeForm.desIp) {
-                try {
-                    let desIpIsSpite = await getMenace({
-                        queryData: {
-                            value: row.desIp
-                        }
-                    })
-                    // console.log(desIpIsSpite)
-                    this.seeForm.desIpVenusIsSpite = desIpIsSpite[0]
-                    this.seeForm.desIpIsSpite = desIpIsSpite[1]
-                } catch (e) {
-                    console.log(e)
-                }
-            }
-            console.log(this.seeForm)
             this.alarmDisposalForm.id = row.id
             this.alarmDisposalForm.desIp = row.desIp ? row.desIp : ''
             this.alarmDisposalForm.reportFrom = row.reportFrom

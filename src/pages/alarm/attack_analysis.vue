@@ -2,39 +2,39 @@
     <div class="list">
         <SearchTop @search="searchCheck" @reset="reset" @isOpen="isOpen1">
             <el-col :md="12" :lg="8" :xl="6">
-                <el-form :model="get_params" style="width: 100%;line-height: 50px;" label-position="right" label-width="90px">
+                <el-form :model="get_params" style="width: 100%;line-height: 50px" label-position="left" label-width="65px">
                     <el-form-item label="攻击者IP:">
                         <el-input
                             placeholder="请输入"
                             clearable
                             v-model.trim="get_params.srcIp"
-                            style="width: 100%;"
+                            style="width: 100%"
                             size="small">
                         </el-input>
                     </el-form-item>
                 </el-form>
             </el-col>
             <el-col :md="12" :lg="8" :xl="6">
-                <el-form :model="get_params" style="width: 100%;" label-position="right" label-width="90px">
+                <el-form :model="get_params" style="width: 100%" label-position="left" label-width="80px">
                     <el-form-item label="受害资产IP:">
                         <el-input
                             placeholder="请输入"
                             clearable
                             v-model.trim="get_params.desIp"
-                            style="width: 100%;"
+                            style="width: 100%"
                             size="small">
                         </el-input>
                     </el-form-item>
                 </el-form>
             </el-col>
             <el-col :md="12" :lg="8" :xl="6">
-                <el-form :model="get_params" style="width: 100%;" label-position="right" label-width="90px">
+                <el-form :model="get_params" style="width: 100%" label-position="left" label-width="65px">
                     <el-form-item label="攻击手段:">
                         <el-select
                             v-model="get_params.reportType"
                             filterable
                             placeholder="请选择"
-                            style="width: 100%;"
+                            style="width: 100%"
                             size="small"
                             clearable>
                             <el-option
@@ -48,84 +48,33 @@
                 </el-form>
             </el-col>
             <el-col :md="12" :lg="8" :xl="6">
-                <el-form :model="get_params" style="width: 100%;" label-position="right" label-width="90px">
+                <el-form :model="get_params" label-position="left" label-width="100px">
+                    <el-form-item label="首次攻击时间:">
+                        <CustomDate :append-to-body="true" :auto="true" @getCustomTime="getCustomTime" @getDateData="getDateData"  @actualTime="actualTimeData" @timeUnit="timeUnitData" :empty="isReset" ref="customDate"></CustomDate>
+                    </el-form-item>
+                </el-form>
+            </el-col>
+            <el-col :md="12" :lg="8" :xl="6">
+                <el-form :model="get_params" style="width: 100%" label-position="left" label-width="65px">
                     <el-form-item label="IP归属地:">
                         <el-input
                             placeholder="请输入省份"
                             clearable
                             v-model.trim="get_params.province"
-                            style="width: 100%;"
+                            style="width: 100%;margin-bottom: 10px"
                             size="small">
                         </el-input>
-                    </el-form-item>
-                </el-form>
-            </el-col>
-            <el-col :md="12" :lg="8" :xl="6">
-                <el-form :model="get_params" label-position="right" label-width="90px">
-                    <el-form-item label="ATT&CK:">
-                        <div class="treeselect">
-                            <Treeselect
-                                @input="inputChange"
-                                :appendToBody="true"
-                                size="small"
-                                :options="treeDataAtt"
-                                :normalizer="normalizerAtt"
-                                noChildrenText="当前分支无子节点"
-                                noOptionsText="无可用选项"
-                                noResultsText="无可用选项"
-                                placeholder="请选择"
-                                v-model="get_params.attCk"
-                            />
-                        </div>
-                    </el-form-item>
-                </el-form>
-            </el-col>
-            <el-col :md="12" :lg="8" :xl="6">
-                <el-form :model="get_params" label-position="right" label-width="90px">
-                    <el-form-item label="攻击链阶段:">
-                        <el-select filterable size="small" v-model="get_params.attChain" clearable placeholder="请选择" style="width: 100%;" collapse-tags>
-                            <el-option v-for="(item) in attChainList" :key="item.id" :label="item.name" :value="item.id">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-form>
-            </el-col>
-            <el-col :md="12" :lg="8" :xl="6">
-                <el-form :model="get_params">
-                    <el-form-item label-width="90px" label="组织架构:" label-position="right">
-                        <div class="treeselect">
-                            <Treeselect
-                                @input="inputChange"
-                                :appendToBody="true"
-                                size="small"
-                                style="width: 100%;"
-                                :options="treeData"
-                                :normalizer="normalizer"
-                                noChildrenText="当前分支无子节点"
-                                noResultsText="无可用选项"
-                                noOptionsText="无可用选项"
-                                placeholder="请选择"
-                                v-model="get_params.orgId"
-                            />
-                        </div>
-                    </el-form-item>
-                </el-form>
-            </el-col>
-            <el-col :md="12" :lg="8" :xl="6">
-                <el-form :model="get_params" label-position="right" label-width="90px">
-                    <el-form-item label="首次攻击时间:">
-                        <CustomDate style="height: 32px;" :append-to-body="true" :auto="true" @getCustomTime="getCustomTime" @getDateData="getDateData"  @actualTime="actualTimeData" @timeUnit="timeUnitData" :empty="isReset" ref="customDate"></CustomDate>
                     </el-form-item>
                 </el-form>
             </el-col>
         </SearchTop>
         <div class="list-container">
             <div class="ub ub-pj w100 isunfold">
-                <div class="list-tips" style="height: 24px;line-height: 24px;">统计</div>
+                <div class="list-tips" style="height:24px;line-height:24px">统计</div>
                 <div class="unfold" @click="handleUnfold">{{isunfold?'收起':'展开'}}<i :class="['el-icon-arrow-down',isunfold?'icon-select':'icon-select1']"></i>
                 </div>
             </div>
-            <div class="chart-row ub ub-pj" v-show="isunfold" style="margin-bottom: 12px;">
+            <div class="chart-row ub ub-pj" v-show="isunfold" style="margin-bottom:12px">
                 <div class="chart-left">
                     <div class="chart-box">
                         <div class="ub ub-pj ub-ac">
@@ -136,23 +85,23 @@
                             </div>
                         </div>
                         <div class="ub">
-                            <div class="chart-map" style="width: 55%;">
+                            <div class="chart-map" style="width: 55%">
                                 <!--  v-loading="loading_map" -->
-                                <div style="height: 210px;" element-loading-background="transparent" v-loading="loading_map">
+                                <div style="height:210px;" element-loading-background="transparent" v-loading="loading_map">
                                     <div
                                         v-if="!mapData.length"
                                         class="ub ub-f1 ub-ac ub-pc"
-                                        style="height: 100%;font-size: 14px;color: rgb(144 147 153);">
+                                        style="height:100%;color:rgb(144, 147, 153);font-size:14px;">
                                         暂无数据
                                     </div>
                                     <map1 v-if="mapData.length>0" :mapType="mapType" :chartData="mapData"/>
                                 </div>
                             </div>
-                            <div style="overflow: hidden!important;width: 45%;min-width: 300px;">
+                            <div style="width:45%;overflow: hidden!important;min-width: 300px">
                                 <div class="ub ub-ac table-top w100">
                                 </div>
                                 <!-- v-loading="loading_map"  -->
-                                <el-table class="map-table" :data="mapTableData" style="overflow: hidden!important;margin: 0 auto;width: 300px;" element-loading-background="transparent" v-loading="loading_map">
+                                <el-table class="map-table" :data="mapTableData" style="width: 300px;margin: 0 auto;overflow: hidden!important;" element-loading-background="transparent" v-loading="loading_map">
                                     <el-table-column :label="currentMap === '1' ? '省份' : '国家'" show-overflow-tooltip prop="name" width="80">
                                     </el-table-column>
                                     <el-table-column label="攻击量"  align="center" prop="value" width="130">
@@ -174,11 +123,11 @@
                         </div>
                         <div class="chart-map">
                             <!-- v-loading="loading_bar" -->
-                            <div  style="height: 210px;" v-loading="loading_bar" element-loading-background="transparent">
+                            <div  style="height:210px;" v-loading="loading_bar" element-loading-background="transparent">
                                 <div
                                     v-if="!attackTopData.length"
                                     class="ub ub-f1 ub-ac ub-pc"
-                                    style="height: 100%;font-size: 14px;color: rgb(144 147 153);">
+                                    style="height:100%;color:rgb(144, 147, 153);font-size:14px;">
                                     暂无数据
                                 </div>
                                 <bar v-if="attackTopData.length>0" type="1" :chartData="attackTopData"/>
@@ -213,10 +162,6 @@
                             <p>{{row.county || '--' }} {{ row.province || '--'}} {{row.city || '--'}}</p>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="attCk" label="ATT&CK"  width="100">
-                    </el-table-column>
-                    <el-table-column prop="attChain" label="攻击链阶段"  width="150">
-                    </el-table-column>
                     <el-table-column prop="srcIp" label="源IP" width="140">
                         <template slot-scope="scope">
                             <div>
@@ -226,15 +171,15 @@
                                             @click="jumpAsset(scope.row.srcIp)"
                                             class="ub ub-ac click-btn"
                                         >
-                                            <i class="iconfont icon-chaxunzichan" style="font-size: 12px;color: #0052d9;"></i>
+                                            <i class="iconfont icon-chaxunzichan" style="font-size:12px;color:#0052d9"></i>
                                             <span>查询资产</span>
                                         </p>
                                         <p
-                                            style="margin-top: 10px;"
+                                            style="margin-top:10px"
                                             @click="jumpThreat(scope.row.srcIp)"
                                             class="ub ub-ac click-btn"
                                         >
-                                            <i class="iconfont icon-chaxunqingbao" style="font-size: 12px;color: #0052d9;"></i>
+                                            <i class="iconfont icon-chaxunqingbao" style="font-size:12px;color:#0052d9"></i>
                                             <span>查询情报</span>
                                         </p>
                                     </div>
@@ -249,7 +194,7 @@
                     </el-table-column>
                     <el-table-column prop="assetsNum" label="受害资产IP数量"  width="120" align="right">
                         <template slot-scope="{row}">
-                            <span class="num-end" @click="handleSeeAsset(row)" style="font-size: 12px;text-decoration: underline;color: #de7400;cursor: pointer;">{{row.assetsNum}}</span>
+                            <span class="num-end" @click="handleSeeAsset(row)" style="color: #de7400;font-size: 12px;cursor: pointer;text-decoration: underline">{{row.assetsNum}}</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="reportTypeCN" label="攻击手段" width="160" show-overflow-tooltip>
@@ -258,9 +203,9 @@
                             </el-table-column>-->
                     <el-table-column prop="num" label="已处置事件/事件总量" width="160" align="right">
                         <template slot-scope="{row}">
-                            <p style="font-size: 0;cursor: pointer;" @click="handleSeeAlarm(row)">
-                                <span class="num-end" style="font-size: 12px; text-decoration: underline;color: #0052d9;">{{row.dealAlarmNum}}/</span>
-                                <span class="num-sum" style="font-size: 12px; text-decoration: underline;color: rgb(0 0 0 / 90%);">{{row.num}}</span>
+                            <p style="font-size: 0;cursor: pointer" @click="handleSeeAlarm(row)">
+                                <span class="num-end" style="color: #0052d9;font-size: 12px; text-decoration: underline">{{row.dealAlarmNum}}/</span>
+                                <span class="num-sum" style="color: rgba(0,0,0,0.9);font-size: 12px; text-decoration: underline">{{row.num}}</span>
                             </p>
                         </template>
                     </el-table-column>
@@ -275,7 +220,7 @@
                     </el-table-column>
 
                 </el-table>
-                <pagination :total="total_num" :page.sync="get_params.page" :limit.sync="get_params.size"  style="padding-top: 10px;" @pagination="get_data" v-show="total_num>0"/>
+                <pagination :total="total_num" :page.sync="get_params.page" :limit.sync="get_params.size"  style="padding-top:10px" @pagination="get_data" v-show="total_num>0"/>
             </div>
         </div>
         <el-dialog v-dialogDrag title="发起工单" :visible.sync="taskDialog" width="700px" custom-class="common-dialog">
@@ -294,11 +239,6 @@
                         <el-option label="低" value="3"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="模板类型:" prop="mouldType" :label-width="formLabelWidth">
-                    <el-select style="width: 100%;" size="small" v-model="taskForm.mouldType" clearable placeholder="请选择" @change="changeMouldType">
-                        <el-option v-for="(item, index) in mouldTypeList" :key="index" :label="item.name" :value="item.id"></el-option>
-                    </el-select>
-                </el-form-item>
                 <el-form-item label="工单模板：" prop="workMouldId" :label-width="formLabelWidth">
                     <el-select
                         placeholder="请选择"
@@ -308,8 +248,8 @@
                         <el-option v-for="(item) in allTemplate" :key="item.id" :label="item.name" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item style="width: 100%;" label="工单描述：" :label-width="formLabelWidth">
-                    <div style="width: 100%;">
+                <el-form-item style="width:100%;" label="工单描述：" :label-width="formLabelWidth">
+                    <div style="width:100%;">
                         <vue-ueditor-wrap v-model="taskForm.workOrderContent" :config="myConfig"></vue-ueditor-wrap>
                     </div>
                 </el-form-item>
@@ -340,11 +280,11 @@
                     <el-table-column prop="reportLevel" label="事件等级"  width="100">
                         <template slot-scope="scope">
                             <div>
-                                <span v-if="scope.row.reportLevel == 0" style="color: #00bcd4;">低</span>
-                                <span v-if="scope.row.reportLevel == 1" style="color: #00c7ff;">中低</span>
-                                <span v-if="scope.row.reportLevel == 2" style="color: #f2cd00;">中</span>
-                                <span v-if="scope.row.reportLevel == 3" style="color: #fc7f00;">中高</span>
-                                <span v-if="scope.row.reportLevel == 4" style="color: #fd0001;">高</span>
+                                <span v-if="scope.row.reportLevel == 0" style="color:#00bcd4">低</span>
+                                <span v-if="scope.row.reportLevel == 1" style="color:#00c7ff">中低</span>
+                                <span v-if="scope.row.reportLevel == 2" style="color:#f2cd00">中</span>
+                                <span v-if="scope.row.reportLevel == 3" style="color:#fc7f00">中高</span>
+                                <span v-if="scope.row.reportLevel == 4" style="color:#fd0001">高</span>
                             </div>
                         </template>
                     </el-table-column>
@@ -403,23 +343,23 @@
         </el-dialog>
         <el-dialog v-dialogDrag title="事件状态变更" :visible.sync="stateDialog" width="700px" custom-class="common-dialog">
             <el-form :model="stateForm" :rules="rules" ref="stateForm">
-                <el-form-item style="width: 100%;" label="事件状态：" :label-width="formLabelWidth" prop="reportStatus">
-                    <el-select size="small" style="width: 660px;" v-model="stateForm.reportStatus" placeholder="请选择">
+                <el-form-item style="width:100%;" label="事件状态：" :label-width="formLabelWidth" prop="reportStatus">
+                    <el-select size="small" style="width:660px" v-model="stateForm.reportStatus" placeholder="请选择">
                         <el-option label="已处置" value="2"></el-option>
                         <el-option label="已驳回" value="3"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item v-if="stateForm.reportStatus==2" style="width: 100%;" label="处置结果：" :label-width="formLabelWidth">
+                <el-form-item v-if="stateForm.reportStatus==2" style="width:100%;" label="处置结果：" :label-width="formLabelWidth">
                     <div class="ub ub-pc ub-f1">
                         <vue-ueditor-wrap v-model="stateForm.actionResults" :config="myConfig"></vue-ueditor-wrap>
                     </div>
                 </el-form-item>
-                <el-form-item v-if="stateForm.reportStatus==3" style="width: 100%;" label="驳回理由：" :label-width="formLabelWidth">
+                <el-form-item v-if="stateForm.reportStatus==3" style="width:100%;" label="驳回理由：" :label-width="formLabelWidth">
                     <div class="ub ub-pc ub-f1">
                         <vue-ueditor-wrap v-model="stateForm.rejectReason" :config="myConfig"></vue-ueditor-wrap>
                     </div>
                 </el-form-item>
-                <el-form-item v-if="stateForm.reportStatus==3" style="width: 100%;" label="分析过程：" :label-width="formLabelWidth">
+                <el-form-item v-if="stateForm.reportStatus==3" style="width:100%;" label="分析过程：" :label-width="formLabelWidth">
                     <div class="ub ub-pc ub-f1">
                         <vue-ueditor-wrap v-model="stateForm.analyzePro" :config="myConfig"></vue-ueditor-wrap>
                     </div>
@@ -460,7 +400,7 @@
                         </template>
                     </el-table-column>
                 </el-table>
-                <pagination :total="asset_params.total" :page.sync="asset_params.page" :limit.sync="asset_params.size" @pagination="seeAsset" style="padding-top: 10px;"/>
+                <pagination :total="asset_params.total" :page.sync="asset_params.page" :limit.sync="asset_params.size" @pagination="seeAsset" style="padding-top:10px"/>
             </div>
         </el-dialog>
         <!-- 新的资产详情 -->
@@ -469,7 +409,7 @@
 </template>
 
 <script>
-import { get_threat_search, getStartConfig, get_threat_searchVenus } from '@/server/alarm/api.js'
+import { get_threat_search } from '@/server/intelligence/api.js'
 import CustomDate from '@/pages/alarm/alarm_detail_drawer/index.vue'
 import bar from './charts/assetAnalysis/bar'
 import map1 from './charts/attackAnalysis/map'
@@ -477,8 +417,6 @@ import map1 from './charts/attackAnalysis/map'
 import VueUeditorWrap from '../../components/vue-ueditor-wrap.vue' // ES6 Module
 import ueditorConfig from '../../mixins/ueditorConfig'
 import list from './alarm_detail_drawer/alarm_list.vue'
-import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import {
     getAttackTopBar,
     getAttackMap,
@@ -493,11 +431,6 @@ import {
     changeStatus,
     attackAnalysisAdd_workTask
 } from '../../server/alarm/define.js'
-import {
-    getAttCk,
-    getAttChain,
-    getTreeOrg
-} from '../../server/alarm/alarm.js'
 export default {
     name: 'AssetAnalysis',
     components: {
@@ -505,49 +438,15 @@ export default {
         map1,
         VueUeditorWrap,
         list,
-        CustomDate,
-        Treeselect
+        CustomDate
     },
     mixins: [ueditorConfig],
     data() {
         return {
-            startData: [],
-            normalizer(node) {
-                return {
-                    id: node.id,
-                    label: node.name,
-                    children: node.children
-                }
-            },
-            normalizerAtt(node) {
-                return {
-                    id: node.id,
-                    label: node.name,
-                    children: node.child
-                }
-            },
-            mouldTypeList: [
-                {
-                    id: 0,
-                    name: '分析'
-                },
-                {
-                    id: 1,
-                    name: '应急'
-                },
-                {
-                    id: 2,
-                    name: '通报'
-                }
-            ],
-            attackResultList: [],
             isSubmitTask: false,
             tabHeight: document.body.clientHeight - 580,
             isReset: false,
             isunfold: true,
-            treeData: [],
-            treeDataAtt: [],
-            attChainList: [],
             pickerOptions: {
                 shortcuts: [{
                     text: '1小时内',
@@ -623,10 +522,7 @@ export default {
                 srcIp: '',
                 desIp: '',
                 province: '',
-                reportType: '',
-                orgId: null,
-                attCk: null,
-                attChain: ''
+                reportType: ''
             },
             alarm_params: {
                 id: '',
@@ -638,7 +534,6 @@ export default {
             recordId: '',
             record_srcIp: '',
             taskForm: {
-                mouldType: '',
                 workOrderName: '',
                 workMouldId: '',
                 level: '',
@@ -667,11 +562,6 @@ export default {
                 reportType: [{
                     required: true,
                     message: '请选择事件类型',
-                    trigger: 'change'
-                }],
-                mouldType: [{
-                    required: true,
-                    message: '请选择模板类型',
                     trigger: 'change'
                 }],
                 status: [{
@@ -724,15 +614,11 @@ export default {
     },
     mounted() {
         this.$nextTick(() => {
-            this.getStartConfigData()
-            this.initTree()
-            this.getAttCkFn()
-            this.getAttChainFn()
             this.getBarTop()
             this.getMap()
             this.getStage()
             this.getAlarmList()
-            // this.get_attack_template()
+            this.get_attack_template()
             this.get_data()
         })
     },
@@ -745,8 +631,7 @@ export default {
                         workOrderName: '',
                         workMouldId: '',
                         level: '',
-                        workOrderContent: '',
-                        mouldType: ''
+                        workOrderContent: ''
                     }
                 }
             }
@@ -814,48 +699,6 @@ export default {
         }
     },
     methods: {
-        getStartConfigData() {
-            getStartConfig({ queryData: {}, paramsData: {}}).then(res => {
-                this.startData = res
-            })
-        },
-        changeMouldType(val) {
-            if (val !== '') {
-                this.get_attack_template()
-            } else {
-                this.allTemplate = []
-            }
-        },
-        initTree() {
-            let data = {
-                queryData: {},
-                paramsData: {}
-            }
-            getTreeOrg(data).then(res => {
-                console.log('tree', res)
-                this.treeData = res
-                console.log(this.organizationIds)
-            }).catch(error => {
-                console.log('error' + error)
-            })
-        },
-        getAttCkFn() {
-            getAttCk({}).then(res => {
-                console.log(res)
-                this.treeDataAtt = res
-            }).catch(err => {
-                console.log(err)
-            })
-        },
-        getAttChainFn() {
-            getAttChain({}).then(res => {
-                this.attChainList = res
-            }).catch(err => {
-                console.log(err)
-            })
-        },
-        inputChange() {
-        },
         tableRowClassName({ row, rowIndex }) {
             console.log(rowIndex)
             if (rowIndex % 2) {
@@ -882,37 +725,23 @@ export default {
             // window.open(router.href)
         },
         jumpThreat(value) {
-            console.log(value)
             let obj = {
-                queryData: {},
-                paramsData: { value }
+                queryData: { value },
+                paramsData: {}
             }
-            if (this.startData.includes(1)) {
-                this.searchWeibu(obj, value)
-            } else if (this.startData.includes(0)) {
-                this.searchVenus(obj, value)
-            }
-        },
-        searchWeibu(obj, value) {
             get_threat_search(obj)
                 .then(res => {
                     console.log(res)
                     this.$setsessionStorage('search-item', res)
-                    window.open(window.location.origin + '/#' + '/intelligence/threat_detail?searchStr=' + value)
+                    let route = this.$router.resolve({
+                        name: 'intelligence_threat_detail',
+                        query: {
+                            searchStr: value
+                        }
+                    })
+                    window.open(route.href, '_blank')
                 })
                 .catch(err => {
-                    console.log(err + 'err')
-                })
-        },
-        searchVenus(obj, value) {
-            get_threat_searchVenus(obj, value)
-                .then(res => {
-                    console.log(res)
-                    this.$setsessionStorage('search-item', res)
-                    window.open(window.location.origin + '/#' + '/intelligence/threat_detail?searchStr=' + value)
-                })
-                .catch(err => {
-                    this.btnLoading = false
                     console.log(err + 'err')
                 })
         },
@@ -957,10 +786,7 @@ export default {
                 srcIp: '',
                 desIp: '',
                 province: '',
-                reportType: '',
-                orgId: null,
-                attCk: null,
-                attChain: ''
+                reportType: ''
             }
             this.sayTimes = null
             this.isReset = true
@@ -969,8 +795,6 @@ export default {
             }, 300)
             this.get_params.page = 1
             this.get_data()
-            this.getBarTop()
-            this.getMap()
         },
         changeMap() {
             if (this.currentMap === '1') {
@@ -999,8 +823,7 @@ export default {
             this.mapTableData = []
             this.loading_map = true
             let data = {
-                fromType: this.currentMap === '1' ? 1 : 0,
-                orgId: this.get_params.orgId != null ? this.get_params.orgId : ''
+                fromType: this.currentMap === '1' ? 1 : 0
             }
             getAttackMap(data).then(res => {
                 this.loading_map = false
@@ -1028,9 +851,7 @@ export default {
         getBarTop() {
             this.attackTopData = []
             this.loading_bar = true
-            getAttackTopBar({
-                orgId: this.get_params.orgId != null ? this.get_params.orgId : ''
-            }).then(res => {
+            getAttackTopBar({}).then(res => {
                 console.log('top20', res)
                 this.loading_bar = false
                 if (res.length) {
@@ -1074,11 +895,10 @@ export default {
                 console.log(err + 'err')
             })
         },
-        get_alarm_template() {
+        get_alarm_template(row) {
             this.alarmTemplate = []
             let obj = {
-                id: 3,
-                mouldType: this.taskForm.mouldType
+                id: row.id
             }
             getAlarmTemplate(obj).then(res => {
                 console.log('事件模板', res)
@@ -1091,13 +911,11 @@ export default {
         get_attack_template(row) {
             this.attackTemplate = []
             let obj = {
-                id: 4,
-                mouldType: this.taskForm.mouldType
+                id: 4
             }
             getAssetTemplate(obj).then(res => {
                 console.log('攻击者模板', res)
-                this.allTemplate = res
-                // this.attackTemplate = res
+                this.attackTemplate = res
             }).catch(err => {
                 console.log(err)
             })
@@ -1118,10 +936,7 @@ export default {
                     startFirstTime: this.sayTimes && this.sayTimes.length > 0 ? this.sayTimes[0] : '',
                     endFirstTime: this.sayTimes && this.sayTimes.length > 0 ? this.sayTimes[1] : '',
                     province: this.get_params.province,
-                    reportType: this.get_params.reportType,
-                    orgId: this.get_params.orgId != null ? this.get_params.orgId : '',
-                    attCk: this.get_params.attCk != null ? this.get_params.attCk : '',
-                    attChain: this.get_params.attChain
+                    reportType: this.get_params.reportType
                 }
             }
             getAttackList(data).then(res => {
@@ -1159,8 +974,6 @@ export default {
                         obj.srcIp = item.srcIp
                         obj.alarmStageCN = item.alarmStageCN || '--'
                         obj.isStart = item.isStart
-                        obj.attChain = item.attChain
-                        obj.attCk = item.attCk
 
                         this.tableData.push(obj)
                     })
@@ -1178,7 +991,6 @@ export default {
                         queryData: {},
                         paramsData: {
                             sourceId: this.recordId,
-                            mouldType: this.taskForm.mouldType,
                             workOrderName: this.taskForm.workOrderName,
                             level: this.taskForm.level,
                             workMouldId: this.taskForm.workMouldId,
@@ -1239,8 +1051,6 @@ export default {
         searchCheck() {
             this.get_params.page = 1
             this.get_data()
-            this.getBarTop()
-            this.getMap()
         },
         handleSizeChange(val) {
             this.get_params.size = val
@@ -1367,7 +1177,7 @@ export default {
             console.log(row)
             this.recordId = row.id
             this.orderType = 1
-            // await this.get_alarm_template(row)
+            await this.get_alarm_template(row)
             this.taskDialog = true
         },
         handleChangeStatus(row) {
@@ -1393,45 +1203,45 @@ export default {
 .click-btn:hover {
     // background: #0d4873;
 }
-.reset-btn {
-    margin-right: 10px;
+.reset-btn{
     width: 80px;
     height: 30px;
-    font-size: 12px;
-    border: solid 1px #39caf3;
-    border-radius: 5px;
-    color: #a2ece8;
     background-color: #041f38;
-    box-shadow: inset 0 0 10px 0
-        rgb(0 167 245 / 97%);
+    box-shadow: inset 0px 0px 10px 0px
+    rgba(0, 167, 245, 0.97);
+    border: solid 1px #39caf3;
+    font-size: 12px;
     line-height: 15px;
     letter-spacing: 1px;
+    color: #a2ece8;
+    border-radius: 5px;
+    margin-right: 10px;
     cursor: pointer;
     box-sizing: border-box;
 }
-.isunfold {
-    margin-bottom: 10px;
-    height: 24px !important;
+.isunfold{
+    height:24px !important;
     border-radius: 2px;
-    background-color: rgb(56 125 238 / 10%);
-    line-height: 24px;
-    .unfold {
-        font-size: 12px;
-        color: #0052d9;
+    background-color: rgba(56, 125, 238,.1);
+    margin-bottom:10px;
+    line-height:24px;
+    .unfold{
         letter-spacing: 1px;
+        color: #0052d9;
         cursor: pointer;
-        i {
-            font-size: 14px;
+        font-size:12px;
+        i{
+            font-size:14px;
         }
         .icon-select::before {
-            display: inline-block;
+            display:inline-block;
             transform: rotate(-180deg);
-            transition: 0.4s;
+            transition: .4s;
             transform-origin: center;
         }
         .icon-select1::before {
-            display: inline-block;
-            transition: 0.4s;
+            display:inline-block;
+            transition: .4s;
             transform-origin: center;
         }
     }
@@ -1448,62 +1258,68 @@ export default {
         width: 22%;
     }
 }
+
 .chart-box {
     position: relative;
-    overflow: hidden;
     height: 280px;
+    overflow: hidden;
+    background-color: rgba(56, 125, 238, 0.05);
     border-radius: 6px;
-    background-color: rgb(56 125 238 / 5%);
+
     & > span {
         position: absolute;
-        top: -1px;
         left: -1px;
+        top: -1px;
         width: 10px;
         height: 10px;
         background: url('/static/img/icon-jiao.png') no-repeat;
+
         &.angle2 {
-            right: -1px;
             left: auto;
+            right: -1px;
             transform: rotate(90deg);
         }
+
         &.angle3 {
-            top: auto;
-            right: -1px;
-            bottom: -1px;
             left: auto;
+            right: -1px;
+            top: auto;
+            bottom: -1px;
             transform: rotate(180deg);
         }
+
         &.angle4 {
             top: auto;
             bottom: -1px;
             transform: rotate(270deg);
         }
     }
+
     .chart-title {
-        position: relative;
-        margin: 12px 0 10px;
-        padding-left: 10px;
+        margin: 12px 0 10px 0px;
         height: 24px;
-        font-size: 12px;
-        font-weight: 500;
-        color: rgb(0 0 0 / 90%);
         line-height: 24px;
+        font-size: 12px;
+        padding-left: 10px;
+        font-weight: 500;
+        color: rgba(0,0,0,0.9);
+        position: relative;
     }
     .chart-btn {
-        margin: 12px 10px 10px 0;
         min-width: 60px;
         height: 24px;
-        font-size: 12px;
-        color: rgb(0 0 0 / 90%);
         line-height: 24px;
+        font-size: 12px;
+        margin: 12px 10px 10px 0;
+        color: rgba(0,0,0,0.9);
         cursor: pointer;
         i {
             transform: rotate(90deg);
-            color: #387dee;
+            color:#387dee;
         }
         p {
-            margin-left: 10px;
             font-size: 12px;
+            margin-left: 10px;
         }
     }
     .chart-btn.select {
@@ -1513,20 +1329,21 @@ export default {
     }
 }
 .event  ::v-deep  .el-range-input {
-    color: #ffffff;
-    background-color: rgb(0 0 0 / 0%);
+    background-color: rgba(0, 0, 0, 0);
+    color: #fff;
 }
+
 .event  ::v-deep  .el-range-separator {
-    color: #ffffff;
+    color: #fff;
 }
 .search-box {
-    margin-bottom: 10px;
+    margin-bottom:10px;
     .search-more {
         display: flex;
         justify-content: space-between;
-        .has-more {
-            overflow-y: hidden;
+        .has-more{
             height: 70px !important;
+            overflow-y: hidden;
         }
         .search-more-left {
             display: flex;
@@ -1545,14 +1362,14 @@ export default {
         }
         .search-text {
             display: block;
-            margin-top: 10px;
-            margin-right: 20px;
             width: 114px;
-            height: 20px;
-            font-size: 12px;
-            text-align: right;
-            color: #03e9ff;
+            color:#03e9ff;
             cursor: pointer;
+            font-size:12px;
+            height: 20px;
+            margin-top: 10px;
+            margin-right:20px;
+            text-align: right;
         }
     }
     & ::v-deep .el-form-item__label {
@@ -1561,54 +1378,59 @@ export default {
     & ::v-deep .el-form-item__content {
         line-height: 40px !important;
     }
+
 }
 .event ::v-deep .el-divider {
-    margin-top: 0;
     background-color: #50b0ff;
     opacity: 0.5;
+    margin-top: 0;
 }
 </style>
 <style>
-.add-search-attack.el-popover {
+.add-search-attack.el-popover{
+    background: #fff;
     /* box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.59) inset; */
     border: solid 1px #dcdcdc;
-    color: rgb(0 0 0 / 90%);
-    background: #ffffff;
+    color: rgba(0,0,0,.9);
 }
 .map-table {
+    background: rgba(0, 0, 0, 0)!important;
     min-height: 0!important;
-    background: rgb(0 0 0 / 0%)!important;
 }
 .map-table .el-table__empty-block {
-    width: auto !important;
-    height: 30px !important;
     min-height: 30px !important;
+    height: 30px !important;
+    width: auto !important;
 }
 .map-table .el-table__empty-text {
     height: 30px !important;
     line-height: 30px !important;
 }
+
 .map-table th,
 .map-table tr {
-    background: rgb(0 0 0 / 0%)!important;
+    background: rgba(0, 0, 0, 0)!important;
 }
+
 .map-table td,
 .map-table th.is-leaf {
-    padding: 1px 0 !important;
-
     /* border-color: #c5c5c5!important; */
-    color: #ffffff!important;
+    color: #fff!important;
+    padding: 1px 0 !important;
 }
+
 .el-table--border::after,
 .el-table--group::after,
 .el-table::before {
     background-color: #c5c5c5!important;
 }
+
 .map-table.el-table--enable-row-hover .el-table__body tr:hover>td {
     /* background: #c5c5c5!important; */
 }
+
 .map-table .cell {
-    color: rgb(0 0 0 / 90%)!important;
+    color: rgba(0,0,0,.9)!important;
 }
 .map-table th .cell {
     color: #0052d9!important;

@@ -29,7 +29,7 @@
                         :expand-on-click-node="false"
                         :indent='indent'>
                         <span class="custom-tree-node" slot-scope="{ node }">
-                            <span style="font-size:12px;">{{ node.label }}</span>
+                            <span style="color:rgba(0, 0, 0, 0.9);font-size:12px;">{{ node.label }}</span>
                         </span>
                     </el-tree>
                 </div>
@@ -48,7 +48,6 @@
                                             :options="labelData"
                                             :normalizer="normalizer"
                                             noChildrenText="当前分支无子节点"
-                                            noResultsText="无可用选项"
                                             noOptionsText="无可用选项"
                                             placeholder="请选择"
                                             v-model="get_params.name"
@@ -145,7 +144,6 @@
                                         :options="labelData"
                                         noChildrenText="当前分支无子节点"
                                         noOptionsText="无可用选项"
-                                        noResultsText="无可用选项"
                                         :normalizer="normalizer"
                                         placeholder="请选择"
                                         v-model="add_params.name"
@@ -443,7 +441,6 @@
                                         :normalizer="normalizer"
                                         noChildrenText="当前分支无子节点"
                                         noOptionsText="无可用选项"
-                                        noResultsText="无可用选项"
                                         placeholder="请选择"
                                         v-model="add_paramsEdit.name"
                                     />
@@ -737,7 +734,6 @@
                         :normalizer="normalizerTag"
                         noChildrenText="当前分支无子节点"
                         noOptionsText="无可用选项"
-                        noResultsText="无可用选项"
                         placeholder="请选择"
                         v-model="addTypeForm.parentId"
                     />
@@ -1433,11 +1429,6 @@ export default {
 }
 .el-tree{
     background: rgba(0,0,0,0);
-    ::v-deep .custom-tree-node {
-        span {
-            color:rgba(0, 0, 0, 0.9);
-        }
-    }
 }
 .event  ::v-deep  .custom-tree-node{
     height: 26px;
@@ -1640,35 +1631,9 @@ export default {
 .event ::v-deep .vue-treeselect__input{
         vertical-align: middle !important;
 }
-.custom-star {
-    #app {
-        .bg-color {
-            background: unset;
-        }
-        .el-tree {
-            ::v-deep .custom-tree-node {
-                color: red;
-                span {
-                    color:rgba(255, 255, 255, 0.9);
-                }
-            }
-        }
-        .vue-treeselect__portal-target .vue-treeselect__menu .vue-treeselect__option {
-            color: #fff;
-        }
-    }
-}
 </style>
 <style>
-    .custom-star {
-        .vue-treeselect__portal-target .vue-treeselect__option {
-            color: #fff;
-        }
-        .vue-treeselect--single .vue-treeselect__option--selected {
-            color: #1cd7fa;
-            background-color: rgba(255,255,255,.2);
-        }
-    }
+
     .custom-tree-node span:hover {
         color: #0052d9 !important;
     }

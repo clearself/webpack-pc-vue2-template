@@ -17,12 +17,12 @@
             </el-col>
             <el-col :md="12" :lg="8" :xl="6">
                 <el-form :model="searchForm">
-                    <el-form-item label="所属部门:" label-width="80px" style="height: 32px;">
+                    <el-form-item label="所属部门:" label-width="80px" style="height: 32px">
                         <div class="treeselect">
                             <Treeselect
                                 :appendToBody="true"
                                 size="small"
-                                style="width: 100%;"
+                                style="width:100%;"
                                 :options="treeData"
                                 :normalizer="normalizer"
                                 noChildrenText="当前分支无子节点"
@@ -37,7 +37,7 @@
             <el-col :md="12" :lg="8" :xl="6">
                 <el-form :model="searchForm">
                     <el-form-item label="用户角色:" label-width="80px">
-                        <el-select v-model="searchForm.roleId" placeholder="请选择" size="small" style="width: 100%;" clearable>
+                        <el-select v-model="searchForm.roleId" placeholder="请选择" size="small" style="width:100%" clearable>
                             <el-option
                                 v-for="item in roleList"
                                 :key="item.id"
@@ -343,10 +343,6 @@ export default {
             this.$refs.addEditUser.userForm.mailbox = row.mailbox
             this.$refs.addEditUser.userForm.roles = row.roles
             this.$refs.addEditUser.userForm.isLimit = row.isLimit
-            this.$refs.addEditUser.userForm.adminAssets = row.userOrg.map(item => { return item.orgId })
-            this.$refs.addEditUser.userForm.assetUser = row.assetUser
-            this.$refs.addEditUser.userForm.assetsUserName = row.assetsUserName
-            this.$refs.addEditUser.userForm.orgType = row.orgType
             if (row.ips.length > 0) {
                 this.$refs.addEditUser.userForm.ips = row.ips.map(item => {
                     return {
@@ -469,63 +465,39 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$blue: #387dee;
+$blue: #387DEE;
 .table-template-text {
     color: $blue;
 }
-.custom-star #app .table-template-inactive {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 102px;
-    height: 24px;
-    text-align: center;
-    color: #ff9696;
-    background-color: rgba(255, 186, 0, .2);
-    border-radius: 4px;
-    border: solid 1px #ff3a3a;
-}
-.custom-star #app .table-template-active {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 102px;
-    height: 24px;
-    text-align: center;
-    color: #96ff96;
-    background-color: rgba(0, 255, 0, .2);
-    border-radius: 4px;
-    border: solid 1px #00ff00;
-}
 .table-template-inactive {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 102px;
     height: 18px;
+    color: #aa0202;
+    background-color:#fdd8d8;
     border-radius: 11px;
     text-align: center;
-    color: #aa0202;
-    background-color: #fdd8d8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .table-template-active {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 102px;
     height: 18px;
+    color: #048450;
+    background-color:#ccf6e4;
     border-radius: 11px;
     text-align: center;
-    color: #048450;
-    background-color: #ccf6e4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.treeselect {
+ .treeselect{
     padding: 0;
-    ::v-deep .vue-treeselect__control {
+    ::v-deep .vue-treeselect__control{
         height: 30px;
         line-height: 30px;
     }
-    ::v-deep .vue-treeselect__input {
+    ::v-deep .vue-treeselect__input{
         vertical-align: middle;
     }
 }

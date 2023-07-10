@@ -3,7 +3,7 @@
         <SearchTop @search="searchAssets" @reset="reserFun">
             <el-col :md="12" :lg="8" :xl="6">
                 <el-form :model="get_params">
-                    <el-form-item label="属性名称：" label-width="90px">
+                    <el-form-item label="属性名称：" label-width="80px">
                         <el-input placeholder="请输入" clearable v-model="get_params.attrName" size="small"></el-input>
                     </el-form-item>
                 </el-form>
@@ -135,7 +135,7 @@
             </el-table>
             <pagination v-show="total_num>0" :total="total_num" :page.sync="get_params.page" :limit.sync="get_params.size" @pagination="get_data" />
         </div>
-        <el-dialog title="查看" :visible.sync="seeDialog" width="700px" custom-class="common-dialog checkdia">
+        <el-dialog title="查看" :visible.sync="seeDialog" width="700px" custom-class="common-dialog">
             <div style="width:100%;margin: 0 auto;">
                 <el-descriptions class="margin-top" title="" :column="1" size="mini" border>
                     <el-descriptions-item>
@@ -859,25 +859,4 @@ export default {
     cursor: pointer;
     box-sizing: border-box;
 }
-
-</style>
-<style lang="scss">
-    .custom-star {
-        .checkdia {
-            .el-dialog__body {
-                .el-descriptions__body {
-                    background: unset;
-                    .el-descriptions-item__label.is-bordered-label {
-                        background: unset!important;
-                        color: #fff!important;
-                        border: 1px solid #1cd7fa!important;
-                    }
-                    .el-descriptions-item__cell {
-                        color: #fff;
-                        border: 1px solid #1cd7fa!important;
-                    }
-                }
-            }
-        }
-    }
 </style>

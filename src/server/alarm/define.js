@@ -254,12 +254,3 @@ export const assetsInfo1 = (data) => {
         data: data
     })
 }
-// 获取自动响应信息
-export const getAutoResponse = (data) => {
-    return request({
-        url: 'alarm/manage/alarmList/getAutoResponse',
-        method: 'post',
-        params: data.queryData,
-        data: data.paramsData
-    })
-}

@@ -51,7 +51,7 @@ export default {
         // background: url("../../../assets/img/tab_btn.jpg") 100% 100% no-repeat;
         color: rgba(0,0,0,0.6);
         box-sizing: border-box;
-        font-size: 13px;
+        font-size: 14px;
 
         &.tab-active {
             color: #387dee;

@@ -1,12 +1,7 @@
 <template>
-    <div class="login w100 h100 ub ub-ac">
-        <div class="left-bg-box ub ub-ac">
-            <div>
-                <img src="../../assets/img/login/left_bg_login.png" alt="">
-            </div>
-        </div>
-        <div class="main ub ub-ver ub-ac ub-pc">
-            <div class="title-info ub ub-pc ub-ac mb-5">
+    <div class="login w100 h100 ub ub-ac ub-pc">
+        <div class="main ub ub-ac ub-pc">
+            <div class="title-info ub ub-pc ub-ac">
                 <p>{{safetyInfo.systemName}}</p>
             </div>
             <div class="form">
@@ -21,6 +16,7 @@
                         ref="loginForm">
                         <el-form-item prop="username" label="用户名" :label-width="formLabelWidth" :class="{'mt40': safetyInfo.graphicVerification !== 1}">
                             <el-input
+                                prefix-icon="iconfont icon-zhanghu"
                                 clearable
                                 placeholder="请输入用户名"
                                 v-model.trim="loginForm.username"
@@ -33,6 +29,7 @@
                             prop="password"
                             :label-width="formLabelWidth">
                             <el-input
+                                prefix-icon="iconfont icon-mima"
                                 show-password
                                 placeholder="请输入密码"
                                 @keyup.native.enter="validUser"
@@ -56,7 +53,7 @@
                                 <img
                                     slot="append"
                                     @click="handleRefresh"
-                                    style="display: block;width: 120px;height: 38px;border-radius: 4px;"
+                                    style="width: 120px;height: 38px;display: block;border-radius: 4px"
                                     :src="verifyCode"
                                     alt="验证码">
 
@@ -64,7 +61,6 @@
                         </el-form-item>
                         <div class="submit">
                             <el-button :disabled="isLogin" class="w100" type="primary" @click="validUser">{{isLogin ? '正在登录中，请稍后...' : '登 录'}}</el-button>
-                            <el-button :disabled="isLogin" class="w100" type="primary" @click="validUserSSO" v-if="this.$getlocalStorage('project') == '1'">SSO 登录</el-button>
                             <div class="mark ub ub-pj ub-ac">
                                 <div class="remember-pwd">
                                     <el-checkbox v-model="checked">记住密码</el-checkbox>
@@ -106,6 +102,7 @@ import {
     sendVerifyCode,
     getCode
 } from '@/server/login/index.js'
+
 export default {
     name: 'Login',
     components: {
@@ -174,12 +171,9 @@ export default {
             return '/api/base-server/getCaptcha?width=120&height=38&time=' + this.refresh
         }
     },
-    beforeMount() {
-        // window.location.href = 'https://www.baidu.com/'
-    },
     created() {
         // 判断授权是否过期
-        // this.getExpire()
+        this.getExpire()
         // 监听屏幕比例变化，强制禁止缩放
         // new DevicePixelRatio().init()
         this.handleRefresh()
@@ -216,10 +210,6 @@ export default {
                     })
                 }
             })
-        },
-        validUserSSO() {
-            window.location.href = '/api/base-server/sso/initAuthorize'
-            console.log('sso')
         },
         checkViChange() {
             if (!document.hidden) {
@@ -374,61 +364,41 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$dark: rgb(0 0 0 / 90%);
+$dark: rgba(0, 0, 0, 0.9);
 $blue: #387dee;
 .login {
     position: fixed;
-    padding: 0 90px 0 40px;
-    width: 100%;
-    min-width: 1300px;
-    // background: url('../../assets/img/login/login-bg.jpg') center center no-repeat fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-image: url('../../assets/img/login/bg_login.jpg');
-    box-sizing: border-box;
-    .left-bg-box {
-        width: 62%;
-        min-width: 800px;
-        height: 100vh;
-        >div {
-            margin-top: -20px;
-            width: 100%;
-            img {
-                vertical-align: top;
-                width: 100%;
-            }
-            // background-image: url('../../assets/img/login/left_bg_login.png');
-            // transform: scale(0.93);
-        }
-    }
+    background: url('../../assets/img/login/login-bg.jpg') center center no-repeat fixed;
+    background-size: 100% 99%;
     .main {
+        width: 1446px;
+        height: 1084px;
+        background-color: #ebf6fd;
         position: relative;
-        width: 35%;
-        min-width: 400px;
-        height: 100vh;
-        // background: url('../../assets/img/login/login-inner.png') center center no-repeat;
-        // background-size: 90% 90%;
-        // background-color: #ebf6fd;
+        background: url('../../assets/img/login/login-inner.png') center center no-repeat;
+        background-size: 90% 90%;
         .title-info {
-            // position: absolute;
-            // top: 200px;
-            // z-index: 10;
             height: 40px;
             line-height: 40px;
+            top: 200px;
+            position: absolute;
+            z-index: 10;
             p {
-                font-size: 45px;
+                font-size: 50px;
                 font-family: Hkxzy;
-                color: #ffffff;
+                color: #3579ec;
+                text-shadow: 10px 10px 4px rgba(13, 64, 133, .1);
+                letter-spacing: 8px;
             }
         }
         .form {
-            position: relative;
             z-index: 999;
-            width: 100%;
+            width: 380px;
+            position: relative;
             .warn-tips {
                 font-size: 12px;
                 color: #ff1414;
+
                 span.admin-phone {
                     text-decoration: underline;
                     cursor: pointer;
@@ -437,32 +407,28 @@ $blue: #387dee;
         }
         .login-form {
             & ::v-deep .el-form--label-top .el-form-item__label {
-                margin-bottom: 8px;
-                padding: 0;
-                height: 20px;
                 font-size: 13px!important;
-                color: #ffffff;
+                color: rgba(0, 0, 0, 0.26);
+                height: 20px;
                 line-height: 20px;
+                padding: 0;
+                margin-bottom: 8px;
             }
             & ::v-deep .el-form-item {
-                margin-bottom: 100px;
+                margin-bottom: 30px;
+
                 .el-input__prefix {
-                    left: 16px;
                     color: $blue;
+                    left: 16px;
                     i {
-                        font-size: 20px;
                         font-weight: 500;
+                        font-size: 20px;
                     }
                 }
-                .el-input__inner {
-                    padding-left: 10px;
-                    border-color: transparent!important;
-                    border-bottom-color: rgb(255 255 255 / 50%)!important;
-                    border-radius: 0;
-                    color: #ffffff;
-                    background-color: transparent;
+                .el-input--prefix .el-input__inner {
+                    padding-left: 42px;
                     // &:hover {
-                    // border-color: #3579ec!important;
+                        // border-color: #3579ec!important;
                     // }
                 }
             }
@@ -473,7 +439,8 @@ $blue: #387dee;
                     cursor: pointer;
                     height: 40px;
                     box-sizing: border-box;
-                    background-color: #ffffff;
+                    background-color: #fff;
+
                     img {
                         padding: 4px 16px;
                     }
@@ -486,7 +453,7 @@ $blue: #387dee;
             }
         }
         .mt40 {
-            margin-bottom: 60px!important;
+            margin-bottom: 40px!important;
         }
         .submit {
             .el-button {
@@ -499,37 +466,35 @@ $blue: #387dee;
             .mark {
                 height: 20px;
                 font-size: 12px;
+
                 .forget-pwd {
-                    text-align: right;
-                    color: rgb(255 255 255 / 70%);
                     cursor: pointer;
+                    color: $blue;
+                    text-align: right;
                     &:hover {
                         text-decoration: underline;
                     }
                 }
-            }
-            & ::v-deep .el-checkbox, & ::v-deep .el-checkbox__input.is-checked+.el-checkbox__label {
-                color: rgb(255 255 255 / 70%)!important;
             }
             & ::v-deep .el-checkbox__input.is-checked+.el-checkbox__label,
             & ::v-deep .el-checkbox__input.is-checked .el-checkbox__inner {
                 color: $blue;
             }
             & ::v-deep .el-checkbox__input.is-checked .el-checkbox__inner {
-                border-color: $blue;
                 background-color: $blue;
+                border-color: $blue;
             }
             & ::v-deep .el-button--primary {
-                border-color: $blue;
                 background-color: $blue;
+                border-color: $blue;
             }
             & ::v-deep .el-button--primary:focus,
             & ::v-deep .el-button--primary:hover {
-                opacity: 0.9;
+                opacity: .9;
             }
             & ::v-deep .el-button--primary.is-disabled {
-                border-color: #dcdcdc;
                 background-color: #dcdcdc;
+                border-color: #dcdcdc;
             }
             .remember-pwd {
                 & ::v-deep .el-checkbox__inner::after {
@@ -538,24 +503,12 @@ $blue: #387dee;
                 }
             }
         }
-        & ::v-deep .el-icon-view::before {
+        & ::v-deep .el-icon-view:before {
             content: '\e7e5';
             font-family: iconfont;
         }
         & ::v-deep .el-input__inner:focus {
-            box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
-        }
-    }
-}
-
-</style>
-<style lang="scss">
-.custom-star #app {
-    .login-form {
-        .el-input__inner {
-            color: #ffffff!important;
-            background-color: rgb(0 0 0 / 0%)!important;
-            box-shadow: none!important;
+            box-shadow: 0 4px 8px rgba(0,0,0,.1)
         }
     }
 }

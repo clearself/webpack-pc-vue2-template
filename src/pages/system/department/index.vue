@@ -30,8 +30,6 @@
                 default-expand-all
                 :tree-props="{ children: 'sub', hasChildren: 'hasChildren'}"
                 @selection-change="handleSelectionChange"
-                @select="select"
-                @select-all="selectAll"
                 :height="tableHeight"
                 :row-style="{ height: '32px' }"
                 :header-row-style="{ height: '32px' }">
@@ -108,62 +106,6 @@ export default {
         console.log('关闭了')
     },
     methods: {
-        setChildren(children, type) {
-            children.map((j) => {
-                this.toggleSelection(j, type)
-                if (j.sub) {
-                    this.setChildren(j.sub, type)
-                }
-            })
-        },
-        select(selection, row) {
-            if (
-                selection.some((el) => {
-                    return row.id === el.id
-                })
-            ) {
-                if (row.sub) {
-                    this.setChildren(row.sub, true)
-                }
-            } else {
-                if (row.sub) {
-                    this.setChildren(row.sub, false)
-                }
-            }
-        },
-        toggleSelection(row, select) {
-            if (row) {
-                this.$nextTick(() => {
-                    this.$refs.multipleTable && this.$refs.multipleTable.toggleRowSelection(row, select)
-                })
-            }
-        },
-        selectAll(selection) {
-            const isSelect = selection.some((el) => {
-                const tableDataIds = this.tableData.map((j) => j.id)
-                return tableDataIds.includes(el.id)
-            })
-            const isCancel = !this.tableData.every((el) => {
-                const selectIds = selection.map((j) => j.id)
-                return selectIds.includes(el.id)
-            })
-            if (isSelect) {
-                selection.map((el) => {
-                    if (el.sub) {
-                        this.setChildren(el.sub, true)
-                    }
-                })
-            }
-            if (isCancel) {
-                this.tableData.map((el) => {
-                    if (el.sub) {
-                        this.setChildren(el.sub, false)
-                    }
-                })
-            }
-            this.$emit('handleSelect', this.tableData)
-        },
-
         add() {
             this.handleType = 'add'
             this.initDisabled(this.tableData)

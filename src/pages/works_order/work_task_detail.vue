@@ -6,7 +6,7 @@
                     <div class="work-btn"  :class="{'tab-active': activeTabName === 'one'}">任务详情</div>
                     <div class="draft-btn" :class="{'tab-active': activeTabName === 'two'}">流程图</div>
                 </div>
-                <div class="ub ub-pj w100" style="padding: 20px;">
+                <div class="ub ub-pj w100" style="padding:20px">
                     <div>{{ workTaskInfo.workOrderName }}</div>
                     <div>
                         <!-- <cancel-btn @click="back" title="返 回" /> -->
@@ -27,13 +27,13 @@
                             <el-descriptions-item label="工单名称">{{workTaskInfo.workOrderName | NullStr}}</el-descriptions-item>
                             <el-descriptions-item label="工单类型">{{workTaskInfo.workOrderObjectName | NullStr}}</el-descriptions-item>
                             <el-descriptions-item label="优先级">
-                                <span v-if="workTaskInfo.level==1" style="color: #ff0000;">
+                                <span v-if="workTaskInfo.level==1" style="color:#ff0000;">
                                     {{workTaskInfo.level|getLevel}}
                                 </span>
-                                <span v-else-if="workTaskInfo.level==2" style="color: #ffdd00;">
+                                <span v-else-if="workTaskInfo.level==2" style="color:#ffdd00;">
                                     {{workTaskInfo.level|getLevel}}
                                 </span>
-                                <span v-else style="color: #00e1fd;">
+                                <span v-else style="color:#00e1fd;">
                                     {{workTaskInfo.level|getLevel}}
                                 </span>
                             </el-descriptions-item>
@@ -44,10 +44,10 @@
                                 {{workTaskInfo.runningNodeName|getRunningNodeName}}
                             </el-descriptions-item>
                             <el-descriptions-item label="当前节点状态">
-                                <span v-if="workTaskInfo.currentNodeStatus==='待处理'" style="color: #ffba00;">{{workTaskInfo.currentNodeStatus}}</span>
-                                <span v-if="workTaskInfo.currentNodeStatus==='已超时'" style="color: #ff00e4;">{{workTaskInfo.currentNodeStatus}}</span>
-                                <span v-if="workTaskInfo.currentNodeStatus==='已撤销'" style="color: #cccccc;">{{workTaskInfo.currentNodeStatus}}</span>
-                                <span v-if="workTaskInfo.currentNodeStatus==='已完成'" style="color: lightgreen;">{{workTaskInfo.currentNodeStatus}}</span>
+                                <span v-if="workTaskInfo.currentNodeStatus==='待处理'" style="color:#ffba00;">{{workTaskInfo.currentNodeStatus}}</span>
+                                <span v-if="workTaskInfo.currentNodeStatus==='已超时'" style="color:#ff00e4;">{{workTaskInfo.currentNodeStatus}}</span>
+                                <span v-if="workTaskInfo.currentNodeStatus==='已撤销'" style="color:#ccc;">{{workTaskInfo.currentNodeStatus}}</span>
+                                <span v-if="workTaskInfo.currentNodeStatus==='已完成'" style="color:lightgreen;">{{workTaskInfo.currentNodeStatus}}</span>
                             </el-descriptions-item>
                             <el-descriptions-item label="创建人">
                                 {{workTaskInfo.createUser | NullStr}}
@@ -75,8 +75,8 @@
                     </div>
                     <div v-if="workTaskInfo.workOrderObject == 1" style="margin-top: 20px;" class="info-title">事件详情</div>
                     <div v-if="workTaskInfo.workOrderObject == 1">
-                        <el-row style='margin: 20px 0;' type="flex" justify="start">
-                            <div class="ub" style="width: 100%;">
+                        <el-row style='margin:20px 0;' type="flex" justify="start">
+                            <div class="ub" style="width:100%;">
                                 <!-- <div class="label">原始日志：</div> -->
                                 <div class="ub ub-f1">
                                     <div class="ub ub-ver ub-f1">
@@ -109,15 +109,15 @@
                                                                     @click="jumpAsset(scope.row.srcIp)"
                                                                     class="ub ub-ac click-btn"
                                                                 >
-                                                                    <i class="iconfont icon-chaxunzichan" style="font-size: 12px;"></i>
+                                                                    <i class="iconfont icon-chaxunzichan" style="font-size:12px"></i>
                                                                     <span>查询资产</span>
                                                                 </p>
                                                                 <p
-                                                                    style="margin-top: 10px;"
+                                                                    style="margin-top:10px"
                                                                     @click="jumpThreat(scope.row.srcIp)"
                                                                     class="ub ub-ac click-btn"
                                                                 >
-                                                                    <i class="iconfont icon-chaxunqingbao" style="font-size: 12px;"></i>
+                                                                    <i class="iconfont icon-chaxunqingbao" style="font-size:12px"></i>
                                                                     <span>查询情报</span>
                                                                 </p>
                                                             </div>
@@ -140,15 +140,15 @@
                                                                     @click="jumpAsset(scope.row.desIp)"
                                                                     class="ub ub-ac click-btn"
                                                                 >
-                                                                    <i class="iconfont icon-chaxunzichan" style="font-size: 12px;"></i>
+                                                                    <i class="iconfont icon-chaxunzichan" style="font-size:12px"></i>
                                                                     <span>查询资产</span>
                                                                 </p>
                                                                 <p
-                                                                    style="margin-top: 10px;"
+                                                                    style="margin-top:10px"
                                                                     @click="jumpThreat(scope.row.desIp)"
                                                                     class="ub ub-ac click-btn"
                                                                 >
-                                                                    <i class="iconfont icon-chaxunqingbao" style="font-size: 12px;"></i>
+                                                                    <i class="iconfont icon-chaxunqingbao" style="font-size:12px"></i>
                                                                     <span>查询情报</span>
                                                                 </p>
                                                             </div>
@@ -198,139 +198,139 @@
                     </div>
                     <div v-if="workTaskInfo.workOrderObject == 2" style="margin-top: 20px;" class="info-title">漏洞详情</div>
                     <div v-if="workTaskInfo.workOrderObject == 2">
-                        <el-row style='margin: 10px 0;' type="flex" justify="start">
-                            <div class="ub" style="width: 33%;">
+                        <el-row style='margin:10px 0;' type="flex" justify="start">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">漏洞名称：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.nodeName | NullStr}}</div>
                             </div>
-                            <div class="ub" style="width: 33%;">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">漏洞类型：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.leakTypeCN | NullStr}}</div>
                             </div>
-                            <div class="ub" style="width: 33%;">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">漏洞级别：</div>
                                 <div class="ub ub-f1 line1 label-val">
-                                    <span style="color: #00a2ff;" v-if="leaksInfo.riskLevel==1">
+                                    <span style="color:#00a2ff;" v-if="leaksInfo.riskLevel==1">
                                         {{leaksInfo.riskLevelCN}}
                                     </span>
-                                    <span style="color: #f2cd00;" v-if="leaksInfo.riskLevel==2">
+                                    <span style="color:#f2cd00;" v-if="leaksInfo.riskLevel==2">
                                         {{leaksInfo.riskLevelCN}}
                                     </span>
-                                    <span style="color: #f86900;" v-if="leaksInfo.riskLevel==3">
+                                    <span style="color:#f86900;" v-if="leaksInfo.riskLevel==3">
                                         {{leaksInfo.riskLevelCN}}
                                     </span>
-                                    <span style="color: #19b0b1;" v-if="leaksInfo.riskLevel==4">
+                                    <span style="color:#19b0b1;" v-if="leaksInfo.riskLevel==4">
                                         {{leaksInfo.riskLevelCN}}
                                     </span>
                                 </div>
                             </div>
                         </el-row>
-                        <el-row style='margin: 20px 0;' type="flex" justify="start">
-                            <div class="ub" style="width: 33%;">
+                        <el-row style='margin:20px 0;' type="flex" justify="start">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">修复建议：</div>
                                 <div class="ub ub-f1 line1 label-val">
                                     {{leaksInfo.repairAdvice | NullStr}}
                                 </div>
                             </div>
-                            <div class="ub" style="width: 33%;">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">简短描述：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.shortDesc | NullStr}}</div>
                             </div>
-                            <div class="ub" style="width: 33%;">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">详细描述：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.fullDesc | NullStr}}</div>
                             </div>
                         </el-row>
-                        <el-row style='margin: 20px 0;' type="flex" justify="start">
-                            <div class="ub" style="width: 33%;">
+                        <el-row style='margin:20px 0;' type="flex" justify="start">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">漏洞CVSS分值：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.cvssScore | NullStr}}</div>
                             </div>
-                            <div class="ub" style="width: 33%;">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">CVE编号：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.cveTag | NullStr}}</div>
                             </div>
-                            <div class="ub" style="width: 33%;">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">CNVD编号：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.cnvdTag | NullStr}}</div>
                             </div>
                         </el-row>
-                        <el-row style='margin: 20px 0;' type="flex" justify="start">
-                            <div class="ub" style="width: 33%;">
+                        <el-row style='margin:20px 0;' type="flex" justify="start">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">CNNVD编号：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.cnnvdTag | NullStr}}</div>
                             </div>
-                            <div class="ub" style="width: 33%;">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">CNCVE编号：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.cncveTag | NullStr}}</div>
                             </div>
-                            <div class="ub" style="width: 33%;">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">BUGTRAP：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.bugTraqTag | NullStr}}</div>
                             </div>
                         </el-row>
-                        <el-row style='margin: 20px 0;' type="flex" justify="start">
-                            <div class="ub" style="width: 33%;">
+                        <el-row style='margin:20px 0;' type="flex" justify="start">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">更新时间：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.updateTime | NullStr}}</div>
                             </div>
-                            <div class="ub" style="width: 33%;">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">影响平台：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.platforms | NullStr}}</div>
                             </div>
-                            <div class="ub" style="width: 33%;">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">创建时间：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.createTime | NullStr}}</div>
                             </div>
                         </el-row>
-                        <el-row style='margin: 20px 0;' type="flex" justify="start">
-                            <div class="ub" style="width: 33%;">
+                        <el-row style='margin:20px 0;' type="flex" justify="start">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">漏洞端口：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.port | NullStr}}</div>
                             </div>
-                            <div class="ub" style="width: 33%;">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">服务名称：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.serviceName | NullStr}}</div>
                             </div>
-                            <div class="ub" style="width: 33%;">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">检查结果：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.checkResult | NullStr}}</div>
                             </div>
                         </el-row>
-                        <el-row style='margin: 20px 0;' type="flex" justify="start">
-                            <div class="ub" style="width: 33%;">
+                        <el-row style='margin:20px 0;' type="flex" justify="start">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">检查类型：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.checkType | NullStr}}</div>
                             </div>
-                            <div class="ub" style="width: 33%;">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">合规项描述：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.compliance | NullStr}}</div>
                             </div>
-                            <div class="ub" style="width: 33%;">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">加固方案：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.reinforcement | NullStr}}</div>
                             </div>
                         </el-row>
-                        <el-row style='margin: 20px 0;' type="flex" justify="start">
-                            <div class="ub" style="width: 33%;">
+                        <el-row style='margin:20px 0;' type="flex" justify="start">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">漏洞URL：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.leakUrl | NullStr}}</div>
                             </div>
-                            <div class="ub" style="width: 33%;">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">网站名称：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.webName | NullStr}}</div>
                             </div>
-                            <div class="ub" style="width: 33%;">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">提交类型：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.submitType | NullStr}}</div>
                             </div>
                         </el-row>
-                        <el-row style='margin: 20px 0;' type="flex" justify="start">
-                            <div class="ub" style="width: 33%;">
+                        <el-row style='margin:20px 0;' type="flex" justify="start">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">测试数据：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.testData | NullStr}}</div>
                             </div>
-                            <div class="ub" style="width: 33%;">
+                            <div class="ub" style="width:33%;">
                                 <div class="label">post数据：</div>
                                 <div class="ub ub-f1 line1 label-val">{{leaksInfo.postData | NullStr}}</div>
                             </div>
@@ -351,7 +351,7 @@
                                         }"
                                         v-for="(item,index) in fieldsForm.fields"
                                         :key="index">
-                                        <div v-if="item.valType==='text'" style="width: 100%;">
+                                        <div v-if="item.valType==='text'" style="width:100%">
                                             <el-form-item
                                                 v-if="item.type=='0'"
                                                 :style="{
@@ -389,7 +389,7 @@
                                             </el-form-item>
 
                                         </div>
-                                        <div v-if="item.valType==='textArea'" style="width: 100%;">
+                                        <div v-if="item.valType==='textArea'" style="width:100%">
                                             <el-form-item
                                                 v-if="item.type=='0'"
                                                 :style="{
@@ -430,7 +430,7 @@
 
                                         </div>
 
-                                        <div v-if="item.valType==='select'" style="width: 100%;">
+                                        <div v-if="item.valType==='select'" style="width:100%">
                                             <el-form-item
                                                 v-if="item.type=='0'"
                                                 :style="{
@@ -520,7 +520,7 @@
                                         }"
                                         v-for="(item,index) in fieldsForm.fields"
                                         :key="index">
-                                        <div v-if="item.fieldType==1" style="width: 100%;">
+                                        <div v-if="item.fieldType==1" style="width:100%">
                                             <el-form-item
                                                 v-if="item.type=='0'"
                                                 :style="{
@@ -560,7 +560,7 @@
                                             </el-form-item>
 
                                         </div>
-                                        <div v-if="item.fieldType==2" style="width: 100%;">
+                                        <div v-if="item.fieldType==2" style="width:100%">
                                             <el-form-item
                                                 v-if="item.type=='0'"
                                                 :style="{
@@ -602,7 +602,7 @@
                                             </el-form-item>
 
                                         </div>
-                                        <div v-if="item.fieldType==3" style="width: 100%;">
+                                        <div v-if="item.fieldType==3" style="width:100%">
                                             <el-form-item
                                                 v-if="item.type=='0'"
                                                 :style="{
@@ -649,7 +649,7 @@
                                             </el-form-item>
 
                                         </div>
-                                        <div v-if="item.fieldType==4" style="width: 100%;">
+                                        <div v-if="item.fieldType==4" style="width:100%">
                                             <el-form-item
                                                 v-if="item.type=='0'"
                                                 :style="{
@@ -694,7 +694,7 @@
                                             </el-form-item>
 
                                         </div>
-                                        <div v-if="item.fieldType==6" style="width: 100%;">
+                                        <div v-if="item.fieldType==6" style="width:100%">
                                             <el-form-item
                                                 v-if="item.type=='0'"
                                                 :style="{
@@ -738,7 +738,7 @@
 
                                             </el-form-item>
                                         </div>
-                                        <div v-if="item.fieldType==7" style="width: 100%;">
+                                        <div v-if="item.fieldType==7" style="width:100%">
                                             <el-form-item
                                                 v-if="item.type=='0'"
                                                 :style="{
@@ -821,7 +821,7 @@
                             <!-- 备注 -->
                             <div class="w100" v-if="(workTaskInfo.workOrderObject == 3 || workTaskInfo.workOrderObject == 4|| workTaskInfo.workOrderObject == 5 || (workTaskInfo.runningNodeName?workTaskInfo.runningNodeName[0] == 'User Task':''))">
                                 <el-form class="w100" :model="otherForm" :rules="rules" ref="otherForm" :inline="true">
-                                    <el-form-item style="margin-bottom: 20px;width: 100%;" label="备注：" prop="" :label-width="formLabelWidth">
+                                    <el-form-item style="width:100%;margin-bottom: 20px;" label="备注：" prop="" :label-width="formLabelWidth">
                                         <div class="ub ub-pc rich-text-width" style="position: relative;">
                                             <vue-ueditor-wrap v-model="otherForm.remark" :config="myConfig"></vue-ueditor-wrap>
                                         </div>
@@ -832,7 +832,7 @@
 
                             <div class="w100" v-if="workTaskInfo.workOrderObject==1&&workTaskInfo.operation&&workTaskInfo.operation==2">
                                 <el-form class="w100" :model="handleForm" :rules="disposalRules" ref="handleForm" :inline="true">
-                                    <el-form-item style="margin-bottom: 20px;width: 48%;" label="审核状态：" prop="isReject" :label-width="formLabelWidth">
+                                    <el-form-item style="width:48%;margin-bottom: 20px;" label="审核状态：" prop="isReject" :label-width="formLabelWidth">
                                         <el-select placeholder="请选择" style="width: 400px;" v-model="handleForm.isReject" size="small">
                                             <el-option label="处置" value="0"></el-option>
                                             <el-option label="驳回" value="1"></el-option>
@@ -841,7 +841,7 @@
                                     </el-form-item>
                                     <el-form-item
                                         v-if="handleForm.isReject != 1"
-                                        style="margin-bottom: 20px;width: 48%;"
+                                        style="width:48%;margin-bottom: 20px;"
                                         label="处理方式："
                                         prop="disposalType"
                                         :label-width="formLabelWidth">
@@ -857,14 +857,14 @@
 
                                     <el-form-item
                                         v-if="handleForm.disposalType == 0  && handleForm.isReject != 1"
-                                        style="margin-bottom: 20px;width: 48%;"
+                                        style="width:48%;margin-bottom: 20px;"
                                         label="IP："
                                         prop=""
                                         :label-width="formLabelWidth">
                                         <el-input style="width: 400px;" type="textarea" placeholder="请输入" clearable v-model="handleForm.ips" size="small"></el-input>
                                         <el-tooltip
                                             class="item"
-                                            style="position: absolute;top: 40%;right: -20px;"
+                                            style="position: absolute;top:40%;right: -20px;"
                                             effect="dark"
                                             content="多个ip录入时，记录每行为一个ip，按Enter折行批量录入"
                                             placement="right">
@@ -873,7 +873,7 @@
                                     </el-form-item>
                                     <el-form-item
                                         v-if="handleForm.disposalType == 0  && handleForm.isReject != 3"
-                                        style="margin-bottom: 20px;width: 48%;"
+                                        style="width:48%;margin-bottom: 20px;"
                                         label="封禁对象："
                                         prop=""
                                         :label-width="formLabelWidth">
@@ -883,7 +883,7 @@
 
                                     </el-form-item>
                                     <div style="margin-bottom: 20px;" v-if="handleForm.disposalType == 1 && handleForm.isReject != 1">
-                                        <el-form-item label="变更项：" style="width: 48%;" :label-width="formLabelWidth">
+                                        <el-form-item label="变更项：" style="width: 48%" :label-width="formLabelWidth">
                                             <el-select v-model="handleForm.changeItemZDGZ" placeholder="请选择" style="width: 400px;" size="small">
                                                 <el-option label="WAF规则变更" value=0></el-option>
                                                 <el-option label="IPS规则变更" value=1></el-option>
@@ -891,7 +891,7 @@
                                                 <el-option label="IDS规则变更" value=3></el-option>
                                             </el-select>
                                         </el-form-item>
-                                        <el-form-item label="选择设备：" style="width: 48%;" :label-width="formLabelWidth">
+                                        <el-form-item label="选择设备：" style="width: 48%" :label-width="formLabelWidth">
                                             <el-select v-model="handleForm.assetIdsZDGZ" placeholder="请选择" multiple style="width: 400px;" size="small">
                                                 <el-option v-for="(item,index) in assetList" :key="index" :label="item.name" :value="item.id">
                                                 </el-option>
@@ -899,7 +899,7 @@
                                         </el-form-item>
                                     </div>
                                     <div style="margin-bottom: 20px;" v-if="handleForm.disposalType == 2 && handleForm.isReject != 1">
-                                        <el-form-item label="变更项：" style="width: 48%;" :label-width="formLabelWidth">
+                                        <el-form-item label="变更项：" style="width: 48%" :label-width="formLabelWidth">
                                             <el-select v-model="handleForm.changeItemJCGZ" placeholder="请选择" style="width: 400px;" size="small">
                                                 <el-option label="WAF规则变更" value=0></el-option>
                                                 <el-option label="IPS规则变更" value=1></el-option>
@@ -907,7 +907,7 @@
                                                 <el-option label="IDS规则变更" value=3></el-option>
                                             </el-select>
                                         </el-form-item>
-                                        <el-form-item label="选择设备：" style="width: 48%;" :label-width="formLabelWidth">
+                                        <el-form-item label="选择设备：" style="width: 48%" :label-width="formLabelWidth">
                                             <el-select v-model="handleForm.assetIdsJCGZ" placeholder="请选择" multiple style="width: 400px;" size="small">
                                                 <el-option v-for="(item,index) in assetList" :key="index" :label="item.name" :value="item.id">
                                                 </el-option>
@@ -919,21 +919,21 @@
                                         prop=""
                                         :label-width="formLabelWidth"
                                         v-if="handleForm.disposalType == 3 && handleForm.isReject != 1"
-                                        style="margin-bottom: 20px;width: 48%;">
+                                        style="width:48%;margin-bottom: 20px;">
                                         <el-select v-model="handleForm.assetIdsFWGZ" placeholder="请选择" multiple style="width: 400px;" size="small">
                                             <el-option v-for="item in assetList" :key="item.id" :label="item.name" :value="item.id">
                                             </el-option>
                                         </el-select>
                                     </el-form-item>
                                     <div style="margin-bottom: 20px;" v-if="handleForm.disposalType == 4 && handleForm.isReject != 1">
-                                        <el-form-item label="业务系统：" style="width: 48%;" :label-width="formLabelWidth">
+                                        <el-form-item label="业务系统：" style="width: 48%" :label-width="formLabelWidth">
                                             <el-select v-model="handleForm.assetSystemId" placeholder="请选择" style="width: 400px;" size="small">
                                                 <el-option v-for="item in systemList" :key="item.id" :label="item.system_name" :value="item.id">
                                                 </el-option>
                                             </el-select>
                                         </el-form-item>
 
-                                        <el-form-item label="业务员：" class="business" style="width: 48%;" :label-width="formLabelWidth">
+                                        <el-form-item label="业务员：" class="business" style="width: 48%" :label-width="formLabelWidth">
                                             <el-select v-model="handleForm.assetUserId" placeholder="请选择" style="width: 400px;" size="small">
                                                 <el-option v-for="item in userList" :key="item.id" :label="item.chineseName" :value="item.id">
                                                 </el-option>
@@ -945,10 +945,10 @@
                                         label="备注："
                                         :label-width="formLabelWidth"
                                         prop="changeLog"
-                                        style="margin-bottom: 20px;width: 48%;"
+                                        style="width:48%;margin-bottom: 20px;"
                                         v-if="handleForm.disposalType != 0 && handleForm.disposalType != 5  && handleForm.isReject != 1">
                                         <el-input
-                                            style="width: 400px;font-size: 12px;"
+                                            style="font-size: 12px;width: 400px"
                                             type="textarea"
                                             :autosize="{ minRows: 3, maxRows: 5}"
                                             v-model="handleForm.changeLog"
@@ -956,7 +956,7 @@
                                     </el-form-item>
                                     <el-form-item
                                         v-if="handleForm.isReject == 1"
-                                        style="margin-bottom: 20px;width: 100%;"
+                                        style="width:100%;margin-bottom: 20px;"
                                         label="驳回理由:"
                                         :label-width="formLabelWidth">
                                         <div class="ub ub-pc rich-text-width">
@@ -964,7 +964,7 @@
                                         </div>
                                     </el-form-item>
                                     <el-form-item
-                                        style=" margin-bottom: 20px;width: 100%;"
+                                        style="width:100%; margin-bottom: 20px;"
                                         v-if="handleForm.disposalType == 5"
                                         label="其他:"
                                         :label-width="formLabelWidth">
@@ -972,7 +972,7 @@
                                             <vue-ueditor-wrap v-model="handleForm.otherMsg" :config="myConfig"></vue-ueditor-wrap>
                                         </div>
                                     </el-form-item>
-                                    <el-form-item style=" margin-bottom: 20px;width: 100%;" label="处置结果：" prop="" :label-width="formLabelWidth">
+                                    <el-form-item style="width:100%; margin-bottom: 20px;" label="处置结果：" prop="" :label-width="formLabelWidth">
                                         <div class="ub ub-pc rich-text-width">
                                             <vue-ueditor-wrap v-model="handleForm.actionResults" :config="myConfig"></vue-ueditor-wrap>
                                         </div>
@@ -984,7 +984,7 @@
                             <div class="w100" v-if="workTaskInfo.workOrderObject==2&&workTaskInfo.operation&&workTaskInfo.operation==2">
                                 <el-form class="w100" :model="handleLeakForm" :rules="disposalRules" ref="handleLeakForm" :inline="true">
                                     <el-form-item
-                                        style="margin-bottom: 20px;width: 48%;"
+                                        style="width:48%;margin-bottom: 20px;"
                                         label="处理方式："
                                         prop="disposalType"
                                         :label-width="formLabelWidth">
@@ -994,7 +994,7 @@
                                             <el-option label="其他" value=2></el-option>
                                         </el-select>
                                     </el-form-item>
-                                    <el-form-item v-if="handleLeakForm.disposalType==2" style=" margin-bottom: 20px;width: 100%;" label="处理方式描述：" prop="" :label-width="formLabelWidth">
+                                    <el-form-item v-if="handleLeakForm.disposalType==2" style="width:100%; margin-bottom: 20px;" label="处理方式描述：" prop="" :label-width="formLabelWidth">
                                         <div class="ub ub-pc rich-text-width">
                                             <vue-ueditor-wrap v-model="handleLeakForm.des" :config="myConfig"></vue-ueditor-wrap>
                                         </div>
@@ -1005,21 +1005,21 @@
                             <!-- 事件分析 -->
                             <div class="w100" v-if="workTaskInfo.workOrderObject==1&&workTaskInfo.operation===0">
                                 <el-form class="w100" :model="analysisForm" :rules="analysisRules" ref="analysisForm" :inline="true">
-                                    <el-form-item style="margin-bottom: 20px;width: 100%;" label="是否驳回：" prop="isReject" :label-width="formLabelWidth">
+                                    <el-form-item style="width:100%;margin-bottom: 20px;" label="是否驳回：" prop="isReject" :label-width="formLabelWidth">
                                         <el-select placeholder="请选择" class="rich-text-width" v-model="analysisForm.isReject" size="small">
                                             <el-option label="是" value="1"></el-option>
                                             <el-option label="否" value="0"></el-option>
 
                                         </el-select>
                                     </el-form-item>
-                                    <el-form-item style="margin-bottom: 20px;width: 100%;" label="分析过程：" prop="" :label-width="formLabelWidth">
+                                    <el-form-item style="width:100%;margin-bottom: 20px;" label="分析过程：" prop="" :label-width="formLabelWidth">
                                         <div class="ub ub-pc rich-text-width">
                                             <vue-ueditor-wrap v-model="analysisForm.analyzePro" :config="myConfig"></vue-ueditor-wrap>
                                         </div>
                                     </el-form-item>
                                     <el-form-item
                                         v-if="analysisForm.isReject==1"
-                                        style="margin-bottom: 20px;width: 100%;"
+                                        style="width:100%;margin-bottom: 20px;"
                                         label="驳回理由"
                                         prop=""
                                         :label-width="formLabelWidth">
@@ -1027,7 +1027,7 @@
                                             <vue-ueditor-wrap v-model="analysisForm.rejectReason" :config="myConfig"></vue-ueditor-wrap>
                                         </div>
                                     </el-form-item>
-                                    <el-form-item v-else style="margin-bottom: 20px;width: 100%;" label="处置建议" prop="" :label-width="formLabelWidth">
+                                    <el-form-item v-else style="width:100%;margin-bottom: 20px;" label="处置建议" prop="" :label-width="formLabelWidth">
                                         <div class="ub ub-pc rich-text-width">
                                             <vue-ueditor-wrap v-model="analysisForm.advice" :config="myConfig"></vue-ueditor-wrap>
                                         </div>
@@ -1037,7 +1037,7 @@
                             <!-- 事件溯源 -->
                             <div class="w100" v-if="workTaskInfo.workOrderObject==1&&workTaskInfo.operation&&workTaskInfo.operation==3">
                                 <el-form class="w100" :model="backForm" :rules="rules" ref="backForm" :inline="true">
-                                    <el-form-item style="margin-bottom: 20px;width: 100%;" label="溯源结果：" prop="" :label-width="formLabelWidth">
+                                    <el-form-item style="width:100%;margin-bottom: 20px;" label="溯源结果：" prop="" :label-width="formLabelWidth">
                                         <div class="ub ub-pc rich-text-width" style="position: relative;">
                                             <vue-ueditor-wrap v-model="backForm.traceResult" :config="myConfig"></vue-ueditor-wrap>
                                         </div>
@@ -1047,7 +1047,7 @@
                             <!-- 事件二线分析-->
                             <div class="w100" v-if="workTaskInfo.workOrderObject==1&&workTaskInfo.operation&&workTaskInfo.operation==4">
                                 <el-form class="w100" :model="alarmAddviceForm" :rules="rules" ref="alarmAddviceForm" :inline="true">
-                                    <el-form-item style="margin-bottom: 20px;width: 100%;" label="追加建议：" prop="" :label-width="formLabelWidth">
+                                    <el-form-item style="width:100%;margin-bottom: 20px;" label="追加建议：" prop="" :label-width="formLabelWidth">
                                         <div class="ub ub-pc rich-text-width">
                                             <vue-ueditor-wrap v-model="alarmAddviceForm.appendProposal" :config="myConfig"></vue-ueditor-wrap>
                                         </div>
@@ -1057,8 +1057,8 @@
                             <!-- 事件状态变更-->
                             <div class="w100" v-if="workTaskInfo.workOrderObject==1&&workTaskInfo.operation&&workTaskInfo.operation==1">
                                 <el-form class="w100" :model="alarmStatusForm" :rules="rules" ref="alarmStatusForm" :inline="true">
-                                    <el-form-item style="margin-bottom: 20px;width: 100%;" label="事件状态：" prop="" :label-width="formLabelWidth">
-                                        <div class="ub ub-pc" style="width: 400px;">
+                                    <el-form-item style="width:100%;margin-bottom: 20px;" label="事件状态：" prop="" :label-width="formLabelWidth">
+                                        <div class="ub ub-pc" style="width:400px;">
                                             <el-select placeholder="请选择" style="width: 400px;" v-model="alarmStatusForm.reportStatus" size="small">
                                                 <el-option label="待确认" value="0"></el-option>
                                                 <el-option label="已确认" value="1"></el-option>
@@ -1076,8 +1076,8 @@
                         <el-button type="text" icon="el-icon-download" v-on:click="getPdf('pdfPrint',workTaskInfo.workOrderName)">生成PDF</el-button>
                     </div>
                     <div class="w100 work-record" id="pdfPrint">
-                        <el-row style="margin: 20px 0;background: #ffffff;" type="flex" justify="center">
-                            <el-timeline style="margin-left: 140px;width: 90%;">
+                        <el-row style="margin:20px 0;background: #fff" type="flex" justify="center">
+                            <el-timeline style="width:90%;margin-left: 140px;">
                                 <el-timeline-item
                                     class="w100"
                                     v-for="(activity, index) in bpmRecord"
@@ -1091,15 +1091,15 @@
                                     placement="top">
                                     <div class="ub ub-pj ub-ac time-box">
                                         <div class="ub" style="width: 50%;">
-                                            <h4 style="font-size: 16px;color: rgb(0 0 0 / 90%);">{{activity.userName|NullStr}}
-                                                <sub style="margin-left: 10px;font-size: 12px;color: rgb(0 0 0 / 60%);opacity: 0.6;vertical-align: bottom;">{{activity.userRole|NullStr}}</sub>
-                                                <sub style="margin-left: 10px;font-size: 12px;color: rgb(0 0 0 / 60%);opacity: 0.6;vertical-align: bottom;">当前节点：{{activity.nodeName ? activity.nodeName:''}}</sub>
+                                            <h4 style="color: rgba(0, 0, 0, 0.9);font-size: 16px;">{{activity.userName|NullStr}}
+                                                <sub style="font-size:12px;color: rgba(0, 0, 0, 0.6);opacity: 0.6;margin-left: 10px;vertical-align: bottom;">{{activity.userRole|NullStr}}</sub>
+                                                <sub style="font-size:12px;color: rgba(0, 0, 0, 0.6);opacity: 0.6;margin-left: 10px;vertical-align: bottom;">当前节点：{{activity.nodeName ? activity.nodeName:''}}</sub>
                                             </h4>
                                         </div>
-                                        <div class="time-right" style="width: 150px;text-align: right;">
+                                        <div class="time-right" style="width: 150px;text-align: right">
                                             <el-button
                                                 type="text"
-                                                style="font-size: 12px;text-decoration: underline;"
+                                                style="text-decoration: underline;font-size:12px;"
                                                 :class="{'el-icon-arrow-down':activity.isOpen,'el-icon-arrow-up':!activity.isOpen}"
                                                 @click="activity.isOpen=!activity.isOpen">{{activity.isOpen?'收起内容':'展开查看'}}</el-button>
                                         </div>
@@ -1113,16 +1113,9 @@
                                                 <div v-else class="time-text-box-right" v-html="item.val" @click="imageEnlargement"></div>
                                             </div>
                                         </div>
-                                        <div class="time-text-box" v-if="!['1', '2', '3', '4', '5','6'].includes(workTaskInfo.workOrderObject)&&activity.dealType!=2">
+                                        <div class="time-text-box" v-if="!['1', '2', '3', '4', '5'].includes(workTaskInfo.workOrderObject)">
                                             <div class="w100 time-text-box-item" v-for="(item,_index) in activity.dealContent" :key="_index">
                                                 <div class="time-text-box-left">{{_index}}：</div>
-                                                <div class="time-text-box-right" v-html="item" @click="imageEnlargement"></div>
-                                            </div>
-                                        </div>
-                                        <!-- 通知公告 -->
-                                        <div class="time-text-box" v-if="['6'].includes(workTaskInfo.workOrderObject)&&activity.dealType==1">
-                                            <div class="w100 time-text-box-item" v-for="(item, _index) in activity.dealContent" :key="_index">
-                                                <div class="time-text-box-left">{{ _index }}：</div>
                                                 <div class="time-text-box-right" v-html="item" @click="imageEnlargement"></div>
                                             </div>
                                         </div>
@@ -1262,7 +1255,7 @@
                         </el-row>
                     </div>
                 </div>
-                <div v-if="activeTabName === 'two'" style="padding: 20px;">
+                <div v-if="activeTabName === 'two'" style="padding:20px">
                     <bpmn-modeler
                         ref="refNode"
                         :xml="seeForm.xml"
@@ -1279,9 +1272,9 @@
         </div>
         <el-dialog title="提示" :visible.sync="finishDialog" :width="isNeedSelected?'60%':'30%'" custom-class="common-dialog">
             <el-form v-if="isNeedSelected" class="w100" :model="checkkForm"  ref="checkkForm">
-                <el-form-item style="margin-bottom: 20px;width: 100%;" label="下一节点处理人：" prop="selectUsers" :rules="rules.selectUsers" :label-width="formLabelWidth">
+                <el-form-item style="width:100%;margin-bottom: 20px;" label="下一节点处理人：" prop="selectUsers" :rules="rules.selectUsers" :label-width="formLabelWidth">
                     <div class="ub ub-pc ub-f1">
-                        <el-select filterable clearable multiple v-model="checkkForm.selectUsers" size="small" style="width: 100%;" placeholder="请选择">
+                        <el-select filterable clearable multiple v-model="checkkForm.selectUsers" size="small" style="width: 100%" placeholder="请选择">
                             <el-option v-for="(item, index) in selectUsersAll" :key="index" :label="item.name" :value="item.id"></el-option>
                         </el-select>
                     </div>
@@ -1296,14 +1289,14 @@
         </el-dialog>
         <el-dialog v-dialogDrag :title="agreeTitle" :visible.sync="checkDialog" width="65%" custom-class="attendance-dialog">
             <el-form class="w100" :model="checkkForm"  ref="checkkForm">
-                <el-form-item style="margin-bottom: 20px;width: 100%;" label="审批意见：" prop="" :label-width="formLabelWidth">
+                <el-form-item style="width:100%;margin-bottom: 20px;" label="审批意见：" prop="" :label-width="formLabelWidth">
                     <div class="ub ub-pc ub-f1">
                         <vue-ueditor-wrap v-model="checkkForm.approveOpinion" :config="myConfig"></vue-ueditor-wrap>
                     </div>
                 </el-form-item>
-                <el-form-item v-if="isNeedSelected" style="margin-bottom: 20px;width: 100%;" label="下一节点处理人：" prop="selectUsers" :rules="rules.selectUsers" :label-width="formLabelWidth">
+                <el-form-item v-if="isNeedSelected" style="width:100%;margin-bottom: 20px;" label="下一节点处理人：" prop="selectUsers" :rules="rules.selectUsers" :label-width="formLabelWidth">
                     <div class="ub ub-pc ub-f1">
-                        <el-select filterable clearable multiple v-model="checkkForm.selectUsers" size="small" style="width: 100%;" placeholder="请选择">
+                        <el-select filterable clearable multiple v-model="checkkForm.selectUsers" size="small" style="width: 100%" placeholder="请选择">
                             <el-option v-for="(item, index) in selectUsersAll" :key="index" :label="item.name" :value="item.id"></el-option>
                         </el-select>
                     </div>
@@ -1316,7 +1309,7 @@
         </el-dialog>
         <el-drawer :visible.sync="detailDialog" direction="rtl" size="78%" :wrapperClosable="false" title="详情">
             <div class="drawer-content" style="height: 100%;">
-                <div style="position: relative;top: 0;left: 0;overflow-y: auto;width: 100%;height: 100%;">
+                <div style="position: relative;left:0;top:0;width:100%;height:100%;overflow-y: auto;">
                     <div class="ub ub-pj w100">
                         <div class="list-tips">
                             {{ detailArr.reportName }}
@@ -1328,16 +1321,28 @@
 
                             <span
                                 v-if="detailArr.reportStatus == 0"
-                                style="padding: 3px 10px;font-size: 12px;border-radius: 2px;color: #eeb174;background: #fde6d8;line-height: 1;">待确认</span>
+                                style="color:#eeb174;background:#fde6d8;font-size: 12px;
+        border-radius: 2px;
+        line-height: 1;
+        padding: 3px 10px;">待确认</span>
                             <span
                                 v-if="detailArr.reportStatus == 1"
-                                style="padding: 3px 10px;font-size: 12px;border-radius: 2px;color: #3fa87b;background: #ccf6e4;line-height: 1;">已确认</span>
+                                style="color:#3fa87b;background:#ccf6e4;font-size: 12px;
+        border-radius: 2px;
+        line-height: 1;
+        padding: 3px 10px;">已确认</span>
                             <span
                                 v-if="detailArr.reportStatus == 2"
-                                style="padding: 3px 10px;font-size: 12px;border-radius: 2px;color: #3c7ce2;background: #d5e5fa;line-height: 1;">已处置</span>
+                                style="color:#3c7ce2;background:#d5e5fa;font-size: 12px;
+        border-radius: 2px;
+        line-height: 1;
+        padding: 3px 10px;">已处置</span>
                             <span
                                 v-if="detailArr.reportStatus == 3"
-                                style="padding: 3px 10px;font-size: 12px;border-radius: 2px;color: #aa0202;background: #fad7dd;line-height: 1;">已驳回</span>
+                                style="color:#aa0202;background:#fad7dd;font-size: 12px;
+        border-radius: 2px;
+        line-height: 1;
+        padding: 3px 10px;">已驳回</span>
                         </div>
                         <!-- <div class="ub">
                             <div>
@@ -1346,7 +1351,7 @@
                         </div> -->
                     </div>
                     <div class="drawer-pad">
-                        <el-tabs class="drawer-tabs" style="height: 100%;" v-model="alarmActiveName" @tab-click="handleClick">
+                        <el-tabs class="drawer-tabs" style="height: 100%" v-model="alarmActiveName" @tab-click="handleClick">
                             <el-tab-pane label="基本信息" name="first">
                                 <BasicInfo :seeForm="detailArr"></BasicInfo>
                             </el-tab-pane>
@@ -1400,15 +1405,15 @@
                                                             @click="jumpAsset(scope.row.srcIp)"
                                                             class="ub ub-ac click-btn"
                                                         >
-                                                            <i class="iconfont icon-chaxunzichan" style="font-size: 12px;"></i>
+                                                            <i class="iconfont icon-chaxunzichan" style="font-size:12px"></i>
                                                             <span>查询资产</span>
                                                         </p>
                                                         <p
-                                                            style="margin-top: 10px;"
+                                                            style="margin-top:10px"
                                                             @click="jumpThreat(scope.row.srcIp)"
                                                             class="ub ub-ac click-btn"
                                                         >
-                                                            <i class="iconfont icon-chaxunqingbao" style="font-size: 12px;"></i>
+                                                            <i class="iconfont icon-chaxunqingbao" style="font-size:12px"></i>
                                                             <span>查询情报</span>
                                                         </p>
                                                     </div>
@@ -1432,15 +1437,15 @@
                                                             @click="jumpAsset(scope.row.desIp)"
                                                             class="ub ub-ac click-btn"
                                                         >
-                                                            <i class="iconfont icon-chaxunzichan" style="font-size: 12px;"></i>
+                                                            <i class="iconfont icon-chaxunzichan" style="font-size:12px"></i>
                                                             <span>查询资产</span>
                                                         </p>
                                                         <p
-                                                            style="margin-top: 10px;"
+                                                            style="margin-top:10px"
                                                             @click="jumpThreat(scope.row.desIp)"
                                                             class="ub ub-ac click-btn"
                                                         >
-                                                            <i class="iconfont icon-chaxunqingbao" style="font-size: 12px;"></i>
+                                                            <i class="iconfont icon-chaxunqingbao" style="font-size:12px"></i>
                                                             <span>查询情报</span>
                                                         </p>
                                                     </div>
@@ -1490,7 +1495,7 @@
         <AlarmDetail :alarmSeeDialog="alarmSeeDialog" :seeForm="alarmDetailData" ref="alarmDetail"></AlarmDetail>
     </div>
 
-</template>ueditorConfig
+</template>
 
 <script>
 import AlarmDetail from '@/pages/alarm/new_alarm/components/AlarmDetail.vue'
@@ -1503,8 +1508,8 @@ import 'vant/lib/index.css'
 import {
     ImagePreview
 } from 'vant'
-import VueUeditorWrap from '@/components/vue-ueditor-wrap.vue' // ES6 Module
-import ueditorConfig from '@/mixins/ueditorConfig'
+import VueUeditorWrap from '../../components/vue-ueditor-wrap.vue' // ES6 Module
+import ueditorConfig from '../../mixins/ueditorConfig'
 import {
     get_workTask_detail,
     finish_workTask,
@@ -1513,7 +1518,7 @@ import {
     get_sys_users,
     needSelected
 } from '../../server/works_order/api.js'
-import { get_threat_search, getStartConfig, get_threat_searchVenus } from '@/server/alarm/api.js'
+import { get_threat_search } from '@/server/intelligence/api.js'
 import bpmnModeler from '../../package/detailXml'
 export default {
     name: 'TaskDetail',
@@ -1528,7 +1533,6 @@ export default {
     mixins: [ueditorConfig],
     data() {
         return {
-            startData: [],
             tableHeight: document.body.clientHeight - 150,
             get_params: {
                 page: 1,
@@ -2073,50 +2077,30 @@ export default {
         this.currentTab = this.$route.query.type
         this.initTask()
         this.initUsers()
-        // this.getStartConfigData()
     },
     methods: {
-        getStartConfigData() {
-            getStartConfig({ queryData: {}, paramsData: {}}).then(res => {
-                this.startData = res
-            })
-        },
         jumpAsset(value) {
             this.$setsessionStorage('currentPath', '/assets/assets_asset_info?ip=' + value)
             window.open(window.location.origin + '/#' + '/assets/assets_asset_info?ip=' + value)
         },
         jumpThreat(value) {
-            console.log(value)
             let obj = {
-                queryData: {},
-                paramsData: { value }
+                queryData: { value },
+                paramsData: {}
             }
-            if (this.startData.includes(1)) {
-                this.searchWeibu(obj, value)
-            } else if (this.startData.includes(0)) {
-                this.searchVenus(obj, value)
-            }
-        },
-        searchWeibu(obj, value) {
             get_threat_search(obj)
                 .then(res => {
                     console.log(res)
                     this.$setsessionStorage('search-item', res)
-                    window.open(window.location.origin + '/#' + '/intelligence/threat_detail?searchStr=' + value)
+                    let route = this.$router.resolve({
+                        name: 'intelligence_threat_detail',
+                        query: {
+                            searchStr: value
+                        }
+                    })
+                    window.open(route.href, '_blank')
                 })
                 .catch(err => {
-                    console.log(err + 'err')
-                })
-        },
-        searchVenus(obj, value) {
-            get_threat_searchVenus(obj, value)
-                .then(res => {
-                    console.log(res)
-                    this.$setsessionStorage('search-item', res)
-                    window.open(window.location.origin + '/#' + '/intelligence/threat_detail?searchStr=' + value)
-                })
-                .catch(err => {
-                    this.btnLoading = false
                     console.log(err + 'err')
                 })
         },
@@ -2203,8 +2187,7 @@ export default {
                         }
                     })
                     console.log(srcIpIsSpite)
-                    this.alarmDetailData.srcIpVenusIsSpite = srcIpIsSpite[0]
-                    this.alarmDetailData.srcIpIsSpite = srcIpIsSpite[1]
+                    this.alarmDetailData.srcIpIsSpite = srcIpIsSpite
                 } catch (e) {
                     console.log(e)
                 }
@@ -2217,8 +2200,7 @@ export default {
                         }
                     })
                     // console.log(desIpIsSpite)
-                    this.alarmDetailData.desIpVenusIsSpite = desIpIsSpite[0]
-                    this.alarmDetailData.desIpIsSpite = desIpIsSpite[1]
+                    this.alarmDetailData.desIpIsSpite = desIpIsSpite
                 } catch (e) {
                     console.log(e)
                 }
@@ -3013,385 +2995,383 @@ $status4: #e1e2e4;
     }
 }
 .click-btn:hover {
-    background: #dddddd;
+    background: #ddd;
 }
-.table-container {
-    display: flex;
-    justify-content: flex-start;
-    width: 50%;
-    &:nth-child(2n) {
-        background-color: rgb(29 65 105 / 50%);
-    }
-}
-.table-left,
-.table-right {
-    padding: 4px 10px;
-    font-size: 16px;
-    border: 1px solid #1a5c92;
-    background: rgb(3 50 84 / 50%);
-}
-.table-left {
-    padding-right: 10px;
-    width: 160px !important;
-    border-right: none;
-    text-align: right;
-    color: #ffffff;
-    opacity: 0.6;
-    flex-shrink: 0;
+    .table-container {
+        display: flex;
+        justify-content: flex-start;
+        width: 50%;
 
-    /* white-space: nowrap; */
-}
-.table-right {
-    width: calc(100% - 160px);
-}
-.event {
-    position: relative;
-    padding: 0;
-    box-sizing: border-box;
-}
-.event-content {
-    margin: 10px;
-    background-color: #ffffff;
-}
-.custom-star {
+        &:nth-child(2n) {
+            background-color: rgba(29, 65, 105, 0.5);
+        }
+
+    }
+
+    .table-left,
+    .table-right {
+        font-size: 16px;
+        border: 1px solid #1a5c92;
+        padding: 4px 10px;
+        background: rgba(3, 50, 84, 0.5);
+    }
+
+    .table-left {
+        color: #fff;
+        opacity: .6;
+        flex-shrink: 0;
+        border-right: none;
+        padding-right: 10px;
+        text-align: right;
+        width: 160px !important;
+        /*white-space: nowrap;*/
+    }
+
+    .table-right {
+        width: calc(100% - 160px);
+    }
+
+    .event {
+        padding: 0px 0px 0px 0px;
+        box-sizing: border-box;
+        position: relative;
+    }
     .event-content {
-        background-color: #052942!important;
+        background-color: #fff;
+        margin: 10px;
     }
-    .tab-button {
-        border: solid 1px #50b0ff;
-        background-color: rgba($color: #136dac, $alpha: 20%);
-        box-shadow: inset 0 0 18px 0
-            #00b4ff;
-        & div {
-            color: #ffffff;
+
+    .event ::v-deep .el-timeline-item__timestamp.is-top {
+        margin-bottom: 8px;
+        padding-top: 3px;
+        position: absolute;
+        left: -145px;
+        top: 0;
+        font-size: 12px;
+        width: 130px;
+        text-align: right;
+        color: rgba(0, 0, 0, 0.9);
+    }
+
+    .event ::v-deep .el-range-input {
+        background-color: rgba(0, 0, 0, 0);
+        color: #fff;
+    }
+
+    .event ::v-deep .el-range-separator {
+        color: #fff;
+    }
+
+     .el-tabs ::v-deep .el-tabs__nav-wrap::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 1px;
+        background-color: rgba(28, 215, 250, 0.2);
+        z-index: 1;
+    }
+
+    .el-tabs ::v-deep .el-tabs__active-bar {
+        background: #387dee;
+        // margin-left: 14px;
+    }
+
+    .el-tabs ::v-deep .el-tabs__item.is-active {
+        color: #387dee;
+        height: 34px;
+        line-height: 34px;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .el-tabs ::v-deep .el-tabs__item.is-top,
+    .container ::v-deep .el-tabs__active-bar.is-top {
+        // margin-left: 14px;
+    }
+    .el-tabs ::v-deep .el-tabs__item.is-top {
+        margin-left: 14px;
+        color: #387dee;
+        border-bottom: 1px solid #387dee;
+    }
+    .drawer-tabs ::v-deep .el-tabs__item.is-top {
+        margin-left: 0;
+        color: rgba(0, 0, 0, 0.6);
+        border-bottom: none
+    }
+    .drawer-tabs ::v-deep .el-tabs__content {
+        height: calc(100% - 54px);
+        .el-tab-pane {
+            height: 100%;
         }
     }
-    .text-name {
-        color: #ffffff;
+    .drawer-tabs ::v-deep .el-tabs__item.is-active {
+        color: #387dee;
     }
+    .el-drawer__wrapper .el-tabs__item:hover {
+        color: #387dee;
+    }
+    .el-drawer__wrapper .el-tabs__item {
+        color: rgba(0, 0, 0, 0.6);
+        box-shadow: none;
+    }
+    .info-title {
+        // margin-left: 14px;
+        font-size: 12px;
+        color: #0052d9;
+        margin-bottom: 18px;
+    }
+
+    .task-status {
+        padding-right: 30px;
+        box-sizing: border-box;
+        margin: 16px 0 30px;
+    }
+
+    .task-status>div:nth-child(1) {
+        color: rgba(0, 0, 0, 0.9);
+        font-size: 22px;
+    }
+
+    .assets-big-image ::v-deep .el-image-viewer__close {
+        color: #00E1FF !important;
+    }
+
+    .task-status>div:nth-child(2) {
+        color: rgba(0, 0, 0, 0.9);
+        font-size: 12px;
+
+        span.one {
+            color: #c0c0c0;
+        }
+
+        span.two {
+            color: #fdb900;
+        }
+
+        span.three {
+            color: #00bffe;
+        }
+    }
+     .title-level {
+        border: 1px solid $zero;
+        background: rgba($zero, .2);
+        color: $zero;
+        font-size: 12px;
+        border-radius: 3px;
+        line-height: 1;
+        padding: 2px 21px;
+        margin: 0 5px;
+
+        &.one {
+            border-color: $one;
+            background: rgba($one, .2);
+            color: $one;
+        }
+
+        &.two {
+            border-color: $two;
+            background: rgba($two, .2);
+            color: $two;
+        }
+
+        &.three {
+            border-color: $three;
+            background: rgba($three, .2);
+            color: $three;
+        }
+
+        &.fore {
+            border-color: $fore;
+            background: rgba($fore, .2);
+            color: $fore;
+        }
+    }
+    .drawer-pad {
+        // padding: 0 20px;
+        height: calc(100% - 24px);
+        overflow-y: auto;
+
+        & ::v-deep img {
+            max-width: 600px;
+            max-height: 600px;
+        }
+        &::-webkit-scrollbar, li::-webkit-scrollbar, ul::-webkit-scrollbar {
+            width: 4px;
+        }
+        &::-webkit-scrollbar-track, li::-webkit-scrollbar-track, ul::-webkit-scrollbar-track {
+            background: none;
+        }
+    }
+    .drawer-pad ::v-deep .el-form-item__content {
+        font-size: 12px;
+    }
+    .drawer-pad ::v-deep .el-form-item__label{
+        font-size: 12px;
+        color: #999!important
+    }
+    .basic-info {
+        position: relative;
+        .chapter {
+            position: absolute;
+            right: 30px;
+            top: 20px;
+            transform: rotateZ(15deg);
+        }
+    }
+    .basic-info ::v-deep .el-descriptions__body .el-descriptions__table {
+        border-radius: 4px;
+    }
+    .black-theme .basic-info ::v-deep .el-descriptions__body {
+        background: #033254;
+        color: #fff;
+    }
+    .black-theme .basic-info ::v-deep .el-descriptions-item__label.is-bordered-label {
+        background: #00466d;
+        color: #fff;
+        box-shadow: inset 0px 0px 2px rgba(0, 186, 255, 0.73);
+    }
+    .basic-info ::v-deep .el-descriptions-item__label.is-bordered-label {
+        width: 120px;
+    }
+    .black-theme .basic-info ::v-deep .el-descriptions .is-bordered .el-descriptions-item__cell {
+        border: 1px solid #1a5c92;
+    }
+    .black-theme .basic-info ::v-deep .el-descriptions-row {
+    box-shadow: inset 0px 0px 6px 0px
+    rgba(0, 186, 255, 0.73),
+    inset 0px -1px 0px 0px
+    rgba(40, 82, 124, 0.5) !important;
+    }
+
     .label {
-        border: 1px solid #1cd7fa;
-        color: #ffffff;
-        background-color: #052942;
+        width: 100px;
+        font-size: 12px;
+        color: #999;
+        text-align: right;
+        margin-right: 15px;
+        line-height: 32px;
     }
+
     .label-val {
-        border: 1px solid #1cd7fa;
-        color: #ffffff;
+        font-size: 12px;
+        height: 32px;
+        padding: 8px;
+        border: 1px solid #ebf1f5;
+        color: rgba(0, 0, 0, 0.9);
     }
-    .basic-info ::v-deep {
-        .el-descriptions__body .el-descriptions-item__label.is-bordered-label,.el-descriptions__body .el-descriptions-item__label.is-bordered-label {
-            border: 1px solid #1cd7fa !important;
-            color: #ffffff !important;
-            background: #052942 !important;
-        }
-        .el-descriptions .is-bordered .el-descriptions-item__cell {
-            border: 1px solid #1cd7fa!important;
-            color: #ffffff;
-        }
-        .el-descriptions__body {
-            background-color: #052942!important;
-        }
+
+    .event ::v-deep .el-timeline-item__tail {
+        border-left: 2px solid #00B7EE !important;
     }
-}
-.event ::v-deep .el-timeline-item__timestamp.is-top {
-    position: absolute;
-    top: 0;
-    left: -145px;
-    margin-bottom: 8px;
-    padding-top: 3px;
-    width: 130px;
-    font-size: 12px;
-    text-align: right;
-    color: rgb(0 0 0 / 90%);
-}
-.event ::v-deep .el-range-input {
-    color: #ffffff;
-    background-color: rgb(0 0 0 / 0%);
-}
-.event ::v-deep .el-range-separator {
-    color: #ffffff;
-}
-.el-tabs ::v-deep .el-tabs__nav-wrap::after {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-    width: 100%;
-    height: 1px;
-    background-color: rgb(28 215 250 / 20%);
-    content: '';
-}
-.el-tabs ::v-deep .el-tabs__active-bar {
-    background: #387dee;
-    // margin-left: 14px;
-}
-.el-tabs ::v-deep .el-tabs__item.is-active {
-    height: 34px;
-    border: none !important;
-    color: #387dee;
-    box-shadow: none !important;
-    line-height: 34px;
-}
-.el-tabs ::v-deep .el-tabs__item.is-top,
-.container ::v-deep .el-tabs__active-bar.is-top {
-    // margin-left: 14px;
-}
-.el-tabs ::v-deep .el-tabs__item.is-top {
-    margin-left: 14px;
-    border-bottom: 1px solid #387dee;
-    color: #387dee;
-}
-.drawer-tabs ::v-deep .el-tabs__item.is-top {
-    margin-left: 0;
-    border-bottom: none;
-    color: rgb(0 0 0 / 60%);
-}
-.drawer-tabs ::v-deep .el-tabs__content {
-    height: calc(100% - 54px);
-    .el-tab-pane {
-        height: 100%;
+    .event ::v-deep .el-timeline-item__node--large {
+        z-index: 2;
+        background-color: #387dee!important;
     }
-}
-.drawer-tabs ::v-deep .el-tabs__item.is-active {
-    color: #387dee;
-}
-.el-drawer__wrapper .el-tabs__item:hover {
-    color: #387dee;
-}
-.el-drawer__wrapper .el-tabs__item {
-    color: rgb(0 0 0 / 60%);
-    box-shadow: none;
-}
-.info-title {
-    margin-bottom: 18px;
-    // margin-left: 14px;
-    font-size: 12px;
-    color: #0052d9;
-}
-.task-status {
-    margin: 16px 0 30px;
-    padding-right: 30px;
-    box-sizing: border-box;
-}
-.task-status>div:nth-child(1) {
-    font-size: 22px;
-    color: rgb(0 0 0 / 90%);
-}
-.assets-big-image ::v-deep .el-image-viewer__close {
-    color: #00e1ff !important;
-}
-.task-status>div:nth-child(2) {
-    font-size: 12px;
-    color: rgb(0 0 0 / 90%);
-    span.one {
+
+    .event ::v-deep .el-timeline-item__icon.el-icon-circle-check {
+        color: #fff !important;
+        font-size: 20px !important;
+    }
+
+    .event ::v-deep .el-timeline-item__icon.icon-circle {
+        color: #00b7ee !important;
+        font-size: 16px !important;
+        font-weight: 500;
+    }
+
+    .time-box {
+        width: 100%;
+        height: 20px;
+        margin-bottom: 10px;
+    }
+
+    .time-left>h4 {
+        color: rgba(0, 0, 0, 0.9);
+        font-weight: 500;
+    }
+
+    .time-left>p {
+        color: #999;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .time-right>div.one {
         color: #c0c0c0;
     }
-    span.two {
+
+    .time-right>div.two {
         color: #fdb900;
     }
-    span.three {
+
+    .time-right>div.three {
         color: #00bffe;
     }
-}
-.title-level {
-    margin: 0 5px;
-    padding: 2px 21px;
-    font-size: 12px;
-    border: 1px solid $zero;
-    border-radius: 3px;
-    color: $zero;
-    background: rgba($zero, 0.2);
-    line-height: 1;
-    &.one {
-        border-color: $one;
-        color: $one;
-        background: rgba($one, 0.2);
+
+    .time-right>p {
+        color: #fff;
+        font-size: 12px;
+        margin-top: 5px;
     }
-    &.two {
-        border-color: $two;
-        color: $two;
-        background: rgba($two, 0.2);
+    .event ::v-deep .el-table__empty-block {
+        background-color: #fff;
     }
-    &.three {
-        border-color: $three;
-        color: $three;
-        background: rgba($three, 0.2);
+
+    .event ::v-deep .edui-editor-iframeholder {
+        height: 200px !important;
     }
-    &.fore {
-        border-color: $fore;
-        color: $fore;
-        background: rgba($fore, 0.2);
-    }
-}
-.drawer-pad {
-    overflow-y: auto;
-    // padding: 0 20px;
-    height: calc(100% - 24px);
-    & ::v-deep img {
-        max-width: 600px;
-        max-height: 600px;
-    }
-    &::-webkit-scrollbar, li::-webkit-scrollbar, ul::-webkit-scrollbar {
-        width: 4px;
-    }
-    &::-webkit-scrollbar-track, li::-webkit-scrollbar-track, ul::-webkit-scrollbar-track {
-        background: none;
-    }
-}
-.drawer-pad ::v-deep .el-form-item__content {
-    font-size: 12px;
-}
-.drawer-pad ::v-deep .el-form-item__label {
-    font-size: 12px;
-    color: #999999!important;
-}
-.basic-info {
-    position: relative;
-    .chapter {
-        position: absolute;
-        top: 20px;
-        right: 30px;
-        transform: rotateZ(15deg);
-    }
-}
-.basic-info ::v-deep .el-descriptions__body .el-descriptions__table {
-    border-radius: 4px;
-}
-.black-theme .basic-info ::v-deep .el-descriptions__body {
-    color: #ffffff;
-    background: #033254;
-}
-.black-theme .basic-info ::v-deep .el-descriptions-item__label.is-bordered-label {
-    color: #ffffff;
-    background: #00466d;
-    box-shadow: inset 0 0 2px rgb(0 186 255 / 73%);
-}
-.basic-info ::v-deep .el-descriptions-item__label.is-bordered-label {
-    width: 120px;
-}
-.black-theme .basic-info ::v-deep .el-descriptions .is-bordered .el-descriptions-item__cell {
-    border: 1px solid #1a5c92;
-}
-.black-theme .basic-info ::v-deep .el-descriptions-row {
-    box-shadow: inset 0 0 6px 0
-        rgb(0 186 255 / 73%),
-        inset 0 -1px 0 0
-        rgb(40 82 124 / 50%) !important;
-}
-.label {
-    margin-right: 15px;
-    width: 100px;
-    font-size: 12px;
-    text-align: right;
-    color: #999999;
-    line-height: 32px;
-}
-.label-val {
-    padding: 8px;
-    min-height: 32px;
-    font-size: 12px;
-    border: 1px solid #ebf1f5;
-    color: rgb(0 0 0 / 90%);
-    word-break: break-all;
-}
-.event ::v-deep .el-timeline-item__tail {
-    border-left: 2px solid #00b7ee !important;
-}
-.event ::v-deep .el-timeline-item__node--large {
-    z-index: 2;
-    background-color: #387dee!important;
-}
-.event ::v-deep .el-timeline-item__icon.el-icon-circle-check {
-    font-size: 20px !important;
-    color: #ffffff !important;
-}
-.event ::v-deep .el-timeline-item__icon.icon-circle {
-    font-size: 16px !important;
-    font-weight: 500;
-    color: #00b7ee !important;
-}
-.time-box {
-    margin-bottom: 10px;
-    width: 100%;
-    height: 20px;
-}
-.time-left>h4 {
-    font-weight: 500;
-    color: rgb(0 0 0 / 90%);
-}
-.time-left>p {
-    margin-top: 5px;
-    font-size: 12px;
-    color: #999999;
-}
-.time-right>div.one {
-    color: #c0c0c0;
-}
-.time-right>div.two {
-    color: #fdb900;
-}
-.time-right>div.three {
-    color: #00bffe;
-}
-.time-right>p {
-    margin-top: 5px;
-    font-size: 12px;
-    color: #ffffff;
-}
-.event ::v-deep .el-table__empty-block {
-    background-color: #ffffff;
-}
-.event ::v-deep .edui-editor-iframeholder {
-    height: 200px !important;
-}
-.list-tips .el-icon-sort {
-    cursor: pointer;
-    margin-left: 10px;
-    transform: rotate(90deg);
-    color: #387dee;
-}
-.tab-button {
-    margin-bottom: 2px;
-    height: 30px;
-    background-color: #ffffff;
-    & div {
-        width: 80px;
-        height: 30px;
-        font-size: 14px;
-        text-align: center;
-        color: rgb(0 0 0 / 60%);
-        line-height: 30px;
+    .list-tips .el-icon-sort {
         cursor: pointer;
-        box-sizing: border-box;
-        &.tab-active {
-            border-bottom: 1px solid #387dee;
-            color: #387dee;
+        margin-left: 10px;
+        transform: rotate(90deg);
+        color: #387dee;
+    }
+    .tab-button {
+        height: 30px;
+        background-color: #fff;
+        margin-bottom: 2px;
+
+        & div {
+            width: 80px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.6);
+            box-sizing: border-box;
+            font-size: 14px;
+
+            &.tab-active {
+                color: #387dee;
+                border-bottom: 1px solid #387dee;;
+            }
         }
     }
-}
 </style>
 <style lang="scss">
-    .add-search-order-detail.el-popover {
-        border: solid 1px #dddddd;
-        color: rgb(0 0 0 / 60%);
-        background: #ffffff;
+    .add-search-order-detail.el-popover{
+        background: #fff;
+        border: solid 1px #ddd;
+        color: rgba(0, 0, 0, 0.6);
     }
     .time-text-box {
         padding: 5px;
-        border: solid 1px #dddddd;
-        border-radius: 3px;
         background-color: #f5f8fe;
+        border-radius: 3px;
+        border: solid 1px #dddddd;
     }
     .time-text-box-item {
-        overflow: hidden;
         margin: 10px 0;
+        overflow: hidden;
     }
     .time-text-box-left {
         float: left;
-        margin-right: 10px;
         font-size: 12px;
-        color: rgb(0 0 0 / 40%);
         letter-spacing: 1px;
+        color: rgba(0, 0, 0, 0.4);
+        margin-right: 10px;
         vertical-align: top;
     }
     .time-box-item-bottom div {
@@ -3402,25 +3382,27 @@ $status4: #e1e2e4;
     }
     .time-text-box-bottom i {
         font-size: 10px;
-        color: #999999;
+        color: #999;
     }
     .time-text-box-bottom span {
         font-size: 10px;
-        color: #999999;
+        color: #999;
     }
     .time-text-box-right {
-        float: left;
         width: 88%;
+        float: left;
         font-size: 12px;
-        color: rgb(0 0 0 / 90%);
+        color: rgba(0, 0, 0, 0.9);
         vertical-align: top;
     }
     .time-text-box-right * {
         word-break: break-all;
     }
+
     .time-text-box-right p {
         font-size: 12px !important;
     }
+
     .time-text-box-right img {
         max-width: 50% !important;
     }

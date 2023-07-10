@@ -183,7 +183,7 @@
             element-loading-spinner="el-icon-loading"
             element-loading-background="rgba(0, 0, 0, 0.5)"
         >
-            <span class="custom-text">确定失效吗？</span>
+            <span>确定失效吗？</span>
             <span slot="footer" class="dialog-footer">
                 <el-button size="small" @click="invalidDialog = false">取 消</el-button>
                 <Debounce :time='10000' :isDebounce="2">
@@ -944,11 +944,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.custom-star {
-    .custom-text {
-        color: #fff;
-    }
-}
 .data-source-zero {
     width: 80px;
     height: 18px;

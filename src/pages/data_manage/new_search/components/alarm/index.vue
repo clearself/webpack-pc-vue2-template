@@ -1,13 +1,14 @@
 <template>
     <div>
-        <el-drawer custom-class="drawer-dialog" title="发起事件" :visible.sync="alarmDialog" direction="rtl" :size="720" :show-close="true" :before-close="closeDialog" @close="closeDialog" :wrapperClosable="false" :modal="modal">
+        <el-drawer custom-class="drawer-dialog" title="发起事件" :visible.sync="alarmDialog" direction="rtl" :size="720" :show-close="true" :before-close="closeDialog" @close="closeDialog" :wrapperClosable="false">
             <div class="drawer-content">
                 <div
-                    style="position: relative;left: 0;top: 0; width: 100%;
+                    style="position: relative;left: 0;
+                        top: 0;
+                        width: 100%;
                         height: 100%;
                         overflow-x: hidden;
                         overflow-y: auto;
-                        margin-bottom:100px;
                     ">
                     <div class="drawer-pad">
                         <el-form :model="addForm" :rules="rules" ref="addForm" :inline="true" label-position="top">
@@ -33,7 +34,6 @@
                                         placeholder="请输入目的端口"
                                         clearable
                                         v-model="addForm.desPort"
-                                        :min="0"
                                         type="number"
                                         onKeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))"
                                         size="small"></el-input>
@@ -49,7 +49,6 @@
                                         placeholder="请输入源端口"
                                         clearable
                                         v-model="addForm.srcPort"
-                                        :min="0"
                                         type="number"
                                         onKeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))"
                                         size="small"></el-input>
@@ -87,9 +86,9 @@
                                 <el-form-item label="工单名称:" :label-width="formLabelWidth" prop="workOrderName">
                                     <el-input placeholder="请输入" clearable v-model="addForm.workOrderName" size="small" style="width: 320px"></el-input>
                                 </el-form-item>
-                                <el-form-item label="模板类型:" :label-width="formLabelWidth" prop="mouldType">
-                                    <el-select style="width: 320px" size="small" v-model="addForm.mouldType" clearable placeholder="请选择" @change="changeMouldType">
-                                        <el-option v-for="(item, index) in mouldTypeList" :key="index" :label="item.name" :value="item.id"></el-option>
+                                <el-form-item label="工单模板:" :label-width="formLabelWidth" prop="workMouldId">
+                                    <el-select style="width: 320px" size="small" v-model="addForm.workMouldId" clearable placeholder="请选择">
+                                        <el-option :key="index" v-for="(item,index) in workMouldIdList" :label="item.name" :value="item.id"></el-option>
                                     </el-select>
                                 </el-form-item>
                             </div>
@@ -99,12 +98,6 @@
                                         <el-option :key="index" v-for="(item,index) in levelList" :label="item.name" :value="item.id"></el-option>
                                     </el-select>
                                 </el-form-item>
-                                <el-form-item label="工单模板:" :label-width="formLabelWidth" prop="workMouldId">
-                                    <el-select style="width: 320px" size="small" v-model="addForm.workMouldId" clearable placeholder="请选择">
-                                        <el-option :key="index" v-for="(item,index) in workMouldIdList" :label="item.name" :value="item.id"></el-option>
-                                    </el-select>
-                                </el-form-item>
-
                             </div>
                             <el-form-item label="" v-if="addForm.isStart">
                                 <div class="w100 mb-3">
@@ -129,7 +122,7 @@
                             right: 0;
                             z-index: 9999;
                             width: 720px;
-                            background: transparent;
+                            background: #fff;
                             padding-bottom: 10px;
                             text-align: right;">
                             <el-button @click="closeDialog" size="small" class="mr-1">取消</el-button>
@@ -173,12 +166,6 @@ export default {
             default() {
                 return {}
             }
-        },
-        modal: {
-            type: Boolean,
-            default() {
-                return true
-            }
         }
     },
     watch: {
@@ -186,25 +173,7 @@ export default {
             if (val) {
                 this.initData()
                 this.getAlarmTypeData()
-            } else {
-                this.$refs.addForm.resetFields()
-                this.addForm = {
-                    reportDesc: '',
-                    reportName: '',
-                    reportType: '',
-                    reportLevel: '',
-                    reportStatus: '',
-                    srcIp: '',
-                    srcPort: '',
-                    desIp: '',
-                    desPort: '',
-                    isStart: false,
-                    workOrderName: '',
-                    workMouldId: '',
-                    level: '',
-                    workOrderContent: '',
-                    mouldType: ''
-                }
+                this.getAlarmWorkMouldData()
             }
         }
     },
@@ -212,24 +181,11 @@ export default {
         this.initData()
         this.$nextTick(() => {
             this.getAlarmTypeData()
+            this.getAlarmWorkMouldData()
         })
     },
     data() {
         return {
-            mouldTypeList: [
-                {
-                    id: 0,
-                    name: '分析'
-                },
-                {
-                    id: 1,
-                    name: '应急'
-                },
-                {
-                    id: 2,
-                    name: '通报'
-                }
-            ],
             allData: [],
             logIds: [],
             reportLevelList: [
@@ -356,11 +312,6 @@ export default {
                     message: '请选择优先级',
                     trigger: 'change'
                 }],
-                mouldType: [{
-                    required: true,
-                    message: '请选择模板类型',
-                    trigger: 'change'
-                }],
                 workMouldId: [{
                     required: true,
                     message: '请选择工单模板',
@@ -381,21 +332,13 @@ export default {
                 workOrderName: '',
                 workMouldId: '',
                 level: '',
-                workOrderContent: '',
-                mouldType: ''
+                workOrderContent: ''
             },
             inputTerm: []
         }
     },
     computed: {},
     methods: {
-        changeMouldType(val) {
-            if (val !== '') {
-                this.getAlarmWorkMouldData()
-            } else {
-                this.workMouldIdList = []
-            }
-        },
         initData() {
             console.log('选择模式', this.selectMode)
             if (this.selectMode === 1) {
@@ -480,9 +423,7 @@ export default {
         getAlarmWorkMouldData() {
             let data = {
                 queryData: {},
-                paramsData: {
-                    mouldType: this.addForm.mouldType
-                }
+                paramsData: {}
             }
             getAlarmWorkMould(data).then(res => {
                 this.workMouldIdList = res
@@ -509,7 +450,7 @@ export default {
                                 alarm: {
                                     reportName: this.addForm.reportName,
                                     reportType: this.addForm.reportType,
-                                    reportTypeName: this.typeList.filter(item => { return item.id == this.addForm.reportType })[0].name,
+                                    reportTypeName: this.addForm.reportName,
                                     desIp: this.addForm.desIp,
                                     desPort: this.addForm.desPort,
                                     srcIp: this.addForm.srcIp,
@@ -519,7 +460,7 @@ export default {
                                     reportDesc: this.addForm.reportDesc,
                                     attackResult: this.allData[0].attackResult,
                                     logType: this.allData[0].logType,
-                                    dt: this.allData[0].dtName,
+                                    dt: this.allData[0].dt,
                                     logId: this.allData[0].id,
                                     msg: JSON.stringify([{ logId: this.allData[0].id, logType: this.allData[0].logType, alarmTime: this.allData[0].alarmTime }])
                                 },
@@ -528,7 +469,6 @@ export default {
                                     workOrderName: this.addForm.workOrderName,
                                     workMouldId: this.addForm.workMouldId,
                                     level: this.addForm.level,
-                                    mouldType: this.addForm.mouldType,
                                     workOrderContent: this.addForm.workOrderContent
                                 }
                             }
@@ -548,7 +488,7 @@ export default {
                                 alarm: {
                                     reportName: this.addForm.reportName,
                                     reportType: this.addForm.reportType,
-                                    reportTypeName: this.typeList.filter(item => { return item.id == this.addForm.reportType })[0].name,
+                                    reportTypeName: this.addForm.reportName,
                                     desIp: this.addForm.desIp,
                                     desPort: this.addForm.desPort,
                                     srcIp: this.addForm.srcIp,
@@ -567,7 +507,6 @@ export default {
                                     workOrderName: this.addForm.workOrderName,
                                     workMouldId: this.addForm.workMouldId,
                                     level: this.addForm.level,
-                                    mouldType: this.addForm.mouldType,
                                     workOrderContent: this.addForm.workOrderContent
                                 }
                             }

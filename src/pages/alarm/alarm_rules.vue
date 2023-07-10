@@ -106,7 +106,6 @@
                             placeholder="请选择"
                             style="width: 300px"
                             clearable
-                            filterable
                             size="small">
                             <el-option v-for="item in alarmTypeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
                         </el-select>
@@ -152,7 +151,6 @@
                             v-model="alarmRuleFormEdit.alarmType"
                             placeholder="请选择"
                             style="width: 300px"
-                            filterable
                             clearable
                             size="small">
                             <el-option v-for="item in alarmTypeList" :key="item.id" :label="item.name" :value="item.id"></el-option>

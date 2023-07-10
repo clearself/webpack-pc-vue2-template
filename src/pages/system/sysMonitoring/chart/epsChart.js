@@ -125,7 +125,7 @@ export default {
                 seriesData.push({
                     name: tps[i],
                     type: 'line',
-                    stack: 'Total',
+                    stack: 'Total' + i,
                     data: [],
                     symbol: 'circle', // 设定为实心点
                     symbolSize: 7 // 设定实心点的大小

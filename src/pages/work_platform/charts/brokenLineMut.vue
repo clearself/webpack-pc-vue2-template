@@ -4,14 +4,10 @@
 
 <script>
 // import white_line from '../../../mixins/whiteCharts'
-import { mapGetters } from 'vuex'
 export default {
     name: 'BrokenLineMut',
     // mixins: [white_line],
     props: ['chartData', 'title', 'type'],
-    computed: {
-        ...mapGetters(['themeSettings'])
-    },
     data() {
         return {
 
@@ -21,12 +17,6 @@ export default {
         let colors = null
         var fontColor = 'rgba(255,255,255,0.5)'
         let data = this.chartData
-        let lendcolor = ''
-        if (this.themeSettings === 'star') {
-            lendcolor = '#fff'
-        } else {
-            lendcolor = '#333'
-        }
         console.log('趋势', data)
         let xData = []
         let legendData = []
@@ -109,11 +99,11 @@ export default {
                 itemWidth: 14,
                 itemHeight: 4,
                 textStyle: {
-                    color: 'lendcolor',
+                    // color: 'rgba(0,0,0,1)',
                     fontSize: 10
                 },
                 nameTextStyle: {
-                    color: 'lendcolor'
+                    // color: 'rgba(0,0,0,1)'
                 },
                 data: legendData
             },

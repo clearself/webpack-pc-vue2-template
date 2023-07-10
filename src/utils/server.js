@@ -22,7 +22,6 @@ console.log(process.env.NODE_ENV)
 // request拦截器
 service.interceptors.request.use(
     (config) => {
-        console.log(config, '111')
         // console.log(config, '请求头')
         if (!config.immediate) {
             removePendingRequest(config) // 检查是否存在重复请求，若存在则取消已发的请求
@@ -30,6 +29,7 @@ service.interceptors.request.use(
         }
         /* ----添加token---*/
         if (!exculdUrls.includes(config.url)) {
+        // if (config.url !== 'base-server/terminal/getUserConfig' && config.url !== 'base-server/loginUser' && config.url !== 'base-server/forgetPassword' && config.url !== 'base-server/sendCode') {
             console.log(getlocalStorage('initInfo'))
             let initInfo = getlocalStorage('initInfo')
             console.log(initInfo)
@@ -39,7 +39,6 @@ service.interceptors.request.use(
         }
         /* ----测试环境加签---*/
         if (config.method === 'post') {
-            console.log(config.data)
             let data = JSON.parse(JSON.stringify(config.data))
             let tempTag = {} // 升序后生成sign
             let keys = Object.keys(data).sort()

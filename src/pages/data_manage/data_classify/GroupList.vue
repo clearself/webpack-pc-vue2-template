@@ -3,21 +3,21 @@
     <div class="bg-color mb-1">
         <div
             style="
-                    overflow: auto;
-                    padding: 20px 5px 10px;
                     width: 200px;
+                    padding: 20px 5px 10px;
                     box-sizing: border-box;
-">
+                    overflow: auto;
+                ">
             <div>
                 <!-- <span style="position: absolute;width:10px;height:10px;background: red;top:50%;right:0;"></span> -->
                 <div
                     class="ub ub-pj ub-ac w100"
                     style="
-                            margin-bottom: 20px;
                             padding-left: 10px;
+                            margin-bottom: 20px;
                             box-sizing: border-box;
-">
-                    <div class="list-tips" style="margin-bottom: 0; font-size: 12px;">
+                        ">
+                    <div class="list-tips" style="margin-bottom: 0; font-size: 12px">
                         分组列表
                     </div>
                     <div class="operate">
@@ -45,7 +45,7 @@
 
                     </div>
                 </div>
-                <div style="padding: 0 5px 10px;">
+                <div style="padding: 0 5px 10px 5px">
                     <el-input  suffix-icon="el-icon-search" placeholder="请输入关键词搜索" clearable v-model="filterText" class="tree-input" size="mini">
                     </el-input>
                 </div>
@@ -64,16 +64,14 @@
                     :expand-on-click-node="false"
                     :indent="indent">
                     <span class="custom-tree-node" slot-scope="{ node, data }" @mouseenter="mouseenter(data)" @mouseleave="mouseleave(data)">
-                        <el-tooltip class="item" effect="dark" :content="node.label" placement="top">
-                            <span class="node-label" style="margin-right: 10px; font-size: 12px;color: rgb(0 0 0 / 90%);">{{
-                                node.label | ellipsis
-                            }}</span>
-                        </el-tooltip>
+                        <span class="node-label" style="color:rgba(0, 0, 0, 0.9); font-size: 12px;margin-right:10px">{{
+                            node.label
+                        }}</span>
                         <el-tooltip class="item" effect="dark" content="编辑" placement="top">
-                            <span style="margin-right: 6px; font-size: 12px;color: rgb(0 0 0 / 90%);" class="node-edit iconfont icon-bianji1" v-show="data.show" @click="editNode( data )"></span>
+                            <span style="color:rgba(0, 0, 0, 0.9); font-size: 12px;margin-right:6px" class="node-edit iconfont icon-bianji1" v-show="data.show" @click="editNode( data )"></span>
                         </el-tooltip>
                         <el-tooltip class="item" effect="dark" content="删除" placement="top">
-                            <span style=" font-size: 12px;color: rgb(0 0 0 / 90%);" class="node-del iconfont icon-shanchu3" v-show="data.show && data.grade !== 1 && $route.query.mode!==0 && $route.query.mode!==1" @click="delNode(data)"></span>
+                            <span style="color:rgba(0, 0, 0, 0.9); font-size: 12px" class="node-del iconfont icon-shanchu3" v-show="data.show && data.grade !== 1 && $route.query.mode!==0 && $route.query.mode!==1" @click="delNode(data)"></span>
                         </el-tooltip>
                     </span>
                 </el-tree>
@@ -83,14 +81,14 @@
         <el-dialog title="提示" :visible.sync="delDialog" width="30%" custom-class="attendance-dialog">
             <span>确定删除吗？</span>
             <span slot="footer" class="dialog-footer">
-                <el-button size="small" @click="delDialog = false" style="margin-right: 10px;">取 消</el-button>
+                <el-button size="small" @click="delDialog = false" style="margin-right:10px">取 消</el-button>
                 <el-button type="primary" size="small" @click="handleDel">确 定</el-button>
             </span>
         </el-dialog>
         <el-dialog title="提示" :visible.sync="seeDialog" width="30%" custom-class="attendance-dialog">
             <span>是否放弃当前编辑的内容</span>
             <span slot="footer" class="dialog-footer">
-                <el-button size="small" @click="handleCancel" style="margin-right: 10px;">取 消</el-button>
+                <el-button size="small" @click="handleCancel" style="margin-right:10px">取 消</el-button>
                 <el-button type="primary" size="small" @click="handleSee">确 定</el-button>
             </span>
         </el-dialog>
@@ -122,18 +120,6 @@ export default {
             currentNode: {},
             filterText: ''
         }
-    },
-    filters: {
-        ellipsis(value) {
-            if (!value) return ''
-
-            if (value.length > 9) {
-                return value.slice(0, 9) + '...'
-            }
-
-            return value
-        }
-
     },
     watch: {
         filterText(val) {
@@ -357,21 +343,21 @@ export default {
 
 <style lang="scss" scoped>
 .tree-line {
-    overflow-y: auto;
     height: 750px;
+    overflow-y: auto;
 }
-.operate {
-    .iconfont {
-        font-size: 14px;
-        color: #387dee;
-    }
-    span {
-        margin-right: 10px;
-        &:hover {
-            cursor: pointer;
-        }
-    }
-}
+ .operate {
+     .iconfont {
+         color: #387dee;
+         font-size:14px;
+     }
+     span {
+         margin-right: 10px;
+         &:hover {
+             cursor: pointer;
+         }
+     }
+ }
 // .list-tips {
 //     height: 24px;
 //     line-height: 24px;
@@ -420,26 +406,13 @@ export default {
 //       }
 //     }
 //   }
-.custom-star {
-    .list-tips {
-        color: #ffffff!important;
-    }
-    .el-tree {
-        background: unset;
-        ::v-deep .custom-tree-node {
-            color: red;
-            .node-label, .node-edit, .node-del {
-                color: rgb(255 255 255 / 90%)!important;
-            }
-        }
-    }}
+
 </style>
 <style lang="scss">
 //   .event-content .custom-tree-node .node-label:hover {
 //     color: #fff !important;
 //   }
-
-/* .custom-tree-node .node-edit:hover {
+  /* .custom-tree-node .node-edit:hover {
     color: #00e9ff !important;;
   }
   .custom-tree-node .node-del:hover {

@@ -40,7 +40,7 @@
                                                 aria-hidden="true"
                                             ></i>
                                         </div>
-                                        <div class="ub ub-f1 line1" style="font-size: 12px;">{{ element.name }}</div>
+                                        <div class="ub ub-f1 line1" style="font-size:12px;">{{ element.name }}</div>
                                         <div class="close-box" @click="$parent.delFileds(element)"><i class="el-icon-close"></i></div>
                                         <!-- <span class="fields-ver-line"></span> -->
                                     </div>
@@ -50,13 +50,13 @@
                         </draggable>
                     </div>
                     <div class="left-title ub" v-if="listCanSelect.length > 0">
-                        <div class="left-mark mr-1" style="background-color: #dcdcdc;"></div>
+                        <div class="left-mark mr-1" style="background-color: #dcdcdc"></div>
                         <div>可选字段</div>
                     </div>
                     <el-input
                         v-if="listCanSelect.length > 0"
                         placeholder="请输入字段"
-                        style="margin: 10px 0 0;width: 180px;"
+                        style="width: 180px;margin: 10px 0 0 0px"
                         size="small"
                         v-model="filterCanFields"
                         clearable
@@ -80,7 +80,7 @@
                                             aria-hidden="true"
                                         ></i>
                                     </div>
-                                    <div class="ub ub-f1 line1" style="font-size: 12px;">{{ element.name }}</div>
+                                    <div class="ub ub-f1 line1" style="font-size:12px;">{{ element.name }}</div>
                                     <div class="close-box" @click="$parent.addFileds(element)"><i class="el-icon-plus"></i></div>
                                 </div>
                                 <div v-if="element.show" class="list-inner"><RankChart :rank-data="rankData" :top-loading="topLoading" :element-data="element" /></div>
@@ -90,9 +90,9 @@
                 </div>
             </div>
         </div>
-        <div class="ub ub-f1 ub-ver expert-right" style="overflow-x: hidden;">
+        <div class="ub ub-f1 ub-ver expert-right" style="overflow-x:hidden;">
             <div class="ub ub-pj w100 mb-1">
-                <div class="list-tips active" style="height: 32px; line-height: 32px;">日志查询</div>
+                <div class="list-tips active">日志查询</div>
                 <!-- <div class="pagination pag" style="padding: 0px 0px 10px 0 !important;">
                     <el-pagination
                         background
@@ -106,10 +106,10 @@
                         next-text="下一页 ＞"
                     ></el-pagination>
                 </div> -->
-                <div style="flex: 1;text-align: right;">
+                <div style="flex:1;text-align:right">
                     <el-button v-per="['data_log_start']" size="small" icon="iconfont icon-fasongyoujian1" type="primary" @click="handleAlarm" style="border-radius: 4px;">发起事件</el-button>
-                    <el-button v-per="['data_log_storage']" size="small" icon="iconfont icon-sousuotiaojianbaocun" type="primary" @click="handleSaveLogIds" style="border-radius: 4px;background: #00a870;">暂 存</el-button>
-                    <el-button v-per="['data_log_storage_list']" size="small" icon="iconfont icon-zancunliebiao" type="primary" @click="handleSaveList" style="border-radius: 4px;background: #00a870;">暂存列表</el-button>
+                    <el-button v-per="['data_log_storage']" size="small" icon="iconfont icon-sousuotiaojianbaocun" type="primary" @click="handleSaveLogIds" style="background:#00a870;border-radius: 4px;">暂 存</el-button>
+                    <el-button v-per="['data_log_storage_list']" size="small" icon="iconfont icon-zancunliebiao" type="primary" @click="handleSaveList" style="background:#00a870;border-radius: 4px;">暂存列表</el-button>
                     <el-button v-per="['data_log_pcap']" size="small" icon="iconfont icon-tianjia" type="primary" @click="createAllPackTask" style="border-radius: 4px;">创建PCAP包任务</el-button>
                     <el-dropdown trigger="click" @command="handleCommand">
                         <span class="el-dropdown-link">
@@ -120,7 +120,7 @@
                             <el-dropdown-item command="1">导出excel</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
-                    <el-button v-per="['data_log_highlight']" style="margin-left: 10px;border-radius: 4px;background: #b500ff;" size="small" icon="iconfont icon-shezhi" type="primary" @click="$parent.highlightDialog = true">配置高亮词</el-button>
+                    <el-button v-per="['data_log_highlight']" style="margin-left: 10px;background:#b500ff;border-radius: 4px;" size="small" icon="iconfont icon-shezhi" type="primary" @click="$parent.highlightDialog = true">配置高亮词</el-button>
 
                     <!--<addBtn icon="el-icon-download" title="下载任务" @click="downloadFun" />-->
                     <!--<addBtn style="margin-left:10px;" icon="el-icon-box" title="创建PCAP包任务" @click="createAllPackTask" />-->
@@ -129,7 +129,7 @@
             <div :style="{ height: heigRight, 'overflow-y': 'auto' }">
                 <el-table
                     :row-class-name="tableRowClassName"
-                    style="width: 100%;"
+                    style="width:100%;"
                     ref="multipleTable"
                     @expand-change="handleExpand"
                     class="bigTable expert-table"
@@ -153,11 +153,11 @@
                     <el-table-column type="expand" class-name="expand-col" width="40">
                         <template slot-scope="{ row }">
                             <el-tabs>
-                                <el-tab-pane label="键/值" style="overflow: hidden;padding: 0 20px;" class="demo-table-left">
-                                    <div class="table-expand" style="overflow-y: auto;max-height: 500px;">
+                                <el-tab-pane label="键/值" style="padding:0 20px;overflow:hidden;" class="demo-table-left">
+                                    <div class="table-expand" style="max-height:500px;overflow-y:auto;">
                                         <el-form label-position="left" label-width="120px">
                                             <el-form-item :label="item.name" v-for="(item, index) in expandData" :key="index + row.id">
-                                                <div style="max-width: 70%;text-align: justify;word-break: break-all;">
+                                                <div style="max-width: 100%;text-align: justify;word-break:break-all">
                                                     <el-popover popper-class="add-search" placement="bottom" title="" trigger="click">
                                                         <div>
                                                             <p
@@ -175,12 +175,12 @@
                                                                 <i class="el-icon-plus"></i>
                                                                 <span>{{ item.name }}</span>
                                                                 <span>=</span>
-                                                                <span class="val" style="max-width: 100%;">{{ item.value }}</span>
+                                                                <span class="val" style="max-width: 100%">{{ item.value }}</span>
                                                             </p>
                                                             <p
                                                                 v-if="item.fieldName !== 'message' && item.fieldName !== 'dt'"
                                                                 class="ub ub-ac click-btn"
-                                                                style="margin: 10px 0;"
+                                                                style="margin: 10px 0"
                                                                 @click="
                                                                     unequalVal({
                                                                         key: item.fieldName,
@@ -193,7 +193,7 @@
                                                                 <i class="el-icon-plus"></i>
                                                                 <span>{{ item.name }}</span>
                                                                 <span>!=</span>
-                                                                <span class="val" style="max-width: 100%;">{{ item.value }}</span>
+                                                                <span class="val" style="max-width: 100%">{{ item.value }}</span>
                                                             </p>
                                                             <p
                                                                 @click="item.visible = false"
@@ -206,21 +206,21 @@
                                                                 <span>复制</span>
                                                             </p>
                                                             <p
-                                                                style="margin-top: 10px;"
+                                                                style="margin-top:10px"
                                                                 v-if="['ip'].some(keyWord => item.fieldName.toLowerCase().includes(keyWord))"
                                                                 @click="jumpAsset(item, item.value)"
                                                                 class="ub ub-ac click-btn"
                                                             >
-                                                                <i class="el-icon-s-promotion" style="font-size: 12px;"></i>
+                                                                <i class="el-icon-s-promotion" style="font-size:12px"></i>
                                                                 <span>查询资产</span>
                                                             </p>
                                                             <p
-                                                                style="margin-top: 10px;"
+                                                                style="margin-top:10px"
                                                                 v-if="['ip', 'url', '域名'].some(keyWord => item.fieldName.toLowerCase().includes(keyWord))"
                                                                 @click="jumpThreat(item, item.value)"
                                                                 class="ub ub-ac click-btn"
                                                             >
-                                                                <i class="iconfont icon-chaxunqingbao" style="font-size: 12px;"></i>
+                                                                <i class="iconfont icon-chaxunqingbao" style="font-size:12px"></i>
                                                                 <span>查询情报</span>
                                                             </p>
                                                         </div>
@@ -234,23 +234,6 @@
                                                             slot="reference"
                                                         >
                                                             <i
-                                                                v-if="item.fieldName == 'srcIp' && item.value && item.srcIpVenusIsSpite != '内网'"
-                                                                class="iconfont"
-                                                                :style="{
-                                                                    color: [
-                                                                        { type: '安全', color: '#00ff48' },
-                                                                        { type: '恶意', color: '#ff0000' },
-                                                                        { type: '未知', color: '#7c7c7c' }
-                                                                    ].filter(co => co.type == item.srcIpVenusIsSpite)[0].color
-                                                                }"
-                                                                :title="'VenusEye：'+item.srcIpVenusIsSpite"
-                                                                :class="{
-                                                                    'icon-liebiaonei-anquan': item.srcIpVenusIsSpite == '安全',
-                                                                    'icon-liebiaonei-buanquan': item.srcIpVenusIsSpite == '恶意',
-                                                                    'icon-liebiaonei-weizhi': item.srcIpVenusIsSpite == '未知'
-                                                                }"
-                                                            ></i>
-                                                            <i
                                                                 v-if="item.fieldName == 'srcIp' && item.value && item.srcIpIsSpite != '内网'"
                                                                 class="iconfont"
                                                                 :style="{
@@ -260,28 +243,11 @@
                                                                         { type: '未知', color: '#7c7c7c' }
                                                                     ].filter(co => co.type == item.srcIpIsSpite)[0].color
                                                                 }"
-                                                                :title="'微步：'+item.srcIpIsSpite"
+                                                                :title="item.srcIpIsSpite"
                                                                 :class="{
                                                                     'icon-liebiaonei-anquan': item.srcIpIsSpite == '安全',
                                                                     'icon-liebiaonei-buanquan': item.srcIpIsSpite == '恶意',
                                                                     'icon-liebiaonei-weizhi': item.srcIpIsSpite == '未知'
-                                                                }"
-                                                            ></i>
-                                                            <i
-                                                                v-if="item.fieldName == 'desIp' && item.value && item.desIpVenusIsSpite != '内网'"
-                                                                class="iconfont"
-                                                                :style="{
-                                                                    color: [
-                                                                        { type: '安全', color: '#00ff48' },
-                                                                        { type: '恶意', color: '#ff0000' },
-                                                                        { type: '未知', color: '#7c7c7c' }
-                                                                    ].filter(co => co.type == item.desIpVenusIsSpite)[0].color
-                                                                }"
-                                                                :title="'VenusEye：'+item.desIpVenusIsSpite"
-                                                                :class="{
-                                                                    'icon-liebiaonei-anquan': item.desIpVenusIsSpite == '安全',
-                                                                    'icon-liebiaonei-buanquan': item.desIpVenusIsSpite == '恶意',
-                                                                    'icon-liebiaonei-weizhi': item.desIpVenusIsSpite == '未知'
                                                                 }"
                                                             ></i>
                                                             <i
@@ -294,7 +260,7 @@
                                                                         { type: '未知', color: '#7c7c7c' }
                                                                     ].filter(co => co.type == item.desIpIsSpite)[0].color
                                                                 }"
-                                                                :title="'微步：'+item.desIpIsSpite"
+                                                                :title="item.desIpIsSpite"
                                                                 :class="{
                                                                     'icon-liebiaonei-anquan': item.desIpIsSpite == '安全',
                                                                     'icon-liebiaonei-buanquan': item.desIpIsSpite == '恶意',
@@ -309,18 +275,18 @@
                                         </el-form>
                                     </div>
                                 </el-tab-pane>
-                                <el-tab-pane label="JSON" style="overflow: hidden;padding: 0 20px;">
-                                    <div class="table-expand" style="overflow-y: auto;max-width: 100%;height: 500px;font-size: 12px;text-align: justify;word-break: break-all;">
+                                <el-tab-pane label="JSON" style="padding:0 20px;overflow:hidden;">
+                                    <div class="table-expand" style="font-size:12px;max-width: 100%;text-align: justify;word-break:break-all;max-height:500px;overflow-y:auto;">
                                         <json-viewer :value="expandJsonData" :expand-depth="5" copyable theme="my-awesome-json-theme" sort></json-viewer>
                                     </div>
                                 </el-tab-pane>
 
-                                <el-tab-pane v-if="row.nftData === 2" label="PCAP包" style="overflow: hidden;padding: 0 20px;max-width: 1300px;">
-                                    <div class="table-expand pcap-detail" style="overflow-y: auto;max-height: 500px;font-size: 12px;text-align: justify;word-break: break-all;">
-                                        <div style="margin-bottom: 10px;">
+                                <el-tab-pane v-if="row.nftData === 2" label="PCAP包" style="padding:0 20px;overflow:hidden;max-width: 1300px">
+                                    <div class="table-expand pcap-detail" style="font-size:12px;text-align: justify;word-break:break-all;max-height:500px;overflow-y:auto;">
+                                        <div style="margin-bottom: 10px">
                                             <addBtn
                                                 class="pcap-btn"
-                                                style="margin-right: 10px;"
+                                                style="margin-right: 10px"
                                                 icon="iconfont icon-tianjia"
                                                 :disabled="row.nftData === 0"
                                                 title="创建PCAP包任务"
@@ -331,14 +297,14 @@
                                                 <addBtn class="pcap-btn" icon="iconfont icon-xiazai1" title="下载PCAP包" />
                                             </a>
                                         </div>
-                                        <el-tabs v-model="tabsValue" type="card" style="height: 100%;">
-                                            <el-tab-pane :key="index" v-for="(item, index) in pacpData" :label="item.name" :name="item.name" style="height: 100%;">
+                                        <el-tabs v-model="tabsValue" type="card" style="height:100%;">
+                                            <el-tab-pane :key="index" v-for="(item, index) in pacpData" :label="item.name" :name="item.name" style="height:100%;">
                                                 <div v-if="item.content.length > 0" class="w100 left-content">
                                                     <div v-for="(_item, _index) in item.content" :key="_index" class="ub w100 ub-ver">
-                                                        <div v-if="_item.type === 'req'" class="ub ub-f1 request" style="width: 100%;">
+                                                        <div v-if="_item.type === 'req'" class="ub ub-f1 request" style="width:100%;">
                                                             <pre>{{ _item.payload }}</pre>
                                                         </div>
-                                                        <div v-if="_item.type === 'res'" class="ub ub-f1 response" style="width: 100%;">
+                                                        <div v-if="_item.type === 'res'" class="ub ub-f1 response" style="width:100%;">
                                                             <pre>{{ _item.payload }}</pre>
                                                         </div>
                                                     </div>
@@ -383,7 +349,7 @@
                                         <p
                                             v-if="item.fieldName !== 'message' && item.fieldName !== 'dt'"
                                             class="ub ub-ac click-btn"
-                                            style="margin: 10px 0;"
+                                            style="margin: 10px 0"
                                             @click="
                                                 unequalVal({
                                                     key: item.fieldName,
@@ -409,25 +375,25 @@
                                             <span>复制</span>
                                         </p>
                                         <p
-                                            style="margin-top: 10px;"
+                                            style="margin-top:10px"
                                             v-if="['ip'].some(keyWord => item.fieldName.toLowerCase().includes(keyWord))"
                                             @click="jumpAsset(item, scope.row[item.fieldName])"
                                             class="ub ub-ac click-btn"
                                         >
-                                            <i class="iconfont icon-chaxunzichan" style="font-size: 12px;"></i>
+                                            <i class="iconfont icon-chaxunzichan" style="font-size:12px"></i>
                                             <span>查询资产</span>
                                         </p>
                                         <p
-                                            style="margin-top: 10px;"
+                                            style="margin-top:10px"
                                             v-if="['ip', 'url', '域名'].some(keyWord => item.fieldName.toLowerCase().includes(keyWord))"
                                             @click="jumpThreat(item, scope.row[item.fieldName])"
                                             class="ub ub-ac click-btn"
                                         >
-                                            <i class="iconfont icon-chaxunqingbao" style="font-size: 12px;"></i>
+                                            <i class="iconfont icon-chaxunqingbao" style="font-size:12px"></i>
                                             <span>查询情报</span>
                                         </p>
                                     </div>
-                                    <p class="highlighted" slot="reference" v-html="scope.row[item.fieldName]" v-if="item.fieldName === 'aDate'" style="color: #00c0ff;"></p>
+                                    <p class="highlighted" slot="reference" v-html="scope.row[item.fieldName]" v-if="item.fieldName === 'aDate'" style="color:#00c0ff"></p>
                                     <p
                                         v-else
                                         class="highlighted"
@@ -443,44 +409,6 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <!-- <el-table-column
-                        v-for="(item, index) in tableList"
-                        :key="index"
-                        :label="item.name"
-                        min-width="140"
-                        :sortable="item.type === 3 || item.type === 2"
-                        :prop="item.fieldName"
-                        v-if="item.fieldName == 'message'"
-                    >
-                        <template slot-scope="scope">
-                            <div>
-                                <el-popover popper-class="add-search" placement="bottom" title="" trigger="click">
-                                    <div>
-                                        <p
-                                            @click="item.visible = false"
-                                            class="ub ub-ac click-btn"
-                                            v-clipboard:copy="scope.row[item.fieldName]"
-                                            v-clipboard:success="firstCopySuccess"
-                                            v-clipboard:error="firstCopyError"
-                                        >
-                                            <i class="el-icon-document-copy"></i>
-                                            <span>复制</span>
-                                        </p>
-                                    </div>
-                                    <p
-                                        class="highlighted"
-                                        :style="
-                                            ['ip', 'url', '域名'].some(keyWord => item.fieldName.toLowerCase().includes(keyWord))
-                                                ? 'cursor: pointer; text-decoration: underline; color: #0052D9;'
-                                                : 'cursor: default; text-decoration: unset; color: #191919;'
-                                        "
-                                        slot="reference"
-                                        v-html="scope.row[item.fieldName]"
-                                    ></p>
-                                </el-popover>
-                            </div>
-                        </template>
-                    </el-table-column> -->
                     <el-table-column label="操作" align="center" width="240" fixed="right" class-name="deepBg">
                         <template slot-scope="scope">
                             <el-button v-per="['data_log_storage']"  :disabled="scope.row.holdType !== 0"  type="text" size="small" @click="hanleSave(scope.row)">暂存</el-button>
@@ -492,7 +420,7 @@
                     </el-table-column>
                 </el-table>
             </div>
-            <div v-show="tableData.length>0" class="pagination pag" style="z-index: 20;padding: 0 !important;text-align: right;">
+            <div v-show="tableData.length>0" class="pagination pag" style="padding: 0px !important;text-align: right;z-index:20">
                 <el-pagination
                     background
                     @size-change="handleSizeChange"
@@ -501,7 +429,6 @@
                     :page-sizes="[30,50,100]"
                     :page-size="$parent.get_params.size"
                     layout="slot,sizes, prev, next"
-                    :total="$parent.total_num"
                     prev-text="＜ 上一页"
                     next-text="下一页 ＞"></el-pagination>
             </div>
@@ -532,7 +459,7 @@ import RankChart from '@/pages/data_manage/new_search/components/chart/RankChart
 import EventBus from '@/assets/js/bus'
 import axios from 'axios'
 import { getExpandLog, saveLogIds, createTask, viewPcap } from '@/server/data_manage/new_search'
-import { get_threat_search, getStartConfig, get_threat_searchVenus } from '@/server/alarm/api.js'
+import { get_threat_search } from '@/server/intelligence/api.js'
 export default {
     name: 'TableContent',
     components: {
@@ -588,7 +515,6 @@ export default {
     },
     data() {
         return {
-            startData: [],
             downLoading: false,
             leftFold: false,
             tabsValue: '',
@@ -683,7 +609,7 @@ export default {
             handler(newVal) {
                 if (newVal) {
                     if (this.type == 1) {
-                        this.heigRight = 'calc(100vh - 620px)'
+                        this.heigRight = 'calc(100vh - 610px)'
                         this.heigLeft = 'calc(100vh - 560px)'
                     } else {
                         this.heigRight = 'calc(100vh - 535px)'
@@ -691,7 +617,7 @@ export default {
                     }
                 } else {
                     if (this.type == 1) {
-                        this.heigRight = 'calc(100vh - 465px)'
+                        this.heigRight = 'calc(100vh - 460px)'
                         this.heigLeft = 'calc(100vh - 410px)'
                     } else {
                         this.heigRight = 'calc(100vh - 385px)'
@@ -707,17 +633,39 @@ export default {
                 if (newVal == 'normal') {
                     if (this.type == 1) {
                         this.heigRight = 'calc(100vh - 470px)'
-                        this.heigLeft = 'calc(100vh - 450px)'
+                        this.heigLeft = 'calc(100vh - 410px)'
                     }
                 } else {
                     if (this.type == 1) {
                         this.heigRight = 'calc(100vh - 396px)'
-                        this.heigLeft = 'calc(100vh - 380px)'
+                        this.heigLeft = 'calc(100vh - 410px)'
                     }
                 }
             },
             immediate: true
         },
+        // viewChartOpen(val) {
+        //     if (val) {
+        //         this.heigRight = 'calc(100vh - 520px)'
+        //         this.heigLeft = 'calc(100vh - 520px)'
+        //     } else {
+        //         this.heigRight = 'calc(100vh - 380px)'
+        //         this.heigLeft = 'calc(100vh - 410px)'
+        //     }
+        // },
+        // list: {
+        //     handler(newVal, oldVal) {
+        //         let arr = []
+        //         this.listAll.map(item => {
+        //             if (!newVal.some(_item => item.fieldName === _item.fieldName)) {
+        //                 arr.push(item)
+        //             }
+        //         })
+        //         this.listCanSelect = this.$deepCopy(arr)
+        //     },
+        //     // 代表在wacth里声明了firstName这个方法之后立即先去执行handler方法
+        //     immediate: true
+        // },
         list: {
             handler(newVal) {
                 this.innerList = _.cloneDeep(newVal)
@@ -741,15 +689,8 @@ export default {
             })
         }
     },
-    mounted() {
-        this.getStartConfigData()
-    },
+    mounted() {},
     methods: {
-        getStartConfigData() {
-            getStartConfig({ queryData: {}, paramsData: {}}).then(res => {
-                this.startData = res
-            })
-        },
         tableRowClassName({ row, rowIndex }) {
             if (rowIndex % 2) {
                 return 'table-row2'
@@ -771,35 +712,24 @@ export default {
             }
             console.log('ip', item.fieldName, value)
             let obj = {
-                queryData: {},
-                paramsData: { value }
+                queryData: {
+                    value
+                },
+                paramsData: {}
             }
-            if (this.startData.includes(1)) {
-                this.searchWeibu(obj, value)
-            } else if (this.startData.includes(0)) {
-                this.searchVenus(obj, value)
-            }
-        },
-        searchWeibu(obj, value) {
             get_threat_search(obj)
                 .then(res => {
                     console.log(res)
                     this.$setsessionStorage('search-item', res)
-                    window.open(window.location.origin + '/#' + '/intelligence/threat_detail?searchStr=' + value)
+                    let route = this.$router.resolve({
+                        name: 'intelligence_threat_detail',
+                        query: {
+                            searchStr: value
+                        }
+                    })
+                    window.open(route.href, '_blank')
                 })
                 .catch(err => {
-                    console.log(err + 'err')
-                })
-        },
-        searchVenus(obj, value) {
-            get_threat_searchVenus(obj, value)
-                .then(res => {
-                    console.log(res)
-                    this.$setsessionStorage('search-item', res)
-                    window.open(window.location.origin + '/#' + '/intelligence/threat_detail?searchStr=' + value)
-                })
-                .catch(err => {
-                    this.btnLoading = false
                     console.log(err + 'err')
                 })
         },
@@ -988,28 +918,11 @@ export default {
                                         }
                                         if (obj1.fieldName == 'srcIp' || obj1.fieldName == 'desIp') {
                                             const field = `${obj1.fieldName}IsSpite`
-                                            const field1 = `${obj1.fieldName}VenusIsSpite`
-                                            obj1[field1] = res[field1]
                                             obj1[field] = res[field]
                                             console.log(res[field])
                                         }
                                         arr.push(obj1)
                                         obj[item.fieldName] = res[resKey]
-                                    }
-                                    if (item) {
-                                        // const obj2 = {
-                                        //     fieldName: item.fieldName,
-                                        //     name: item.name,
-                                        //     value: res[resKey],
-                                        //     type: item.type
-                                        // }
-                                        // if (obj2.fieldName == 'srcIp' || obj2.fieldName == 'desIp') {
-                                        //     const field1 = `${obj2.fieldName}VenusIsSpite`
-                                        //     obj2[field1] = res[field1]
-                                        //     console.log(res[field1])
-                                        // }
-                                        // arr.push(obj2)
-                                        // obj[item.fieldName] = res[resKey]
                                     }
                                 }
                             }
@@ -1226,20 +1139,15 @@ export default {
 }
 </script>
 
-<style lang="scss">
-    .el-tooltip__popper {
-        max-width: 50vw;
-    }
-</style>
 <style scoped lang="scss">
-@import '../../../../../assets/css/pacap';
+@import '../../../../../assets/css/pacap.scss';
 i.fold {
     position: absolute;
-    top: 18px;
-    right: 15px;
-    font-size: 12px;
-    color: #999999;
     cursor: pointer;
+    color: #999999;
+    right: 15px;
+    top: 18px;
+    font-size: 12px;
 }
 .pag {
     ::v-deep .el-input__inner {
@@ -1255,7 +1163,7 @@ i.fold {
             color: #676a71 !important;
         }
         span:hover {
-            color: #0052d9 !important;
+            color: #0052D9 !important;
         }
     }
     ::v-deep .btn-next {
@@ -1267,7 +1175,7 @@ i.fold {
             color: #676a71 !important;
         }
         span:hover {
-            color: #0052d9 !important;
+            color: #0052D9 !important;
         }
     }
 }
@@ -1278,14 +1186,14 @@ i.fold {
     background-size: 100% 100%;
 }
 .expert-left {
-    position: relative;
-    padding: 10px 0;
     width: 190px;
-    border: solid 1px #ffffff;
-    background-color: #ffffff;
+    padding: 10px 0;
+    background-color: #fff;
+    position: relative;
+    border: solid 1px #fff;
+    box-sizing: border-box;
     // margin-right: 10px;
     transition: width 0.2s linear;
-    box-sizing: border-box;
     ::v-deep .el-input__suffix-inner {
         line-height: 32px;
     }
@@ -1293,75 +1201,82 @@ i.fold {
 .expert-left.left-fold {
     width: 30px;
     transition: width 0.2s linear;
+
     i.fold {
-        right: 8px;
         color: #999999;
+        right: 8px;
         transform: rotate(180deg);
     }
 }
+
 .expert-right {
     padding: 10px 0 10px 10px;
-    border: solid 1px #ffffff;
-    background-color: #ffffff;
+    background-color: #fff;
+    border: solid 1px #fff;
     ::v-deep .el-button--primary {
-        border-color: #ffffff;
+        border-color: #FFF;
     }
     ::v-deep .el-button--text {
         // color: #0052d9;
     }
-    .bigTable {
-        ::v-deep .el-form-item {
-            margin-bottom: 0;
-        }
+    .bigTable  {
+       ::v-deep .el-form-item {
+            margin-bottom: 0px
+       }
     }
+
 }
 .left-title {
-    height: 32px;
     font-size: 14px;
     color: #191919;
-    line-height: 32px;
 }
 .left-mark {
     width: 5px;
     height: 24px;
-    border-radius: 4px;
     background-color: #387dee;
+    border-radius: 4px;
 }
 .left-tip {
     margin-top: 10px;
     margin-bottom: 10px;
     font-size: 0;
+
     > i {
-        margin-right: 5px;
+        vertical-align: middle;
         font-size: 12px;
         color: #bdbdbd;
-        vertical-align: middle;
+        margin-right: 5px;
     }
+
     > span {
         vertical-align: middle;
         font-size: 10px;
         color: #bdbdbd;
     }
 }
+
 .list-group {
     min-height: 26px;
 }
+
 .list-title {
-    // margin-left: 6px;
-    position: relative;
     width: 180px;
     height: 26px;
+    // margin-left: 6px;
+    position: relative;
     border-radius: 4px;
     // background-image: url(../../../../../assets/img/field_bg.jpg);
     // background-size: 100% 100%;
     // background-repeat: no-repeat;
     // background-position: left top;
+
     .vertical-line {
         position: absolute;
-        left: -6px;
         width: 2px;
         height: 26px;
-        background: rgb(255 255 255 / 20%);
+        background: rgba(255, 255, 255, 0.2);
+        left: -6px;
+
         &.active {
             // background: #fff;
             // box-shadow: 0 0 4px #00d0ff, 0 0 6px #00d0ff;
@@ -1373,19 +1288,21 @@ i.fold {
         // background: red;
     }
 }
+
 .list-group-item {
-    margin: 4px 0;
     color: #ffffff;
     cursor: move;
+    margin: 4px 0;
     // padding:0 10px;
     box-sizing: border-box;
     .list-title {
         background-color: #387dee;
     }
 }
+
 .list-group-item1 {
-    margin: 8px 0;
     color: #616161;
+    margin: 8px 0;
     // padding:0 10px;
     box-sizing: border-box;
     .list-title {
@@ -1396,27 +1313,31 @@ i.fold {
         color: #5c5c5c;
     }
 }
+
 .list-group-item i,
 .list-group-item1 i {
     cursor: pointer;
 }
+
 .open-box,
 .close-box {
     width: 26px;
     height: 100%;
+    color: #fff;
     text-align: center;
-    color: #ffffff;
     line-height: 26px;
 }
+
 .list-inner-tip {
-    margin: 6px 0;
     font-size: 12px;
-    color: #0052d9;
     line-height: 15px;
+    color: #0052D9;
+    margin: 6px 0;
 }
+
 .list-inner {
-    margin: 10px 0;
     width: 170px;
+    margin: 10px 0;
 }
 div ::v-deep .store.btn_box {
     background-image: url('../../../../../components/modules/colorBtn/images/downloadBg.png');
@@ -1426,10 +1347,10 @@ div ::v-deep .store.btn_box {
     font-size: 12px;
     i {
         margin-right: 5px;
-        color: #0052d9;
+        color: #0052D9;
     }
     span.val {
-        color: #0052d9;
+        color: #0052D9;
     }
 }
 .click-btn:hover {
@@ -1439,13 +1360,10 @@ div ::v-deep .store.btn_box {
     width: 0 !important;
 }
 div ::v-deep .el-table__expand-column.expand-col {
-    width: 30px;
     border: none;
+    width: 30px;
 }
 .el-dropdown-menu {
     width: 120px !important;
-}
-.custom-purple .el-table td.el-table__cell div {
-    line-height: 40px;
 }
 </style>

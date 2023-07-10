@@ -149,30 +149,17 @@
         </div>
 
         <div class="lasBox">
-            <div class="logNumBox wrapBg w26">
+            <div class="logNumBox wrapBg w50">
                 <div class="boxTit">
                     <div class="block"></div>
-                    <div class="tex">各数据源接收日志数</div>
+                    <div class="tex">数据报送统计</div>
                 </div>
                 <div class="chartWrap">
-                    <logNumChart ref="logNumChart" :chartMes="logNumMes"></logNumChart>
+                    <staticChart ref="staticChart" :chartMes="logNumMes"></staticChart>
                     <el-empty :image-size="100" v-show="!logNumMes" class="empBox" description="暂无数据"></el-empty>
                 </div>
-                <div v-if="timeMes" class="timeWrap">{{ timeMes.beginTime }} ~ {{ timeMes.endTime }}</div>
             </div>
-            <div class="logSizBox wrapBg">
-                <div class="boxTit">
-                    <div class="block"></div>
-                    <div class="tex">各数据源接收日志总大小</div>
-                </div>
-                <div class="chartWrap">
-                    <logSizChart ref="logSizChart" :chartMes="logSizeMes"></logSizChart>
-                    <el-empty :image-size="100" v-show="!logSizeMes" class="empBox" description="暂无数据"></el-empty>
-                </div>
-
-                <div v-if="timeMes" class="timeWrap">{{ timeMes.beginTime }} ~ {{ timeMes.endTime }}</div>
-            </div>
-            <div class="logSizBox wrapBg w40">
+            <div class="logSizBox wrapBg w50">
                 <div class="boxTit">
                     <div class="block"></div>
                     <div class="tex">数据采集EPS</div>
@@ -195,9 +182,8 @@ import memChart from './chart/memChart.js'
 import netChart from './chart/netChart.js'
 import stoChart from './chart/stoChart.js'
 import epsChart from './chart/epsChart.js'
-import logNumChart from './chart/logNumChart.js'
-import logSizChart from './chart/logSizChart.js'
 import dataChart from './chart/dataChart.js'
+import staticChart from './chart/staticChart.js'
 
 import {
     getSystemMonitorInfoReq
@@ -214,9 +200,8 @@ export default {
         netChart,
         stoChart,
         epsChart,
-        logNumChart,
-        logSizChart,
-        dataChart
+        dataChart,
+        staticChart
     },
     data() {
         return {
@@ -235,9 +220,7 @@ export default {
             diskMes: [],
             epsMes: [],
             logNumMes: [],
-            logSizeMes: [],
             dataMes: [],
-            timeMes: [],
 
             netTbArr: [],
             diskTbArr: [],
@@ -326,18 +309,7 @@ export default {
                 this.diskTbArr = this.isDataEmpty(res.diskTb)
                 this.epsMes = this.isDataEmpty(res.processingEps)
                 this.dataMes = this.isDataEmpty(res.collecEpsInfo)
-                if (res.logMap) {
-                    this.timeMes = {
-                        beginTime: res.logMap.beginTime,
-                        endTime: res.logMap.endTime
-                    }
-                    this.logNumMes = res.logMap.log || null
-                    this.logSizeMes = res.logMap.log || null
-                } else {
-                    this.timeMes = null
-                    this.logNumMes = null
-                    this.logSizeMes = null
-                }
+                this.logNumMes = this.isDataEmpty(res.staticReport)
 
                 // processingEps
                 // this.memMes = ['']
@@ -345,8 +317,6 @@ export default {
                 // this.netMes = ['']
                 // this.diskMes = ['']
                 // this.epsMes = ['']
-                // this.logNumMes = ['']
-                // this.logSizeMes = ['']
                 // this.dataMes = ['']
                 // this.loading = false
                 this.reqLoading = false
@@ -423,8 +393,7 @@ export default {
             this.$refs.netChart.drawMap()
             this.$refs.stoChart.drawMap()
             this.$refs.epsChart.drawMap()
-            this.$refs.logNumChart.drawMap()
-            this.$refs.logSizChart.drawMap()
+            this.$refs.staticChart.drawMap()
             this.$refs.dataChart.drawMap()
         },
         resizeCharts() {
@@ -434,8 +403,7 @@ export default {
             this.$refs.netChart.resizeMap()
             this.$refs.stoChart.resizeMap()
             this.$refs.epsChart.resizeMap()
-            this.$refs.logNumChart.resizeMap()
-            this.$refs.logSizChart.resizeMap()
+            this.$refs.staticChart.resizeMap()
             this.$refs.dataChart.resizeMap()
         }
     },
@@ -620,8 +588,8 @@ export default {
     .wrapBg {
         width: calc(33.3% - 3px);
     }
-    .w26 {
-        width: calc(25.3% - 3px);
+    .w50 {
+        width: calc(50% - 3px);
     }
     .w40 {
         width: calc(41.3% - 3px);

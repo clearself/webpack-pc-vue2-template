@@ -46,7 +46,19 @@ const toolTipFormatter = (params) => { // unit添加的单位
 
 const option = {
     tooltip: {
-        trigger: 'axis'
+        trigger: 'axis',
+        transitionDuration: 1, // 提示框浮层的移动动画过渡时间
+        formatter: function(params) {
+            console.log(params)
+            // name:类目轴数据，value：数值轴数据, dataIndex：数据的索引
+            // return params[0].name + '<br>' + yData[params[0].dataIndex]
+            // return params[0].name + '<br>' + params[0].value
+        },
+        axisPointer: {
+            type: 'line',
+            axis: 'x',
+            snap: true // axisPointer自动吸附到最近的点上
+        }
     },
     xAxis: {
         type: 'category',
@@ -65,6 +77,16 @@ const option = {
         },
         axisLine: {
             show: false // 不显示坐标轴线
+        },
+        axisLabel: {
+            margin: 5,
+            textStyle: {
+                fontSize: 12
+            },
+            formatter: function(value) {
+                return value * value * value
+                // return value
+            }
         },
         splitLine: {
             show: true,
@@ -125,7 +147,7 @@ export default {
                 seriesData.push({
                     name: tps[i],
                     type: 'line',
-                    stack: 'Total',
+                    stack: 'Total' + i,
                     data: [],
                     symbol: 'circle', // 设定为实心点
                     symbolSize: 7 // 设定实心点的大小
@@ -175,10 +197,16 @@ export default {
                     } else { return value }
                 }
             }
+            this.chartOption.yAxis.axisLabel = {
+                formatter: function(value) {
+                    return value
+                }
+            }
 
             this.chartOption.series = seriesData
 
             console.log(chartData, 'zzzzzzzzzzzzzzzz')
+            console.log(this.chartOption, 'zzzzzzzzzzzzzzzz')
             this.myChart.clear()
             this.myChart.setOption(this.chartOption)
         },

@@ -5,7 +5,6 @@
                 <div class="draft-btn" @click="tabClick('1')" :class="{'tab-active': currentTab === '1'}">待办工单</div>
                 <div class="draft-btn" @click="tabClick('2')" :class="{'tab-active': currentTab === '2'}">已办工单</div>
                 <div class="draft-btn" @click="tabClick('3')" :class="{'tab-active': currentTab === '3'}">发起工单</div>
-                <div class="draft-btn" @click="tabClick('4')" :class="{'tab-active': currentTab === '4'}">抄送工单</div>
             </div>
             <div class="ub w100 search-area event-content" style="box-sizing: border-box;padding: 0;">
                 <SearchTop @search="searchCheck" :border="false" @reset="reset">
@@ -24,22 +23,13 @@
                     <el-col :md="12" :lg="8" :xl="6">
                         <el-form :model="get_params">
                             <el-form-item label="工单类型：" label-width="70px">
-                                <el-select filterable clearable v-model="get_params.workOrderObject" size="small" style="width: 100%;" placeholder="请选择">
+                                <el-select filterable clearable v-model="get_params.workOrderObject" size="small" style="width: 100%" placeholder="请选择">
                                     <el-option v-for="(item, index) in workTypeList" :key="index" :label="item.name" :value="item.id"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-form>
                     </el-col>
-                    <el-col :md="12" :lg="8" :xl="6">
-                        <el-form :model="get_params">
-                            <el-form-item label="模板类型：" label-width="70px">
-                                <el-select filterable clearable v-model="get_params.mouldType" size="small" style="width: 100%;" placeholder="请选择">
-                                    <el-option v-for="(item, index) in mouldTypeList" :key="index" :label="item.name" :value="item.id"></el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-form>
-                    </el-col>
-                    <el-col :md="12" :lg="8" :xl="6">
+                    <el-col v-if="currentTab!=='1'" :md="12" :lg="8" :xl="6">
                         <el-form :model="get_params">
                             <el-form-item label="优先级：" label-width="70px">
                                 <el-select
@@ -57,11 +47,11 @@
                     </el-col>
                 </SearchTop>
             </div>
-            <div class="list-container table-area">
+            <div class="attendance-list table-area">
                 <div class="ub ub-pj w100" style="margin-bottom: 10px;">
                     <div class="list-tips">列表内容</div>
                     <div>
-                        <el-checkbox v-if="currentTab == 1" style="margin-right: 10px;" v-model="isTimeChected">60s刷新一次</el-checkbox>
+                        <el-checkbox v-if="currentTab == 1" style="margin-right: 10px" v-model="isTimeChected">60s刷新一次</el-checkbox>
                         <el-button v-per="['work_order_add']" @click="handleAddTemplate" v-if="currentTab == 3" icon="el-icon-plus" type="primary" size="small">发起工单</el-button>
                     </div>
                 </div>
@@ -82,8 +72,6 @@
                     </el-table-column>
                     <el-table-column prop="workOrderName" label="工单名称" show-overflow-tooltip>
                     </el-table-column>
-                    <el-table-column prop="mouldName" label="模板类型" show-overflow-tooltip>
-                    </el-table-column>
                     <el-table-column prop="workMouldName" label="工单模板" show-overflow-tooltip>
                     </el-table-column>
                     <el-table-column label="工单来源" width="70" show-overflow-tooltip>
@@ -95,9 +83,9 @@
                         <template slot-scope="{row}">
                             <div>
                                 <div>
-                                    <span v-if="row.level == 1" style="color: #ff0000;">高</span>
-                                    <span v-if="row.level == 2" style="color: #f2cd00;">中</span>
-                                    <span v-if="row.level == 3" style="color: #48ccca;">低</span>
+                                    <span v-if="row.level == 1" style="color: #ff0000">高</span>
+                                    <span v-if="row.level == 2" style="color: #f2cd00">中</span>
+                                    <span v-if="row.level == 3" style="color: #48ccca">低</span>
                                 </div>
                             </div>
                         </template>
@@ -113,9 +101,9 @@
                         <template slot-scope="{row}">
                             <div>
                                 <div>
-                                    <span v-if="row.status == 0" style="color: #ff3a3a;">已撤销</span>
-                                    <span v-if="row.status == 1" style="color: #08a508;">进行中</span>
-                                    <span v-if="row.status == 2" style="color: #00c0ff;">已完成</span>
+                                    <span v-if="row.status == 0" style="color: #ff3a3a">已撤销</span>
+                                    <span v-if="row.status == 1" style="color: #08a508">进行中</span>
+                                    <span v-if="row.status == 2" style="color: #00c0ff">已完成</span>
                                 </div>
                             </div>
 
@@ -155,16 +143,15 @@
                     </el-table-column>
                     <el-table-column prop="createUser" label="创建人" width="100">
                     </el-table-column>
-                    <!-- <el-table-column prop="createTime" label="创建时间" width="150">
-                    </el-table-column> -->
-                    <el-table-column label="操作" align="center" width="200" fixed="right" class-name="deepBg">
+                    <el-table-column prop="createTime" label="创建时间" width="150">
+                    </el-table-column>
+                    <el-table-column label="操作" align="center" width="160" fixed="right" class-name="deepBg">
                         <template slot-scope="scope">
                             <!--<el-button type="text" @click="seeWorkImg(scope.row)">流程图</el-button>-->
                             <el-button v-per="['work_order_view']" type="text" size="small" @click="handleSee(scope.row)">查看</el-button>
-                            <el-button type="text" size="small" v-if="currentTab == 1 || currentTab == 3" @click="handleCopy(scope.row)">抄送</el-button>
                             <el-button v-per="['work_order_urge']" type="text" size="small" v-if="currentTab == 3" @click="urgeWork(scope.row)" :disabled="scope.row.status !== 1 && currentTab == 3">催办</el-button>
                             <el-button v-per="['work_order_revoke']" type="text" size="small" v-if="currentTab == 3" @click="revertWork(scope.row)" :disabled="scope.row.status !== 1 && currentTab == 3">撤销</el-button>
-                            <el-button v-per="['work_order_del']" type="text" size="small" v-if="currentTab == 3" @click="handleDelete(scope.row)" :disabled="(scope.row.status !== 2 && scope.row.status != 0) && currentTab == 3">删除</el-button>
+                            <el-button v-per="['work_order_del']" type="text" size="small" v-if="currentTab == 3" @click="handleDelete(scope.row)" :disabled="scope.row.status !== 2 && currentTab == 3">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -172,7 +159,7 @@
             </div>
         </div>
         <!--增加对象-->
-        <el-dialog title="发起工单" :visible.sync="addDialog" width="700px" custom-class="common-dialog" @click.native="closeUser">
+        <el-dialog title="发起工单" :visible.sync="addDialog" width="700px" custom-class="attendance-dialog" @click.native="closeUser">
             <el-form :model="addForm" :rules="rules" ref="addForm" label-position="top">
                 <el-form-item label="工单名称：" prop="workOrderName" :label-width="formLabelWidth">
                     <el-input placeholder="请输入工单名称" clearable v-model="addForm.workOrderName" size="small"></el-input>
@@ -188,19 +175,7 @@
                         <el-option label="低" value="3"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="模板类型：" prop="mouldType" :label-width="formLabelWidth">
-                    <el-select style="width: 100%;" size="small" v-model="addForm.mouldType" clearable placeholder="请选择" @change="changeMouldType">
-                        <el-option v-for="(item, index) in mouldTypeList" :key="index" :label="item.name" :value="item.id"></el-option>
-                    </el-select>
-                </el-form-item>
-                <div v-if="addForm.mouldType == 2">
-                    <el-form-item label="标题：" :label-width="formLabelWidth">
-                        <el-input placeholder="请输入标题" clearable v-model="addForm.headline" size="small"></el-input>
-                    </el-form-item>
-                    <el-form-item label="内容：" :label-width="formLabelWidth">
-                        <el-input placeholder="请输入内容" clearable v-model="addForm.content" size="small"></el-input>
-                    </el-form-item>
-                </div>
+
                 <el-form-item label="工单模板：" prop="workMouldId" :label-width="formLabelWidth">
                     <el-select
                         placeholder="请选择"
@@ -216,15 +191,15 @@
                     <div>
                         <div>
                             <div class="w100" v-for="(item, index) in addForm.attrs" :key="index">
-                                <el-form-item v-if="item.type == 1" :key="'a1' + index" :label="item.name+ '：'" label-width="120px" style="width: 100%;">
+                                <el-form-item v-if="item.type == 1" :key="'a1' + index" :label="item.name+ '：'" label-width="120px" style="width: 100%">
                                     <el-input size="small" v-model="item.val" placeholder="请输入字符串" autocomplete="off" clearable></el-input>
                                 </el-form-item>
-                                <el-form-item v-if="item.type == 2" :key="'a2' + index" :label="item.name+ '：'" label-width="120px" style="width: 100%;">
+                                <el-form-item v-if="item.type == 2" :key="'a2' + index" :label="item.name+ '：'" label-width="120px" style="width: 100%">
                                     <el-input size="small" type="number"  v-model="item.val" oninput ="value=value.replace(/[^0-9.]/g,'')"  @blur="item.val = $event.target.value"  clearable placeholder="请输入数字" autocomplete="off"></el-input>
                                 </el-form-item>
                                 <el-form-item v-if="item.type == 3" :key="'a3' + index" :label="item.name+ '：'" label-width="120px">
                                     <el-date-picker
-                                        style="width: 100%;"
+                                        style="width:100%"
                                         v-model="item.val"
                                         align="right"
                                         type="date"
@@ -236,7 +211,7 @@
                                 </el-form-item>
                                 <el-form-item v-if="item.type == 4" :key="'a4' + index" :label="item.name+ '：'" label-width="120px">
                                     <el-date-picker
-                                        style="width: 100%;"
+                                        style="width:100%"
                                         v-model="item.val"
                                         type="datetime"
                                         size="small"
@@ -246,16 +221,16 @@
                                         :picker-options="pickerOptions">
                                     </el-date-picker>
                                 </el-form-item>
-                                <el-form-item v-if="item.type == 5" :label="item.name + '：'" label-width="120px" style="width: 100%;">
-                                    <vue-ueditor-wrap style="width: 100%;" :config="myConfig" v-model="item.val"></vue-ueditor-wrap>
+                                <el-form-item v-if="item.type == 5" :label="item.name + '：'" label-width="120px" style="width: 100%">
+                                    <vue-ueditor-wrap style="width: 100%" :config="myConfig" v-model="item.val"></vue-ueditor-wrap>
                                 </el-form-item>
-                                <el-form-item v-if="item.type == 6" :key="'ss8' + index" :label="item.name+ '：'" label-width="120px" style="width: 100%;">
-                                    <el-select style="width: 100%;" size="small" v-model="item.val" clearable placeholder="请选择">
+                                <el-form-item v-if="item.type == 6" :key="'ss8' + index" :label="item.name+ '：'" label-width="120px" style="width: 100%">
+                                    <el-select style="width:100%" size="small" v-model="item.val" clearable placeholder="请选择">
                                         <el-option v-for="(_it,_inx) in typeof item.items === 'string' ? item.items.split('#') : []" :key="_inx" :label="_it" :value="_it"></el-option>
                                     </el-select>
                                 </el-form-item>
-                                <el-form-item v-if="item.type == 7" :key="'ss9' + index" :label="item.name+ '：'" label-width="120px" style="width: 100%;">
-                                    <el-select style="width: 100%;" size="small" v-model="item.val" multiple collapse-tags clearable placeholder="请选择">
+                                <el-form-item v-if="item.type == 7" :key="'ss9' + index" :label="item.name+ '：'" label-width="120px" style="width: 100%">
+                                    <el-select style="width:100%" size="small" v-model="item.val" multiple collapse-tags clearable placeholder="请选择">
                                         <el-option v-for="(_it,_inx) in typeof item.items === 'string' ? item.items.split('#') : []" :key="_inx" :label="_it" :value="_it"></el-option>
                                     </el-select>
                                 </el-form-item>
@@ -263,8 +238,8 @@
                         </div>
                     </div>
                 </div>
-                <el-form-item class="users" style="position: relative;z-index: 101;" v-if="addForm.workMouldId==='null'" label="人员范围：" :label-width="formLabelWidth">
-                    <div style="width: 100%;">
+                <el-form-item class="users" style="position: relative;z-index:101" v-if="addForm.workMouldId==='null'" label="人员范围：" :label-width="formLabelWidth">
+                    <div style="width:100%;">
                         <Users
                             ref="users"
                             style="width: 100%;min-height: 32px;"
@@ -278,8 +253,8 @@
                         请选择人员
                     </div>
                 </el-form-item>
-                <el-form-item style="width: 100%;" label="工单描述：" :label-width="formLabelWidth">
-                    <div style="width: 100%;">
+                <el-form-item style="width:100%;" label="工单描述：" :label-width="formLabelWidth">
+                    <div style="width:100%;">
                         <vue-ueditor-wrap v-model="addForm.workOrderContent" :config="myConfig"></vue-ueditor-wrap>
                     </div>
                 </el-form-item>
@@ -293,7 +268,7 @@
         </el-dialog>
 
         <!--删除-->
-        <el-dialog title="删除工单" :visible.sync="deleteDialog" width="30%" custom-class="common-dialog ">
+        <el-dialog title="删除工单" :visible.sync="deleteDialog" width="30%" custom-class="attendance-dialog">
             <span>确定删除吗？</span>
             <span slot="footer" class="dialog-footer">
                 <el-button type="primary" size="small" @click="handleDeleteFun">确 定</el-button>
@@ -301,40 +276,13 @@
             </span>
         </el-dialog>
         <!--撤销-->
-        <el-dialog title="撤销工单" :visible.sync="revertDialog" width="30%" custom-class="common-dialog ">
+        <el-dialog title="撤销工单" :visible.sync="revertDialog" width="30%" custom-class="attendance-dialog">
             <span>确定撤销工单吗？</span>
             <span slot="footer" class="dialog-footer">
                 <el-button type="primary" size="small" @click="handleRevertFun">确 定</el-button>
                 <el-button size="small" @click="revertDialog = false">取 消</el-button>
                 <!-- <searchBtn title="确 定" @click="handleRevertFun"/> -->
                 <!-- <cancel-btn title="取 消" @click="revertDialog = false"/> -->
-            </span>
-        </el-dialog>
-
-        <!--抄送-->
-        <el-dialog title="抄送" :visible.sync="copyDialog" width="700px" custom-class="common-dialog " @click.native="closeCopy">
-            <el-form :model="copyForm"  ref="copyForm" label-position="top">
-                <el-form-item class="users" style="position: relative;z-index: 101;"  label="抄送人：" :label-width="formLabelWidth">
-                    <div style="width: 100%;">
-                        <Users
-                            ref="users"
-                            style="width: 100%;min-height: 32px;"
-                            :usersList="allUserList"
-                            :depList="allDepList"
-                            :rolesList="allRolesList"
-                            @confirmData="confirmData"
-                        ></Users>
-                    </div>
-                    <div v-if="usersSelected.length===0&&flag" class="el-form-item__error">
-                        请选择人员
-                    </div>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <Debounce :time='1500' :isDebounce="2">
-                    <el-button type="primary" size="small" @click.native="submitCopyForm('copyForm')">确 定</el-button>
-                </Debounce>
-                <el-button size="small" @click="copyDialog = false">取 消</el-button>
             </span>
         </el-dialog>
     </div>
@@ -357,8 +305,7 @@ import {
     delete_workTask
 } from '../../server/works_order/define.js'
 import {
-    get_one_work,
-    copySave
+    get_one_work
 } from '../../server/works_order/api.js'
 
 export default {
@@ -375,9 +322,6 @@ export default {
             tableHeight: document.body.clientHeight - 290,
             isTimeChected: false,
             timer: null,
-            copyForm: {
-                workOrderId: ''
-            },
             pickerOptions: {
                 disabledDate(time) {
                     return time.getTime() > Date.now()
@@ -403,7 +347,6 @@ export default {
                     }
                 }]
             },
-            copyDialog: false,
             flag: false,
             usersSelected: [],
             count: 0,
@@ -427,20 +370,6 @@ export default {
             seeActive: 'first',
             seeDialog: false,
             seeForm: {},
-            mouldTypeList: [
-                {
-                    id: 0,
-                    name: '分析'
-                },
-                {
-                    id: 1,
-                    name: '应急'
-                },
-                {
-                    id: 2,
-                    name: '通报'
-                }
-            ],
             workTypeList: [], // 工单类型
             // flag: null,
             config_id: '',
@@ -449,11 +378,8 @@ export default {
                 workOrderName: '',
                 workMouldId: '',
                 level: '',
-                mouldType: '',
                 attrs: [],
-                workOrderContent: '',
-                headline: '',
-                content: ''
+                workOrderContent: ''
             },
             allUserList: [], // 所有人
             allDepList: [], // 所有部门
@@ -486,11 +412,6 @@ export default {
                     message: '请选择优先级',
                     trigger: 'change'
                 }],
-                mouldType: [{
-                    required: true,
-                    message: '请选择模板类型',
-                    trigger: 'change'
-                }],
                 workMouldId: [{
                     required: true,
                     message: '请选择工单模板',
@@ -519,7 +440,6 @@ export default {
                 size: 20,
                 workOrderObject: '',
                 workOrderName: '',
-                mouldType: '',
                 level: '',
                 type: '1'
             }
@@ -550,24 +470,7 @@ export default {
                     this.$refs.addForm.resetFields()
                     this.addForm.workMouldId = ''
                     this.addForm.workOrderContent = ''
-                    this.addForm.headline = ''
-                    this.addForm.content = ''
                     this.addForm.attrs = []
-                    this.usersSelected = []
-                    this.flag = false
-                }
-            }
-        },
-        copyDialog: {
-            handler(newVal, oldVal) {
-                console.log(newVal, oldVal, '没走吗')
-                if (!newVal) {
-                    console.log('走了吗')
-                    this.$refs.copyForm.resetFields()
-                    this.$refs.users.checkUsers = []
-                    this.$refs.users.checkDeps = []
-                    this.$refs.users.checkRoles = []
-                    this.copyForm.workOrderId = ''
                     this.usersSelected = []
                     this.flag = false
                 }
@@ -648,13 +551,6 @@ export default {
         }
     },
     methods: {
-        changeMouldType(val) {
-            if (val !== '') {
-                this.get_workMound()
-            } else {
-                this.allTemplate = []
-            }
-        },
         tableRowClassName({ row, rowIndex }) {
             if (rowIndex % 2) {
                 return 'table-row2'
@@ -668,16 +564,13 @@ export default {
                 type = 1
             } else if (this.currentTab == '2') {
                 type = 2
-            } else if (this.currentTab == '3') {
+            } else {
                 type = 3
-            } else if (this.currentTab == '4') {
-                type = 4
             }
             this.get_params = {
                 page: 1,
                 size: 20,
                 workOrderObject: '',
-                mouldType: '',
                 workOrderName: '',
                 level: '',
                 type
@@ -703,11 +596,6 @@ export default {
                 this.addForm.attrs = []
             }
         },
-        closeCopy() {
-            if (this.$refs.users) {
-                this.$refs.users.showMore = false
-            }
-        },
         closeUser() {
             if (this.$refs.users) {
                 this.$refs.users.showMore = false
@@ -716,10 +604,6 @@ export default {
         confirmData(obj) {
             this.usersSelected = obj
             console.log('val1111111111111', obj)
-        },
-        handleCopy(row) {
-            this.copyForm.workOrderId = row.workOrderId
-            this.copyDialog = true
         },
         handleSee(row) {
             console.log('row', row)
@@ -772,19 +656,9 @@ export default {
         },
         tabClick(val = '1') {
             this.currentTab = val
-            this.get_params = {
-                page: 1,
-                size: 20,
-                workOrderObject: '',
-                workOrderName: '',
-                mouldType: '',
-                level: '',
-                type: ''
-            }
             val === '1' && (this.get_params.type = 1)
             val === '2' && (this.get_params.type = 2)
             val === '3' && (this.get_params.type = 3)
-            val === '4' && (this.get_params.type = 4)
             this.get_data()
         },
         handleAddTemplate() {
@@ -814,7 +688,6 @@ export default {
                     workOrderObject: this.get_params.workOrderObject,
                     workOrderName: this.get_params.workOrderName,
                     level: this.get_params.level,
-                    mouldType: this.get_params.mouldType,
                     id: id && typeof (id) == 'string' ? id : ''
                     // startTime: this.sayTimes && this.sayTimes.length > 0 ? this.sayTimes[0] : '',
                     // endTime: this.sayTimes && this.sayTimes.length > 0 ? this.sayTimes[1] : '',
@@ -839,7 +712,6 @@ export default {
                         obj.currentTime = item.currentTime
                         obj.currentNodeStatus = ''
                         obj.workMouldName = item.workMouldName ? item.workMouldName : '--'
-                        obj.mouldName = item.mouldName ? item.mouldName : '--'
                         obj.workMouldId = item.workMouldId
                         obj.workOrderContent = item.workOrderContent
                         obj.nodeIds = item.nodeIds
@@ -902,6 +774,7 @@ export default {
             this.get_dep()
             this.get_roles()
             this.get_users()
+            this.get_workMound()
         },
         get_sendObject() {
             get_workObject({ paramsData: {}, queryData: {}}).then(res => {
@@ -913,7 +786,7 @@ export default {
         },
         get_workMound() {
             this.allTemplate = []
-            get_workTemplate({ paramsData: { mouldType: this.addForm.mouldType }, queryData: {}}).then(res => {
+            get_workTemplate({ paramsData: {}, queryData: {}}).then(res => {
                 console.log('可用工单模板', res)
                 this.allTemplate.push({
                     name: '不使用模板',
@@ -1024,50 +897,7 @@ export default {
                 console.log(error + 'error')
             })
         },
-        submitCopyForm(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    let data = {
-                        workOrderId: this.copyForm.workOrderId
-                    }
-                    if (this.usersSelected.length === 0) {
-                        console.log('this.usersSelected', this.usersSelected)
-                        this.flag = true
-                        return
-                    }
-                    let usersSelected = this.usersSelected.map(item => {
-                        return JSON.parse(item)
-                    })
-                    this.flag = false
-                    data.users = usersSelected.filter(item => item.type == 0).map(item => {
-                        return item.id
-                    })
-                    data.deps = usersSelected.filter(item => item.type == 1).map(item => {
-                        return item.id
-                    })
-                    data.roles = usersSelected.filter(item => item.type == 2).map(item => {
-                        return item.id
-                    })
 
-                    copySave({ paramsData: data, queryData: {}}).then(res => {
-                        this.copyDialog = false
-                        console.log('抄送成功')
-                        this.$message({
-                            message: '抄送成功',
-                            type: 'success'
-                        })
-                        setTimeout(() => {
-                            this.get_data()
-                        }, 1500)
-                    }).catch(error => {
-                        console.log(error + 'error')
-                    })
-                } else {
-                    console.log('error submit!!')
-                    return false
-                }
-            })
-        },
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -1076,12 +906,9 @@ export default {
                     let data = {
                         workOrderName: this.addForm.workOrderName,
                         level: this.addForm.level,
-                        mouldType: this.addForm.mouldType,
                         attrs: JSON.stringify(this.addForm.attrs),
                         workMouldId: this.addForm.workMouldId === 'null' ? '' : this.addForm.workMouldId,
-                        workOrderContent: this.addForm.workOrderContent,
-                        headline: this.addForm.headline,
-                        content: this.addForm.content
+                        workOrderContent: this.addForm.workOrderContent
 
                     }
                     if (this.addForm.workMouldId === 'null') {
@@ -1153,40 +980,30 @@ export default {
 <style lang="scss" scoped>
 .search-area {
     .wrapper {
-        border: none;
-        border-top: 1px solid #dadee8;
         border-radius: 0 0 4px 4px;
         box-shadow: none;
-    }
-}
-.custom-star {
-    .tab-button {
-        border: solid 1px #50b0ff;
-        background-color: rgba($color: #136dac, $alpha: 20%);
-        // opacity: 0.2;
-        box-shadow: inset 0 0 18px 0
-            #00b4ff;
-        & div {
-            color: #ffffff;
-        }
+        border: none;
+        border-top: 1px solid #DADEE8;
     }
 }
 .tab-button {
     height: 30px;
+    background-color: #fff;
     border-radius: 4px 0 0 4px;
-    background-color: #ffffff;
+
     & div {
         width: 80px;
         height: 30px;
-        font-size: 14px;
-        text-align: center;
-        color: rgb(0 0 0 / 60%);
         line-height: 30px;
+        text-align: center;
         cursor: pointer;
+        color: rgba(0, 0, 0, 0.6);
         box-sizing: border-box;
+        font-size: 14px;
+
         &.tab-active {
-            border-bottom: 1px solid #387dee;
             color: #387dee;
+            border-bottom: 1px solid #387dee;
         }
     }
 }
@@ -1205,38 +1022,43 @@ export default {
     position: relative;
     padding: 0 20px;
     color: #1cd7fa;
+
     .el-button {
         position: absolute;
-        top: 0;
         right: 20px;
+        top: 0;
         padding: 0;
         color: #1cd7fa;
     }
 }
 .domain-list {
+    background: rgba(0, 0, 0, .3);
     margin: 3px 0 20px;
     padding: 20px 0 1px;
-    background: rgb(0 0 0 / 30%);
+
     .list-tit {
         width: 100px;
         text-align: right;
     }
+
     .ub {
         margin-bottom: 20px;
     }
+
     .list-btn {
         padding-left: 20px;
+
         .el-button {
-            color: #f56c6c;
+            color: #F56C6C;
         }
     }
 }
 .event  ::v-deep  .el-range-input {
-    color: #ffffff;
-    background-color: rgb(0 0 0 / 0%);
+    background-color: rgba(0, 0, 0, 0);
+    color: #fff;
 }
 .event  ::v-deep  .el-range-separator {
-    color: #ffffff;
+    color: #fff;
 }
 .event  ::v-deep  .el-radio {
     margin: 0 150px 0 30px;
@@ -1245,38 +1067,37 @@ export default {
     padding: 0;
 }
 .event  ::v-deep  .el-upload-list__item-name {
-    color: #01e9ff;
+    color: #01E9FF;
     i {
-        color: #01e9ff;
+        color: #01E9FF;
     }
 }
 .attendance-list.table-area {
     margin-top: 10px;
     padding: 10px;
-    border: solid 1px #dadee8;
+    background-color: #fff;
     border-radius: 4px;
-    background-color: #ffffff;
+    border: solid 1px #dadee8;
 }
 .event ::v-deep .edui-editor-iframeholder {
     height: 200px !important;
 }
 .event  ::v-deep  .drawer-content {
     .box-title {
-        margin: 30px 0 20px;
-        font-size: 14px;
         color: #00e9ff;
+        font-size: 14px;
+        margin: 30px 0 20px;
     }
     .label {
-        margin-right: 15px;
         width: 60px;
         font-size: 12px;
+        color: #999;
         text-align: right;
-        color: #999999;
+        margin-right: 15px;
     }
     .label-val {
         font-size: 12px;
-        word-break: break-all;
-        color: #ffffff;
+        color: #fff;
         img {
             max-width: 300px;
         }
@@ -1287,73 +1108,71 @@ export default {
         margin-bottom: 10px;
     }
     .condition_black {
-        margin-right: 6px;
         font-size: 12px;
-        color: #999999;
+        color: #999;
+        margin-right: 6px;
     }
     .condition_white {
-        margin-right: 6px;
         font-size: 12px;
-        color: #ffffff;
+        color: #fff;
+        margin-right: 6px;
     }
 }
 .event  ::v-deep  .warn-wrapper {
-    padding-left: 10px;
     width: 640px;
-    border-radius: 2px;
-    background: rgb(0 0 0 / 20%);
+    padding-left: 10px;
     box-sizing: border-box;
+    background: rgba(0,0,0,.2);
+    border-radius: 2px;
+
     & p {
-        margin: 5px 0;
         font-size: 12px;
+        margin: 5px 0;
+
         &.warn-top {
-            color: #ffffff;
-            opacity: 0.6;
+            color: #fff;
+            opacity: .6;
         }
         &.warn-body {
-            color: #ffffff;
+            color: #fff;
             word-break: break-all;
         }
     }
 }
 .event  ::v-deep  .pic-wrapper {
-    overflow: auto;
-    width: 99%;
     height: calc(100vh - 190px);
+    width: 99%;
+    overflow: auto;
     border: 1px solid #1cd7fa;
 }
-.users  ::v-deep  .el-form-item__label::before {
-    margin-right: 4px;
-    color: #f56c6c;
+.users  ::v-deep  .el-form-item__label:before {
     content: '*';
+    color: #F56C6C;
+    margin-right: 4px;
 }
-.fields-wapper {
+.fields-wapper{
     width: 100%;
     box-sizing: border-box;
-    >div {
-        padding: 10px;
+    >div{
         min-height: 100px;
-        border: 1px solid #dcdcdc;
-        border-radius: 5px;
-        background-color: rgb(56 125 238 / 2%);
+        border:1px solid #dcdcdc;
+        background-color: rgba(56, 125, 238, 0.02);
+        border-radius:5px;
+        padding: 10px;
         .el-form-item {
             margin-bottom: 10px;
         }
     }
-}
-.work-task ::v-deep .common-dialog  .el-dialog__body {
-    height: 410px;
 }
 </style>
 <style>
 .nav-tips {
     pointer-events: none !important;
 }
-
-/* 下拉菜单 */
+/*下拉菜单*/
 .el-dropdown-link.active {
     font-size: 12px;
-    color: #409eff;
+    color:#409EFF ;
 }
 .work-task .el-dropdown-menu__item {
     padding: 0 20px !important;

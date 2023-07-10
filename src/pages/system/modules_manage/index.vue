@@ -2,8 +2,8 @@
     <div
         class="modules_manage mb-1"
         v-loading="loading"
-        element-loading-background=""
-        :style="{'background':tableData.length === 0?'':'','border-radius':tableData.length===0?'4px':'0'}">
+        element-loading-background="rgba(255,255,255,.8)"
+        :style="{'background':tableData.length === 0?'rgba(255,255,255,.8)':'','border-radius':tableData.length===0?'4px':'0'}">
         <!-- 页面头 -->
         <div class="header">
             <div class="ub ub-ac ub-pj w100">
@@ -24,6 +24,8 @@
         <!-- 页面内容 -->
         <div
             class="content">
+            <!-- <draggable  class="module" chosenClass="chonsen" animation="300" @choose="choose(tableData)" @unchoose="unchoose" @start="start" @end="end(tableData)" v-model="tableData">
+                <div class="list-first" v-for="(first,index) in tableData" :key="first.id" :style="{paddingBottom:(first.sub === 0||orFoldIndex!==index?'0':'8px')}"> -->
             <draggable  class="module" ghostClass="ghost" chosenClass="chosen" animation="300" @choose="choose(tableData)" @unchoose="unchoose" @start="start" @end="end(tableData)" v-model="tableData">
                 <div class="list-first" v-for="(first,index) in tableData" :key="first.id" :style="{paddingBottom:(first.sub === 0||orFoldIndex!==index?'0':'8px')}" @mousemove="choose(tableData)" @mouseleave="unchoose">
                     <div class="list">
@@ -111,12 +113,10 @@
             <el-form ref="addModule" :model="moduleForm" label-width="80px" :rules="moduleRules" label-position="top" :hide-required-asterisk="true" size="small">
                 <el-form-item label="模块名称：" prop="name">
                     <label slot="label">模块名称：<span style="color:red">*</span></label>
-                    <!-- <el-input v-model="moduleForm.name" placeholder="请输入内容" clearable></el-input> -->
-                    <input class="el-textarea__inner" v-model.lazy="moduleForm.name" placeholder="请输入内容" clearable/>
+                    <el-input v-model="moduleForm.name" placeholder="请输入内容" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="ICON名称：">
-                    <!-- <el-input v-model="moduleForm.icon" icon="请输入内容" clearable></el-input> -->
-                    <input class="el-textarea__inner" v-model.lazy="moduleForm.name" placeholder="请输入内容" clearable/>
+                    <el-input v-model="moduleForm.icon" placeholder="请输入内容" clearable></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer">
@@ -129,12 +129,10 @@
             <el-form ref="editModule" :model="moduleFormEdit" label-width="80px" :rules="moduleRules" label-position="top" :hide-required-asterisk="true" size="small">
                 <el-form-item label="模块名称：" prop="name">
                     <label slot="label">模块名称：<span style="color:red">*</span></label>
-                    <!-- <el-input v-model="moduleFormEdit.name" placeholder="请输入内容" clearable></el-input> -->
-                    <input class="el-textarea__inner" v-model.lazy="moduleFormEdit.name" placeholder="请输入内容" clearable/>
+                    <el-input v-model="moduleFormEdit.name" placeholder="请输入内容" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="ICON名称：">
-                    <!-- <el-input v-model="moduleFormEdit.icon" placeholder="请输入内容" clearable></el-input> -->
-                    <input class="el-textarea__inner" v-model.lazy="moduleFormEdit.icon" placeholder="请输入内容" clearable/>
+                    <el-input v-model="moduleFormEdit.icon" placeholder="请输入内容" clearable></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer">
@@ -147,16 +145,13 @@
             <el-form ref="otherForm" :model="otherForm" label-width="80px" :rules="otherRules" label-position="top" :hide-required-asterisk="true" size="small">
                 <el-form-item label="菜单名称：" prop="name">
                     <label slot="label">菜单名称：<span style="color:red">*</span></label>
-                    <!-- <el-input v-model="otherForm.name" placeholder="请输入内容" clearable></el-input> -->
-                    <input class="el-textarea__inner" v-model.lazy="otherForm.name" placeholder="请输入内容" clearable/>
+                    <el-input v-model="otherForm.name" placeholder="请输入内容" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="父级菜单：">
-                    <!-- <el-input v-model="otherForm.parentName" placeholder="请输入内容" :disabled="true"></el-input> -->
-                    <input class="el-textarea__inner" v-model.lazy="otherForm.parentName" placeholder="请输入内容" clearable  :disabled="true"/>
+                    <el-input v-model="otherForm.parentName" placeholder="请输入内容" :disabled="true"></el-input>
                 </el-form-item>
                 <el-form-item label="URL：">
-                    <!-- <el-input v-model="otherForm.url" placeholder="请输入内容" clearable></el-input> -->
-                    <input class="el-textarea__inner" v-model.lazy="otherForm.url" placeholder="请输入内容" clearable/>
+                    <el-input v-model="otherForm.url" placeholder="请输入内容" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="按钮配置：">
                     <el-form-item
@@ -168,32 +163,29 @@
                         <el-row :gutter="10">
                             <el-col :span="5">
                                 <el-form-item>
-                                    <!-- <el-input
+                                    <el-input
                                         placeholder="按钮名称"
                                         v-model="item.name"
                                         clearable
-                                    ></el-input> -->
-                                    <input class="el-textarea__inner" placeholder="按钮名称" v-model.lazy="item.name" clearable>
+                                    ></el-input>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="9">
                                 <el-form-item>
-                                    <!-- <el-input
+                                    <el-input
                                         placeholder="请选择按钮权限"
                                         v-model="item.permissionName"
                                         clearable
-                                    ></el-input> -->
-                                    <input class="el-textarea__inner" placeholder="请选择按钮权限" v-model.lazy="item.permissionName" clearable>
+                                    ></el-input>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="6">
                                 <el-form-item>
-                                    <!-- <el-input
+                                    <el-input
                                         placeholder="请选择按钮编号"
                                         v-model="item.code"
                                         clearable
-                                    ></el-input> -->
-                                    <input class="el-textarea__inner" placeholder="请选择按钮编号" v-model.lazy="item.code" >
+                                    ></el-input>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="3">
@@ -791,71 +783,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.custom-star {
-    .modules_manage {
-        .list-tips {
-            color: #fff;
-        }
-        .content {
-            .list-first{
-                background-color: #021c31;
-                border-radius: 4px;
-                margin-bottom: 16px;
-                border:1px solid rgba(80, 176, 255, 0.8) !important;
-                box-shadow: inset 0px 0px 18px 0px rgba(0, 180, 255, 0.5);
-                transition: all .6s ease;
-                .list {
-                    color: #fff;
-                    background-color: #021c31;
-                    border:1px solid rgba(80, 176, 255, 0.8);
-                    box-shadow: inset 0px 0px 18px 0px rgba(0, 180, 255, 0.5);
-                }
-                .list-second{
-                    background-color: #021c31;
-                    .list{
-                        display: flex;
-                        align-items: center;
-                        line-height: 40px;
-                        margin-left: 20px;
-                        border-radius: 4px;
-                        margin-bottom: 8px;
-                        background-color: #021c31;
-                        border:1px solid rgba(80, 176, 255, 0.8);
-                        box-shadow: inset 0px 0px 18px 0px rgba(0, 180, 255, 0.5);
-                        margin-right:20px;
-                    }
-                    .list-third{
-                        .list{
-                            display: flex;
-                            align-items: center;
-                            line-height: 32px;
-                            background-color: #021c31;
-                            border:1px solid rgba(80, 176, 255, 0.8);
-                            box-shadow: inset 0px 0px 18px 0px rgba(0, 180, 255, 0.5);
-                            margin:0 20px 8px 36px;
-                            border-radius: 4px;
-                            font-size: 12px;
-                        }
-                    }
-                }
-            }
-            .list-first ::v-deep .el-switch__core::after {
-                background-color: #11809e !important;
-            }
-            .list-first .is-checked ::v-deep .el-switch__core::after {
-                background-color: #ecd7fa !important;
-            }
-            .list-first ::v-deep .el-switch__core {
-                border-color: #001a2c !important;
-                background-color: #001a2c !important;
-            }
-            .list-first .is-checked ::v-deep .el-switch__core {
-                border-color: #001a2c !important;
-                background-color: #001a2c !important;
-            }
-        }
-    }
-}
   .chosen{
       >.list{
           border:1px solid $high-color

@@ -5,10 +5,10 @@
                 <div class="logo">
                     <Logo />
                 </div>
-                <div class="more-btn ub ub-pc ub-ac more-menus">
+                <div class="more-btn ub ub-pc ub-ac">
                     <el-popover
                         placement="top-start"
-                        trigger="click">
+                        trigger="hover">
                         <MoreMenu :menus="menus" />
                         <i class="el-icon-share" slot="reference"></i>
                     </el-popover>
@@ -64,30 +64,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.top-nav, .el-menu {
+.top-nav, .el-menu  {
     @include themeify {
         background: themed('top-bar-bg');
     }
 }
 .logo {
-    margin-right: 10px;
-    margin-left: 10px;
-    // width: 256px;
+    width: 256px;
     height: 40px;
-    // margin-left: -10px;
 }
 .nav-menu {
-    overflow: hidden;
     height: 40px;
+    overflow: hidden;
 
-    /* 重写element 样式 */
+    /*重写element 样式*/
     &::v-deep .el-menu--horizontal .el-menu-item {
-        float: left;
-        margin: 0;
-        height: 40px;
-        border-bottom: 2px solid transparent;
-        color: #909399;
-        line-height: 40px;
+         float: left;
+         height: 40px;
+         line-height: 40px;
+         margin: 0;
+         border-bottom: 2px solid transparent;
+         color: #909399;
     }
     &::v-deep .el-menu--horizontal .el-submenu {
         float: left;
@@ -101,16 +98,17 @@ export default {
     height: 40px;
 }
 .more-btn {
-    margin-right: 24px;
     width: 20px;
     height: 40px;
+    margin-right: 24px;
     cursor: pointer;
-    & i {
+
+    & i{
         @include themeify {
             color: themed('top-font-color');
         }
     }
-    &:hover, &:hover i {
+    &:hover, &:hover i{
         @include themeify {
             color: themed('top-hover-font-color') !important;
         }

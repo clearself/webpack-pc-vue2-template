@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { exit, ssoloading } from '@/server/login/index.js'
+import { exit } from '@/server/login/index.js'
 export default {
     name: 'Toolbar',
     data() {
@@ -41,33 +41,7 @@ export default {
             this.$eventBus.$emit('passwordShow')
         },
         handleCommand(command) {
-            console.log('退出')
-            let data = {
-                queryData: {},
-                paramsData: {}
-            }
-            if (command === 'exit' && this.$getlocalStorage('project') == '1') {
-                ssoloading(data).then(res => {
-                    if (res == null) {
-                        exit({}).then(res => {
-                            this.$removesessionStorage('currentPath')
-                            this.$router.push({
-                                name: 'login'
-                            })
-                        }).catch(error => {
-                            console.log('error', error)
-                        })
-                    } else {
-                        exit({}).then(res => {
-                            this.$removesessionStorage('currentPath')
-                        }).catch(error => {
-                            console.log('error', error)
-                        })
-                        window.location.href = '/api/base-server/sso/clean'
-                    }
-                    console.log(res)
-                })
-            } else {
+            if (command === 'exit') {
                 exit({}).then(res => {
                     this.$removesessionStorage('currentPath')
                     this.$router.push({

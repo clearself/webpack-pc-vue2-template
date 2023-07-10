@@ -1,6 +1,6 @@
 <template>
-    <div class="event event-wrapper attendance-list expert general" style="overflow: hidden !important;">
-        <div class="ub w100" style="box-sizing: border-box;padding-top: 20px;">
+    <div class="event event-wrapper attendance-list expert general" style="overflow:hidden !important">
+        <div class="ub w100" style="box-sizing: border-box;padding-top:20px;">
             <div class="w100">
                 <div class="ub w100">
                     <div class="ub ub-ver ub-f1">
@@ -21,10 +21,6 @@
                                     </div>
                                 </div>
                                 <div class="input-btn ub ub-ac ub-pe mt-1">
-                                    <!-- <p @click="chartDialog = true">
-                                        <i class="el-icon-brush"></i>
-                                        <span>输出图表记录</span>
-                                    </p> -->
                                     <p @click="taskDialog = true">
                                         <i class="iconfont icon-lixianrenwu"></i>
                                         <span>离线任务查询</span>
@@ -38,7 +34,7 @@
                                         <span>输出</span>
                                     </p> -->
                                 </div>
-                                <div style="width: 200px;"></div>
+                                <div style="width: 200px"></div>
                                 <!--<div class="search-text" v-show="isOpen && searchType==='normal'"  @click="isOpen=false">收 起</div>-->
                                 <!--<div class="search-text" v-show="!isOpen && searchType==='normal'"  @click="isOpen=true">展 开</div>-->
                             </div>
@@ -47,16 +43,16 @@
                 </div>
                 <div class="sql-box ub ub-pj">
                     <CustomSearch ref="customSearch" :auto="true" class="ub-f1" @getData="getData" :type="2" @saveTask="saveTask" />
-                    <div class="ub ub-pe" style="width: 200px;">
+                    <div class="ub ub-pe" style="width:200px;">
                         <Debounce :time='1500' :isDebounce="2">
-                            <el-button style="min-width: 60px !important;" size="small"  @click.native="resetFun">重 置</el-button>
+                            <el-button style="min-width: 60px !important" size="small"  @click.native="resetFun">重 置</el-button>
                         </Debounce>
                         <Debounce :time='1500' :isDebounce="2">
-                            <el-button style="min-width: 60px !important;" :loading="loading" size="small" type="primary" @click.native="searchAssets">搜 索</el-button>
+                            <el-button style="min-width: 60px !important" :loading="loading" size="small" type="primary" @click.native="searchAssets">搜 索</el-button>
                         </Debounce>
                     </div>
                 </div>
-                <div style="position: relative;">
+                <div style="position: relative">
                     <FilterCondition :condition-data="conditionData" />
                     <div v-if="conditionShow" class="condition-area">
                         <ConditionRules
@@ -81,14 +77,13 @@
                     <!-- <div class="table-view ub ub-pc" @click="viewTab = 'tableView'" :class="{'active': viewTab === 'tableView'}">表格视图</div> -->
                     <!--<div class="chart-view ub ub-pc" @click="viewTab = 'chartView'" :class="{'active': viewTab === 'chartView'}">图表视图</div>-->
                     <div class="table-view ub ub-pc" @click="viewTab = 'tableView'" :class="{'active': viewTab === 'tableView'}">
-                        <div style="padding-left: 0;">表格视图</div>
+                        <div style="padding-left:0">表格视图</div>
                         <div>
                             <!-- <i class="el-icon-caret-top" v-show="viewChartOpen"  @click="viewChartOpen=false"></i>
                             <i class="el-icon-caret-bottom" v-show="!viewChartOpen"  @click="viewChartOpen=true"></i> -->
-                            <i :class="['iconfont', 'icon-a-yibiaopan-xiala1',viewChartOpen?'icon-select1':'icon-select' ]" @click="viewChartOpen=!viewChartOpen" style="font-size: 12px;"></i>
+                            <i :class="['iconfont', 'icon-a-yibiaopan-xiala1',viewChartOpen?'icon-select1':'icon-select' ]" @click="viewChartOpen=!viewChartOpen" style="font-size:12px"></i>
                         </div>
                     </div>
-                    <div class="chart-view ub ub-pc" @click="viewTab = 'chartView'" :class="{'active': viewTab === 'chartView'}">图表视图</div>
                 </div>
             </div>
             <!-- <div class="ub ub-pe fold-box" style="color: #0052D9;">
@@ -96,25 +91,25 @@
                 <div v-show="!viewChartOpen"  @click="viewChartOpen=true">展 开<i style="margin-left: 3px;" class="el-icon-arrow-down"></i></div>
             </div> -->
             <div
-                style="background: #f2f6fd;"
+                style="background:#f2f6fd"
                 class="ub w100"
                 v-show="viewChartOpen "
                 v-loading.lock="log_loading"
                 element-loading-background="rgba(0, 0, 0, 0.05)"
                 element-loading-text="拼命加载中......">
-                <div class="chart-num-box" style="margin-top: 15px;width: 200px;">
+                <div class="chart-num-box" style="width:200px;margin-top:15px">
                     <div class="ub ub-ac mb-3">
-                        <p style="font-size: 14px;">结果总量</p>
+                        <p style="font-size: 14px">结果总量</p>
                         <el-tooltip v-if="resetShow" class="item" effect="dark" content="还原" placement="top-start">
-                            <i style="margin-left: 10px; font-size: 12px;color: #387dee;cursor: pointer;" @click="handleChartRefresh" class="iconfont icon-shuaxin"></i>
+                            <i style="color: #387dee; font-size: 12px;margin-left: 10px;cursor: pointer" @click="handleChartRefresh" class="iconfont icon-shuaxin"></i>
                         </el-tooltip>
                     </div>
-                    <div class="mb-2" style="font-size: 24px;color: #0052d9;">{{parseInt(logs_total)}}</div>
+                    <div class="mb-2" style="color: #0052d9;font-size: 24px">{{parseInt(logs_total)}}</div>
                     <div class="chart-bg"></div>
                 </div>
-                <div class="ub ub-f1" style="height: 140px;">
-                    <div style="position: relative;padding: 2px;width: 100%;height: 100%;cursor: pointer;box-sizing: border-box;">
-                        <div v-if="log_no_data" class="ub ub-f1 ub-ac ub-pc" style="height: 100%;font-size: 16px;color: #e7e7e7; cursor: pointer;">
+                <div class="ub ub-f1" style="height:140px;">
+                    <div style="width:100%;height:100%;cursor: pointer;padding: 2px;box-sizing: border-box;position: relative;">
+                        <div v-if="log_no_data" class="ub ub-f1 ub-ac ub-pc" style="height:100%;color:#e7e7e7;font-size:16px; cursor: pointer;">
                             暂无数据
                         </div>
                         <TableChart :chart-data="chartData" />
@@ -141,18 +136,9 @@
             @saveLogIdSuccess="saveLogIdSuccess"
             @createTaskSucess="createTaskSucess"
             @handleDownload="handleDownload"
-            v-show="viewTab === 'tableView'">
+            v-if="viewTab === 'tableView'">
         </TableContent>
-        <ChartContent
-            :type="3"
-            :tab="'general'"
-            v-loading.lock="loading"
-            element-loading-background="rgba(0, 0, 0, 0.05)"
-            element-loading-text="拼命加载中......"
-            ref="chartContent"
-            :sortFieldObj="sortFieldObj"
-            v-show="viewTab === 'chartView'">
-        </ChartContent>
+
         <Alarm :alarm-dialog="alarmDialog" :select-mode='selectMode' @addAlarmSucess="addAlarmSucess" ref="drawerRef"></Alarm>
         <SaveList :type="2" :save-list-dialog="saveListDialog"></SaveList>
         <OffLineTask :task-dialog="taskDialog" @handleSee="seeTask" ref="offLineTask"></OffLineTask>
@@ -163,9 +149,9 @@
                     <span slot="label">
                         <span>高亮词名称：</span>
                     </span>
-                    <el-input size="mini" style="width: 98%;" placeholder="请输入高亮词，多个以英文逗号隔开" v-model.trim="highlightForm.keywords"></el-input>
+                    <el-input size="mini" style="width: 98%" placeholder="请输入高亮词，多个以英文逗号隔开" v-model.trim="highlightForm.keywords"></el-input>
                     <el-tooltip class="item" effect="dark" content="为优化页面性能，请将高亮词填写详细，修改成功后，需重新搜索" placement="top-start">
-                        <i style="position: absolute; margin-left: 4px;font-size: 12px;color: #0052d9;" class="iconfont icon-qiangtishi"></i>
+                        <i style="color: #0052D9; margin-left: 4px;font-size: 12px;position: absolute" class="iconfont icon-qiangtishi"></i>
                     </el-tooltip>
                 </el-form-item>
             </el-form>
@@ -176,13 +162,13 @@
         </el-dialog>
         <el-dialog title="保存查询记录" width="700px" :visible.sync="saveRecordDialog" custom-class="attendance-dialog">
             <el-form :model="saveRecordForm" ref="saveRecordForm" :rules="saveRecordRules" label-position="top">
-                <el-form-item label="条件名称：" prop="name" label-width="80px" style="margin-bottom: 20px;">
+                <el-form-item label="条件名称：" prop="name" label-width="80px" style="margin-bottom: 20px">
                     <el-input size="small" placeholder="请输入" v-model.trim="saveRecordForm.name"></el-input>
                 </el-form-item>
                 <el-form-item label="所属分组：" prop="typeId" label-width="80px">
                     <treeselect
                         class="treeselect"
-                        style="margin-top: 3px;width: 660px;"
+                        style="width:660px;margin-top: 3px"
                         :options="dataTree"
                         :normalizer="normalizer"
                         noChildrenText="当前分支无子节点"
@@ -190,7 +176,6 @@
                         placeholder="请选择资产类型"
                         v-model="saveRecordForm.typeId"
                         loadingText="下拉框无匹配项"
-                        noResultsText="无可用选项"
                         :clearable="false"
                     />
                 </el-form-item>
@@ -211,48 +196,6 @@
                 <el-button size="small" @click="saveTaskDialog=false">取消</el-button>
             </div>
         </el-dialog>
-        <el-dialog title="保存至输出图表" width="700px" :visible.sync="chartTaskDialog" custom-class="common-dialog">
-            <el-form :model="chartTaskForm" ref="chartTaskForm" :rules="saveTaskRules" label-position="top">
-                <el-form-item label="名称：" prop="name" label-width="86px" style="margin-bottom: 20px;">
-                    <el-input size="mini" placeholder="请输入" v-model="chartTaskForm.name" style="margin-top: 3px;width: 652px;"></el-input>
-                </el-form-item>
-                <el-form-item label="所属分组：" prop="typeId" label-width="86px" style="margin-bottom: 20px;">
-                    <treeselect
-                        class="treeselect"
-                        style="margin-top: 3px;width: 652px;"
-                        :options="dataTree1"
-                        :normalizer="normalizer"
-                        noChildrenText="当前分支无子节点"
-                        noOptionsText="无可用选项"
-                        placeholder="请选择资产类型"
-                        v-model="chartTaskForm.typeId"
-                        loadingText="下拉框无匹配项"
-                        noResultsText="无可用选项"
-                        :clearable="false"
-                    />
-                </el-form-item>
-                <el-form :model="get_params" label-width="86px" label-position="top">
-                    <el-form-item label="发生时间:" v-if="chartTaskDialog">
-                        <CustomDate1
-                            :append-to-body="appendToBody"
-                            :chart-time-range="chartTimeRange1"
-                            @getCustomTime="getCustomTime1"
-                            @getDateData="getDateData1"
-                            :inputWidth="652"
-                            @useing="customDateUse"
-                            :current-type="2"
-                            :empty="false"
-                            ref="customDate1"
-                            :xiangxi="dateData1"></CustomDate1>
-                    </el-form-item>
-                </el-form>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button size="small" @click="handlechartTaskClose()">取消</el-button>
-                <el-button size="small" type="primary" @click="handleChartTask('chartTaskForm')">确认</el-button>
-            </div>
-        </el-dialog>
-        <ChartRecord :chart-dialog='chartDialog' @query="historyChart" ref="chartRecordRef"></ChartRecord>
     </div>
 </template>
 
@@ -263,7 +206,6 @@ import HistoryRecord from './components/history_record/index.vue'
 import OffLineTask from './components/off_line_task/index.vue'
 import SaveList from './components/save_list/index.vue'
 import CustomDate from './components/custom_date/index.vue'
-import ChartContent from '@/pages/data_manage/chart_option/components/ChartContent'
 import {
     saveHighlight,
     getHighlight,
@@ -279,8 +221,7 @@ import {
     saveSearchTask,
     saveSearchHistory,
     findSearchType,
-    searchFieldVal,
-    getSortField
+    searchFieldVal
 } from '@/server/data_manage/new_search.js'
 import draggable from 'vuedraggable'
 import Prcess from '@/components/prcess.vue'
@@ -296,9 +237,6 @@ import ConditionRules from '@/pages/data_manage/new_search/components/ConditionR
 import TableChart from '@/pages/data_manage/new_search/components/chart/TableChart'
 import EventBus from '@/assets/js/bus'
 import Refresh from './components/refresh/index.vue'
-import { addDashboardChart, findSearchTypeChart } from '@/server/alarm_log/chart_record.js'
-import CustomDate1 from '@/pages/alarm_log/new_search/components/chart_record/custom_date.vue'
-import ChartRecord from './components/chart_record/index.vue'
 export default {
     name: 'General',
     components: {
@@ -316,10 +254,7 @@ export default {
         Refresh,
         OffLineTask,
         HistoryRecord,
-        ChartContent,
-        Treeselect,
-        CustomDate1,
-        ChartRecord
+        Treeselect
     },
     mixins: [ueditorConfig],
     data() {
@@ -345,16 +280,6 @@ export default {
             }
         }
         return {
-            chartDialog: false,
-            dataTree1: [],
-            chartTaskForm: {
-                name: '',
-                chartTaskForm: '',
-                startTime: '',
-                endTime: '',
-                typeId: null
-            },
-            chartTaskDialog: false,
             requestFlag: true,
             searchLoading: false,
             resetShow: false,
@@ -623,12 +548,7 @@ export default {
             dateMode: '',
             useDate: {},
             useIndex: '',
-            sortFieldObj: null,
-            xiangxi: '',
-            dateData1: '',
-            dateMode1: '',
-            useDate1: {},
-            useIndex1: ''
+            xiangxi: ''
         }
     },
     computed: {
@@ -755,36 +675,12 @@ export default {
         // }
         this.initCanSelectedFileds()
         this.initSelectedFileds1()
-        this.getSortFieldFn()
         this.isShow = true
         this.$nextTick(() => {
             this.getHighlight()
         })
     },
     methods: {
-        getSortFieldFn() {
-            getSortField({ queryData: {}, paramsData: {}}).then(res => {
-                console.log(res)
-                this.sortFieldObj = res
-            })
-        },
-        handlechartTaskClose() {
-            this.chartTaskForm = {
-                name: '',
-                typeId: null
-            }
-            this.saveTaskForm = {
-                name: ''
-            }
-            this.saveRecordForm = {
-                name: '',
-                typeId: ''
-            }
-            this.chartTimeRange1 = this.customTime
-            this.saveRecordDialog = false
-            this.saveTaskDialog = false
-            this.chartTaskDialog = false
-        },
         customDateUse() {
             this.searchLoading = true
             this.get_params.page = 1
@@ -795,12 +691,6 @@ export default {
             this.dateMode = mode
             this.useDate = useDate
             this.useIndex = useIndex
-        },
-        getDateData1(date, mode, useDate, useIndex) {
-            this.dateData1 = date
-            this.dateMode1 = mode
-            this.useDate1 = useDate
-            this.useIndex1 = useIndex
         },
         seeTask(val) {
             console.log('queryMap', JSON.parse(val.queryMap))
@@ -834,23 +724,7 @@ export default {
                 this.saveRecordDialog = true
             } else if (val === 2) {
                 this.saveTaskDialog = true
-            } else if (val === 3) {
-                this.getFindSearchType1()
-                this.chartTimeRange1 = this.customTime
-                this.chartTaskDialog = true
-                this.dateData1 = this.$getsessionStorage('saveDate').title ? this.$getsessionStorage('saveDate').title : this.$getsessionStorage('saveDate').value.join(',')
             }
-        },
-        getFindSearchType1() {
-            let data = {
-                queryData: {},
-                paramsData: {}
-            }
-            findSearchTypeChart(data).then(res => {
-                this.dataTree1 = res
-            }).catch(error => {
-                console.log('error', error)
-            })
         },
         handleSaveTask(formName) {
             this.$refs[formName].validate((valid) => {
@@ -873,49 +747,6 @@ export default {
                             type: 'success'
                         })
                         this.saveTaskDialog = false
-                    }).catch(error => {
-                        console.log('error', error)
-                    })
-                } else {
-                    console.log('error submit!!')
-                    return false
-                }
-            })
-        },
-        handleChartTask(formName) {
-            console.log(this.chartTaskForm, '输出图表')
-            console.log('111', this.dateData, this.dateData1)
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    let data = {
-                        queryData: {},
-                        paramsData: {
-                            name: this.chartTaskForm.name,
-                            param: {
-                                inputTerm: [{ field: 'startTime', value: this.customTime[0] }, { field: 'endTime', value: this.customTime[1] }],
-                                sqlTerm: this.sqlTermData,
-                                filterTerm: this.conditionData.length > 0 ? this.conditionData.map(it => it.origin[0]) : [],
-                                conditionData: this.conditionData,
-                                time: this.$getsessionStorage('temporary').actualTime ? this.$getsessionStorage('temporary').actualTime : this.dateData1,
-                                timeStatus: this.$getsessionStorage('temporary').timeUnit ? this.$getsessionStorage('temporary').timeUnit : ''
-                            },
-                            groupId: this.chartTaskForm.typeId || '',
-                            originHeader: this.list,
-                            indexType: 7,
-                            originType: 1
-                        }
-                    }
-                    console.log(data)
-                    addDashboardChart(data).then(res => {
-                        this.$message({
-                            message: '保存成功！',
-                            type: 'success'
-                        })
-                        this.chartTaskDialog = false
-                        this.chartTaskForm = {
-                            name: '',
-                            typeId: null
-                        }
                     }).catch(error => {
                         console.log('error', error)
                     })
@@ -963,18 +794,6 @@ export default {
             console.log('历史查询任务', queryMapData)
             // this.customTime = this.formatDate(val.time, val.timeStatus, queryMapData.inputTerm[0].value, queryMapData.inputTerm[1].value)
             // this.chartTimeRange = this.formatDate(val.time, val.timeStatus, queryMapData.inputTerm[0].value, queryMapData.inputTerm[1].value)
-            this.sqlTermData = queryMapData.sqlTerm ?? ''
-            this.$refs.customSearch.inputData = queryMapData.sqlTerm ?? ''
-            this.conditionData = queryMapData.conditionData ?? []
-            this.formatDate(val.time, val.timeStatus, queryMapData.inputTerm[0].value, queryMapData.inputTerm[1].value)
-            this.get_data()
-            if (this.viewChartOpen) {
-                this.get_chart_data()
-            }
-        },
-        historyChart(val) {
-            let queryMapData = JSON.parse(val.chartQueryCriteria)
-            console.log('历史查询任务', queryMapData)
             this.sqlTermData = queryMapData.sqlTerm ?? ''
             this.$refs.customSearch.inputData = queryMapData.sqlTerm ?? ''
             this.conditionData = queryMapData.conditionData ?? []
@@ -1194,7 +1013,6 @@ export default {
                     type: 'success'
                 })
             }).catch(error => {
-                this.$refs.tableContent.downLoading = false
                 this.$message({
                     message: error,
                     type: 'error'
@@ -1225,7 +1043,6 @@ export default {
         },
         getCustomTime(val, isChartTime) {
             this.customTime = val
-            this.chartTimeRange1 = val
             if (isChartTime) {
                 this.resetShow = true
             } else {
@@ -1236,11 +1053,6 @@ export default {
                 this.$refs.tableContent.$refs.multipleTable.clearSelection()
             }
             console.log('时间', val)
-        },
-        getCustomTime1(val, isChartTime) {
-            this.customTime1 = val
-            this.saveTaskForm.startTime = val[0]
-            this.saveTaskForm.endTime = val[1]
         },
         addFilterCondition() {
             let that = this
@@ -1746,22 +1558,6 @@ export default {
                 console.log('error' + error)
             })
         },
-        getSearchParams() {
-            let data = {
-                queryData: {
-                },
-                paramsData: {
-                    inputTerm: this.customTime.length > 0 ? [{ field: 'startTime', value: this.customTime[0] }, { field: 'endTime', value: this.customTime[1] }] : [],
-                    sqlTerm: this.sqlTermData,
-                    filterTerm: this.conditionData.map(it => it.origin[0]),
-                    fields: this.list.map(it => it.fieldName),
-                    taskId: this.taskId,
-                    time: this.$getsessionStorage('temporaryOld').actualTime ? this.$getsessionStorage('temporaryOld').actualTime : this.dateData,
-                    timeStatus: this.$getsessionStorage('temporaryOld').timeUnit ? this.$getsessionStorage('temporaryOld').timeUnit : ''
-                }
-            }
-            return data
-        },
         get_data() {
             this.loading = true
 
@@ -1792,7 +1588,6 @@ export default {
                 return res
             }).then(res => {
                 console.log('数据查询列表', res)
-                this.total_num = res.total
                 this.loading = false
                 this.barStatus = 1
                 let arr = res.records
@@ -1897,11 +1692,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../assets/css/pacap';
-.event-wrapper {
+@import '../../../assets/css/pacap.scss';
+.event-wrapper{
     border-top: none;
     border-radius: 0 0 4px 4px;
-    box-shadow: 0 0 0 0 rgb(140 152 164 / 20%);
+    box-shadow: 0px 0px 0px 0px rgb(140 152 164 / 20%);
 }
 .ub-wrap {
     flex-wrap: wrap;
@@ -1918,8 +1713,8 @@ export default {
             display: flex;
             flex-wrap: wrap;
             div {
-                margin-right: 20px;
                 padding: 5px 0;
+                margin-right: 20px;
                 ::v-deep .el-select {
                     width: 253px;
                 }
@@ -1931,13 +1726,13 @@ export default {
         }
         .search-text {
             display: block;
-            margin-top: 10px;
             width: 114px;
-            height: 20px;
-            font-size: 12px;
-            text-align: right;
-            color: #03e9ff;
+            color:#03e9ff;
             cursor: pointer;
+            font-size:12px;
+            height: 20px;
+            margin-top: 10px;
+            text-align: right;
         }
     }
     & ::v-deep .el-form-item__label {
@@ -1946,104 +1741,99 @@ export default {
     & ::v-deep .el-form-item__content {
         line-height: 40px !important;
     }
+
 }
 .sql-box {
     margin-top: 5px;
 }
 .split-line {
-    position: absolute;
-    bottom: 30px;
-    left: 0;
     width: 100%;
     height: 1px;
+    position: absolute;
+    left: 0;
+    bottom: 30px;
     background: #dcdcdc;
 }
 .progress-box {
-    position: relative;
     height: 24px;
+    position: relative;
     .chart-title {
         position: absolute;
-        top: 0;
         height: 24px;
-        font-size: 12px;
-        color: rgb(77 77 77 / 60%);
         line-height: 24px;
+        font-size: 12px;
+        color: rgba(255,255,255,.6);
+        top: 0;
 
-        // div:nth-child(1) {
-        //     padding:0 10px;
-        //     // width: 80px;
-        //     cursor: pointer;
-        // }
-        .table-view, .chart-view {
-            padding: 0 10px;
+        div:nth-child(1) {
+            padding:0 10px;
             // width: 80px;
             cursor: pointer;
-            div:nth-child(1) {
-                padding-right: 10px;
-            }
         }
         div.active {
             //background-color: #008aff;
             color: #0052d9;
-            background-color: rgb(255 255 255 / 50%);
+            background-color: rgba(255, 255, 255, 0.5);
             // box-shadow: 0 0 12px rgba(0,180,255,.9) inset;
         }
         .icon-select::before {
-            display: inline-block;
+            display:inline-block;
             transform: rotate(-180deg);
-            transition: 0.4s;
+            transition: .4s;
             transform-origin: center;
         }
         .icon-select1::before {
-            display: inline-block;
-            transition: 0.4s;
+            display:inline-block;
+            transition: .4s;
             transform-origin: center;
         }
     }
 }
 .fold-box {
-    padding-right: 20px;
     height: 24px;
-    color: #ffffff;
     line-height: 24px;
+    padding-right: 20px;
     box-sizing: border-box;
+    color: #fff;
     cursor: pointer;
 }
 .expert ::v-deep .vue-treeselect__placeholder, .vue-treeselect__single-value {
     line-height: 30px;
 }
 .expert ::v-deep .vue-treeselect__limit-tip-text {
-    padding: 0 2px;
     border: 1px solid #00e9ff;
-    border-radius: 2px;
     color: #00e9ff;
+    border-radius:2px;
+    padding: 0 2px;
 }
 .expert ::v-deep .vue-treeselect__limit-tip {
     padding-top: 0;
 }
 .fields-ver-line {
-    position: absolute;
-    top: 0;
-    left: -8px;
     width: 2px;
     height: 26px;
-    border-radius: 1px;
+    position: absolute;
+    left: -8px;
+    top: 0;
     background-color: #ffffff;
-    box-shadow: 0 0 4px 0 #00d0ff,
-        0 0 6px 0 #00d0ff;
+    box-shadow: 0px 0px 4px 0px #00d0ff,
+    0px 0px 6px 0px #00d0ff;
+    border-radius: 1px;
+
 }
 .expert ::v-deep .el-input-group__append {
-    position: relative;
-    top: -1px;
+    background-color: rgba(0, 0, 0, 0);
     display: table-cell;
-    margin-left: -1px;
-    padding: 0 20px;
-    width: 1px;
+    position: relative;
     border: none;
     border-radius: 4px;
-    background-color: rgb(0 0 0 / 0%);
+    padding: 0 20px;
+    width: 1px;
     box-sizing: border-box;
+    margin-left: -1px;
+    top:-1px;
 }
+
 .expert ::v-deep .el-input-group__append button.el-button,
 .expert ::v-deep .el-input-group__append div.el-select .el-input__inner,
 .expert ::v-deep .el-input-group__append div.el-select:hover .el-input__inner,
@@ -2051,89 +1841,101 @@ export default {
 .expert ::v-deep .el-input-group__prepend div.el-select .el-input__inner,
 .expert ::v-deep .el-input-group__prepend div.el-select:hover .el-input__inner {
     height: 28px;
-    border: solid 1px #dcdcdc;
-    border-left: none;
     // background-color: rgb(4, 33, 54);
     // box-shadow: inset 0px 0px 7px 0px #389bf7;
-    border-radius: 0 2px 2px 0;
+    border-radius: 0px 2px 2px 0px;
+    border: solid 1px #dcdcdc;
     box-sizing: border-box;
+    border-left: none;
+
     i.el-icon-search {
-        margin-top: -4px;
         color: #dcdcdc;
+        margin-top: -4px;
     }
-    .el-icon-search::before {
+    .el-icon-search:before {
         position: relative;
         top: -4px;
     }
 }
+
 .expert ::v-deep .el-tabs__item {
-    padding-left: 20px !important;
     height: 30px;
-    font-size: 12px;
-    color: rgb(0 0 0 / 60%);
     line-height: 30px;
+    font-size: 12px;
+    padding-left: 20px !important;
+    color: rgba(0,0,0,0.6);
 }
+
 .expert ::v-deep .el-tabs__item.is-active {
     color: #0052d9;
 }
+
 .expert ::v-deep .el-tabs__active-bar {
     height: 1px;
     background-color: #0052d9;
 }
+
 .expert ::v-deep .el-tabs__nav-wrap::after {
     height: 1px;
-    background-color: rgb(210 216 57 / 20%);
+    background-color: rgba(210, 216, 57, 0.2);
 }
+
 .expert ::v-deep .el-form-item__label {
     font-size: 12px;
-    color: #999999;
+    color: #999;
 }
+
 .popper-item {
-    font-size: 12px;
-    text-align: center;
-    color: #ffffff;
-    background-color: #1a5c92;
     line-height: 30px;
+    text-align: center;
+    background-color: #1a5c92;
+    font-size: 12px;
+    color: #ffffff;
     cursor: pointer;
 }
+
 .popper-item.active {
+    background-color: rgba(0, 186, 255, 0.73);
     font-size: 12px;
     color: #00fffc;
-    background-color: rgb(0 186 255 / 73%);
 }
+
 .add_expert {
     width: 80px;
     height: 30px;
     color: #63e6ff;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    opacity: 0.8;
     box-sizing: border-box;
     background-image: url(../../../assets/img/XZWJ.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    opacity: .8;
 }
-.add_expert:hover {
+.add_expert:hover{
     color: #63e6ff!important;
     opacity: 1;
 }
 .export {
     font-size: 12px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
     background-image: url(../../../assets/img/export_bg.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
 }
+
 .export1 {
     font-size: 12px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
     background-image: url(../../../assets/img/add_expert.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
 }
+
 .export ::v-deep span,
 .export1 ::v-deep span {
     margin-left: 5px;
 }
+
 .el-form-item {
     margin-bottom: 0;
 }
@@ -2141,58 +1943,69 @@ export default {
     margin-bottom: 22px;
 }
 .expert ::v-deep .el-icon-date {
-    color: rgb(0 0 0 / 40%);
+    color:rgba(0,0,0,0.4);
 }
+
 .search-fileds-box ::v-deep .el-form-item {
     margin-bottom: 10px;
 }
+
 .add_expert:hover,
 .export:hover,
 .export1:hover {
-    color: #ffffff;
+    color: #fff;
 }
+
 .field-del-icon {
     display: inline-block;
     width: 20px;
     height: 20px;
     cursor: pointer;
     vertical-align: middle;
-    font-size: 0;
+    font-size: 0px;
     text-align: center;
+
     >i {
+        color: #0052D9;
         font-size: 16px;
-        color: #0052d9;
         line-height: 18px;
     }
 }
+
 .search-option {
     padding-left: 100px;
 }
+
 .search-option ::v-deep .el-button--text {
-    color: #0052d9;
+    color: #0052D9;
 }
+
 .search-list-btn {
     // margin-top: -10px;
+
     >div {
         cursor: pointer;
         margin: 0 10px;
     }
 }
+
 .search-list-btn i {
-    margin-right: 5px;
     font-size: 12px;
     color: #00e9ff;
+    margin-right: 5px;
 }
+
 .search-list-btn span {
     font-size: 12px;
     color: #00e9ff;
 }
+
 .chart-desc {
     font-size: 12px;
     line-height: 36px;
     color: #ffffff;
 }
-.event ::v-deep .el-input--small .el-input__inner {
+.event ::v-deep .el-input--small .el-input__inner{
     height: 32px;
     line-height: 32px;
 }
@@ -2205,364 +2018,416 @@ export default {
     margin-right: 10px;
     padding-left: 20px;
     box-sizing: border-box;
+
     >div:nth-child(1) {
         font-size: 12px;
         line-height: 15px;
-        color: rgb(0 0 0 / 90%);
+         color:rgba(0,0,0,0.9);
     }
+
     >div:nth-child(2) {
-        bottom: 6px;
         margin-top: 10px;
         font-size: 12px;
-        color: rgb(0 0 0 / 90%);
+        color: rgba(0,0,0,0.9);
+        bottom: 6px;
         // text-shadow: 0px 0px 10px rgba(247, 232, 0, 0.9);
     }
     .chart-bg {
         width: 90px;
         height: 40px;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        opacity: 0.5;
         background-image: url('../../../assets/img/data_manage/chart_three.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+       opacity: 0.5;
     }
 }
 .chart-bg-two {
-    position: absolute;
-    top: -4px;
-    width: 40px;
-    height: 40px;
-    background-position: center;
-    // background-image: url('../../../assets/img/data_manage/chart_two.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    opacity: 0.5;
-}
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        // background-image: url('../../../assets/img/data_manage/chart_two.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        top: -4px;
+        opacity: 0.5;
+
+    }
 .chart-bg-three {
-    position: absolute;
-    right: -19px;
-    bottom: -8px;
-    width: 40px;
-    height: 40px;
-    background-position: center;
-    // background-image: url('../../../assets/img/data_manage/chart_one.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    opacity: 0.5;
-}
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        // background-image: url('../../../assets/img/data_manage/chart_one.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        bottom: -8px;
+        right: -19px;
+        opacity: 0.5;
+
+    }
+
 .expert-left {
-    margin-right: 10px;
-    padding: 8px 10px;
     width: 200px;
-    border: solid 1px rgb(80 176 255 / 40%);
+    padding: 8px 10px;
     background-color: #07101a;
+    border: solid 1px rgba(80, 176, 255, 0.4);
     box-sizing: border-box;
+    margin-right: 10px;
 }
+
 .expert-right {
     padding: 10px;
-    border: solid 1px rgb(80 176 255 / 40%);
     background-color: #07101a;
+    border: solid 1px rgba(80, 176, 255, 0.4);
+
 }
+
 .left-title {
     font-size: 14px;
     color: #ffffff;
 }
-.reset-btn, .sql-btn {
-    margin-left: 10px;
+
+.reset-btn, .sql-btn{
     width: 80px;
     height: 30px;
-    font-size: 12px;
-    border: solid 1px #39caf3;
-    border-radius: 5px;
-    color: #a2ece8;
     background-color: #041f38;
-    box-shadow: inset 0 0 10px 0
-        rgb(0 167 245 / 97%);
+    box-shadow: inset 0px 0px 10px 0px
+    rgba(0, 167, 245, 0.97);
+    border: solid 1px #39caf3;
+    font-size: 12px;
     line-height: 15px;
     letter-spacing: 1px;
+    color: #a2ece8;
+    border-radius: 5px;
+    margin-left: 10px;
     cursor: pointer;
     box-sizing: border-box;
 }
+
 .search-btn ::v-deep .btn {
     width: 80px;
     height: 30px;
     border: none;
     background: none;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     background-image: url(../../../assets/img/expert_search_btn.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
     i {
         display: none;
     }
 }
 .chart-wrapper {
     width: 100%;
-    border-radius: 4px;
-    background: #dadee8;
     box-sizing: border-box;
+    background: #dadee8;
+    border-radius: 4px;
     // border: solid 1px rgba(80, 176, 255, 0.4);
     // background-image: url(../../../assets/img/log_num.png);
     // background-size: cover;
     // background-repeat: no-repeat;
     // background-position: left top;
-    ::v-deep .el-loading-spinner {
-        top: 40px !important;
+    ::v-deep .el-loading-spinner{
+        top:40px !important;
     }
 }
+
 .left-tip {
     margin-top: 10px;
     font-size: 0;
+
     >i {
-        margin-right: 5px;
-        font-size: 12px;
-        color: #0052d9;
         vertical-align: middle;
+        font-size: 12px;
+        color: #0052D9;
+        margin-right: 5px;
     }
+
     >span {
         vertical-align: middle;
         font-size: 10px;
-        color: #0052d9;
+        color: #0052D9;
     }
 }
+
 .list-group {
     min-height: 26px;
+
 }
+
 .list-title {
-    margin: 0 auto;
     width: 170px;
     height: 26px;
-    background-position: left top;
-    background-repeat: no-repeat;
-    background-size: cover;
+    margin: 0 auto;
     background-image: url(../../../assets/img/field_bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: left top;
 }
+
 .list-group-item {
-    margin: 8px 0;
-    color: #ffffff;
+    color: #FFFFFF;
     cursor: move;
-    // padding:0 10px;
-    box-sizing: border-box;
-}
-.list-group-item1 {
     margin: 8px 0;
-    color: #ffffff;
     // padding:0 10px;
     box-sizing: border-box;
 }
+
+.list-group-item1 {
+    color: #FFFFFF;
+    margin: 8px 0;
+    // padding:0 10px;
+    box-sizing: border-box;
+}
+
 .list-group-item i,
 .list-group-item1 i {
     cursor: pointer;
 }
+
 .open-box,
 .close-box {
     width: 26px;
     height: 100%;
+    color: #0052D9;
     text-align: center;
-    color: #0052d9;
     line-height: 26px;
 }
+
 .list-inner-tip {
-    margin: 6px 0;
     font-size: 12px;
-    color: #0052d9;
     line-height: 15px;
+    color: #0052D9;
+    margin: 6px 0;
 }
+
 .list-inner {
-    margin: 0 auto;
     width: 170px;
+    margin: 0 auto;
 }
+
 .condition-box {
-    position: absolute;
-    top: 106%;
-    left: 0;
-    z-index: 999;
-    overflow-y: auto;
-    padding-bottom: 20px;
     width: 1000px;
-    border: solid 1px #0052d9;
-    border-radius: 2px;
+    padding-bottom: 20px;
+    overflow-y: auto;
+    position: absolute;
+    left: 0;
+    top: 106%;
+    z-index: 999;
     background-color: #033254;
-    box-shadow: 0 0 20px 0 rgb(0 0 0 / 80%),
-        inset 0 0 6px 0 rgb(0 186 255 / 73%);
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.8),
+    inset 0px 0px 6px 0px rgba(0, 186, 255, 0.73);
+    border-radius: 2px;
+    border: solid 1px #0052D9;
 }
+
 .condition-area {
     position: absolute;
-    top: 27px;
-    right: 0;
     left: 0;
+    right: 0;
+    top: 27px;
     z-index: 1000;
+     background-color: #fff;
     padding: 20px;
-    border: solid 1px #dcdcdc;
+     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
-    background-color: #ffffff;
-    box-shadow: 0 0 20px 0 rgb(0 0 0 / 10%);
-    transition: all 0.3s;
+     border: solid 1px #dcdcdc;
+    transition: all .3s;
     .footer {
         position: absolute;
-        right: 10px;
         bottom: 1px;
+        right: 10px;
     }
 }
+
 .attendance-list {
     margin-top: 0;
-    padding-top: 0;
-    padding-right: 10px;
-    padding-left: 10px;
+    height: -webkit-calc(100vh - 126px);
+    height: -moz-calc(100vh - 126px);
     height: -ms-calc(100vh - 126px);
     height: calc(100vh - 126px);
     box-sizing: border-box;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 0;
 }
+
 .pagination {
     padding: 30px 0 20px;
     text-align: right;
 }
+
 .el-input.ips {
     display: block;
     width: 100%;
 }
+
 .drawer-pad {
     padding: 0 20px;
 }
+
 .event ::v-deep .el-range-input {
-    color: #ffffff;
-    background-color: rgb(0 0 0 / 0%);
+    background-color: rgba(0, 0, 0, 0);
+    color: #fff;
 }
+
 .event ::v-deep .el-range-separator {
-    color: #ffffff;
+    color: #fff;
 }
+
 .event ::v-deep .el-radio__inner {
     background-color: transparent;
 }
+
 .event ::v-deep .el-radio__label {
-    color: #ffffff;
+    color: #fff;
 }
+
 .event ::v-deep .el-radio__input.is-checked+.el-radio__label {
-    color: #409eff;
+    color: #409EFF;
 }
+
 .event ::v-deep .el-radio__input.is-disabled .el-radio__inner,
 .event ::v-deep .el-radio__input.is-disabled.is-checked .el-radio__inner {
-    border-color: #409eff;
+    border-color: #409EFF;
     background: transparent;
 }
-.search ::v-deep .el-tag.el-tag--info {
-    border-color: #0052d9;
-    color: #0052d9;
-    background-color: rgb(0 0 0 / 0%);
+.search ::v-deep .el-tag.el-tag--info{
+    background-color: rgba(0,0,0,0);
+    border-color: #0052D9;
+    color: #0052D9;
 }
-.search ::v-deep .el-tag.el-tag--info .el-tag__close {
-    font-size: 14px!important;
-    color: #0052d9;
+.search ::v-deep .el-tag.el-tag--info .el-tag__close{
+    color: #0052D9;
+    font-size:14px!important;
 }
-.search ::v-deep .el-select .el-tag__close.el-icon-close {
-    background-color: rgb(0 0 0 / 0%);
+.search ::v-deep .el-select .el-tag__close.el-icon-close{
+    background-color:rgba(0,0,0,0);
 }
 .option a {
     margin: 0 3px;
 }
+
 .switch-wrapper {
-    position: relative;
     width: 68px;
     height: 28px;
+    position: relative;
     cursor: pointer;
 }
+
 .switch-wrapper>div:nth-child(1) {
     width: 68px;
     height: 28px;
-    border-radius: 14px;
     background-color: #001a2c;
-    box-shadow: inset 0 0 7px 0 #000000;
+    box-shadow: inset 0px 0px 7px 0px #000000;
+    border-radius: 14px;
+
     div {
-        padding: 0 8px;
         font-size: 14px;
         line-height: 28px;
+        padding: 0 8px;
     }
+
     >div:nth-child(1) {
         color: #00d7ff;
         opacity: 0.6;
     }
+
     >div:nth-child(2) {
         color: #ffaa47;
         opacity: 0.6;
     }
 }
+
 .switch-wrapper>div:nth-child(2) {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    margin-top: -16px;
     width: 32px;
     height: 32px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -16px;
     border-radius: 100%;
 }
+
 .switch-wrapper.yes>div:nth-child(2) {
-    animation: moveone 0.3s linear forwards;
+    animation: moveone .3s linear forwards;
 }
+
 .switch-wrapper.no>div:nth-child(2) {
-    animation: _moveone 0.3s linear forwards;
+    animation: _moveone .3s linear forwards;
 }
 
 @keyframes moveone {
     0% {
-        left: 0;
         background-color: #fa941c;
-        box-shadow: 0 0 10px 0 #9c5603;
+        box-shadow: 0px 0px 10px 0px #9c5603;
+        left: 0;
     }
+
     100% {
+        background-color: #0052D9;
+        box-shadow: 0px 0px 10px 0px #058fa9;
         left: 36px;
-        background-color: #0052d9;
-        box-shadow: 0 0 10px 0 #058fa9;
     }
 }
 
-@keyframes moveone {
+@-webkit-keyframes moveone {
     0% {
-        left: 0;
         background-color: #fa941c;
-        box-shadow: 0 0 10px 0 #9c5603;
+        box-shadow: 0px 0px 10px 0px #9c5603;
+        left: 0;
     }
+
     100% {
+        background-color: #0052D9;
+        box-shadow: 0px 0px 10px 0px #058fa9;
         left: 36px;
-        background-color: #0052d9;
-        box-shadow: 0 0 10px 0 #058fa9;
     }
 }
 
 @keyframes _moveone {
     0% {
+        background-color: #0052D9;
+        box-shadow: 0px 0px 10px 0px #058fa9;
         left: 36px;
-        background-color: #0052d9;
-        box-shadow: 0 0 10px 0 #058fa9;
     }
+
     100% {
-        left: 0;
         background-color: #fa941c;
-        box-shadow: 0 0 10px 0 #9c5603;
+        box-shadow: 0px 0px 10px 0px #9c5603;
+        left: 0;
+    ;
     }
 }
-@keyframes _moveone {
+
+@-webkit-keyframes _moveone {
     0% {
+        background-color: #0052D9;
+        box-shadow: 0px 0px 10px 0px #058fa9;
         left: 36px;
-        background-color: #0052d9;
-        box-shadow: 0 0 10px 0 #058fa9;
     }
+
     100% {
-        left: 0;
         background-color: #fa941c;
-        box-shadow: 0 0 10px 0 #9c5603;
+        box-shadow: 0px 0px 10px 0px #9c5603;
+        left: 0;
+    ;
     }
 }
-table-expand::-webkit-scrollbar {
-    width: 0;
+div.table-expand::-webkit-scrollbar {
+    width: 0px;
     height: 5px;
 }
 .input-btn {
     width: 300px;
     p {
-        margin-left: 10px;
-        font-size: 12px;
-        color: #0052d9;
         cursor: pointer;
+        color: #0052d9;
+        font-size: 12px;
+        margin-left: 10px;
         i {
             margin-right: 5px;
             font-size: 12px;
@@ -2570,13 +2435,10 @@ table-expand::-webkit-scrollbar {
     }
 }
 .general ::v-deep .search-box .time-panel-picker {
-    top: -12px !important;
+     top: -12px !important;
 }
 .general ::v-deep .filter-title {
     margin-left: 0 !important;
-}
-.general ::v-deep .common-dialog .time-panel-picker {
-    top: 500px !important;
 }
 </style>
 <style lang="scss">

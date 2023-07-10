@@ -7,17 +7,13 @@ const attack_analysis = () =>
     import('@/pages/alarm/attack_analysis.vue')
 const alarm_list = () =>
     import('@/pages/alarm/alarm_list.vue')
-const fire_line = () =>
-    import('@/pages/alarm/fire_line/index.vue')
-const flow_analysis = () =>
-    import('@/pages/alarm/flow_analysis/index.vue')
 export default [
     {
         path: '/alarm',
         name: 'alarm',
         component: Layout,
         meta: {
-            title: '分析中心'
+            title: '资产管理'
         },
         redirect: '/alarm/alarm_tab_alarm_config',
         children: [
@@ -50,23 +46,7 @@ export default [
                 name: 'alarm_list',
                 component: alarm_list,
                 meta: {
-                    title: '告警分析'
-                }
-            },
-            {
-                path: 'fire_line',
-                name: 'fire_line',
-                component: fire_line,
-                meta: {
-                    title: '防火线'
-                }
-            },
-            {
-                path: 'flow_analysis',
-                name: 'flow_analysis',
-                component: flow_analysis,
-                meta: {
-                    title: '流量分析'
+                    title: '事件列表'
                 }
             }
         ]

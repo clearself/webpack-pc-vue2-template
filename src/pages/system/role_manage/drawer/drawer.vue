@@ -504,13 +504,6 @@ export default {
         padding: 0;
     }
 }
-
-.custom-star #app .el-form--label-top .el-form-item__label {
-    color: #fff !important;
-}
-.custom-star #app .el-checkbox__label {
-    color: #fff;
-}
 </style>
 <style lang="scss" scoped>
 .add-role-form {

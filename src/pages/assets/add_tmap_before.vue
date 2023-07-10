@@ -39,7 +39,6 @@
                                             :normalizer="normalizer"
                                             noChildrenText="当前分支无子节点"
                                             noOptionsText="无可用选项"
-                                            noResultsText="无可用选项"
                                             placeholder="请选择"
                                             v-model="get_params.type"
                                             @input="searchCheck"
@@ -64,9 +63,9 @@
                                     <el-table-column align="center"  :reserve-selection="true" type="selection" width="30"></el-table-column>
                                     <el-table-column align="center" type="index" width="50" :index="indexMethod" label="序号">
                                     </el-table-column>
-                                    <el-table-column prop="deviceName" label="资产名称">
+                                    <el-table-column prop="device_name" label="资产名称">
                                     </el-table-column>
-                                    <el-table-column prop="deviceTypeName" label="资产类型">
+                                    <el-table-column prop="device_type_name" label="资产类型">
                                     </el-table-column>
                                     <el-table-column label="资产ip">
                                         <template slot-scope="{row}">
@@ -269,11 +268,10 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     let assetsSelected = this.multipleSelection.map(item => {
-                        console.log(item)
                         let obj = {}
-                        obj.device_name = item.deviceName
-                        obj.device_type_name = item.deviceTypeName
-                        obj.device_type_id = item.deviceTypeId
+                        obj.device_name = item.device_name
+                        obj.device_type_name = item.device_type_name
+                        obj.device_type_id = item.device_type_id
                         obj.device_ip = this.getAssetsIp(item, 1)
                         obj.device_ports = this.getAssetsIp(item, 2)
                         return obj

@@ -2,7 +2,9 @@ import { getlocalStorage, setlocalStorage } from '@/assets/js/public_fun'
 
 const state = {
     logoAddress: '',
-    systemName: ''
+    systemName: '',
+    dict: {},
+    orgInfo: {}
 }
 const mutations = {
     setLogo: (state, val) => {
@@ -20,6 +22,13 @@ const mutations = {
             initInfo.theme.systemName = val
         }
         setlocalStorage('initInfo', initInfo)
+    },
+    addDict: (state, val) => {
+        let key = val.key
+        state.dict[key] = val.data
+    },
+    setOrg: (state, val) => {
+        state.orgInfo = val
     }
 }
 const actions = {}

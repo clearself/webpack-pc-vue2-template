@@ -49,21 +49,3 @@ export const downLoad = (data) => {
         responseType: 'blob'
     })
 }
-// 动态资源池
-export const getPoolSetting = (data) => {
-    return request({
-        url: 'data-center/manage/poolConfig/get',
-        method: 'post',
-        params: data.queryData,
-        data: data.paramsData
-    })
-}
-export const addPoolSetting = (data) => {
-    return request({
-        url: 'data-center/manage/poolConfig/update',
-        method: 'post',
-        params: data.queryData,
-        data: data.paramsData
-    })
-}
-

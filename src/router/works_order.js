@@ -22,18 +22,13 @@ const all_work_task_detail = () =>
 const work_tab_statistics = () =>
     import('@/pages/works_order/tab_statistics.vue')
 
-const blacklist = () =>
-    import('@/pages/works_order/blacklist/index.vue')
-const whitelist = () =>
-    import('@/pages/works_order/whitelist/index.vue')
-
 export default [
     {
         path: '/works_order',
         name: 'works_order',
         component: Layout,
         meta: {
-            title: '工单管理'
+            title: '系统管理'
         },
         redirect: '/works_order/work_template',
         children: [
@@ -70,7 +65,7 @@ export default [
                 name: 'all_work_task',
                 component: all_work_task,
                 meta: {
-                    title: '全部工单'
+                    title: '所有工单'
                 }
             },
             {
@@ -115,22 +110,6 @@ export default [
                 component: work_tab_statistics,
                 meta: {
                     title: '工单统计'
-                }
-            },
-            {
-                path: 'blacklist',
-                name: 'blacklist',
-                component: blacklist,
-                meta: {
-                    title: '黑名单'
-                }
-            },
-            {
-                path: 'whitelist',
-                name: 'whitelist',
-                component: whitelist,
-                meta: {
-                    title: '白名单'
                 }
             }
         ]

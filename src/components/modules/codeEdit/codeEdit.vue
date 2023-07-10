@@ -98,25 +98,25 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-    // .codeEdit{
-    //     width:100%;
-    // }
-    // .codeEdit::v-deep.CodeMirror {
-    //     height: auto;
-    //     min-height: 500px;
-    // }
-    // .codeEdit::v-deep.vue-codemirror{
-    //     width:100%;
-    //     min-height:500px;
-    // }
-    // .codeEdit::v-deep.CodeMirror {
-    //     border: 1px solid #eee;
-    //     height: auto;
-    //     min-height: 500px;
-    // }
-    // .codeEdit::v-deep.CodeMirror-scroll {
-    //     height: 500px;
-    //     overflow-y: hidden;
-    //     overflow-x: auto;
-    // }
+    .codeEdit{
+        width:100%;
+    }
+    .codeEdit::v-deep.CodeMirror {
+        height: auto;
+        min-height: 500px;
+    }
+    .codeEdit::v-deep.vue-codemirror{
+        width:100%;
+        min-height:500px;
+    }
+    .codeEdit::v-deep.CodeMirror {
+        border: 1px solid #eee;
+        height: auto;
+        min-height: 500px;
+    }
+    .codeEdit::v-deep.CodeMirror-scroll {
+        height: 500px;
+        overflow-y: hidden;
+        overflow-x: auto;
+    }
 </style>

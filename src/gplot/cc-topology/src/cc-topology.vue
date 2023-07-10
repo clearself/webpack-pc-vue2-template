@@ -399,7 +399,6 @@ export default {
         ccBehavior.obj.dragEventEdit.sendThis(this)
         ccBehavior.obj.keyupEventEdit.sendThis(this)
         this.clearHistoryData()
-        console.log(this.graphData)
         // this.initTopo(this.graphData)
         // this.autoZoomHandler()
         window.onresize = () => {
@@ -1167,10 +1166,10 @@ export default {
                 if (res.length > 0) {
                     res.forEach(item => {
                         let obj = {}
-                        obj.value = item.deviceName
+                        obj.value = item.device_name
                         obj.id = item.id
-                        obj.device_type_name = item.deviceTypeName
-                        obj.device_type_id = item.deviceTypeId
+                        obj.device_type_name = item.device_type_name
+                        obj.device_type_id = item.device_type_id
                         obj.device_ip = this.getAssetsIp(item, 1)
                         obj.device_ports = this.getAssetsIp(item, 2)
                         this.restaurants.push(obj)

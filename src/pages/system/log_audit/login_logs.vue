@@ -5,6 +5,7 @@
                 <el-form :model="searchForm">
                     <el-form-item label="用户角色:" label-width="64px">
                         <el-select
+                            @change="search"
                             size="small"
                             clearable
                             v-model="searchForm.roleId"
@@ -26,6 +27,7 @@
                 <el-form :model="searchForm">
                     <el-form-item label="是否登录成功:" label-width="100px">
                         <el-select
+                            @change="search"
                             size="small"
                             style="width: 100%"
                             clearable
@@ -45,14 +47,14 @@
                             size="small"
                             style="width: 100%"
                             v-model="searchForm.time"
-                            type="datetimerange"
-                            value-format="yyyy-MM-dd HH:mm:ss"
-                            format="yyyy-MM-dd HH:mm:ss"
+                            type="daterange"
+                            value-format="yyyy-MM-dd"
                             prefix-icon="iconfont icon-riqi"
                             range-separator="~"
                             start-placeholder="开始日期"
                             end-placeholder="结束日期"
                             :clearable="false"
+                            @change="search"
                         >
                         </el-date-picker>
                         <!-- default-time="['00:00::00', '23:59:59']" -->
@@ -217,7 +219,7 @@ export default {
             }
             export_login_logos(data).then((res) => {
                 console.log(res, this, '----------数据')
-                // this.download(res)
+                this.download(res)
             })
         },
         download(data) {

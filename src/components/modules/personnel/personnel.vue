@@ -1,6 +1,6 @@
 <template>
     <div class="container" @click.stop="">
-        <div class="show-box ub ub-pj" @click="showMore = !showMore">
+        <div class="show-box ub ub-pj">
             <div class="show-left ub ub-ac" :class="showFlag ? 'is-show' : 'not-show'">
                 <el-tag
                     class="tags"
@@ -11,35 +11,34 @@
                     @close="handleClose(tag)">
                     {{tag|showTag}}
                 </el-tag>
-                <span v-if="!selectList.length" style=" padding-left: 10px;font-size: 12px; color: #c5c5c5; line-height: 26px;">请选择</span>
             </div>
             <div class="show-right ub ub-pj ub-ac">
                 <div>
                     <i class="iconfont icon-gengduo"  @click="showFlag = !showFlag"></i>
                 </div>
                 <div>
-                    <i class="iconfont icon-zuo1" :class="showMore ? 'arrow-up' : 'arrow-down'" @click.stop="showMore = !showMore"></i>
+                    <i class="iconfont icon-zuo1" :class="showMore ? 'arrow-up' : 'arrow-down'" @click="showMore = !showMore"></i>
                 </div>
             </div>
         </div>
         <div class="bottom-box tree" v-if="showMore">
             <el-tabs v-model="activeName">
                 <el-tab-pane label="同事" name="first">
-                    <span slot="label" style="position: relative;">同事<span class="red-num">{{checkUsers.length}}</span></span>
+                    <span slot="label" style="position: relative">同事<span class="red-num">{{checkUsers.length}}</span></span>
                     <el-checkbox-group v-model="checkUsers">
-                        <el-checkbox v-for="(item,index) in usersList" :key="index" :label="item.id" style="display: block;">{{item.chineseName}}</el-checkbox>
+                        <el-checkbox v-for="(item,index) in usersList" :key="index" :label="item.id" style="display: block">{{item.chineseName}}</el-checkbox>
                     </el-checkbox-group>
                 </el-tab-pane>
                 <el-tab-pane label="部门" name="second">
-                    <span slot="label" style="position: relative;">部门<span class="red-num">{{checkDeps.length}}</span></span>
+                    <span slot="label" style="position: relative">部门<span class="red-num">{{checkDeps.length}}</span></span>
                     <el-checkbox-group v-model="checkDeps">
-                        <el-checkbox v-for="(item,index) in depList" :key="index + 'a'" :label="item.id" style="display: block;">{{item.name}}</el-checkbox>
+                        <el-checkbox v-for="(item,index) in depList" :key="index + 'a'" :label="item.id" style="display: block">{{item.name}}</el-checkbox>
                     </el-checkbox-group>
                 </el-tab-pane>
                 <el-tab-pane label="角色" name="third">
-                    <span slot="label" style="position: relative;">角色<span class="red-num">{{checkRoles.length}}</span></span>
+                    <span slot="label" style="position: relative">角色<span class="red-num">{{checkRoles.length}}</span></span>
                     <el-checkbox-group v-model="checkRoles">
-                        <el-checkbox v-for="(item,index) in rolesList" :key="index + 'b'" :label="item.id" style="display: block;">{{item.roleName}}</el-checkbox>
+                        <el-checkbox v-for="(item,index) in rolesList" :key="index + 'b'" :label="item.id" style="display: block">{{item.roleName}}</el-checkbox>
                     </el-checkbox-group>
                 </el-tab-pane>
             </el-tabs>
@@ -155,132 +154,129 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.tags {
-    margin-right: 5px;
-    margin-bottom: 4px;
+.tags{
+    margin-right:5px;
+    margin-bottom:4px;
     height: 26px;
     line-height: 26px;
 }
 .container {
-    position: relative;
     width: 100%;
+    position: relative;
 }
 .show-box {
-    cursor: pointer;
-    min-height: 32px;
-    border: 1px solid #dddddd;
+    min-height: 30px;
+    border: 1px solid #ddd;
     // box-shadow: inset 0px 0px 7px 0px #389bf7;
     border-radius: 3px;
+
     .show-right {
         width: 50px;
         height: 30px;
+
         &>div {
             width: 24px;
             height: 30px;
             line-height: 30px;
+
             & i {
+                color: #ddd;
                 font-size: 14px;
-                color: #dddddd;
                 cursor: pointer;
-                &.arrow-up::before {
+
+                &.arrow-up:before {
                     display: inline-block;
                     transform: rotate(90deg);
                 }
-                &.arrow-down::before {
+                &.arrow-down:before {
                     display: inline-block;
                     transform: rotate(-90deg);
                 }
             }
         }
     }
+
     .show-left {
-        display: flex;
-        margin: 2px 5px 0;
         width: calc(100% - 50px);
+        display:flex;
         flex-wrap: wrap;
-        &::v-deep.el-tag {
+        margin:2px 5px 0 5px;
+
+        &::v-deep.el-tag{
             margin-left: 5px;
-            height: 20px;
-            border-color: #387dee;
-            color: #387dee;
             background-color: transparent;
+            height: 20px;
             line-height: 20px;
+            border-color:#387dee ;
+            color: #387dee;
+
             & .el-tag__close {
                 color: #387dee;
             }
+
             & .el-tag__close:hover {
-                color: #000000;
                 background-color: #387dee;
+                color: #000;
             }
         }
     }
     .show-left.not-show {
+        height: 28px;
         overflow: hidden;
-        height: 26px;
     }
     .show-left.is-show {
-        min-height: 30px;
+        min-height: 28px;
     }
 }
 .bottom-box {
-    position: absolute;
+    position:absolute;
+    width:100%;
     margin-top: 10px;
     padding-left: 10px;
-    width: 100%;
-    border: 1px solid #dddddd;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    background-color: #fff;
     // box-shadow: inset 0px 0px 7px 0px #389bf7;
     border-radius: 3px;
-    background-color: #ffffff;
-    box-sizing: border-box;
-    ::v-deep .el-tabs__item.is-active, ::v-deep.el-tabs__item:hover {
-        border: none;
+    ::v-deep .el-tabs__item.is-active, ::v-deep.el-tabs__item:hover{
         color: #387dee;
         opacity: 1;
+        border: none;
         box-shadow: none;
     }
     ::v-deep.el-tabs__active-bar {
         background-color: #387dee;
     }
     ::v-deep .el-tabs__item {
-        padding: 0 10px;
-        font-size: 12px;
         color: #387dee;
         opacity: 0.4;
+        font-size: 12px;
+        padding: 0 10px;
+
     }
     ::v-deep.el-tabs__nav-wrap::after {
-        background-color: rgb(28 215 250 / 20%);
+        background-color: rgba(28,215,250,.2);
     }
     ::v-deep.el-tabs__content {
-        overflow-y: auto;
         max-height: 240px;
+        overflow-y: auto;
+
     }
     ::v-deep.el-checkbox__label {
         font-size: 12px;
     }
     ::v-deep .red-num {
         position: absolute;
-        top: -10px;
-        left: 20px;
         width: 20px;
         height: 20px;
-        font-size: 12px;
-        border-radius: 50%;
         text-align: center;
-        color: #ffffff;
-        background: #ff3d3d;
+        font-size: 12px;
         line-height: 20px;
-    }
-}
-.custom-star {
-    .show-box {
-        border-color: #1cd7fa!important;
-    }
-    .bottom-box {
-        border: 1px solid #1cd7fa;
-        background-color: #052942!important;
-        ::v-deep .el-tabs__nav-wrap::after {
-            background-color: #1cd7fa!important;
-        }
+        background: #ff3d3d;
+        color: #fff;
+        border-radius: 50%;
+        left: 20px;
+        top: -10px;
     }
 }
 </style>

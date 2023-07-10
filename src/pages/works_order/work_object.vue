@@ -43,7 +43,7 @@
                     </el-col>
                 </SearchTop>
             </div>
-            <div class="list-container table-area">
+            <div class="attendance-list table-area">
                 <div class="ub ub-pj w100" style="margin-bottom: 10px;">
                     <div class="list-tips">列表内容</div>
                     <div>
@@ -77,12 +77,12 @@
                     <el-table-column prop="name" label="类型名称" show-overflow-tooltip></el-table-column>
                     <el-table-column prop="des" label="类型描述" show-overflow-tooltip></el-table-column>
                     <el-table-column prop="createUserName" label="创建人" width="160"></el-table-column>
-                    <!-- <el-table-column prop="createTime" label="创建日期" width="160"></el-table-column> -->
+                    <el-table-column prop="createTime" label="创建日期" width="160"></el-table-column>
                     <el-table-column label="操作" align="center" fixed="right" class-name="deepBg" width="140">
                         <template slot-scope="scope">
                             <div>
                                 <el-button v-per="['work_obj_edit']" v-if="scope.row.type == 1" type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
-                                <el-button v-per="['work_obj_del']" v-if="scope.row.type == 1" type="text" size="small" @click="handleDelete(scope.row)" :disabled="scope.row.typeDel == 1">删除</el-button>
+                                <el-button v-per="['work_obj_del']" v-if="scope.row.type == 1" type="text" size="small" @click="handleDelete(scope.row)">删除</el-button>
                                 <el-button v-if="scope.row.type == 0" disabled type="text" size="small">内置类型</el-button>
                             </div>
                         </template>
@@ -103,12 +103,12 @@
                 </el-form-item>
                 <el-form-item label="字段信息：" :label-width="formLabelWidth">
                     <div class="ub ub-ac custom-form" v-for="(_it, _inx) in addForm.attrs" :key="_inx">
-                        <div v-if="_inx > 0" class="del-item" style="font-size: 12px;" @click="deleteCustom(_inx)">
-                            <i class="el-icon-close" style="color: #e34d59;cursor: pointer;"></i>
+                        <div v-if="_inx > 0" class="del-item" style="font-size:12px;" @click="deleteCustom(_inx)">
+                            <i class="el-icon-close" style="color: #e34d59;cursor:pointer;"></i>
                             删除
                         </div>
-                        <div style="width: 100%;">
-                            <div style="display: flex;align-items: center;width: 91%;">
+                        <div style="width:100%">
+                            <div style="width: 91%;display: flex;align-items: center;">
                                 <el-form-item
                                     label="字段名称："
                                     label-width="60px"
@@ -121,9 +121,9 @@
                                     }"
                                     :prop="'attrs.' + _inx + '.name'"
                                 >
-                                    <el-input style="width: 100%;" placeholder="请输入字段名称" clearable maxlength="8" show-word-limit v-model.trim="_it.name" size="small"></el-input>
+                                    <el-input style="width:100%;" placeholder="请输入字段名称" clearable maxlength="8" show-word-limit v-model.trim="_it.name" size="small"></el-input>
                                 </el-form-item>
-                                <span style="width: 32px;font-size: 24px;text-align: center;">-</span>
+                                <span style="width: 32px;text-align: center;font-size: 24px;">-</span>
                                 <el-form-item
                                     label="字段属性："
                                     label-width="60px"
@@ -136,7 +136,7 @@
                                     :prop="'attrs.' + _inx + '.type'"
                                     style="flex: 1;"
                                 >
-                                    <el-select v-model="_it.type" style="width: 100%;height: 32px;">
+                                    <el-select v-model="_it.type" style="width:100%;height: 32px;">
                                         <el-option
                                             v-for="(item, index) in attrTypeList"
                                             :key="index"
@@ -150,7 +150,7 @@
                                 <el-form-item
                                     v-if="_it.type == 6 || _it.type == 7"
                                     :label="'选项-' + (index + 1) + '：'"
-                                    style="vertical-align: center;"
+                                    style="vertical-align: center"
                                     class="ub full-width"
                                     :key="item.key"
                                     label-width="60px"
@@ -162,18 +162,18 @@
                                     }"
                                     :prop="'attrs.' + _inx + '.items.' + index + '.value'"
                                 >
-                                    <el-input style="width: 90%;" placeholder="请输入选项" clearable v-model.trim="item.value" size="small"></el-input>
+                                    <el-input style="width:90%;" placeholder="请输入选项" clearable v-model.trim="item.value" size="small"></el-input>
                                     <i
                                         @click.stop="addSelect(_inx)"
                                         class="el-icon-circle-plus-outline"
                                         v-if="_it.items.length - 1 === index"
-                                        style="display: inline-block;margin: 5px 0 0 6px;font-size: 14px;color: #0052d9;cursor: pointer;"
+                                        style="cursor: pointer;font-size:14px;color:#0052d9;display: inline-block;margin:5px 0 0 6px"
                                     ></i>
                                     <i
                                         @click.stop="deleteSelect(item, _inx)"
                                         v-if="index > 0"
                                         class="el-icon-remove-outline"
-                                        style="display: inline-block;margin: 5px 0 0 6px;font-size: 14px;color: #0052d9;cursor: pointer;"
+                                        style="cursor: pointer;font-size:14px;color:#0052d9;display: inline-block;margin:5px 0 0 6px"
                                     ></i>
                                 </el-form-item>
                             </template>
@@ -206,16 +206,12 @@
                 </el-form-item>
                 <el-form-item label="字段信息：" :label-width="formLabelWidth">
                     <div class="ub ub-ac custom-form" v-for="(_it, _inx) in editForm.attrs" :key="_inx">
-                        <div v-if=" _it.typeNotice != 1 && editForm.id == 6 " class="del-item" style="font-size: 12px;" @click="deleteEditCustom(_inx)">
-                            <i class="el-icon-close" style="color: #e34d59;cursor: pointer;"></i>
+                        <div v-if="_inx > 0" class="del-item" style="font-size:12px;" @click="deleteEditCustom(_inx)">
+                            <i class="el-icon-close" style="color: #e34d59;cursor:pointer;"></i>
                             删除
                         </div>
-                        <div v-if="_inx > 0&&editForm.id != 6 " class="del-item" style="font-size: 12px;" @click="deleteEditCustom(_inx)">
-                            <i class="el-icon-close" style="color: #e34d59;cursor: pointer;"></i>
-                            删除
-                        </div>
-                        <div style="width: 100%;">
-                            <div style="display: flex;align-items: center;width: 91%;">
+                        <div style="width:100%">
+                            <div style="width: 91%;display: flex;align-items: center;">
                                 <el-form-item
                                     label="字段名称："
                                     class="ub full-width"
@@ -227,9 +223,9 @@
                                     }"
                                     :prop="'attrs.' + _inx + '.name'"
                                 >
-                                    <el-input style="width: 100%;" placeholder="请输入字段名称" clearable maxlength="8" show-word-limit v-model.trim="_it.name" size="small"></el-input>
+                                    <el-input style="width:100%;" placeholder="请输入字段名称" clearable maxlength="8" show-word-limit v-model.trim="_it.name" size="small"></el-input>
                                 </el-form-item>
-                                <span style="width: 32px;font-size: 24px;text-align: center;">-</span>
+                                <span style="width: 32px;text-align: center;font-size: 24px;">-</span>
                                 <el-form-item
                                     label="字段属性："
                                     class="ub full-width"
@@ -241,7 +237,7 @@
                                     :prop="'attrs.' + _inx + '.type'"
                                     style="flex: 1;"
                                 >
-                                    <el-select v-model="_it.type" style="width: 100%;height: 32px;">
+                                    <el-select v-model="_it.type" style="width:100%;height: 32px;">
                                         <el-option
                                             v-for="(item, index) in attrTypeList"
                                             :key="index"
@@ -255,7 +251,7 @@
                                 <el-form-item
                                     v-if="_it.type == 6 || _it.type == 7"
                                     :label="'选项-' + (index + 1) + '：'"
-                                    style="vertical-align: center;"
+                                    style="vertical-align: center"
                                     class="ub full-width"
                                     :key="item.key"
                                     label-position="left"
@@ -266,18 +262,18 @@
                                     }"
                                     :prop="'attrs.' + _inx + '.items.' + index + '.value'"
                                 >
-                                    <el-input style="width: 90%;" placeholder="请输入选项" clearable v-model.trim="item.value" size="small"></el-input>
+                                    <el-input style="width:90%;" placeholder="请输入选项" clearable v-model.trim="item.value" size="small"></el-input>
                                     <i
                                         @click.stop="addEditSelect(_inx)"
                                         class="el-icon-circle-plus-outline"
                                         v-if="_it.items.length - 1 === index"
-                                        style="display: inline-block;margin: 5px 0 0 6px;font-size: 14px;color: #0052d9;cursor: pointer;"
+                                        style="cursor: pointer;font-size:14px;color:#0052d9;display: inline-block;margin:5px 0 0 6px"
                                     ></i>
                                     <i
                                         @click.stop="deleteEditSelect(item, _inx)"
                                         v-if="index > 0"
                                         class="el-icon-remove-outline"
-                                        style="display: inline-block;margin: 5px 0 0 6px;font-size: 14px;color: #0052d9;cursor: pointer;"
+                                        style="cursor: pointer;font-size:14px;color:#0052d9;display: inline-block;margin:5px 0 0 6px"
                                     ></i>
                                 </el-form-item>
                             </template>
@@ -539,19 +535,9 @@ export default {
                     if (list.length > 0) {
                         list.forEach(item => {
                             let obj = {}
-                            if (item.id == '5') {
-                                item.type = 0
-                            }
-                            if (item.name == '未知资产') {
-                                item.type = 0
-                            }
-                            if (item.id == '6') {
-                                item.typeDel = 1
-                            }
                             obj.id = item.id
                             obj.name = item.name
                             obj.des = item.des ? item.des : '--'
-                            obj.typeDel = item.typeDel || 0
                             obj.type = item.type
                             obj.createTime = item.createTime
                             obj.attrs = item.attrs
@@ -647,8 +633,7 @@ export default {
                             }
                         ],
                     name: it.name ?? '',
-                    type: it.type + '',
-                    typeNotice: row.id == 6 && (it.name == '标题' || it.name == '内容') ? 1 : 0
+                    type: it.type + ''
                 }
             })
             console.log(this.editForm.attrs)
@@ -789,12 +774,12 @@ export default {
 
 <style lang="scss" scoped>
 .table-area {
-    margin-top: 10px;
+    background-color: #fff;
     padding: 10px;
-    border: solid 1px #dadee8;
+    box-shadow: 0px 0px 8px 0px rgba(140, 152, 164, 0.2);
     border-radius: 4px;
-    background-color: #ffffff;
-    box-shadow: 0 0 8px 0 rgb(140 152 164 / 20%);
+    border: solid 1px #dadee8;
+    margin-top: 10px;
     .pagination {
         margin-top: 20px;
         text-align: right;
@@ -815,34 +800,39 @@ export default {
     position: relative;
     padding: 0 20px;
     color: #1cd7fa;
+
     .el-button {
         position: absolute;
-        top: 0;
         right: 20px;
+        top: 0;
         padding: 0;
         color: #1cd7fa;
     }
 }
 .domain-list {
+    background: rgba(0, 0, 0, 0.3);
     margin: 3px 0 20px;
     padding: 20px 0 1px;
-    background: rgb(0 0 0 / 30%);
+
     .list-tit {
         width: 100px;
         text-align: right;
     }
+
     .ub {
         margin-bottom: 20px;
     }
+
     .list-btn {
         padding-left: 20px;
+
         .el-button {
             color: #f56c6c;
         }
     }
 }
 .event ::v-deep .el-range-input {
-    background-color: rgb(0 0 0 / 0%);
+    background-color: rgba(0, 0, 0, 0);
     // color: #fff;
 }
 .event ::v-deep .el-range-separator {
@@ -853,6 +843,7 @@ export default {
 }
 .event ::v-deep .el-upload-list__item-name {
     color: #01e9ff;
+
     i {
         color: #01e9ff;
     }
@@ -861,17 +852,17 @@ export default {
     background: transparent;
 }
 .event ::v-deep .custom-form {
-    position: relative;
+    background-color: rgba(56, 125, 238, 0.02);
+    border-radius: 4px;
+    border: solid 1px #dddddd;
     margin-bottom: 10px;
     padding: 20px 10px;
-    border: solid 1px #dddddd;
-    border-radius: 4px;
-    background-color: rgb(56 125 238 / 2%);
+    position: relative;
     .el-input__inner {
         height: 32px;
     }
     .full-width {
-        margin-bottom: 0;
+            margin-bottom: 0px;
         .el-form-item__label {
             width: 80px;
             font-size: 12px;
@@ -882,25 +873,20 @@ export default {
         }
     }
     .del-item {
+        width:66px;
+        height: 24px;
+        cursor: pointer;
         position: absolute;
         top: 0;
-        right: 0;
-        width: 66px;
-        height: 24px;
+        right: 0px;
+        color: #e34d59 !important;
         border: solid 1px #dddddd;
+        text-align: center;
+        line-height: 24px;
         border-top: none;
         border-right: none;
-        border-radius: 0 0 0 10px !important;
-        text-align: center;
-        color: #e34d59 !important;
-        cursor: pointer;
-        line-height: 24px;
+        border-radius:0 0 0 10px !important;
     }
-}
-.custom-star .event ::v-deep .custom-form {
-    border: solid 1px#1cd7fa;
-    box-shadow: inset 0 0 7px 0
-        #389bf7;
 }
 </style>
 <style></style>

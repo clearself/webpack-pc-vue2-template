@@ -1,5 +1,5 @@
 <template>
-    <div style="width: 100%;">
+    <div style="width:100%">
         <script ref="script" :name="name" type="text/plain"></script>
     </div>
 </template>
@@ -8,7 +8,6 @@
 import LoadEvent from './utils/Event.js'
 import Debounce from './utils/Debounce.js'
 import theme from '../mixins/theme.js'
-import { mapGetters } from 'vuex'
 export default {
     name: 'VueUeditorWrap',
     mixins: [theme],
@@ -88,7 +87,6 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['themeSettings']),
         mixedConfig() {
             // eslint-disable-next-line vue/no-side-effects-in-computed-properties
             this.config.readonly = this.readonly
@@ -127,14 +125,6 @@ export default {
         },
         // 实例化编辑器
         _initEditor() {
-            let fontColor = ''; let borderColor = ''
-            if (this.themeSettings === 'star') {
-                borderColor = '#1cd7fa'
-                fontColor = '#fff'
-            } else {
-                borderColor = '#000'
-                fontColor = '#333'
-            }
             this.$refs.script.id = this.id = this.editorId || 'editor_' + Math.random().toString(16).slice(-6) // 这么做是为了支持 Vue SSR，因为如果把 id 属性放在 data 里会导致服务端和客户端分别计算该属性的值，而造成 id 不匹配无法初始化的 BUG
             this.init()
             this.$emit('before-init', this.id, this.mixedConfig)
@@ -142,7 +132,7 @@ export default {
             this.editor = window.UE.getEditor(this.id, this.mixedConfig)
             this.editor.addListener('ready', () => {
                 window.UE.dom.domUtils.setStyles(this.editor.body, {
-                    color: fontColor, 'font-family': "'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif", 'font-size': '14px', 'border-color': borderColor
+                    color: this.ueditorFontColor, 'font-family': "'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif", 'font-size': '14px', 'border-color': '#000'
                 })
                 if (this.status === 2) { // 使用 keep-alive 组件会出现这种情况
                     this.editor.setContent(this.value)
@@ -288,8 +278,3 @@ export default {
     }
 }
 </script>
-<style>
-.custom-star .edui-default .edui-editor {
-    border: 1px solid #1cd7fa;
-}
-</style>

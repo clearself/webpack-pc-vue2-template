@@ -20,12 +20,7 @@
 
 @font-face {
     font-family: 'Hkxzy';
-    src: url('./fonts/Hkxzy1.ttf');
-}
-
-@font-face {
-    font-family: 'hkxzyw7';
-    src: url('./fonts/hkxzyw7.ttf');
+    src: url('./fonts/Hkxzy.ttf');
 }
 
 .no-copy {
@@ -60,29 +55,10 @@ input:focus {
     background: #f3f3f3;
     color: rgba(0, 0, 0, 0.9);
 }
-.custom-star #app .el-drawer__header {
-    background: rgba(0, 0, 0, 0);
-    color: #fff;
-}
 
 #app .el-drawer__body {
-    padding: 10px 20px;
+    padding: 14px 10px 10px 10px;
 }
-
-.el-drawer__header {
-    padding: 2px 24px !important;
-    margin-bottom: 10px !important;
-    text-align: left;
-    font-size: 14px;
-    background: #f3f3f3;
-    color: rgba(0, 0, 0, 0.9);
-}
-
-.el-drawer__body {
-    padding: 10px 20px;
-}
-
-
 
 .attendance-list {
     padding-top: 20px;

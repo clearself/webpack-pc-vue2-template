@@ -1,10 +1,10 @@
 <template>
     <el-drawer :visible.sync="alarmSeeDialog" direction="rtl" :size="1200" :wrapperClosable="false" :before-close="handleClose" title="详情">
         <div class="drawer-content">
-            <div style="position: relative;top: 0;left: 0;overflow-y: auto;width: 100%;height: 100%;">
+            <div style="position: relative;left:0;top:0;width:100%;height:100%;overflow-y: auto;">
                 <div class="ub ub-pj w100">
                     <div class="list-tip">
-                        <span style="font-weight: 600;">{{ seeForm.reportName }}</span>
+                        <span style="font-weight:600">{{ seeForm.reportName }}</span>
                         <span v-if="seeForm.reportLevel == 0" class="title-level zero">低</span>
                         <span v-if="seeForm.reportLevel == 1" class="title-level one">中低</span>
                         <span v-if="seeForm.reportLevel == 2" class="title-level two">中</span>
@@ -13,16 +13,16 @@
 
                         <span
                             v-if="seeForm.reportStatus == 0"
-                            style="padding: 3px 15px;font-size: 12px;border-radius: 16px;color: #eeb174;background: #fde6d8;line-height: 1;">待确认</span>
+                            style="color:#eeb174;background:#fde6d8;font-size: 12px;border-radius: 16px;line-height: 1;padding: 3px 15px;">待确认</span>
                         <span
                             v-if="seeForm.reportStatus == 1"
-                            style="padding: 3px 15px;font-size: 12px;border-radius: 16px;color: #3fa87b;background: #ccf6e4;line-height: 1;">已确认</span>
+                            style="color:#3fa87b;background:#ccf6e4;font-size: 12px;border-radius: 16px;line-height: 1;padding: 3px 15px;">已确认</span>
                         <span
                             v-if="seeForm.reportStatus == 2"
-                            style="padding: 3px 15px;font-size: 12px;border-radius: 16px;color: #3c7ce2;background: #d5e5fa;line-height: 1;">已处置</span>
+                            style="color:#3c7ce2;background:#d5e5fa;font-size: 12px;border-radius: 16px;line-height: 1;padding: 3px 15px;">已处置</span>
                         <span
                             v-if="seeForm.reportStatus == 3"
-                            style="padding: 3px 15px;font-size: 12px;border-radius: 16px;color: #aa0202;background: #fad7dd;line-height: 1;">已驳回</span>
+                            style="color:#aa0202;background:#fad7dd;font-size: 12px;border-radius: 16px;line-height: 1;padding: 3px 15px;">已驳回</span>
                     </div>
                 </div>
                 <div class="drawer-pad">
@@ -101,17 +101,18 @@ export default {
     $status2: #01ff01;
     $status3: #00e1fd;
     $status4: #e1e2e4;
-    .list-tip {
-        position: relative;
+    .list-tip{
         height: 24px;
+        line-height: 24px;
         font-size: 14px;
         color: #1c1c1c;
-        line-height: 24px;
+        position: relative;
     }
     .drawer-pad {
-        overflow-y: auto;
         // padding: 0 20px;
         height: calc(100% - 53px);
+        overflow-y: auto;
+
         & ::v-deep img {
             max-width: 600px;
             max-height: 600px;
@@ -126,50 +127,56 @@ export default {
     .drawer-pad ::v-deep .el-form-item__content {
         font-size: 12px;
     }
-    .drawer-pad ::v-deep .el-form-item__label {
+    .drawer-pad ::v-deep .el-form-item__label{
         font-size: 12px;
-        color: #999999!important;
+        color: #999!important
     }
     .title-level {
-        margin: 0 5px;
-        padding: 2px 10px;
+        color: $zero;
         font-size: 12px;
         border-radius: 3px;
-        color: $zero;
         line-height: 1;
+        padding: 2px 10px;
+        margin: 0 5px;
+
         &.one {
             color: $one;
         }
+
         &.two {
             color: $two;
         }
+
         &.three {
             color: $three;
         }
+
         &.fore {
             color: $fore;
         }
     }
     .el-tabs ::v-deep .el-tabs__nav-wrap::after {
+        content: "";
         position: absolute;
-        bottom: 0;
         left: 0;
-        z-index: 1;
+        bottom: 0;
         width: 100%;
         height: 1px;
         background-color: #e7e7e7;
-        content: '';
+        z-index: 1;
     }
+
     .el-tabs ::v-deep .el-tabs__active-bar {
         background: #387dee;
         // margin-left: 14px;
     }
+
     .el-tabs ::v-deep .el-tabs__item.is-active {
-        height: 34px;
-        border: none !important;
         color: #387dee;
-        box-shadow: none !important;
+        height: 34px;
         line-height: 34px;
+        border: none !important;
+        box-shadow: none !important;
     }
 
 </style>

@@ -34,8 +34,8 @@
                     </div>
                     <div class="desItem">设备名称：{{ item.name }}</div>
                     <div class="desItem">设备端口：{{ item.port }}</div>
-                    <div class="desItem">设备类型：{{ desType(item.type) }}</div>
-                    <div class="desItem">设备单位：{{ item.company }}</div>
+                    <!-- <div class="desItem">设备类型：{{ desType(item.type) }}</div>
+                    <div class="desItem">设备单位：{{ item.company }}</div> -->
                 </div>
             </div>
         </div>
@@ -79,8 +79,8 @@ export default {
     },
     mounted() {
         this.getUser()
-        this.getType()
-        // this.get_data()
+        // this.getType()
+        this.get_data()
     },
     computed: {},
     watch: {},

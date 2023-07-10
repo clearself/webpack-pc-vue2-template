@@ -158,7 +158,7 @@ export default {
                     } else if (item == 2) {
                         str += '短信、'
                     } else if (item == 3) {
-                        str += '蓝信、'
+                        str += '蓝鲸快信、'
                     }
                 })
             }

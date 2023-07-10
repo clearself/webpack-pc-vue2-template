@@ -41,7 +41,6 @@
             <div class="select-two" v-show="selectTwoShow">
                 <div class="select-cell" @click="saveTask(1)">保存查询记录</div>
                 <div class="select-cell" @click="saveTask(2)">保存离线任务</div>
-                <div class="select-cell" @click="saveTask(3)">保存输出图表</div>
             </div>
         </transition>
     </div>
@@ -605,7 +604,7 @@ export default {
       right: 0;
       z-index: 1002;
       width: 90px;
-      height: 88px;
+      height: 68px;
       box-sizing: border-box;
       background-color: #fff;
     //   box-shadow: 0px 0px 10px 0px #000000, inset 0px 0px 6px 0px rgba(0, 186, 255, 0.73), inset 0px -1px 0px 0px rgba(40, 82, 124, 0.5);

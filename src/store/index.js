@@ -6,7 +6,6 @@ import common from '@store/modules/common'
 import settings from '@store/modules/settings'
 import user from '@store/modules/user'
 import referee from '@/store/modules/referee'
-import analysis from '@/store/modules/analysis'
 import vueXAlong from 'vuex-along'
 Vue.use(Vuex)
 
@@ -15,8 +14,7 @@ export default new Vuex.Store({
         common,
         settings,
         user,
-        referee,
-        analysis
+        referee
     },
     state: {},
     mutations: {

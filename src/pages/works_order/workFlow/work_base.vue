@@ -3,55 +3,48 @@
         <div class="w100" v-loading="loading">
             <div class="ub w100 relative" style="height: 32px;">
                 <div class="title-created">新建模板</div>
-                <div class="ub" style="margin-left: 20px;">
+                <div class="ub" style="margin-left: 20px">
                     <el-steps :space="100" :active="activeStep">
                         <el-step><i class="step1 step1Active" slot="icon">工单基本信息</i></el-step>
                         <el-step><i class="step2 step2Ready" slot="icon">配置流程信息</i></el-step>
                     </el-steps>
                 </div>
                 <div class="btn-wrap" style="margin-left: auto;">
-                    <el-button size="small" style="color: rgb(0 0 0 / 40%);" @click="cancel">取消</el-button>
+                    <el-button size="small" style="color: rgba(0, 0, 0, 0.4);" @click="cancel">取消</el-button>
                     <el-button size="small" style="background-color: #387dee;" type="primary" @click="next">下一步</el-button>
                 </div>
             </div>
-            <div class="w100 form-wrapper" style="color: #ffffff;">
+            <div class="w100 form-wrapper" style="color: #fff;">
                 <div class="title w100">
                     <span class="t1 mt-1">基本信息</span>
                 </div>
                 <el-form  ref="formData" :model="formData" label-position="top" :rules="formDataRules" label-width="100px">
-                    <div class="ub ub-pj" style="width: 100%;">
+                    <div class="ub ub-pj" style="width:100%;">
                         <el-form-item label="模板名称：" style="width: calc((100% - 168px) / 3);" prop="name" size="small">
                             <el-input clearable v-model.trim="formData.name" size="small" placeholder="请输入模板名称"></el-input>
                         </el-form-item>
                         <el-form-item label="发起类型：" style="width: calc((100% - 168px) / 3);" prop="sendId" size="small">
-                            <el-select filterable clearable v-model="formData.sendId" size="small" style="width: 100%;" placeholder="请选择" @change="changeObject">
+                            <el-select filterable clearable v-model="formData.sendId" size="small" style="width: 100%" placeholder="请选择" @change="changeObject">
                                 <el-option v-for="(item, index) in sendObjectList" :key="index" :label="item.name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="适用范围：" style="width: calc((100% - 168px) / 3);" prop="userIds" size="small">
-                            <el-select  v-model="formData.userIds" size="small" filterable multiple collapse-tags style="width: 100%;" placeholder="请选择">
+                        <el-form-item label="发起人范围：" style="width: calc((100% - 168px) / 3);" prop="userIds" size="small">
+                            <el-select  v-model="formData.userIds" size="small" filterable multiple collapse-tags style="width: 100%" placeholder="请选择">
                                 <el-option v-for="(item, index) in allUserList" :key="index" :label="item.chineseName" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
                     </div>
-                    <div class="ub ub-pj" style="width: 100%;">
-                        <el-form-item label="模板类型：" style="width: calc((100% - 168px) / 3);" prop="mouldType" size="small">
-                            <el-select filterable clearable v-model="formData.mouldType" size="small" style="width: 100%;" placeholder="请选择">
-                                <el-option v-for="(item, index) in mouldTypeList" :key="index" :label="item.name" :value="item.id"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                    <div class="ub" style="width: 100%;">
+                    <div class="ub" style="width:100%;">
                         <el-form-item label="工单描述：" style="width: calc(100% - 84px - ((100% - 168px) / 3));" prop="des" size="small">
-                            <vue-ueditor-wrap style="color: #000000;" v-model="formData.des" :config="myConfig"></vue-ueditor-wrap>
+                            <vue-ueditor-wrap style="color: #000;" v-model="formData.des" :config="myConfig"></vue-ueditor-wrap>
                         </el-form-item>
                     </div>
                 </el-form>
                 <div class="title w100" v-if="this.formData.sendId == 1" style="margin-bottom: 16px;">
                     <span class="t1">手动触发条件</span>
                 </div>
-                <div style="min-height: 100px;border: solid 1px #dddddd;border-radius: 4px;background-color: rgb(56 125 238 / 2%);" v-if="this.formData.sendId == 1">
-                    <div style="padding: 10px 0 0 20px;">
+                <div style="min-height: 100px;background-color: rgba(56, 125, 238, 0.02);border-radius: 4px;border: solid 1px #dddddd;" v-if="this.formData.sendId == 1">
+                    <div style="padding: 10px 0 0 20px">
                         <div class="single-condition" v-for="(item, index) in formData.startConditionObj" :key="index">
                             <el-divider v-if="index != 0">OR</el-divider>
                             <div class="ub ub-ac">
@@ -61,22 +54,22 @@
                                         <el-select filterable clearable v-model="_item.field" size="small" style="width: 36%;" @change="changeFiled(_item)" placeholder="请选择">
                                             <el-option v-for="(item, index) in formData.sendId == 1 ? alarmList : []" :key="index" :label="item.label" :value="item.value"></el-option>
                                         </el-select>
-                                        <el-select filterable clearable v-model="_item.condition" size="small" style="margin: 0 6px;width: 21%;" placeholder="请选择">
+                                        <el-select filterable clearable v-model="_item.condition" size="small" style="margin: 0 6px;width: 21%" placeholder="请选择">
                                             <el-option v-for="(item, index) in conditionList" :key="index" :label="item.name" :value="item.value"></el-option>
                                         </el-select>
-                                        <el-input v-if="getFieldType(_item) === 'text'" v-model="_item.val" clearable size="small" style="width: 36%;" placeholder="请输入"></el-input>
+                                        <el-input v-if="getFieldType(_item) === 'text'" v-model="_item.val" clearable size="small" style="width: 36%" placeholder="请输入"></el-input>
                                         <el-select v-if="getFieldType(_item) === 'select'"  placeholder="请选择" style="width: 36%;" v-model="_item.val" size="small">
                                             <el-option v-for="(tag,_index) in _item.item" :label="tag.value" :value="tag.key" :key="_index"></el-option>
                                         </el-select>
                                         <i
                                             @click.stop="addConditionChild(item.and)"
                                             class="el-icon-plus"
-                                            style="margin-left: 5px;font-size: 12px;color: #1cd7fa;cursor: pointer;"></i>
+                                            style="cursor: pointer;font-size:12px;color:#1cd7fa;margin-left: 5px"></i>
                                         <i
                                             @click.stop="deleteConditionChild(item.and,_item)"
                                             v-if="_index != 0"
                                             class="el-icon-close"
-                                            style="cursor: pointer;font-size: 12px;color: #1cd7fa;"></i>
+                                            style="cursor: pointer;font-size:12px;color:#1cd7fa"></i>
                                     </div>
                                     <p class="del-btn" v-if="index != 0">
                                         <i class="el-icon-close" @click="deleteCondition(item)"> 删除组</i>
@@ -92,14 +85,14 @@
                 <div class="title w100">
                     <span class="t1">结束后动作</span>
                 </div>
-                <div style="padding-top: 10px;min-height: 100px;">
-                    <p v-if="this.formData.endEventObj.type.length === 0" class="operate-color" @click="openFinishDialog" style="padding: 0 3px;height: 24px;border: 1px solid #387dee;line-height: 22px;"><i class="el-icon-plus"></i>添加结束动作</p>
+                <div style="min-height: 100px;padding-top: 10px">
+                    <p v-if="this.formData.endEventObj.type.length === 0" class="operate-color" @click="openFinishDialog" style="border:1px solid #387dee;height:24px;line-height:22px;padding:0 3px"><i class="el-icon-plus"></i>添加结束动作</p>
                     <div v-else class="warn-wrapper">
                         <div class="ub ub-pj ub-ac">
-                            <p style="font-size: 12px;color: rgb(0 0 0 / 90%);">提醒</p>
+                            <p style="font-size: 12px;color: rgba(0, 0, 0, 0.9);">提醒</p>
                             <p>
-                                <i class="el-icon-edit" style="margin-right: 10px;font-size: 12px;color: #387dee;cursor: pointer;" @click="openFinishDialog"></i>
-                                <i class="el-icon-close" style="font-size: 12px;color: #387dee;cursor: pointer;" @click="deleteEndWarn"></i>
+                                <i class="el-icon-edit" style="font-size: 12px;color: #387dee;cursor: pointer;margin-right: 10px;" @click="openFinishDialog"></i>
+                                <i class="el-icon-close" style="font-size: 12px;color: #387dee;cursor: pointer" @click="deleteEndWarn"></i>
                             </p>
                         </div>
                         <div>
@@ -108,20 +101,20 @@
                             <p class="warn-top">提醒人员范围：</p>
                             <p class="warn-body">{{show_warn_user}}</p>
                             <p class="warn-top">提醒内容：</p>
-                            <p class="warn-body" style="font-weight: 600 !important;" v-html="formData.endEventObj.title"></p>
+                            <p class="warn-body" style="font-weight:600 !important">{{formData.endEventObj.title}}</p>
                             <p class="warn-body" v-html="show_warn_mes"></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <el-dialog title="提醒" :visible.sync="finishWarnDialog" width="700px" custom-class="common-dialog " @click.native="closeDrop" :append-to-body="false">
+        <el-dialog title="提醒" :visible.sync="finishWarnDialog" width="700px" custom-class="common-dialog " @click.native="closeDrop">
             <el-form :model="warnForm" :rules="warnRules" ref="warnForm" label-position="top">
                 <el-form-item label="提醒方式：" prop="type" label-width="90px">
                     <el-select filterable clearable v-model="warnForm.type" multiple size="small" style="width: 100%;" placeholder="请选择">
+                        <el-option label="站内消息" value="0"></el-option>
                         <el-option label="邮件" value="1"></el-option>
                         <el-option label="短信" value="2"></el-option>
-                        <el-option label="蓝信" value="0"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="人员范围：" prop="users" label-width="90px" class="red-star">
@@ -132,15 +125,13 @@
                         :rolesList="allRolesList"
                         :usersShow="endWarnList"
                         :dataList="dataList"
-                        :assetOrganizeList="assetOrganizeList"
-                        :assetUserList="assetUserList"
                         ref="personRange"
                         @confirmData="confirmData"
                     ></dropdown-box>
                     <span v-if="personFlag" class="red-warn warn-person">请选择人员</span>
                 </el-form-item>
                 <el-form-item label="提醒内容：" prop="content" label-width="90px" class="red-star insert1">
-                    <insert-fields style="width: calc(100% - 2px);" v-if="finishWarnDialog" ref="field" :title="formData.endEventObj.title" :mes="formData.endEventObj.mes" :sendId="formData.sendId"></insert-fields>
+                    <insert-fields style="width: calc(100% - 2px)" v-if="finishWarnDialog" ref="field" :title="formData.endEventObj.title" :mes="formData.endEventObj.mes" :sendId="formData.sendId"></insert-fields>
                     <span v-if="mesFlag" class="red-warn warn-content">请填写提醒内容</span>
                 </el-form-item>
             </el-form>
@@ -168,9 +159,7 @@ import {
 import {
     get_selested_all_fileds,
     get_condition,
-    get_leak_fileds,
-    getWorkAssetsUser,
-    getWorkAssetsDep
+    get_leak_fileds
 } from '../../../server/works_order/api.js'
 export default {
     name: 'WorkBase',
@@ -182,20 +171,6 @@ export default {
     mixins: [ueditorConfig],
     data() {
         return {
-            mouldTypeList: [
-                {
-                    id: 0,
-                    name: '分析'
-                },
-                {
-                    id: 1,
-                    name: '应急'
-                },
-                {
-                    id: 2,
-                    name: '通报'
-                }
-            ],
             count: 0,
             loading: false, // 右侧整体loading
             formLabelWidth: '120px',
@@ -209,7 +184,6 @@ export default {
             record_endWarnList: [], // 打开弹框
             record_send_id: '',
             formData: {
-                mouldType: '',
                 name: '',
                 userIds: [],
                 sendId: '',
@@ -254,8 +228,6 @@ export default {
             allDepList: [], // 所有部门
             allRolesList: [], // 所有角色
             sendObjectList: [], // 工单发起类型
-            assetOrganizeList: [],
-            assetUserList: [],
             dataList: [
                 {
                     name: '资产负责人',
@@ -276,10 +248,7 @@ export default {
                     { required: true, message: '请选择发起类型', trigger: ['change', 'blur'] }
                 ],
                 userIds: [
-                    { required: true, message: '请选择适用范围', trigger: ['change', 'blur'] }
-                ],
-                mouldType: [
-                    { required: true, message: '请选择模板类型', trigger: ['change', 'blur'] }
+                    { required: true, message: '请选择发起人范围', trigger: ['change', 'blur'] }
                 ]
             },
             warnRules: {
@@ -300,7 +269,6 @@ export default {
             /* 复制新建或编辑*/
             if (this.$getsessionStorage('copyTemplate')) {
                 let form = this.$getsessionStorage('copyTemplate')
-                this.formData.mouldType = form.mouldType
                 this.formData.name = form.name
                 this.formData.xml = form.xml
                 this.formData.xmlName = form.xmlName
@@ -316,7 +284,6 @@ export default {
             } else if (this.$getsessionStorage('editTemplate')) {
                 let form = this.$getsessionStorage('editTemplate')
                 console.log('formformformform2222', form)
-                this.formData.mouldType = form.mouldType
                 this.formData.name = form.name
                 this.formData.xml = form.xml
                 this.formData.xmlName = form.xmlName
@@ -355,7 +322,7 @@ export default {
             if (this.formData.endEventObj.type.length) {
                 this.formData.endEventObj.type.forEach(item => {
                     if (item == 0) {
-                        str += '蓝信'
+                        str += '站内消息、'
                     } else if (item == 1) {
                         str += '邮件、'
                     } else if (item == 2) {
@@ -383,10 +350,6 @@ export default {
                     } else if (item.type == 2) {
                         str += item.roleName + '、'
                     } else if (item.type == 3) {
-                        str += item.name + '、'
-                    } else if (item.type == 5) {
-                        str += item.name + '、'
-                    } else if (item.type == 6) {
                         str += item.name + '、'
                     } else if (item == '流程相关') {
                         str += item + '、'
@@ -460,8 +423,6 @@ export default {
             await this.get_roles()
             await this.get_users()
             await this.get_alarmList()
-            await this.getTreeData()
-            await this.getWorkAssetsUserData()
             // await this.get_leakList()
             await this.get_conditionList()
         },
@@ -487,38 +448,6 @@ export default {
                 this.$setsessionStorage('allRolesList', res)
             }).catch(err => {
                 console.log(err, 'err')
-            })
-        },
-        async getTreeData() {
-            let data = {
-                queryData: {},
-                paramsData: {}
-            }
-            await getWorkAssetsDep(data).then(res => {
-                this.assetOrganizeList = res
-                this.$setsessionStorage('assetOrganizeList', res)
-            }).catch(error => {
-                console.log('error' + error)
-            })
-        },
-        async getWorkAssetsUserData() {
-            let data = {
-                queryData: {},
-                paramsData: {}
-            }
-            await getWorkAssetsUser(data).then(res => {
-                console.log('所有资产用户', res)
-                this.assetUserList = res.map(item => {
-                    return {
-                        type: '6',
-                        id: item.id,
-                        name: item.name,
-                        account: item.accountnum || ''
-                    }
-                })
-                this.$setsessionStorage('assetUserList', res)
-            }).catch(error => {
-                console.log('error' + error)
             })
         },
         async get_dep() {
@@ -627,15 +556,12 @@ export default {
             this.endWarnList = []
         },
         confirmData(val) {
-            console.log('val', val)
             this.endWarnList = this.$deepCopy(val)
             val = val.length ? val : []
             let type0 = []
             let type1 = []
             let type2 = []
-            let type3 = []
-            let type5 = []
-            let type6 = []; let type4
+            let type3 = []; let type4
             this.formData.endEventObj.users = []
             val.forEach(item => {
                 if (item !== '流程相关') {
@@ -649,10 +575,6 @@ export default {
                     type2.push(item.id)
                 } else if (item.type === '3') {
                     type3.push(item.id)
-                } else if (item.type === '5') {
-                    type5.push(item.id)
-                } else if (item.type === '6') {
-                    type6.push(item.id)
                 } else if (item === '流程相关') {
                     type4 = true
                 }
@@ -661,8 +583,6 @@ export default {
             type1.length && this.formData.endEventObj.users.push({ userType: '1', ids: type1 })
             type2.length && this.formData.endEventObj.users.push({ userType: '2', ids: type2 })
             type3.length && this.formData.endEventObj.users.push({ userType: '3', ids: type3 })
-            type5.length && this.formData.endEventObj.users.push({ userType: '5', ids: type5 })
-            type6.length && this.formData.endEventObj.users.push({ userType: '6', ids: type6 })
             type4 && this.formData.endEventObj.users.push({ userType: '4' })
             // console.log(this.formData.endEventObj.users, '提醒人列表')
         },
@@ -703,18 +623,6 @@ export default {
                     } else if (item.userType == 4) {
                         let obj = { userType: '4' }
                         arr.push(JSON.stringify(obj))
-                    } else if (item.userType == 5) {
-                        /* 遍历所有资产组织架构*/
-                        item.ids.forEach(_item => {
-                            let obj = this.assetOrganizeList.find(it => it.id == _item)
-                            obj && (arr.push(JSON.stringify(obj)))
-                        })
-                    } else if (item.userType == 6) {
-                        /* 遍历所有资产用户*/
-                        item.ids.forEach(_item => {
-                            let obj = this.assetUserList.find(it => it.id == _item)
-                            obj && (arr.push(JSON.stringify(obj)))
-                        })
                     }
                 })
                 this.endWarnList = this.$deepCopy(arr)
@@ -782,18 +690,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .event-content {
+    .event-content{
         background-color: #111d2b;
     }
     .add_template.second-view {
-        margin-right: 10px;
         margin-left: 10px;
-        padding: 20px;
+        margin-right: 10px;
+        padding: 20px 20px;
     }
     .title-created {
-        height: 28px;
         font-size: 14px;
-        color: rgb(0 0 0 / 90%);
+        color: rgba(0, 0, 0, 0.9);
+        height: 28px;
         line-height: 28px;
     }
     .add_template ::v-deep .el-form {
@@ -808,12 +716,13 @@ export default {
             right: 0;
         }
     }
+
     .add_template ::v-deep .is-disabled {
         .el-textarea__inner {
-            border: 1px solid #1cd7fa;
-            color: #cccccc;
             background: transparent;
-            box-shadow: 0 0 7px #389bf7 inset;
+            border: 1px solid #1cd7fa;
+            box-shadow: 0px 0px 7px #389bf7 inset;
+            color: #ccc;
         }
     }
     .add_template ::v-deep .el-steps {
@@ -821,164 +730,165 @@ export default {
             .el-step__head {
                 .el-step__line {
                     display: none;
-                    height: 0;
+                    height: 0px;
                 }
                 .is-text {
-                    margin-left: 20px;
-                    width: 200px;
                     height: 28px;
+                    width: 200px;
+                    margin-left: 20px;
                     border-style: hidden;
-                    background-color: transparent !important;
+                    background-color:transparent !important;
                 }
             }
             .step1, .step2, .step3 {
-                width: 200px;
-                height: 28px;
+                color: rgba(0, 0, 0, 0.26);
                 text-indent: 20px;
-                color: rgb(0 0 0 / 26%);
-                background-color: #f3f3f3;
+                width: 200px;
                 line-height: 28px;
                 font-style: normal;
+                height: 28px;
+                background-color: #f3f3f3;
             }
             .step2, .step3 {
                 text-indent: 40px;
             }
             .step1Active {
-                position: relative;
-                color: #ffffff;
+                color: #fff;
                 background-color: #387dee;
-                &::after {
+                position: relative;
+                &:after {
                     position: absolute;
                     top: 0;
                     right: -20px;
+                    content: '';
                     width: 0;
                     height: 0;
-                    border-top: 14px solid transparent;
-                    border-right: none;
-                    border-bottom: 14px solid transparent;
                     border-left: 20px solid #387dee;
-                    content: '';
+                    border-top: 14px solid transparent;
+                    border-bottom: 14px solid transparent;
+                    border-right: none;
                 }
             }
             .step2Active,.step3Active {
-                color: #ffffff;
+                color: #fff;
                 background-color: #387dee;
-                &::after {
+                &:after {
                     position: absolute;
                     top: 0;
                     right: -20px;
+                    content: '';
                     width: 0;
                     height: 0;
-                    border-top: 14px solid transparent;
-                    border-right: none;
-                    border-bottom: 14px solid transparent;
                     border-left: 20px solid #387dee;
-                    content: '';
+                    border-top: 14px solid transparent;
+                    border-bottom: 14px solid transparent;
+                    border-right: none;
                 }
-                &::before {
+                &:before {
                     position: absolute;
                     top: 0;
                     left: 0;
+                    content: '';
                     width: 0;
                     height: 0;
+                    border-left: 20px solid #fff;
                     border-top: 14px solid transparent;
-                    border-right: none;
                     border-bottom: 14px solid transparent;
-                    border-left: 20px solid #ffffff;
-                    content: '';
+                    border-right: none;
                 }
             }
             .step1Finish {
-                position: relative;
-                color: #ffffff;
+                color: #fff;
                 background-color: #387dee;
-                &::after {
+                position: relative;
+                &:after {
                     position: absolute;
                     top: 0;
                     right: -20px;
+                    content: '';
                     width: 0;
                     height: 0;
-                    border-top: 14px solid transparent;
-                    border-right: none;
-                    border-bottom: 14px solid transparent;
                     border-left: 20px solid #387dee;
-                    content: '';
+                    border-top: 14px solid transparent;
+                    border-bottom: 14px solid transparent;
+                    border-right: none;
                 }
             }
             .step2Finish,.step3Finish {
-                color: #ffffff;
+                color: #fff;
                 background-color: #387dee;
-                &::after {
+                &:after {
                     position: absolute;
                     top: 0;
                     right: -20px;
+                    content: '';
                     width: 0;
                     height: 0;
-                    border-top: 14px solid transparent;
-                    border-right: none;
-                    border-bottom: 14px solid transparent;
                     border-left: 20px solid #387dee;
-                    content: '';
+                    border-top: 14px solid transparent;
+                    border-bottom: 14px solid transparent;
+                    border-right: none;
                 }
-                &::before {
+                &:before {
                     position: absolute;
                     top: 0;
                     left: 0;
+                    content: '';
                     width: 0;
                     height: 0;
+                    border-left: 20px solid #fff;
                     border-top: 14px solid transparent;
-                    border-right: none;
                     border-bottom: 14px solid transparent;
-                    border-left: 20px solid #ffffff;
-                    content: '';
+                    border-right: none;
                 }
             }
-            .step1Ready {
-                color: rgb(0 0 0 / 26%);
+            .step1Ready{
                 background-color: #f3f3f3;
-                &::after {
+                color: rgba(0, 0, 0, 0.26);
+                &:after {
                     position: absolute;
                     top: 0;
                     right: -20px;
+                    content: '';
                     width: 0;
                     height: 0;
-                    border-top: 14px solid transparent;
-                    border-right: none;
-                    border-bottom: 14px solid transparent;
                     border-left: 20px solid #f3f3f3;
-                    content: '';
+                    border-top: 14px solid transparent;
+                    border-bottom: 14px solid transparent;
+                    border-right: none;
                 }
             }
             .step2Ready,.step3Ready {
-                color: rgb(0 0 0 / 26%);
                 background-color: #f3f3f3;
-                &::after {
+                color: rgba(0, 0, 0, 0.26);
+                &:after {
                     position: absolute;
                     top: 0;
                     right: -20px;
+                    content: '';
                     width: 0;
                     height: 0;
-                    border-top: 14px solid transparent;
-                    border-right: none;
-                    border-bottom: 14px solid transparent;
                     border-left: 20px solid #f3f3f3;
-                    content: '';
+                    border-top: 14px solid transparent;
+                    border-bottom: 14px solid transparent;
+                    border-right: none;
                 }
-                &::before {
+                &:before {
                     position: absolute;
                     top: 0;
                     left: 0;
+                    content: '';
                     width: 0;
                     height: 0;
+                    border-left: 20px solid #fff;
                     border-top: 14px solid transparent;
-                    border-right: none;
                     border-bottom: 14px solid transparent;
-                    border-left: 20px solid #ffffff;
-                    content: '';
+                    border-right: none;
                 }
             }
         }
     }
+
     .title {
         .t1 {
             line-height: 32px;
@@ -989,70 +899,72 @@ export default {
         }
     }
     .form-wrapper {
-        overflow: auto;
         padding-right: 10px;
         height: calc(100vh - 154px);
+        overflow: auto;
     }
     .form-wrapper ::v-deep .el-form {
         // padding: 10px;
     }
     .arrow {
-        display: inline-block;
-        margin-right: 84px;
-        margin-left: 84px;
         width: 52px;
         height: 31px;
+        display: inline-block;
+        margin-left: 84px;
+        margin-right: 84px;
         background-image: url(../../../assets/img/work_order/arrow.png);
     }
+
     .dis {
         cursor: no-drop;
     }
     .del-btn {
-        display: inline-block;
-        margin-top: 10px;
-        margin-left: 0;
-        width: 60px;
         font-size: 12px;
-        border-radius: 3px;
+        width: 60px;
         color: #387dee;
+        margin-top: 10px;
+        margin-left: 0px;
+        border-radius: 3px;
         cursor: pointer;
+        display: inline-block;
         i {
             margin-right: 4px;
         }
     }
     .operate-color {
-        display: inline-block;
-        margin-top: 10px;
-        margin-bottom: 40px;
         font-size: 12px;
+        display: inline-block;
         border-radius: 3px;
         color: #387dee;
+        margin-top: 10px;
+        margin-bottom: 40px;
         cursor: pointer;
+
         i {
             margin-right: 4px;
         }
     }
     .single-condition {
-        margin-top: 0;
+        margin-top: 0px;
         flex-wrap: wrap;
     }
     .part-condition {
         margin-top: 10px;
     }
     .left-condition {
-        margin-top: 10px;
+        font-size: 12px;
         margin-right: 10px;
+        margin-top: 10px;
         width: 30px;
         height: 100%;
-        font-size: 12px;
         color: #387dee;
     }
     .single-condition  ::v-deep  .el-divider {
-        background-color: rgb(28 215 250 / 20%);
+        background-color: rgba(28,215,250,.2);
     }
     .single-condition  ::v-deep .el-divider__text {
+        background-color: #fff;
         color: #387dee;
-        background-color: #ffffff;
         // border: 1px solid #387dee;
     }
     .single-condition  ::v-deep .el-divider--horizontal {
@@ -1062,72 +974,61 @@ export default {
         height: 300px !important;
     }
     .event  ::v-deep  .warn-wrapper {
-        overflow: hidden;
         margin-top: 10px;
-        padding: 0 10px;
         width: 620px;
+        padding: 0 10px;
+        background-color: rgba(56, 125, 238, 0.05);
         border-radius: 6px;
-        background-color: rgb(56 125 238 / 5%);
+        overflow: hidden;
         & p {
-            margin: 5px 0;
             font-size: 12px;
+            margin: 5px 0;
+
             &.warn-top {
-                color: rgb(0 0 0 / 40%);
+                color: rgba(0, 0, 0, 0.4);
             }
             &.warn-body {
-                color: rgb(0 0 0 / 90%);
+                color: rgba(0, 0, 0, 0.9);
                 word-break: break-all;
             }
         }
+
     }
-    .common-dialog .red-star {
+    .attendance-dialog .red-star {
         position: relative;
-        // padding-left: 6px;
-        ::v-deep .el-form-item__label {
-            padding-left: 10px;
-        }
     }
-    .common-dialog .red-star::before {
+    .attendance-dialog .red-star::before {
         content: '*';
         position: absolute;
-        left: 2px;
-        color: #f56c6c;
+        left: -7px;
+        top: 12px;
+        color: #F56C6C;
     }
-    .common-dialog .red-warn {
+    .attendance-dialog .red-warn {
+        color: #F56C6C;
+        font-size: 12px;
         position: absolute;
         top: calc(100% - 10px);
         left: 0;
-        font-size: 12px;
-        color: #f56c6c;
     }
-    .common-dialog .insert1 .insert-field {
+    .attendance-dialog .insert1 .insert-field {
         ::v-deep .head-tip {
             line-height: 30px;
             top: 0;
         }
     }
-    .custom-star {
-        .event-wrapper {
-            border: solid 1px #1cd7fa;
-            background: #052942;
-        }
-        .title-created {
-            color: #ffffff;
-        }
-    }
 </style>
 <style>
-/* #ue1 { */
-
-/*    border: 1px solid #01e9ff !important; */
-
-/* } */
+/*#ue1 {*/
+/*    border: 1px solid #01e9ff !important;*/
+/*}*/
 .edui-default .edui-editor {
-    background-color: rgb(0 0 0 / 0%) !important;
+    background-color: rgba(0, 0, 0, 0) !important;
 }
+
 .edui-default .edui-editor-toolbarboxouter {
     /* border-bottom: 1px solid #01e9ff !important; */
-    background-color: rgb(0 0 0 / 0%) !important;
+    background-color: rgba(0, 0, 0, 0) !important;
 }
 #edui_fixedlayer {
     z-index: 999999 !important;

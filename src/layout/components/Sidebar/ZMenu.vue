@@ -23,7 +23,7 @@
     <!-- </fragment> -->
 </template>
 <script>
-import { searchDefault } from '@/server/common.js'
+import { searchDefault } from '@/server/stream_data_center/dash_board.js'
 export default {
     name: 'ZMenu', // 至关重要，就靠这个名字递归了
     props: {
@@ -37,8 +37,7 @@ export default {
     },
     methods: {
         handleRouter(menu) {
-            console.log(menu)
-            if (menu.name === '仪表盘列表') {
+            if (menu.name === '仪表盘') {
                 this.searchDefaultData()
             } else {
                 this.$router.push(menu.url)
@@ -53,7 +52,7 @@ export default {
             searchDefault(data).then((res) => {
                 if (res) {
                     this.$router.push({
-                        path: '/dashboard/dash_board_drag',
+                        path: '/stream_data_center/stream_data_manage_dashboard',
                         query: {
                             id: res.id,
                             name: res.name,
@@ -61,7 +60,7 @@ export default {
                         }
                     })
                 } else {
-                    this.$router.push('/dashboard/dash_board_list')
+                    this.$router.push('/stream_data_center/dash_board')
                 }
             })
         }

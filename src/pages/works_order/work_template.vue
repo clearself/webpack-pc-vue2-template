@@ -1,7 +1,7 @@
 <template>
     <div class="event">
         <div class="w100" v-show="!firstShow">
-            <div class="tab-button ub" style="padding: 0 10px;border-bottom: none;">
+            <div class="tab-button ub" style="background:#fff;padding:0 10px;border: 1px solid #DADEE8;border-bottom:none">
                 <div class="work-btn" @click="tabClick('1')" :class="{'tab-active': currentTab === '1'}">工单模板</div>
                 <div class="draft-btn" @click="tabClick('2')" :class="{'tab-active': currentTab === '2'}">草 稿</div>
             </div>
@@ -23,7 +23,7 @@
                     <el-col :md="12" :lg="8" :xl="6">
                         <el-form :model="get_params">
                             <el-form-item label="发起类型：" label-width="70px">
-                                <el-select filterable clearable v-model="get_params.sendId" size="small" style="width: 100%;" placeholder="请选择">
+                                <el-select filterable clearable v-model="get_params.sendId" size="small" style="width: 100%" placeholder="请选择">
                                     <el-option v-for="(item, index) in sendObjectList" :key="index" :label="item.name" :value="item.id"></el-option>
                                 </el-select>
                             </el-form-item>
@@ -40,20 +40,6 @@
                                     size="small">
                                     <el-option label="未启用" value="2"></el-option>
                                     <el-option label="已启用" value="1"></el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-form>
-                    </el-col>
-                    <el-col :md="12" :lg="8" :xl="6" v-if="currentTab === '1'">
-                        <el-form :model="get_params">
-                            <el-form-item label="模板类型：" label-width="70px">
-                                <el-select
-                                    placeholder="请选择"
-                                    clearable
-                                    style="width: 100%;"
-                                    v-model="get_params.mouldType"
-                                    size="small">
-                                    <el-option v-for="(item, index) in mouldTypeList" :key="index" :label="item.name" :value="item.id"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-form>
@@ -78,14 +64,14 @@
                     </el-col>
                 </SearchTop>
             </div>
-            <div class="list-container table-area">
+            <div class="attendance-list table-area">
                 <div class="ub ub-pj w100" style="margin-bottom: 10px;">
                     <div class="list-tips">列表内容</div>
                     <div>
-                        <!-- <div class="help" @click="$pushRouter('/help_manual/help_work_order_manage')">
+                        <div class="help" @click="$pushRouter('/help_manual/help_work_order_manage')">
                             <i class="el-icon-info"></i>
                             <span>帮助手册</span>
-                        </div> -->
+                        </div>
                         <el-button v-per="['work_mould_add']" size="small" icon="el-icon-plus" type="primary" @click="handleAddTemplate">添加模板</el-button>
                     </div>
                 </div>
@@ -108,8 +94,6 @@
                     </el-table-column>
                     <el-table-column prop="sendCN" label="发起类型" width="200">
                     </el-table-column>
-                    <el-table-column prop="mouldName" label="模板类型" width="200">
-                    </el-table-column>
                     <el-table-column prop="userIds" label="适用范围" show-overflow-tooltip>
                         <template slot-scope="{row}">
                             <div>
@@ -121,13 +105,13 @@
                     </el-table-column>
                     <el-table-column prop="createUserCN" label="创建人"  width="100">
                     </el-table-column>
-                    <!-- <el-table-column prop="createTime" label="创建时间" width="160">
-                    </el-table-column> -->
+                    <el-table-column prop="createTime" label="创建时间" width="160">
+                    </el-table-column>
                     <el-table-column prop="status" label="是否启用" width="100" align="center">
                         <template slot-scope="{row}">
                             <div class="switch-wrapper" :class="{'yes':row.status == 1,'no':row.status == 2}"  @click="deploymentEnvironment(row)">
                                 <div class="ub ub-ac ub-pj">
-                                    <div style="margin-left: -1px;"><i class="el-icon-check"></i></div>
+                                    <div style="margin-left: -1px"><i class="el-icon-check"></i></div>
                                     <!-- <div>否</div> -->
                                 </div>
                                 <div class="circle"></div>
@@ -184,8 +168,8 @@
                     </el-table-column>
                     <el-table-column prop="createUserCN" label="创建人" width="80">
                     </el-table-column>
-                    <!-- <el-table-column prop="createTime" label="创建时间" width="160">
-                    </el-table-column> -->
+                    <el-table-column prop="createTime" label="创建时间" width="160">
+                    </el-table-column>
                     <el-table-column label="操作" align="center" width="160">
                         <template slot-scope="scope">
                             <el-button v-per="['work_mould_edit']" type="text" @click="handleEdit(scope.row)">编辑草稿</el-button>
@@ -203,7 +187,7 @@
         </DeleteDialog>
         <el-drawer :visible.sync="seeDialog" direction="rtl" size="850px">
             <div class="drawer-content">
-                <div style="position: absolute;top: 0;left: 0;overflow-y: auto;padding: 20px;width: 100%;height: 100%;box-sizing: border-box;">
+                <div style="position: absolute;left:0;top:0;width:100%;height:100%;overflow-y: auto;padding:20px;box-sizing: border-box;">
                     <div class="ub ub-pj w100">
                         <div class="list-tips">
                             {{'模板名称'}}
@@ -211,7 +195,7 @@
                         <div>
                             <i
                                 class="el-icon-close"
-                                style="font-size: 20px;color: #00b3ca;cursor: pointer;"
+                                style="color:#00b3ca;font-size:20px;cursor: pointer;"
                                 @click="seeDialog=false"></i>
                         </div>
                     </div>
@@ -219,40 +203,40 @@
                         <el-tab-pane label="详情信息" name="first">
                             <p class="box-title">基本信息</p>
                             <div class="baseinfo-box">
-                                <el-row style='margin: 20px 0;' type="flex" justify="start">
-                                    <div class="ub" style="width: 33%;">
+                                <el-row style='margin:20px 0;' type="flex" justify="start">
+                                    <div class="ub" style="width:33%;">
                                         <div class="label">模板名称：</div>
                                         <div class="ub ub-f1 line1 label-val">{{seeForm.name | NullStr}}</div>
                                     </div>
-                                    <div class="ub" style="width: 33%;">
+                                    <div class="ub" style="width:33%;">
                                         <div class="label">发起类型：</div>
                                         <div class="ub ub-f1 line1 label-val">{{seeForm.sendCN | NullStr}}</div>
                                     </div>
-                                    <div class="ub" style="width: 33%;">
+                                    <div class="ub" style="width:33%;">
                                         <div class="label">模板状态：</div>
                                         <div class="ub ub-f1 line1 label-val">
-                                            <span v-if="seeForm.status == 1" style="color: #00ff00;">已启用</span>
-                                            <span v-if="seeForm.status == 2" style="color: rgb(255 255 255 / 50%);">未启用</span>
+                                            <span v-if="seeForm.status == 1" style="color: #00ff00">已启用</span>
+                                            <span v-if="seeForm.status == 2" style="color: rgba(255,255,255,0.5)">未启用</span>
                                         </div>
                                     </div>
                                 </el-row>
-                                <el-row style='margin: 20px 0;' type="flex" justify="start">
-                                    <div class="ub" style="width: 33%;">
+                                <el-row style='margin:20px 0;' type="flex" justify="start">
+                                    <div class="ub" style="width:33%;">
                                         <div class="label">使用次数：</div>
                                         <div class="ub ub-f1 line1 label-val">
-                                            <span style="color: #00ffe4;">{{seeForm.num | NullStr}}</span>
+                                            <span style="color: #00ffe4">{{seeForm.num | NullStr}}</span>
                                         </div>
                                     </div>
-                                    <div class="ub" style="width: 33%;">
+                                    <div class="ub" style="width:33%;">
                                         <div class="label">创建人：</div>
                                         <div class="ub ub-f1 line1 label-val">{{seeForm.createUserCN | NullStr}}</div>
                                     </div>
-                                    <div class="ub" style="width: 33%;">
+                                    <div class="ub" style="width:33%;">
                                         <div class="label">创建时间：</div>
                                         <div class="ub ub-f1 line1 label-val">{{seeForm.createTime | NullStr}}</div>
                                     </div>
                                 </el-row>
-                                <el-row style='margin: 20px 0;' type="flex" justify="start">
+                                <el-row style='margin:20px 0;' type="flex" justify="start">
                                     <div class="ub">
                                         <div class="label">适用范围：</div>
                                         <div class="ub ub-f1 line1 label-val">
@@ -262,7 +246,7 @@
                                         </div>
                                     </div>
                                 </el-row>
-                                <el-row style='margin: 20px 0;' type="flex" justify="start">
+                                <el-row style='margin:20px 0;' type="flex" justify="start">
                                     <div class="ub">
                                         <div class="label">工单描述：</div>
                                         <div class="ub ub-f1 line1 label-val" v-html="seeForm.des"></div>
@@ -272,7 +256,7 @@
                             <p class="box-title">触发条件</p>
                             <div class="condition-box">
                                 <div class="single-condition" v-for="(item, index) in seeForm.startConditionObj" :key="index">
-                                    <div v-if="index != 0" style="margin-bottom: 10px;height: 21px;font-size: 12px;color: #fff584;line-height: 21px;">或（or）</div>
+                                    <div v-if="index != 0" style="color: #fff584;font-size: 12px;height:21px;line-height: 21px;margin-bottom: 10px">或（or）</div>
                                     <div class="ub ub-ver">
                                         <div class="part-condition ub ub-ac" v-for="(_item, _index) in item.and" :key="_index">
                                             <span class="condition_black">且（and）</span>
@@ -287,7 +271,7 @@
                             <div class="finish-box">
                                 <div class="warn-wrapper">
                                     <div class="ub ub-pj ub-ac">
-                                        <p style="font-size: 12px;color: #00ffff;">提醒</p>
+                                        <p style="font-size: 12px;color: #00ffff">提醒</p>
                                         <p>
                                             <i class="iconfont icon-xiugai" style="font-size: 12px;color: #00ffff;"></i>
                                             <i class="el-icon-close" style="font-size: 12px;color: #00ffff;"></i>
@@ -307,7 +291,7 @@
                         <el-tab-pane label="流程详情" name="second">
                         </el-tab-pane>
                     </el-tabs>
-                    <div v-if="seeActive == 'second'" class="w100 pic-wrapper" style="color: #ffffff;">
+                    <div v-if="seeActive == 'second'" class="w100 pic-wrapper" style="color: #fff;">
                         <bpmn-modeler
                             ref="refNode"
                             :xml="seeForm.xml"
@@ -340,7 +324,6 @@ import {
 } from '../../server/works_order/api.js'
 import bpmnModeler from '../../package/detailXml.vue'
 import axios from 'axios'
-import { observerDomResize } from '@jiaminghi/data-view/lib/util'
 export default {
     name: 'WorkObject',
     components: {
@@ -363,20 +346,7 @@ export default {
                 { name: 'OA', id: 'oa' },
                 { name: '财务', id: 'finance' }
             ],
-            mouldTypeList: [
-                {
-                    id: 0,
-                    name: '分析'
-                },
-                {
-                    id: 1,
-                    name: '应急'
-                },
-                {
-                    id: 2,
-                    name: '通报'
-                }
-            ],
+
             that: this,
             currentTab: '1',
             seeActive: 'first',
@@ -456,8 +426,7 @@ export default {
                 name: '',
                 sendId: '',
                 status: '',
-                type: 0,
-                mouldType: ''
+                type: 0
             },
             seeForm: {},
             allUserList: [], // 所有人
@@ -595,7 +564,6 @@ export default {
                 name: '',
                 sendId: '',
                 status: '',
-                mouldType: '',
                 type: this.currentTab == '1' ? 0 : 1
             }
             this.get_data()
@@ -656,7 +624,6 @@ export default {
                     sendId: this.get_params.sendId,
                     status: this.get_params.status,
                     type: this.get_params.type,
-                    mouldType: this.get_params.mouldType,
                     startTime: this.sayTimes && this.sayTimes.length > 0 ? this.sayTimes[0] : '',
                     endTime: this.sayTimes && this.sayTimes.length > 0 ? this.sayTimes[1] : ''
                 }
@@ -690,8 +657,6 @@ export default {
                         obj.deploymentId = item.deploymentId
                         obj.userIds = item.userIds
                         obj.isUse = item.isUse
-                        obj.mouldType = item.mouldType
-                        obj.mouldName = item.mouldName
                         this.tableData.push(obj)
                     })
                 }
@@ -831,52 +796,42 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.custom-star {
-    .tab-button {
-        border: solid 1px #50b0ff;
-        background-color: rgba($color: #136dac, $alpha: 20%);
-        box-shadow: inset 0 0 18px 0
-            #00b4ff;
-        & div {
-            color: #ffffff;
-        }
-    }
-}
 .tab-button {
     height: 30px;
     border-bottom: 1px solid #e7e7e7;
-    background-color: #ffffff;
+    background-color: #fff;
     & div {
-        margin-right: 10px;
         width: 80px;
         height: 30px;
-        font-size: 14px;
-        border-radius: 2px;
-        text-align: center;
-        color: rgb(0 0 0 / 60%);
         line-height: 30px;
+        text-align: center;
+        margin-right: 10px;
         cursor: pointer;
+        border-radius: 2px;
+        color: rgba(0, 0, 0, 0.6);
         box-sizing: border-box;
+        font-size: 14px;
+
         &.tab-active {
-            border-bottom: 1px solid #387dee;
             color: #387dee;
+            border-bottom: 1px solid #387dee;
         }
     }
 }
 .help {
     display: inline-block;
-    margin-right: 24px;
+    color: rgba(0, 0, 0, 0.26);
     font-size: 12px;
-    color: rgb(0 0 0 / 26%);
+    margin-right: 24px;
     cursor: pointer;
     i {
-        margin-right: 6px;
+        margin-right: 6px ;
     }
 }
 .search-area {
     .wrapper {
-        border: 0;
         border-radius: 0;
+        border: 0;
         box-shadow: none;
     }
 }
@@ -895,34 +850,39 @@ export default {
     position: relative;
     padding: 0 20px;
     color: #1cd7fa;
+
     .el-button {
         position: absolute;
-        top: 0;
         right: 20px;
+        top: 0;
         padding: 0;
         color: #1cd7fa;
     }
 }
 .domain-list {
+    background: rgba(0, 0, 0, .3);
     margin: 3px 0 20px;
     padding: 20px 0 1px;
-    background: rgb(0 0 0 / 30%);
+
     .list-tit {
         width: 100px;
         text-align: right;
     }
+
     .ub {
         margin-bottom: 20px;
     }
+
     .list-btn {
         padding-left: 20px;
+
         .el-button {
-            color: #f56c6c;
+            color: #F56C6C;
         }
     }
 }
 .event  ::v-deep  .el-range-input {
-    background-color: rgb(0 0 0 / 0%);
+    background-color: rgba(0, 0, 0, 0);
 }
 .event  ::v-deep  .el-range-separator {
     // color: #fff;
@@ -934,112 +894,117 @@ export default {
     padding: 0;
 }
 .event  ::v-deep  .el-upload-list__item-name {
-    color: #01e9ff;
+    color: #01E9FF;
+
     i {
-        color: #01e9ff;
+        color: #01E9FF;
     }
 }
-.switch-wrapper {
+.switch-wrapper{
+    width:56px;
+    height:20px;
     position: relative;
-    margin-left: 15px;
-    width: 56px;
-    height: 20px;
     cursor: pointer;
+    margin-left: 15px;
 }
-.switch-wrapper>div:nth-child(1) {
-    width: 48px;
-    height: 20px;
+.switch-wrapper>div:nth-child(1){
+    width:48px;
+    height:20px;
+    background-color: #0052d9;
+    color: #fff;
     // box-shadow: inset 0px 0px 7px 0px #000000;
     border-radius: 14px;
-    color: #ffffff;
-    background-color: #0052d9;
-    div {
-        padding: 0 8px;
+    div{
         font-size: 12px;
         line-height: 20px;
+        padding:0 8px;
     }
-    >div:nth-child(1) {
-        color: #ffffff;
+    >div:nth-child(1){
+        color: #fff;
         opacity: 1;
     }
-    >div:nth-child(2) {
-        color: #ffffff;
+    >div:nth-child(2){
+        color: #fff;
         opacity: 1;
     }
 }
-.switch-wrapper>div:nth-child(2) {
-    position: absolute;
-    top: 50%;
-    left: 2px;
-    margin-top: -9px;
+.switch-wrapper>div:nth-child(2){
     width: 18px;
     height: 18px;
-    border-radius: 100%;
+    position: absolute;
+    left:2px;
+    top:50%;
+    margin-top: -9px;
+    border-radius:100%;
 }
-.switch-wrapper.yes>div:nth-child(2) {
+.switch-wrapper.yes>div:nth-child(2){
     animation: moveone 0s linear forwards;
 }
-.switch-wrapper.no>div:nth-child(2) {
+.switch-wrapper.no>div:nth-child(2){
     animation: _moveone 0s linear forwards;
 }
-.switch-wrapper.no>div:nth-child(1) {
+.switch-wrapper.no>div:nth-child(1){
     background-color: #c5c5c5;
 }
 @keyframes moveone {
     0% {
+        background-color: #fff;
+        box-shadow: 0px 0px 6px 0px #fff;
         left: 2px;
-        background-color: #ffffff;
-        box-shadow: 0 0 6px 0 #ffffff;
     }
+
     100% {
+        background-color: #fff;
+        box-shadow: 0px 0px 6px 0px #fff;
         left: 28px;
-        background-color: #ffffff;
-        box-shadow: 0 0 6px 0 #ffffff;
     }
 }
-@keyframes moveone {
+@-webkit-keyframes moveone {
     0% {
+        background-color: #fff;
+        box-shadow: 0px 0px 6px 0px #fff;
         left: 2px;
-        background-color: #ffffff;
-        box-shadow: 0 0 6px 0 #ffffff;
     }
+
     100% {
+        background-color: #fff;
+        box-shadow: 0px 0px 6px 0px #fff;
         left: 28px;
-        background-color: #ffffff;
-        box-shadow: 0 0 6px 0 #ffffff;
-    }
-}
-@keyframes _moveone {
-    0% {
-        left: 28px;
-        background-color: #ffffff;
-        box-shadow: 0 0 6px 0 #ffffff;
-    }
-    100% {
-        left: 2px;
-        background-color: #ffffff;
-        box-shadow: 0 0 6px 0 #ffffff;
     }
 }
 @keyframes _moveone {
     0% {
+        background-color: #fff;
+        box-shadow: 0px 0px 6px 0px #fff;
         left: 28px;
-        background-color: #ffffff;
-        box-shadow: 0 0 6px 0 #ffffff;
     }
+
     100% {
+        background-color: #fff;
+        box-shadow: 0px 0px 6px 0px #fff;
         left: 2px;
-        background-color: #ffffff;
-        box-shadow: 0 0 6px 0 #ffffff;
+    }
+}
+@-webkit-keyframes _moveone {
+    0% {
+        background-color: #fff;
+        box-shadow: 0px 0px 6px 0px #fff;
+        left: 28px;
+    }
+
+    100% {
+        background-color: #fff;
+        box-shadow: 0px 0px 6px 0px #fff;
+        left: 2px;
     }
 }
 .attendance-list.table-area {
-    margin-top: 10px;
-    padding: 10px;
-    border: solid 1px #dadee8;
+    background-color: #fff;
+    padding: 10px 10px;
+    box-shadow: 0px 0px 8px 0px rgba(140, 152, 164, 0.2);
     border-radius: 4px;
-    background-color: #ffffff;
-    box-shadow: 0 0 8px 0 rgb(140 152 164 / 20%);
+    border: solid 1px #dadee8;
+    margin-top: 10px;
     .pagination {
         margin-top: 20px;
         text-align: right;
@@ -1050,20 +1015,20 @@ export default {
 }
 .event  ::v-deep  .drawer-content {
     .box-title {
-        margin: 30px 0 20px;
-        font-size: 14px;
         color: #00e9ff;
+        font-size: 14px;
+        margin: 30px 0 20px;
     }
     .label {
-        margin-right: 15px;
         width: 60px;
         font-size: 12px;
+        color: #999;
         text-align: right;
-        color: #999999;
+        margin-right: 15px;
     }
     .label-val {
         font-size: 12px;
-        color: #ffffff;
+        color: #fff;
         img {
             max-width: 300px;
         }
@@ -1074,85 +1039,91 @@ export default {
         margin-bottom: 10px;
     }
     .condition_black {
-        margin-right: 6px;
         font-size: 12px;
-        color: #999999;
+        color: #999;
+        margin-right: 6px;
     }
     .condition_white {
-        margin-right: 6px;
         font-size: 12px;
-        color: #ffffff;
+        color: #fff;
+        margin-right: 6px;
     }
 }
 .event  ::v-deep  .warn-wrapper {
-    padding-left: 10px;
     width: 640px;
-    border-radius: 2px;
-    background: rgb(0 0 0 / 20%);
+    padding-left: 10px;
     box-sizing: border-box;
+    background: rgba(0,0,0,.2);
+    border-radius: 2px;
+
     & p {
-        margin: 5px 0;
         font-size: 12px;
+        margin: 5px 0;
+
         &.warn-top {
-            color: #ffffff;
-            opacity: 0.6;
+            color: #fff;
+            opacity: .6;
         }
         &.warn-body {
-            color: #ffffff;
+            color: #fff;
             word-break: break-all;
         }
     }
 }
 .event  ::v-deep  .pic-wrapper {
-    overflow: auto;
-    width: 99%;
     height: calc(100vh - 190px);
+    width: 99%;
+    overflow: auto;
     border: 1px solid #1cd7fa;
 }
 @keyframes moveone_white {
     0% {
+        background-color: #fff;
         left: 1px;
-        background-color: #ffffff;
     }
+
     100% {
+        background-color: #fff;
         left: 37px;
-        background-color: #ffffff;
     }
 }
-@keyframes moveone_white {
+@-webkit-keyframes moveone_white {
     0% {
+        background-color: #fff;
         left: 1px;
-        background-color: #ffffff;
     }
+
     100% {
+        background-color: #fff;
         left: 37px;
-        background-color: #ffffff;
     }
 }
 @keyframes _moveone_white {
     0% {
+        background-color: #fff;
         left: 37px;
-        background-color: #ffffff;
     }
+
     100% {
-        left: 1px;
-        background-color: #ffffff;
+        background-color: #fff;
+        left: 1px;;
     }
 }
-@keyframes _moveone_white {
+@-webkit-keyframes _moveone_white {
     0% {
+        background-color: #fff;
         left: 37px;
-        background-color: #ffffff;
     }
+
     100% {
+        background-color: #fff;
         left: 1px;
-        background-color: #ffffff;
     }
 }
-.white-theme .switch-wrapper.yes>div:nth-child(2) {
+.white-theme .switch-wrapper.yes>div:nth-child(2){
     animation: moveone_white 0s linear forwards;
 }
-.white-theme .switch-wrapper.no>div:nth-child(2) {
+.white-theme .switch-wrapper.no>div:nth-child(2){
     animation: _moveone_white 0s linear forwards;
 }
 </style>

@@ -11,11 +11,11 @@ import JsonViewer from 'vue-json-viewer'
 import './assets/css/common.scss'
 import lodash from 'lodash'
 import dataV from '@jiaminghi/data-view'
-import ElDialogHelper from './components/Dialog'
-// import './oldIcon/iconfontOld.css'
+
+import './oldIcon/iconfontOld.css'
 import './icon/iconfont.css'
 
-import store from '@/store/index.js'
+import store from './store/index.js'
 import Debounce from './assets/js/utils.js'
 
 // 时间处理
@@ -44,10 +44,10 @@ import VueClipBoard from 'vue-clipboard2'
 
 // 权限指令加载
 import per from '@/directive/per/index.js' // 引入样式库
+// import ElFormPlus from '@springleo/el-form-plus'
 
 // 工作流样式
 import './package/css/app.css'
-Vue.use(ElDialogHelper)
 Vue.use(dataV)
 Vue.prototype.$eventBus = new Vue()
 Vue.prototype.$moment = moment
@@ -62,6 +62,8 @@ Vue.component('Debounce', Debounce)
 Vue.use(FLYmodules)
 Vue.use(PublicFun)
 Vue.use(htmlToPdf)
+Vue.use(Debounce)
+// Vue.use(ElFormPlus)
 // 过滤器统一处理加载
 Object.keys(filters).forEach(key => {
     Vue.filter(key, filters[key])
@@ -76,23 +78,6 @@ Object.keys(directives).forEach(key => {
     })
 })
 
-let jump_flag = null
-router.beforeEach((to, from, next) => {
-    jump_flag && clearTimeout(jump_flag)
-    // if (to.path.indexOf('http') > -1) {
-    //     window.open(to.path)
-    //     return
-    // }
-    if (to.path.indexOf('large_screen') > -1 && from.path.indexOf('large_screen') == -1 && from.path.trim() !== '/') {
-        console.log(to.path)
-        jump_flag = setTimeout(() => {
-            jump_flag = null
-            window.open(window.location.origin + '/#' + to.path)
-        }, 500)
-        return
-    }
-    next()
-})
 router.afterEach(transition => {
     // console.log('查看tab名', sessionStorage.getItem('currentTabName'))
     // if (window.location.hash === '#/login') {
@@ -104,7 +89,7 @@ router.afterEach(transition => {
     //     sessionStorage.setItem('currentTabName', '积极安全防御分析工具')
     // }
 })
-    Vue.config.productionTip = false
+Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({

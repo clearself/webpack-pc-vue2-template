@@ -218,7 +218,7 @@ export default {
         border-radius: 2px;
         border: solid 1px #dcdcdc;
         font-size: 12px;
-        margin-top: 10px;
+        margin-top: 2px;
         box-shadow: 0px 0px 20px 0px rgba(0,0,0,.1);
         border-radius: 4px;
         .title {

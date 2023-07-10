@@ -8,8 +8,9 @@ import personnel from './personnel/index.js'
 import qmBtn from './qmBtn/index.js'
 import optBtn from './optBtn/index.js'
 import switchBtn from './switchBtn/index.js'
-import OrgSearch from './OrgSearch/index.js'
-import TimeSelect from './TimeSelect/index.js'
+import DepSearch from './DepSearch'
+import CustomSearch from './CustomSearch'
+import SearchView from './SearchView'
 
 import { addBtn, otherBtn, deleteBtn, loadBtn } from './colorBtn/index.js'
 import codeEdit from './codeEdit/index.js'
@@ -29,8 +30,9 @@ const components = [
     DivEditable,
     optBtn,
     switchBtn,
-    OrgSearch,
-    TimeSelect
+    DepSearch,
+    CustomSearch,
+    SearchView
     // KSwitch
 ]
 const install = function(Vue) {
@@ -57,7 +59,8 @@ export default {
     DivEditable,
     optBtn,
     switchBtn,
-    OrgSearch,
-    TimeSelect
+    DepSearch,
+    CustomSearch,
+    SearchView
     // KSwitch
 }

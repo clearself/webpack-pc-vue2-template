@@ -1,4 +1,11 @@
 /*登录页*/
+#app .login .main {
+    position: absolute;
+    /* top: 30px;
+    bottom: 30px;
+    left: 120px;
+    right: 120px; */
+}
 
 #app .login .main .title-info {
     /* top: 20px; */
@@ -46,13 +53,3 @@
     max-height: 480px;
     bottom: 20px;
 }
-
-/* #app .login .left-bg-box {
-    width: 50%;
-    min-width: 50%;
-}
-
-#app .login .main {
-    width: 30%;
-    min-width: 30%;
-} */

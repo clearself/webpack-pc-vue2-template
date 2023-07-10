@@ -50,7 +50,7 @@
                     <div class="ub" style="width: 100%">
                         <div
                             class="topo-name"
-                            v-if="mode === 'preview' || mode === 'add' || mode == 'safe'"
+                            v-if="mode === 'preview' || mode === 'add'"
                         >{{ formData.name }}</div>
                         <el-form-item
                             label="拓扑图名称："
@@ -199,7 +199,7 @@ export default {
                     this.initAssetGraphData(topoData.assets)
                 }
             }
-            if (this.mode === 'edit' || this.mode === 'preview' || this.mode === 'safe') {
+            if (this.mode === 'edit' || this.mode === 'preview') {
                 await this.getTopoById()
                 if (this.mode === 'edit') {
                     this.handleEditClick()
@@ -227,15 +227,9 @@ export default {
             this.backDialog = true
         },
         cancel() {
-            if (this.mode == 'safe') {
-                this.$router.push({
-                    path: '/assets/assets_topology'
-                })
-            } else {
-                this.$router.push({
-                    path: '/assets/assets_img'
-                })
-            }
+            this.$router.push({
+                path: '/assets/assets_img'
+            })
         },
         getTitle() {
             if (this.mode === 'add') {
@@ -283,7 +277,7 @@ export default {
                     labelCfg: {
                         position: 'bottom'
                     },
-                    assetsType: item.deviceTypeId,
+                    assetsType: item.device_type_id,
                     graphType: assetObj[item.device_type_id]
                         ? assetObj[item.device_type_id]
                         : 'others',

@@ -191,11 +191,11 @@
                     <el-table-column prop="reportLevel" label="事件等级"  width="90" align="center">
                         <template slot-scope="scope">
                             <div>
-                                <span v-if="scope.row.reportLevel == 0" style="color:#03864f">低</span>
-                                <span v-if="scope.row.reportLevel == 1"  style="color:#0052d9">中低</span>
-                                <span v-if="scope.row.reportLevel == 2" style="color:#ddd000">中</span>
-                                <span v-if="scope.row.reportLevel == 3" style="color:#e47700">中高</span>
-                                <span v-if="scope.row.reportLevel == 4" style="color:#e47700">高</span>
+                                <span v-if="scope.row.reportLevel == 0" style="color:#6cfeff">低</span>
+                                <span v-if="scope.row.reportLevel == 1" style="color:#00a2ff">中低</span>
+                                <span v-if="scope.row.reportLevel == 2" style="color:#fff76c">中</span>
+                                <span v-if="scope.row.reportLevel == 3" style="color:#f86900">中高</span>
+                                <span v-if="scope.row.reportLevel == 4" style="color:#ff0000">高</span>
                             </div>
                         </template>
                     </el-table-column>
@@ -247,11 +247,6 @@
                         <el-option label="高" value="1"></el-option>
                         <el-option label="中" value="2"></el-option>
                         <el-option label="低" value="3"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="模板类型:" prop="mouldType" :label-width="formLabelWidth">
-                    <el-select style="width: 100%;" size="small" v-model="taskForm.mouldType" clearable placeholder="请选择" @change="changeMouldType">
-                        <el-option v-for="(item, index) in mouldTypeList" :key="index" :label="item.name" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="工单模板：" prop="workMouldId" :label-width="formLabelWidth">
@@ -349,20 +344,6 @@ export default {
             tableHeight: document.body.clientHeight - 370,
             isEmpty: false,
             isRefresh: false,
-            mouldTypeList: [
-                {
-                    id: 0,
-                    name: '分析'
-                },
-                {
-                    id: 1,
-                    name: '应急'
-                },
-                {
-                    id: 2,
-                    name: '通报'
-                }
-            ],
             // 搜索内容
             get_params: {
                 id: '',
@@ -480,8 +461,7 @@ export default {
                 workOrderName: '',
                 workMouldId: '',
                 level: '',
-                workOrderContent: '',
-                mouldType: ''
+                workOrderContent: ''
             },
             allTemplate: [],
 
@@ -538,11 +518,6 @@ export default {
                     message: '请选择优先级',
                     trigger: 'change'
                 }],
-                mouldType: [{
-                    required: true,
-                    message: '请选择模板类型',
-                    trigger: 'change'
-                }],
                 workMouldId: [{
                     required: true,
                     message: '请选择工单模板',
@@ -590,7 +565,6 @@ export default {
                         workOrderName: '',
                         workMouldId: '',
                         level: '',
-                        mouldType: '',
                         workOrderContent: ''
                     }
                 }
@@ -605,13 +579,6 @@ export default {
         }
     },
     methods: {
-        changeMouldType(val) {
-            if (val !== '') {
-                this.get_alarm_template()
-            } else {
-                this.allTemplate = []
-            }
-        },
         tableRowClassName({ row, rowIndex }) {
             console.log(rowIndex)
             if (rowIndex % 2) {
@@ -797,22 +764,20 @@ export default {
         },
         // 查看
         handleSee(row) {
-            console.log(row)
             this.$refs.alarmDetailRef.handleSee(row)
         },
         // 发起工单
         async handleEdit_alarm(row) {
             console.log('发起工单', row)
             this.recordId = row.id
-            // await this.get_alarm_template(row)
+            await this.get_alarm_template(row)
             this.taskDialog = true
             this.orderType = 1
         },
-        get_alarm_template() {
+        get_alarm_template(row) {
             this.alarmTemplate = []
             let obj = {
-                id: this.recordId,
-                mouldType: this.taskForm.mouldType
+                id: row.id
             }
             getAlarmTemplate(obj).then(res => {
                 console.log('事件模板', res)
@@ -831,7 +796,6 @@ export default {
                             sourceId: this.recordId,
                             workOrderName: this.taskForm.workOrderName,
                             level: this.taskForm.level,
-                            mouldType: this.taskForm.mouldType,
                             workMouldId: this.taskForm.workMouldId,
                             workOrderContent: this.taskForm.workOrderContent,
                             type: this.orderType

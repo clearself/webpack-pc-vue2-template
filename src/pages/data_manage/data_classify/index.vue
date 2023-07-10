@@ -1,20 +1,16 @@
 <template>
-    <div class="event tag-list" style="box-sizing: border-box; overflow-y: hidden !important;">
+    <div class="event tag-list" style="box-sizing: border-box; overflow-y: hidden !important">
         <div class="ub w100">
-            <GroupList
-                @getBusIdData="getBusIdData"
-                @getCurrentNode="getCurrentNode"
-                @getTreeData="getTreeData"
-                @click="handleNode"
-                @editNode="editNode"
-                @getParentIdData="getParentIdData"
-                ref="groupList"
-            />
-            <div class="bg-color ub ub-f1 ub-ver" style=" overflow: auto;margin-left: 10px; height: 100%;">
+            <GroupList @getBusIdData="getBusIdData" @getCurrentNode="getCurrentNode" @getTreeData="getTreeData" @click="handleNode" @editNode="editNode"  @getParentIdData="getParentIdData" ref="groupList" />
+            <div class="bg-color ub ub-f1 ub-ver" style="margin-left: 10px; height: 100%; overflow: auto">
                 <div class="attendance-list event-content">
                     <div class="ub ub-pj w100">
-                        <div class="list-tips">数据分类</div>
-                        <div><!-- <cancel-btn title="编 辑"  @click="handleEdit"></cancel-btn> --></div>
+                        <div class="list-tips">
+                            数据分类
+                        </div>
+                        <div>
+                            <!-- <cancel-btn title="编 辑"  @click="handleEdit"></cancel-btn> -->
+                        </div>
                     </div>
                     <el-descriptions class="main" title="" :column="1" size="mini" border>
                         <!-- <el-descriptions-item v-if="grade === 2||grade === 3">
@@ -26,30 +22,28 @@
                             {{ tableData.manufacturer }}
                         </el-descriptions-item> -->
                         <el-descriptions-item>
-                            <template slot="label">
-                                资产类型
-                            </template>
+                            <template slot="label"> 资产类型 </template>
                             {{ tableData.assetTypes }}
                         </el-descriptions-item>
                         <el-descriptions-item>
-                            <template slot="label">
-                                厂商名称
-                            </template>
+                            <template slot="label"> 厂商名称 </template>
                             {{ tableData.manufacturer }}
                         </el-descriptions-item>
                         <el-descriptions-item>
-                            <template slot="label">
-                                属性字段
-                            </template>
-                            <div v-if="propertyField.length > 0">
+                            <template slot="label"> 属性字段 </template>
+                            <div v-if="propertyField.length>0">
                                 <el-tag type="success" size="mini" v-for="(item, index) in propertyField" :key="index" style="margin: 0 4px;">{{ item.name }}</el-tag>
                             </div>
-                            <div v-else>{{ '暂无数据' }}</div>
+                            <div v-else>
+                                {{ '暂无数据' }}
+                            </div>
+
                         </el-descriptions-item>
                     </el-descriptions>
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -171,13 +165,11 @@ export default {
                     grade: node.grade
                 }
             }
-            await getDetail(data)
-                .then(res => {
-                    this.propertyField = res
-                })
-                .catch(error => {
-                    console.log('error' + error)
-                })
+            await getDetail(data).then(res => {
+                this.propertyField = res
+            }).catch(error => {
+                console.log('error' + error)
+            })
         },
         async editNode(node) {
             await this.getNodeDetail(node)
@@ -215,6 +207,7 @@ export default {
                 }
             }
         }
+
     }
 }
 </script>
@@ -283,55 +276,57 @@ export default {
 .event ::v-deep .el-descriptions-item__label.is-bordered-label {
     width: 100px;
 }
-.data_center_tags-content {
+  .data_center_tags-content {
     position: relative;
-}
-.main {
+  }
+  .main {
     margin: 20px 0;
-}
-.data_center_tags-content::before {
-    position: absolute;
-    left: 40px;
-    font-size: 12px;
-    color: #ffffff;
+  }
+
+  .data_center_tags-content:before {
     content: '标签内容：';
-}
-.tag-item {
+    font-size: 12px;
+    position: absolute;
+    color: #fff;
+    left: 40px;
+  }
+
+  .tag-item {
     display: inline-block;
     width: 68px;
-    height: 20px;
-    font-size: 12px;
-    border: solid 1px #00c6ff;
-    border-radius: 4px;
-    text-align: center;
     color: #00fcff;
+    font-size: 12px;
     line-height: 20px;
-}
+    text-align: center;
+    height: 20px;
+    border-radius: 4px;
+    border: solid 1px #00c6ff;
+  }
 //   .el-tree {
 //     background: rgba(0, 0, 0, 0);
 //   }
-.attendance-list {
+  .attendance-list {
     margin-top: 0;
-    padding-right: 20px;
     padding-bottom: 30px;
-    padding-left: 20px;
     min-height: calc(100vh - 80px);
     flex-shrink: 0;
-}
-.event ::v-deep .custom-tree-node {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .event ::v-deep .custom-tree-node {
     height: 26px;
     line-height: 26px;
-}
-.tree ::v-deep .el-tree--highlight-current .el-tree-node > .el-tree-node__content {
+  }
+  .tree ::v-deep .el-tree--highlight-current .el-tree-node > .el-tree-node__content {
     .custom-tree-node {
-        span:nth-child(1) {
-            color: #bfdce4 !important;
-        }
-        span:nth-child(2) {
-            color: #ffffff !important;
-        }
+      span:nth-child(1) {
+        color: #bfdce4 !important;
+      }
+      span:nth-child(2) {
+        color: #fff !important;
+      }
     }
-}
+  }
 //   .tree ::v-deep .el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content {
 //     background-color: rgba(0, 0, 0, 0) !important;
 //     .custom-tree-node {
@@ -351,168 +346,166 @@ export default {
 //   .hightlight {
 //     color: #00fcff;
 //   }
-.sep-line {
-    display: inline-block;
-    margin: 0 5px;
-    margin-top: 6px;
+
+  .sep-line {
     width: 20px;
-    text-align: center;
-}
-.operate-wrap {
+    margin: 0 5px;
     display: inline-block;
+    text-align: center;
+    margin-top: 6px;
+  }
+
+  .operate-wrap {
+    display: inline-block;
+    color: #389bf7;
     width: 26px;
     text-align: center;
-    color: #389bf7;
+
     i {
-        cursor: pointer;
-        font-size: 16px;
+      cursor: pointer;
+      font-size: 16px;
     }
-}
-.tag-cont-wrap {
+  }
+
+  .tag-cont-wrap {
     //   text-align: right;
     .addbtn {
-        display: inline-block;
-        font-size: 14px;
-        color: #01e9ff;
-        cursor: pointer;
-        span {
-            margin-left: 9px;
-        }
+      cursor: pointer;
+      display: inline-block;
+      color: #01e9ff;
+      font-size: 14px;
+
+      span {
+        margin-left: 9px;
+      }
     }
+
     .tag-cont {
-        padding: 20px;
-        border: solid 1px #1cd7fa;
-        border-radius: 4px 4px 2px;
-        background: rgb(0 0 0 / 20%);
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 4px 4px 2px 4px;
+      border: solid 1px #1cd7fa;
+      padding: 20px;
     }
+
     .cont-inner {
-        overflow-y: auto;
-        padding: 10px;
-        height: 400px;
-        background: rgb(255 255 255 / 10%);
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px 10px 10px 10px;
+      height: 400px;
+      overflow-y: auto;
     }
+
     .cont-inner .cont-item:not(:nth-last-child(2)) {
-        margin-bottom: 10px;
+      margin-bottom: 10px;
     }
-}
-.event .el-divider {
-    background-color: rgb(255 255 255 / 20%);
-}
-.event ::v-deep .el-divider__text {
-    padding: 0 5px;
-    color: #ffffff;
+  }
+  .event .el-divider {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .event ::v-deep .el-divider__text {
     background-color: #1d3141;
-}
-.event > .el-divider--horizontal {
+    padding: 0 5px;
+    color: #fff;
+  }
+
+  .event > .el-divider--horizontal {
     width: 97%;
-}
-.del-btn {
-    margin-left: 0;
+  }
+
+  .del-btn {
+    font-size: 12px;
+    color: #1cd7fa;
+    margin-left: 0px;
+    cursor: pointer;
+
+    i {
+      margin-right: 4px;
+    }
+  }
+
+  .operate-color {
     font-size: 12px;
     color: #1cd7fa;
     cursor: pointer;
-    i {
-        margin-right: 4px;
-    }
-}
-.operate-color {
     position: relative;
     z-index: 10;
     width: 70px;
-    font-size: 12px;
-    color: #1cd7fa;
-    cursor: pointer;
     &.active {
-        top: -14px;
+      top: -14px;
     }
+
     i {
-        margin-right: 4px;
+      margin-right: 4px;
     }
-}
-.grpop.active {
+  }
+  .grpop.active {
     padding-left: 70px;
-}
-.el-table th > .cell {
-    text-align: center;
+  }
+  .el-table th > .cell {
     white-space: pre-line;
-}
-.dialog-conten {
+    text-align: center;
+  }
+
+  .dialog-conten {
     width: 100%;
-}
-.tag-list > .attendance-dialog {
+  }
+
+  .tag-list > .attendance-dialog {
     .el-dialog__header {
-        .el-dialog__title {
-            font-size: 14px;
-        }
+      .el-dialog__title {
+        font-size: 14px;
+      }
     }
+
     .el-form-item__label {
-        font-size: 12px;
+      font-size: 12px;
     }
+
     .el-input__inner,
     .el-textarea__inner {
-        font-size: 12px;
+      font-size: 12px;
     }
-}
-.dialog-item {
+  }
+
+  .dialog-item {
     margin-bottom: 30px;
-}
-.w50 {
+  }
+
+  .w50 {
     width: 50%;
-}
-.dialog-item {
+  }
+
+  .dialog-item {
     .dialog-label {
-        display: inline-block;
-        width: 86px;
-        text-align: right;
-        color: #ffffff;
-        opacity: 0.6;
+      display: inline-block;
+      text-align: right;
+      width: 86px;
+      color: #fff;
+      opacity: 0.6;
     }
-}
-.event ::v-deep .vue-treeselect__control {
+  }
+  .event  ::v-deep .vue-treeselect__control {
     height: 32px !important;
-}
-.custom-star {
-    #app {
-        .bg-color {
-            background: unset;
-        }
-        .main {
-            ::v-deep .el-descriptions__body {
-                background: unset;
-                .el-descriptions-item__label.is-bordered-label {
-                    color: #ffffff;
-                    background: #052942;
-                }
-                .el-descriptions-item__cell {
-                    color: #ffffff;
-                }
-            }
-        }
-    }
-    .list-tips {
-        color: #ffffff!important;
-    }
-}
+  }
 </style>
 <style>
-.custom-tree-node .node-label:hover {
+  .custom-tree-node .node-label:hover {
     color: #0052d9 !important;
-}
-.custom-tree-node .node-edit:hover {
+  }
+  .custom-tree-node .node-edit:hover {
+    color: #0052d9 !important;;
+  }
+  .custom-tree-node .node-del:hover {
     color: #0052d9 !important;
-}
-.custom-tree-node .node-del:hover {
-    color: #0052d9 !important;
-}
-.el-tree-node__content {
+  }
+  .el-tree-node__content {
+    background-color: rgba(0, 0, 0, 0) !important;
     color: #0052d9;
-    background-color: rgb(0 0 0 / 0%) !important;
-}
-
-/* 高亮当前点击项 */
-.el-tree-node__content:hover,
-.el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content .custom-tree-node .node-label {
-    color: #0052d9 !important;
+  }
+  /*高亮当前点击项*/
+  .el-tree-node__content:hover,
+  .el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content .custom-tree-node .node-label {
     background: none !important;
-}
+    color: #0052d9 !important;
+  }
 </style>

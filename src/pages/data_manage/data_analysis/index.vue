@@ -11,7 +11,7 @@
             <el-col :md="12" :lg="8" :xl="6">
                 <el-form :model="get_params" >
                     <el-form-item label="解析类型:" label-width="80px">
-                        <el-select size="small" clearable v-model="get_params.parseType" placeholder="请选择" style="width:100%">
+                        <el-select size="small" clearable v-model="get_params.parseType" placeholder="请选择" @change="searchData" style="width:100%">
                             <el-option v-for="item in parseOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </el-form-item>
@@ -28,17 +28,16 @@
                             :normalizer="normalizer"
                             noChildrenText="当前分支无子节点"
                             noOptionsText="无可用选项"
-                            noResultsText="无可用选项"
                             placeholder="请选择接入设备类型"
+                            v-model="get_params.assetsTypeId"
                             @select="selectNode"
                             @input="deSelectNode"
-                            v-model="get_params.assetsTypeId"
                             :disableBranchNodes="true"
                         />
                     </el-form-item>
                 </el-form>
             </el-col>
-            <el-col :md="12" :lg="8" :xl="6">
+            <!-- <el-col :md="12" :lg="8" :xl="6">
                 <el-form :model="get_params">
                     <el-form-item label="数据源厂商:" label-width="80px">
                         <el-select size="small" clearable v-model="get_params.manufacturerId" placeholder="请选择" @change="searchData" style="width:100%">
@@ -46,7 +45,7 @@
                         </el-select>
                     </el-form-item>
                 </el-form>
-            </el-col>
+            </el-col> -->
         </SearchTop>
         <div class="list-container">
             <div class="ub ub-pj w100 mb-1">
@@ -264,14 +263,14 @@ export default {
             this.get_params.assetsTypeIdBus = node.busId // 二级取busId
             this.getThridLevel(node.id)
             this.get_params.manufacturerId = ''
-            // this.initData()
+            this.initData()
         },
         deSelectNode(value, instanceId) {
             if (!value) {
                 this.get_params.logType = '' // 一级id
                 this.get_params.assetsTypeIdBus = '' // 二级取busId
                 this.get_params.manufacturerId = ''
-                // this.initData()
+                this.initData()
             }
         },
         getThridLevel(id) {

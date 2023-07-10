@@ -1,6 +1,6 @@
 <template>
     <div class="list">
-        <div style="background:#ffffff;overflow-y:auto;height: 99%;">
+        <div style="background:#ffffff;overflow-y:hidden;height: 99%;">
             <div style="position:relative">
                 <el-button
                     class="cancelBtn"

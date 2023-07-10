@@ -67,7 +67,7 @@
                     </el-table-column>
                     <el-table-column label="资源池内容" align="right" width="100">
                         <template slot-scope="scope">
-                            <el-link class="zyc" type="primary" style="font-size: 12px;color:#0052d9" @click="showItem(scope.row)">{{ scope.row.sum }}</el-link>
+                            <el-link type="primary" style="font-size: 12px;color:#0052d9" @click="showItem(scope.row)">{{ scope.row.sum }}</el-link>
                         </template>
                     </el-table-column>
                     <el-table-column prop="createTime" label="创建日期" width="160">
@@ -1078,8 +1078,5 @@ export default {
 }
 .event  ::v-deep  .el-date-editor--datetimerange.el-input, .el-date-editor--datetimerange.el-input__inner {
     width: 300px;
-}
-.custom-star #app .zyc {
-    color: #1cd7fa !important;
 }
 </style>

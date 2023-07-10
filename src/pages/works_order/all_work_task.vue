@@ -1,10 +1,6 @@
 <template>
     <div class="event" v-loading.fullscreen.lock="fullscreenLoading"  element-loading-text="拼命下载中" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0,0,0,.5)">
-        <div class="ub tab-button">
-            <div @click="currentTabWrap = 'all'" :class="{'tab-active': currentTabWrap === 'all'}">全部工单</div>
-            <!-- <div @click="currentTabWrap = 'safe'" :class="{'tab-active': currentTabWrap === 'safe'}">安全审查任务管理</div> -->
-        </div>
-        <div class="w100" v-show="currentTabWrap == 'all'">
+        <div class="w100">
             <div class="ub w100 search-area" style="box-sizing: border-box;">
                 <SearchTop @search="searchCheck" @reset="reset">
                     <el-col :md="12" :lg="8" :xl="6">
@@ -22,7 +18,7 @@
                     <el-col :md="12" :lg="8" :xl="6">
                         <el-form :model="get_params">
                             <el-form-item label="工单类型：" label-width="70px">
-                                <el-select filterable clearable v-model="get_params.workOrderObject" size="small" style="width: 100%;" placeholder="请选择">
+                                <el-select filterable clearable v-model="get_params.workOrderObject" size="small" style="width: 100%" placeholder="请选择">
                                     <el-option v-for="(item, index) in workTypeList" :key="index" :label="item.name" :value="item.id"></el-option>
                                 </el-select>
                             </el-form-item>
@@ -44,26 +40,9 @@
                             </el-form-item>
                         </el-form>
                     </el-col>
-                    <el-col :md="12" :lg="8" :xl="6">
-                        <el-form :model="get_params">
-                            <el-form-item label="创建时间：" label-width="70px">
-                                <el-date-picker
-                                    size="small"
-                                    value-format="yyyy-MM-dd HH:mm:ss"
-                                    v-model="sayTimes"
-                                    style="width: 280px;"
-                                    type="datetimerange"
-                                    range-separator="至"
-                                    start-placeholder="开始日期"
-                                    end-placeholder="结束日期"
-                                    :default-time="['00:00:00', '23:59:59']"
-                                ></el-date-picker>
-                            </el-form-item>
-                        </el-form>
-                    </el-col>
                 </SearchTop>
             </div>
-            <div class="list-container table-area">
+            <div class="attendance-list table-area">
                 <div class="ub ub-pj w100" style="margin-bottom: 10px;">
                     <div class="list-tips">列表内容</div>
                     <div>
@@ -100,14 +79,12 @@
                         <template slot-scope="{row}">
                             <div>
                                 <div>
-                                    <span v-if="row.level == 1" style="color: #ff0000;">高</span>
-                                    <span v-if="row.level == 2" style="color: #f2cd00;">中</span>
-                                    <span v-if="row.level == 3" style="color: #48ccca;">低</span>
+                                    <span v-if="row.level == 1" style="color: #ff0000">高</span>
+                                    <span v-if="row.level == 2" style="color: #f2cd00">中</span>
+                                    <span v-if="row.level == 3" style="color: #48ccca">低</span>
                                 </div>
                             </div>
                         </template>
-                    </el-table-column>
-                    <el-table-column prop="createTime" label="创建时间" show-overflow-tooltip>
                     </el-table-column>
                     <el-table-column label="工单类型" width="70" show-overflow-tooltip>
                         <template slot-scope="{row}">
@@ -121,14 +98,14 @@
                             <span>
                                 工单状态
                                 <el-popover popper-class="popover" placement='bottom' width='80' height='350' trigger="click">
-                                    <span slot="reference" style="padding: 0 5px;cursor: pointer;">
-                                        <i class="iconfont icon-filter-fill" style="color: #387dee;"></i>
+                                    <span slot="reference" style="padding:0 5px;cursor: pointer;">
+                                        <i class="iconfont icon-filter-fill" style="color:#387dee"></i>
                                     </span>
                                     <div class="w100 popover-list" @click="shaixuan_status">
-                                        <div style="font-size: 12px;" data-type="">默认</div>
-                                        <div style="font-size: 12px;" data-type="0">已撤销</div>
-                                        <div style="font-size: 12px;" data-type="1">进行中</div>
-                                        <div style="font-size: 12px;" data-type="2">已完成</div>
+                                        <div style="font-size: 12px" data-type="">默认</div>
+                                        <div style="font-size: 12px" data-type="0">已撤销</div>
+                                        <div style="font-size: 12px" data-type="1">进行中</div>
+                                        <div style="font-size: 12px" data-type="2">已完成</div>
                                     </div>
                                 </el-popover>
                             </span>
@@ -136,9 +113,9 @@
                         <template slot-scope="{row}">
                             <div>
                                 <div>
-                                    <span v-if="row.status == 0" style="color: #ff3a3a;">已撤销</span>
-                                    <span v-if="row.status == 1" style="color: #08a508;">进行中</span>
-                                    <span v-if="row.status == 2" style="color: #00c0ff;">已完成</span>
+                                    <span v-if="row.status == 0" style="color: #ff3a3a">已撤销</span>
+                                    <span v-if="row.status == 1" style="color: #08a508">进行中</span>
+                                    <span v-if="row.status == 2" style="color: #00c0ff">已完成</span>
                                 </div>
                             </div>
                         </template>
@@ -151,8 +128,8 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <!-- <el-table-column prop="createTime" label="创建时间" width="150">
-                    </el-table-column> -->
+                    <el-table-column prop="createTime" label="创建时间" width="150">
+                    </el-table-column>
                     <el-table-column prop="createUser" label="创建人" width="100">
                     </el-table-column>
                     <el-table-column label="操作" align="center" width="160">
@@ -160,14 +137,14 @@
                             <!--<el-button type="text" @click="seeWorkImg(scope.row)">流程图</el-button>-->
                             <el-button size="small" v-per="['work_all_view']" type="text" @click="handleSee(scope.row)">查看</el-button>
                             <el-button size="small" v-per="['work_all_revoke']" type="text" :disabled="scope.row.status != 1" @click="revertWork(scope.row)">撤销</el-button>
-                            <el-button size="small" v-per="['work_all_del']" type="text" :disabled="scope.row.status != 2 && scope.row.status != 0" @click="handleDelete(scope.row)">删除</el-button>
+                            <el-button size="small" v-per="['work_all_del']" type="text" :disabled="scope.row.status != 2" @click="handleDelete(scope.row)">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
                 <pagination v-show="total_num>0" :total="total_num" :page.sync="get_params.page" :limit.sync="get_params.size" @pagination="get_data" />
             </div>
         </div>
-        <TaskManage v-show="currentTabWrap == 'safe'" page="work_task"></TaskManage>
+
         <!--删除资源-->
         <DeleteDialog
             :dialogVisible = deleteDialog
@@ -196,17 +173,15 @@ import {
     delete_workTaskAllTask,
     exportWorkTaskExcelAllTask
 } from '../../server/works_order/define.js'
-import TaskManage from '@/pages/works_order/task_manage/index'
+
 export default {
     name: 'WorkObject',
     components: {
-        TaskManage
         // dropdownBox,
         // bpmnModeler
     },
     data() {
         return {
-            currentTabWrap: 'all',
             tableHeight: document.body.clientHeight - 270,
 
             count: 0,
@@ -317,7 +292,6 @@ export default {
             }
         },
         reset() {
-            this.sayTimes = []
             this.get_params = {
                 page: 1,
                 size: 20,
@@ -333,23 +307,22 @@ export default {
             window.location.href = '/api/works_order/manage/assets/template'
         },
         exportExcel() {
-            if (this.fullscreenLoading) return
             let data = { paramsData: {}, queryData: {}}
             this.fullscreenLoading = true
             exportWorkTaskExcelAllTask(data).then(res => {
                 console.log(res, '查看下载')
                 this.fullscreenLoading = false
-                // let url = window.URL.createObjectURL(new Blob([res], {
-                //     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                // }))
-                // let link = document.createElement('a')
-                // link.style.display = 'none'
-                // link.href = url
-                // link.setAttribute('download', '全部工单.xlsx')
-                // document.body.appendChild(link)
-                // link.click()
-                // document.body.removeChild(link) // 下载完成移除元素
-                // window.URL.revokeObjectURL(url) // 释放掉blob对象
+                let url = window.URL.createObjectURL(new Blob([res], {
+                    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                }))
+                let link = document.createElement('a')
+                link.style.display = 'none'
+                link.href = url
+                link.setAttribute('download', '全部工单.xlsx')
+                document.body.appendChild(link)
+                link.click()
+                document.body.removeChild(link) // 下载完成移除元素
+                window.URL.revokeObjectURL(url) // 释放掉blob对象
             }).catch(err => {
                 this.fullscreenLoading = false
                 console.log(err + 'err')
@@ -419,9 +392,7 @@ export default {
                     workOrderObject: this.get_params.workOrderObject,
                     workOrderName: this.get_params.workOrderName,
                     level: this.get_params.level,
-                    status: this.get_params.status,
-                    timeStart: this.sayTimes && this.sayTimes.length > 0 ? this.sayTimes[0] : '',
-                    timeEnd: this.sayTimes && this.sayTimes.length > 0 ? this.sayTimes[1] : ''
+                    status: this.get_params.status
                     // startTime: this.sayTimes && this.sayTimes.length > 0 ? this.sayTimes[0] : '',
                     // endTime: this.sayTimes && this.sayTimes.length > 0 ? this.sayTimes[1] : '',
                 }
@@ -585,38 +556,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.custom-star {
-    .tab-button {
-        border: solid 1px #50b0ff;
-        background-color: rgba($color: #136dac, $alpha: 20%);
-        box-shadow: inset 0 0 18px 0
-            #00b4ff;
-    }
-}
 .tab-button {
-    height: 32px;
-    border: 1px solid #dadee8;
-    border-radius: 4px 4px 0 0;
-    background-color: #ffffff;
+    height: 30px;
+    margin-bottom: 2px;
+    background-color: rgba(19,109,172,.2);
 
-    // margin-bottom: 2px;
     & div {
-        margin-right: 10px;
-        width: 120px;
-        height: 31px;
-        font-size: 14px;
-        // border: 1px solid #76dee2;
-        border-radius: 2px;
+        width: 80px;
+        height: 30px;
+        line-height: 30px;
         text-align: center;
-        // background: url("../../../assets/img/tab_btn.jpg") 100% 100% no-repeat;
-        color: rgb(0 0 0 / 60%);
-        line-height: 32px;
+        margin-right: 10px;
         cursor: pointer;
+        border: 1px solid #76dee2;
+        border-radius: 2px;
+        background: url("../../assets/img/tab_btn.jpg") 100% 100% no-repeat;
+        color: #fff;
         box-sizing: border-box;
+        font-size: 14px;
+
         &.tab-active {
-            border-bottom: 1px solid #387dee;
-            color: #387dee;
-            // background: url("../../../assets/img/tab_active.jpg") 100% 100% no-repeat;
+            background: url("../../assets/img/tab_active.jpg") 100% 100% no-repeat;
         }
     }
 }
@@ -626,10 +586,10 @@ export default {
 }
 .popover-list > div {
     height: 30px;
-    font-size: 15px;
     text-align: center;
-    color: #496573;
     line-height: 30px;
+    font-size: 15px;
+    color: #496573;
     cursor: pointer;
     &:hover {
         color: #387dee;
@@ -646,37 +606,43 @@ export default {
     position: relative;
     padding: 0 20px;
     color: #1cd7fa;
+
     .el-button {
         position: absolute;
-        top: 0;
         right: 20px;
+        top: 0;
         padding: 0;
         color: #1cd7fa;
     }
 }
 .domain-list {
+    background: rgba(0, 0, 0, .3);
     margin: 3px 0 20px;
     padding: 20px 0 1px;
-    background: rgb(0 0 0 / 30%);
+
     .list-tit {
         width: 100px;
         text-align: right;
     }
+
     .ub {
         margin-bottom: 20px;
     }
+
     .list-btn {
         padding-left: 20px;
+
         .el-button {
-            color: #f56c6c;
+            color: #F56C6C;
         }
     }
 }
 .event  ::v-deep  .el-range-input {
-    background-color: rgb(0 0 0 / 0%);
+    background-color: rgba(0, 0, 0, 0);
+    color: #fff;
 }
 .event  ::v-deep  .el-range-separator {
-    color: #ffffff;
+    color: #fff;
 }
 .event  ::v-deep  .el-radio {
     margin: 0 150px 0 30px;
@@ -685,18 +651,18 @@ export default {
     padding: 0;
 }
 .event  ::v-deep  .el-upload-list__item-name {
-    color: #01e9ff;
+    color: #01E9FF;
     i {
-        color: #01e9ff;
+        color: #01E9FF;
     }
 }
 .attendance-list.table-area {
-    margin-top: 10px;
+    background-color: #fff;
     padding: 10px;
-    border: solid 1px #dadee8;
+    box-shadow: 0px 0px 8px 0px rgba(140, 152, 164, 0.2);
     border-radius: 4px;
-    background-color: #ffffff;
-    box-shadow: 0 0 8px 0 rgb(140 152 164 / 20%);
+    border: solid 1px #dadee8;
+    margin-top: 10px;
     .pagination {
         margin-top: 20px;
         text-align: right;
@@ -707,20 +673,20 @@ export default {
 }
 .event  ::v-deep  .drawer-content {
     .box-title {
-        margin: 30px 0 20px;
-        font-size: 14px;
         color: #00e9ff;
+        font-size: 14px;
+        margin: 30px 0 20px;
     }
     .label {
-        margin-right: 15px;
         width: 60px;
         font-size: 12px;
+        color: #999;
         text-align: right;
-        color: #999999;
+        margin-right: 15px;
     }
     .label-val {
         font-size: 12px;
-        color: #ffffff;
+        color: #fff;
         img {
             max-width: 300px;
         }
@@ -731,50 +697,53 @@ export default {
         margin-bottom: 10px;
     }
     .condition_black {
-        margin-right: 6px;
         font-size: 12px;
-        color: #999999;
+        color: #999;
+        margin-right: 6px;
     }
     .condition_white {
-        margin-right: 6px;
         font-size: 12px;
-        color: #ffffff;
+        color: #fff;
+        margin-right: 6px;
     }
 }
 .event  ::v-deep  .warn-wrapper {
-    padding-left: 10px;
     width: 640px;
-    border-radius: 2px;
-    background: rgb(0 0 0 / 20%);
+    padding-left: 10px;
     box-sizing: border-box;
+    background: rgba(0,0,0,.2);
+    border-radius: 2px;
+
     & p {
-        margin: 5px 0;
         font-size: 12px;
+        margin: 5px 0;
+
         &.warn-top {
-            color: #ffffff;
-            opacity: 0.6;
+            color: #fff;
+            opacity: .6;
         }
         &.warn-body {
-            color: #ffffff;
+            color: #fff;
             word-break: break-all;
         }
     }
 }
 .event  ::v-deep  .pic-wrapper {
-    overflow: auto;
-    width: 99%;
     height: calc(100vh - 190px);
+    width: 99%;
+    overflow: auto;
     border: 1px solid #1cd7fa;
 }
 </style>
 <style>
 .edui-default .edui-editor {
     /* border: 1px solid #01e9ff !important; */
-    background-color: rgb(0 0 0 / 0%) !important;
+    background-color: rgba(0, 0, 0, 0) !important;
 }
+
 .edui-default .edui-editor-toolbarboxouter {
     /* border-bottom: 1px solid #01e9ff !important; */
-    background-color: rgb(0 0 0 / 0%) !important;
+    background-color: rgba(0, 0, 0, 0) !important;
 }
 #edui_fixedlayer {
     z-index: 999999 !important;
@@ -782,11 +751,10 @@ export default {
 .nav-tips {
     pointer-events: none !important;
 }
-
-/* 下拉菜单 */
+/*下拉菜单*/
 .el-dropdown-link.active {
     font-size: 12px;
-    color: #409eff;
+    color:#409EFF ;
 }
 .el-dropdown-menu__item {
     padding: 0 20px !important;

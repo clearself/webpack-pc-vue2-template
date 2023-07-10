@@ -20,7 +20,7 @@
                         <el-option label="站内消息" value="0"></el-option>
                         <el-option label="邮件" value="1"></el-option>
                         <el-option label="短信" value="2"></el-option>
-                        <el-option label="蓝信" value="3"></el-option>
+                        <el-option label="蓝鲸快信" value="3"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="人员范围：" prop="persons" label-width="90px" style="margin: 20px 0" class="red-star">
@@ -29,8 +29,6 @@
                         :depList="allDepList"
                         :rolesList="allRolesList"
                         :dataList="dataList"
-                        :assetOrganizeList="assetOrganizeList"
-                        :assetUserList="assetUserList"
                         :usersShow="usersShow"
                         ref="personRange"
                         :noFlow="true"
@@ -71,8 +69,6 @@ export default {
             allUserList: [],
             allDepList: [],
             allRolesList: [],
-            assetOrganizeList: [],
-            assetUserList: [],
             dataList: [
                 {
                     name: '资产负责人',
@@ -140,8 +136,6 @@ export default {
         this.$getsessionStorage('allUserList') && (this.allUserList = this.$getsessionStorage('allUserList'))
         this.$getsessionStorage('allRolesList') && (this.allRolesList = this.$getsessionStorage('allRolesList'))
         this.$getsessionStorage('allDepList') && (this.allDepList = this.$getsessionStorage('allDepList'))
-        this.$getsessionStorage('assetOrganizeList') && (this.assetOrganizeList = this.$getsessionStorage('assetOrganizeList'))
-        this.$getsessionStorage('assetUserList') && (this.assetUserList = this.$getsessionStorage('assetUserList'))
 
         console.log(this.warnItem)
         this.warnItem && (this.formData = this.$deepCopy(this.warnItem.data))
@@ -171,9 +165,7 @@ export default {
             let type0 = []
             let type1 = []
             let type2 = []
-            let type3 = []
-            let type5 = []
-            let type6 = []; let type4
+            let type3 = []; let type4
             this.formData.users = []
             val.forEach(item => {
                 if (item !== '流程相关') {
@@ -187,10 +179,6 @@ export default {
                     type2.push(item.id)
                 } else if (item.type === '3') {
                     type3.push(item.id)
-                } else if (item.type === '5') {
-                    type5.push(item.id)
-                } else if (item.type === '6') {
-                    type6.push(item.id)
                 } else if (item === '流程相关') {
                     type4 = true
                 }
@@ -200,8 +188,6 @@ export default {
             type1.length && this.formData.users.push({ userType: '1', ids: type1 })
             type2.length && this.formData.users.push({ userType: '2', ids: type2 })
             type3.length && this.formData.users.push({ userType: '3', ids: type3 })
-            type5.length && this.formData.users.push({ userType: '5', ids: type5 })
-            type6.length && this.formData.users.push({ userType: '6', ids: type6 })
             type4 && this.formData.users.push({ userType: '4' })
             console.log(this.formData.users, '提醒人列表')
         },

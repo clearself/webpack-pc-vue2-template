@@ -1,12 +1,7 @@
 <template>
-    <div class="register w100 h100 ub ub-ac">
-        <div class="left-bg-box ub ub-ac">
-            <div>
-                <img src="../../assets/img/login/left_bg_login.png" alt="">
-            </div>
-        </div>
-        <div class="main ub ub-ver ub-ac ub-pc">
-            <div class="title-info ub ub-pc ub-ac mb-5">
+    <div class="register w100 h100 ub ub-ac ub-pc">
+        <div class="main ub ub-ac ub-pc">
+            <div class="title-info ub ub-pc ub-ac">
                 <p>{{safetyInfo.systemName}}</p>
             </div>
             <div class="w100 form">
@@ -22,19 +17,21 @@
                         ref="registerForm">
                         <el-form-item prop="username" label="请输入您的用户名" :label-width="formLabelWidth">
                             <el-input
+                                prefix-icon="iconfont icon-zhanghu"
                                 clearable
                                 placeholder="请输入您的用户名"
                                 v-model.trim="registerForm.username"
                                 autocomplete="off"></el-input>
                         </el-form-item>
                         <el-form-item
-                            style="position: relative;"
+                            style="position:relative"
                             v-if="verifyType === 'phone'"
                             label="请输入手机号"
                             prop="phone"
                             :label-width="formLabelWidth">
                             <span class="toggle-way" @click="changeType('mail')">邮箱验证</span>
                             <el-input
+                                prefix-icon="iconfont icon-shouji"
                                 clearable
                                 placeholder="请输入手机号"
                                 v-model.trim="registerForm.phone"
@@ -44,13 +41,14 @@
                             </el-input>
                         </el-form-item>
                         <el-form-item
-                            style="position: relative;"
+                            style="position:relative"
                             v-if="verifyType === 'mail'"
                             label="请输入邮箱"
                             prop="mail"
                             :label-width="formLabelWidth">
                             <span class="toggle-way" @click="changeType('phone')">手机验证</span>
                             <el-input
+                                prefix-icon="iconfont icon-shouji"
                                 clearable
                                 placeholder="请输入邮箱"
                                 v-model.trim="registerForm.mail"
@@ -63,6 +61,7 @@
                             prop="verificationCode"
                             :label-width="formLabelWidth">
                             <el-input
+                                prefix-icon="iconfont icon-yanzhengma"
                                 clearable
                                 placeholder="请输入验证码"
                                 v-model.trim="registerForm.verificationCode"
@@ -77,6 +76,7 @@
                             prop="password"
                             :label-width="formLabelWidth">
                             <el-input
+                                prefix-icon="iconfont icon-mima"
                                 show-password
                                 placeholder="请输入密码"
                                 v-model.trim="registerForm.password"></el-input>
@@ -87,6 +87,7 @@
                             prop="surePassWord"
                             :label-width="formLabelWidth">
                             <el-input
+                                prefix-icon="iconfont icon-mima"
                                 show-password
                                 placeholder="请输入密码"
                                 v-model.trim="registerForm.surePassWord"></el-input>
@@ -412,70 +413,52 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$dark: rgb(0 0 0 / 90%);
+$dark: rgba(0, 0, 0, 0.9);
 $blue: #387dee;
 .register {
     position: fixed;
-    padding: 0 90px 0 40px;
-    width: 100%;
-    min-width: 1300px;
-    // background: url('../../assets/img/login/login-bg.jpg') center center no-repeat fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-image: url('../../assets/img/login/bg_login.jpg');
-    box-sizing: border-box;
-    .left-bg-box {
-        width: 62%;
-        min-width: 800px;
-        height: 1084px;
-        >div {
-            margin-top: -20px;
-            width: 100%;
-            img {
-                vertical-align: top;
-                width: 100%;
-            }
-            // background-image: url('../../assets/img/login/left_bg_login.png');
-            // transform: scale(0.93);
-        }
-    }
+    background: url('../../assets/img/login/login-bg.jpg') center center no-repeat fixed;
+    background-size: cover;
     .main {
-        position: relative;
-        width: 35%;
-        min-width: 400px;
+        width: 1446px;
         height: 1084px;
+        background-color: #ebf6fd;
+        position: relative;
+        background: url('../../assets/img/login/register-inner.png') center center no-repeat;
+        background-size: 96% 96%;
+        background-position-y: 45px;
         .title-info {
-            // position: absolute;
-            // top: 200px;
-            // z-index: 10;
             height: 40px;
             line-height: 40px;
+            top: 200px;
+            position: absolute;
+            z-index: 10;
             p {
-                font-size: 45px;
+                font-size: 50px;
                 font-family: Hkxzy;
-                color: #ffffff;
+                color: #3579ec;
+                text-shadow: 10px 10px 4px rgba(13, 64, 133, .1);
             }
         }
         .form {
             position: relative;
-            width: 100%;
+            width: 380px;
             .back-btn {
                 position: absolute;
-                top: 40px;
-                right: 0;
+                top: 57px;
+                right: -57px;
                 cursor: pointer;
-                color: rgb(255 255 255 / 70%);
+                color: #3579ec;
             }
             .toggle-way {
                 position: absolute;
-                top: -27px;
                 right: 0;
                 height: 20px;
+                line-height: 20px;
+                top: -27px;
                 font-size: 12px;
                 text-decoration: underline;
-                color: #ffffff;
-                line-height: 20px;
+                color: $blue;
                 cursor: pointer;
             }
             .sent-text {
@@ -485,49 +468,45 @@ $blue: #387dee;
         .register-form {
             margin-top: 60px;
             & ::v-deep .el-form--label-top .el-form-item__label {
-                margin-bottom: 8px;
-                padding: 0;
-                height: 20px;
                 font-size: 12px;
-                color: #ffffff;
+                color: rgba(0, 0, 0, 0.26);
+                height: 20px;
                 line-height: 20px;
+                padding: 0;
+                margin-bottom: 8px;
             }
             & ::v-deep .el-form-item {
                 margin-bottom: 16px;
+
                 .el-input__prefix {
-                    left: 16px;
                     color: $blue;
+                    left: 16px;
                     i {
-                        font-size: 20px;
                         font-weight: 500;
+                        font-size: 20px;
                     }
                 }
-                .el-input__inner {
-                    padding-left: 10px;
-                    border-color: transparent!important;
-                    border-bottom-color: rgb(255 255 255 / 50%)!important;
-                    border-radius: 0;
-                    color: #ffffff;
-                    background-color: transparent;
+                .el-input--prefix .el-input__inner {
+                    padding-left: 42px;
                 }
             }
             &::v-deep {
                 .el-input-group__append {
                     padding: 0;
                     width: 80px;
-                    height: 40px;
-                    border-color: transparent;
-                    border-bottom-color: rgb(255 255 255 / 50%);
-                    background-color: transparent;
                     cursor: pointer;
+                    height: 40px;
                     box-sizing: border-box;
+                    background-color: #fff;
+
                     p {
+                        color: $blue;
                         text-decoration: underline;
-                        color: #ffffff;
                     }
                 }
             }
         }
+
         .submit {
             .el-button {
                 margin: 8px 0;
@@ -539,10 +518,11 @@ $blue: #387dee;
             .mark {
                 height: 20px;
                 font-size: 12px;
+
                 .forget-pwd {
-                    text-align: right;
-                    color: $blue;
                     cursor: pointer;
+                    color: $blue;
+                    text-align: right;
                 }
             }
             & ::v-deep .el-checkbox__input.is-checked+.el-checkbox__label,
@@ -550,32 +530,32 @@ $blue: #387dee;
                 color: $blue;
             }
             & ::v-deep .el-checkbox__input.is-checked .el-checkbox__inner {
-                border-color: $blue;
                 background-color: $blue;
+                border-color: $blue;
             }
             & ::v-deep .el-button--primary {
-                border-color: $blue;
                 background-color: $blue;
+                border-color: $blue;
             }
             & ::v-deep .el-button--primary:focus,
             & ::v-deep .el-button--primary:hover {
-                opacity: 0.9;
+                opacity: .9;
             }
             & ::v-deep .el-button--primary.is-disabled {
-                border-color: #dcdcdc;
                 background-color: #dcdcdc;
+                border-color: #dcdcdc;
             }
         }
-        & ::v-deep .el-icon-view::before {
+        & ::v-deep .el-icon-view:before {
             content: '\e7e5';
             font-family: iconfont;
         }
         & ::v-deep .el-input__inner:focus {
-            box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
+            box-shadow: 0 4px 8px rgba(0,0,0,.1)
         }
         .code-getting {
             cursor: not-allowed;
-            color: rgb(0 0 0 / 26%) !important;
+            color: rgba(0, 0, 0, 0.26) !important;
         }
     }
 }

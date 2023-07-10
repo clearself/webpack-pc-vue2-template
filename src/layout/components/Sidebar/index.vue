@@ -6,8 +6,8 @@
                 <div class="menu-text" style='' v-if="!$store.state.settings.navCollapseSettings">{{$store.state.common.systemName}}</div>
             </el-collapse-transition>
         </div>
-        <div style="height: 50px;"></div>
-        <el-scrollbar style="height: 85vh;" wrap-class="wap-list">
+        <div style="height:50px"></div>
+        <el-scrollbar style="height: 85vh" wrap-class="wap-list">
             <!-- <div class="w100 menu"> -->
             <el-menu
                 :collapse="isCollapse"
@@ -59,22 +59,22 @@ export default {
 
 <style lang="scss" scoped>
 .side-bar {
-    overflow: hidden;
     height: 98%;
+    overflow: hidden;
     ::v-deep .all-menu {
         width: 100%;
         height: 20px;
+        color: #fff;
         font-size: 12px;
-        color: #ffffff;
     }
     .menu-content {
         position: relative;
         height: 40px;
         img {
-            position: absolute;
-            left: 16px;
             width: 36px;
             height: 36px;
+            position: absolute;
+            left: 16px;
         }
         .menu-logo {
             // margin-right: 16px;
@@ -83,16 +83,16 @@ export default {
             font-size: 20px;
             font-weight: normal;
             @include themeify {
-                color: themed('top-menu-logo-text-color');
+                color: themed("top-menu-logo-text-color");
             }
         }
         .menu-text {
             position: absolute;
-            right: 0;
-            overflow: hidden;
+            right: 0px;
+            white-space:nowrap;
+            text-overflow:ellipsis;
+            overflow:hidden;
             width: 160px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
     }
     // .operation {
@@ -113,12 +113,13 @@ export default {
     //     }
     // }
 }
+
 .menu-item:not(.el-menu--collapse) {
     width: 220px;
 }
 .menu {
-    margin-top: 25px;
     padding-right: 20px;
+    margin-top: 25px;
 }
 // .menu::before {
 //     width: 220px;
@@ -147,7 +148,7 @@ export default {
     // @include themeify {
     //     background: themed("left-nav-bg");
     // }
-    background: transparent;
+     background: transparent;
     ::v-deep .el-menu-item {
         margin: 14px auto;
         height: 34px;
@@ -156,14 +157,14 @@ export default {
         span {
             font-size: 14px;
             @include themeify {
-                color: themed('left-font-color');
+                color: themed("left-font-color");
             }
         }
         i {
-            margin-right: 10px;
             width: 16px;
+            margin-right: 10px;
             @include themeify {
-                color: themed('left-font-color');
+                color: themed("left-font-color");
             }
         }
     }
@@ -180,12 +181,12 @@ export default {
                 &:hover {
                     span {
                         @include themeify {
-                            color: themed('left-hover-font-color');
+                            color: themed("left-hover-font-color");
                         }
                     }
                     i {
                         @include themeify {
-                            color: themed('left-hover-font-color');
+                            color: themed("left-hover-font-color");
                         }
                     }
                 }
@@ -193,12 +194,12 @@ export default {
             ::v-deep .is-active {
                 span {
                     @include themeify {
-                        color: themed('left-hover-font-color');
+                        color: themed("left-hover-font-color");
                     }
                 }
                 i {
                     @include themeify {
-                        color: themed('left-hover-font-color');
+                        color: themed("left-hover-font-color");
                     }
                 }
             }
@@ -209,17 +210,17 @@ export default {
             .el-menu-item.is-active {
                 .dot {
                     @include themeify {
-                        background-color: themed('left-hover-font-color') !important;
+                        background-color: themed("left-hover-font-color") !important;
                     }
                 }
                 span {
                     @include themeify {
-                        color: themed('left-hover-font-color') !important;
+                        color: themed("left-hover-font-color") !important;
                     }
                 }
                 i {
                     @include themeify {
-                        color: themed('left-hover-font-color') !important;
+                        color: themed("left-hover-font-color") !important;
                     }
                 }
             }
@@ -233,13 +234,13 @@ export default {
             text-align: left;
             span {
                 @include themeify {
-                    color: themed('left-font-color');
+                    color: themed("left-font-color");
                 }
             }
             > i {
                 margin-right: 18px;
                 @include themeify {
-                    color: themed('left-font-color');
+                    color: themed("left-font-color");
                 }
             }
             .el-icon-arrow-down {
@@ -249,12 +250,12 @@ export default {
                 background: transparent;
                 span {
                     @include themeify {
-                        color: themed('left-hover-font-color') !important;
+                        color: themed("left-hover-font-color") !important;
                     }
                 }
                 i {
                     @include themeify {
-                        color: themed('left-hover-font-color') !important;
+                        color: themed("left-hover-font-color") !important;
                     }
                 }
             }
@@ -265,17 +266,17 @@ export default {
         }
         .el-menu.el-menu--inline {
             .el-menu-item {
-                display: flex;
+                background: none !important;
                 margin: 0;
                 text-align: left;
-                background: none !important;
+                display: flex;
                 .dot {
                     margin-top: 14px;
                     width: 6px;
                     height: 6px;
                     border-radius: 50%;
                     @include themeify {
-                        background: themed('left-font-color');
+                        background: themed("left-font-color");
                     }
                 }
                 i {
@@ -287,7 +288,7 @@ export default {
                 &:hover {
                     .dot {
                         @include themeify {
-                            background: themed('left-hover-font-color');
+                            background: themed("left-hover-font-color");
                         }
                     }
                 }
@@ -303,7 +304,7 @@ export default {
     ::v-deep .el-submenu.is-active > .el-submenu__title {
         span {
             @include themeify {
-                color: themed('left-hover-font-color');
+                color: themed("left-hover-font-color");
             }
         }
     }
@@ -311,6 +312,7 @@ export default {
         padding: 0 24px !important;
     }
 }
+
 .el-menu--collapse {
     ::v-deep .el-submenu {
         .el-submenu__title {

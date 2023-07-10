@@ -1,13 +1,13 @@
 <template>
     <div v-loading="isView" class="flow-containers" :class="{ 'view-mode': isView }">
-        <el-container style="height: 100%;">
-            <el-header style="padding: 0 10px;height: auto;border-bottom: 1px solid #dddddd;">
-                <div style="display: flex; justify-content: space-between; padding: 5px 0;">
+        <el-container style="height: 100%">
+            <el-header style="border-bottom: 1px solid #dddddd;height: auto;padding: 0 10px">
+                <div style="display: flex; padding: 5px 0px; justify-content: space-between;">
                     <div>
                         <el-upload
                             action=""
                             :before-upload="openBpmn"
-                            style=" display: inline-block;margin-right: 10px;">
+                            style="margin-right:10px; display:inline-block;">
                             <el-tooltip effect="dark" content="加载xml" placement="bottom">
                                 <el-button class="operate-btn" size="mini" icon="el-icon-folder-opened"/>
                             </el-tooltip>
@@ -41,8 +41,8 @@
                     </div>
                 </div>
             </el-header>
-            <el-container style="align-items: stretch;" class="cav-container">
-                <el-main style="padding: 0;background-color: #fbfbfb;" @mousewheel.prevent>
+            <el-container style="align-items: stretch" class="cav-container">
+                <el-main style="padding: 0;background-color: #FBFBFB;" @mousewheel.prevent>
                     <div ref="canvas" class="canvas"/>
                 </el-main>
                 <el-aside class="panel-wrapper">
@@ -510,120 +510,128 @@ export default {
 </script>
 
 <style lang="scss">
-/* 左边工具栏以及编辑节点的样式 */
-@import '~bpmn-js/dist/assets/diagram-js.css';
-@import '~bpmn-js/dist/assets/bpmn-font/css/bpmn.css';
-@import '~bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css';
-@import '~bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
+/*左边工具栏以及编辑节点的样式*/
+@import "~bpmn-js/dist/assets/diagram-js.css";
+@import "~bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
+@import "~bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
+@import "~bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
+
 .cav-container {
+    height: -webkit-calc(100% - 50px);
+    height: -moz-calc(100% - 50px);
     height: -ms-calc(100% - 50px);
     height: calc(100% - 50px);
 }
+
 .view-mode {
     .el-header, .el-aside, .djs-palette, .bjs-powered-by {
         display: none;
     }
+
     .el-loading-mask {
         background-color: initial;
     }
+
     .el-loading-spinner {
         display: none;
     }
 }
+
 .flow-containers {
     // background-color: #ffffff;
     width: 100%;
     height: 100%;
+
     .canvas {
         width: 100%;
         height: 100%;
     }
+
     .panel {
         position: absolute;
-        top: 50px;
         right: 0;
+        top: 50px;
         width: 300px;
+
     }
+
     .load {
         margin-right: 10px;
     }
+
     .el-form-item__label {
         font-size: 13px;
     }
+
     .djs-palette {
-        top: 0;
-        left: 0 !important;
+        left: 0px !important;
+        top: 0px;
         border: none;
         background: none;
-        background-color: #ffffff;
+        background-color: #fff;
+
     }
+
     .djs-palette .icon-custom {
         cursor: pointer !important;
     }
+
     .djs-palette .tool-text {
         color: #387dee !important;
         // text-shadow: 0px 0px 4px #00ffff !important;
         cursor: pointer !important;
     }
+
     .djs-container svg {
         min-height: 650px;
     }
+
     .panel-wrapper {
-        overflow-y: auto;
         width: 400px;
         min-height: 650px;
         max-height: 100%;
+        overflow-y: auto;
+        background-color: #fff;
         // box-shadow: -12px 0px 10px 0px rgba(0, 0, 0, 0.7), inset 0px 0px 18px 0px #00b4ff;
         border: solid 1px #50b0ff;
-        background-color: #ffffff;
         // background-color: rgba(17, 29, 43, .9);
         // background-image: url(../assets/img/dialog-bg2.png);
         // background-position: right 150px;
         // background-repeat: no-repeat;
         // background-size: 150px 220px;
     }
+
     .djs-direct-editing-parent {
-        border: solid 1px  #dddddd !important;
         background-color: #f5f8fe !important;
+        border: solid 1px  #dddddd !important;
     }
+
     .djs-direct-editing-content {
         color: #333333 !important;
     }
+
     .djs-context-pad .entry {
+        background-color: #fff !important;
         border: solid 1px #dddddd !important;
-        background-color: #ffffff !important;
         box-shadow: 0 0 2px 1px #f5f8fe !important;
     }
+
     .el-divider.el-divider--horizontal {
-        margin: 16px 0;
         background-color: #dcdcdc;
         opacity: 0.2;
+        margin: 16px 0;
     }
 }
 .flow-containers .operate-btn {
-    padding: 4px 10px;
-    border: 1px solid #387dee;
-    color: #387dee;
     background: transparent !important;
+    color: #387dee;
+    border: 1px solid #387dee;
+    padding: 4px 10px;
 }
 .flow-containers .operate-btn:hover {
-    padding: 4px 10px;
-    border: 1px solid #387dee;
-    color: #387dee;
     background: transparent !important;
-}
-.custom-star {
-    .el-main {
-        background-color: #052942!important;
-    }
-    .flow-containers .djs-palette {
-        background-color: #052942!important;
-    }
-    .el-header {
-        border-bottom-color: #1cd7fa!important;
-    }
-    .pic-wrapper {
-        border-color: #1cd7fa!important;
-    }
+    color: #387dee;
+    border: 1px solid #387dee;
+    padding: 4px 10px;
 }
 </style>

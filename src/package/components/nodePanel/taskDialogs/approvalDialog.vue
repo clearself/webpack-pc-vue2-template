@@ -9,7 +9,7 @@
             :show-close="false"
             @closed="$emit('close')"
             custom-class="attendance-dialog">
-            <div class="ub w100" style="height: 300px;">
+            <div class="ub w100" style="height:300px;">
                 <div class="ub ub-ver left-list">
                     <div class="tips-title">全部字段</div>
                     <div class="w100" style="margin-top: 8px;">
@@ -25,7 +25,7 @@
                                 <el-radio v-model="item.type" label="1">必填</el-radio>
                                 <el-radio v-model="item.type" label="0">只读</el-radio>
                             </div>
-                            <div style="margin-left: 10px;font-size: 12px;color: #ff6060;" @click="deleteFun(item,index)"><i class="iconfont icon-liebiaoshanchu"></i></div>
+                            <div style="color:#ff6060;font-size:12px;margin-left: 10px;" @click="deleteFun(item,index)"><i class="iconfont icon-liebiaoshanchu"></i></div>
                         </div>
                     </div>
                 </div>
@@ -162,79 +162,73 @@ export default {
     .flow-containers .el-badge__content.is-fixed {
         top: 18px;
     }
-    .left-list {
-        overflow-y: auto;
-        padding: 10px;
-        width: 200px;
-        border: solid 1px #dddddd;
+    .left-list{
+        width:200px;
+        overflow-y:auto;
+        background-color: #fff;
         // box-shadow: inset 0px 0px 7px 0px #389bf7;
         border-radius: 4px;
-        background-color: #ffffff;
+        border: solid 1px #ddd;
+        padding:10px;
         box-sizing: border-box;
     }
-    .custom-star {
-        .left-list,.right-list {
-            border: solid 1px #1cd7fa;
-            background-color: transparent;
-        }
+    div.left-list::-webkit-scrollbar,div.right-list::-webkit-scrollbar{
+        width:2px!important;
     }
-    div.left-list::-webkit-scrollbar,div.right-list::-webkit-scrollbar {
-        width: 2px!important;
-    }
-    .right-list {
-        overflow-y: auto;
+    .right-list{
         margin-left: 40px;
-        padding: 10px;
-        border: solid 1px #dddddd;
+        overflow-y:auto;
+        background-color: #fff;
         // box-shadow: inset 0px 0px 7px 0px #389bf7;
         border-radius: 4px;
-        background-color: #ffffff;
+        border: solid 1px #ddd;
+        padding:10px;
         box-sizing: border-box;
     }
-    .tips-title {
+    .tips-title{
         font-size: 12px;
         line-height: 15px;
-        color: rgb(0 0 0 / 90%);
+        color: rgba(0, 0, 0, 0.9);
         opacity: 0.6;
     }
-    .left-item {
+    .left-item{
+        width:170px;
         margin: 8px auto;
-        width: 170px;
-        font-size: 12px;
+        line-height: 30px;
+        background-color: #0090ff;
         border-radius: 2px;
         text-indent: 5px;
-        color: #ffffff;
-        background-color: #0090ff;
-        line-height: 30px;
-        cursor: pointer;
-    }
-    .right-item {
-        margin: 8px auto;
-        width: 100%;
-        cursor: pointer;
-    }
-    .right-item-title {
         font-size: 12px;
+        color: #ffffff;
+        cursor: pointer;
+    }
+    .right-item{
+        width:100%;
+        margin: 8px auto;
+        cursor: pointer;
+    }
+    .right-item-title{
+        line-height: 30px;
+        background-color: #0090ff;
         border-radius: 2px;
         text-indent: 5px;
+        font-size: 12px;
         color: #ffffff;
-        background-color: #0090ff;
-        line-height: 30px;
     }
-    .left-item.active {
-        color: #999999;
+    .left-item.active{
         background-color: #0c3459;
         opacity: 0.5;
+        color: #999999;
     }
-    .single-option {
+    .single-option{
         margin-left: 20px;
-        width: 130px;
         text-align: center;
-        &::v-deep.el-radio__label {
-            color: #ffffff;
+        width:130px;
+        &::v-deep.el-radio__label{
+            color:#fff;
         }
-        &::v-deep.el-radio__inner {
-            border-color: #cccccc;
+        &::v-deep.el-radio__inner{
+            border-color:#ccc;
         }
     }
 </style>

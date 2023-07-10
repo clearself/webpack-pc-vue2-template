@@ -1,8 +1,8 @@
 <template>
-    <div class="event classify-add" style="box-sizing: border-box; overflow-y: hidden !important;">
+    <div class="event classify-add" style="box-sizing: border-box; overflow-y: hidden !important">
         <div class="ub w100">
             <GroupList @getBusIdData="getBusIdData"  @getMode="getMode"  @getParentIdData="getParentIdData" @getTreeData="getTreeData" @getgrade="getgrade" @click="handleNode" @editNode="editNode" ref="groupList" />
-            <div class="bg-color ub ub-f1 ub-ver" style=" overflow: auto;margin-left: 10px; height: 100%;">
+            <div class="bg-color ub ub-f1 ub-ver" style="margin-left: 10px; height: 100%; overflow: auto">
                 <div class="attendance-list event-content">
                     <div class="ub ub-pj w100 mb-3">
                         <div class="list-tips">
@@ -22,23 +22,22 @@
                         <div class="title" v-if="$route.query.grade===2 || $route.query.grade===3 || $route.query.mode===0">基础信息</div>
                         <el-form label-position="top" :inline="true" ref="formData" :model="formData" :rules="rules" v-if="$route.query.grade===2 || $route.query.grade===3 || $route.query.mode===0">
                             <!-- 新字段名日志类型 -->
-                            <el-form-item label="日志类型:" style="margin-right: 40px;margin-bottom: 26px;" prop="parentId" size="small" v-if="$route.query.mode===0" label-width="80px">
-                                <el-select filterable v-model="formData.parentId" size="small"  placeholder="请选择" @change="parentIdChange" style="width: 300px;">
+                            <el-form-item label="日志类型:" style="margin-bottom:26px;margin-right:40px" prop="parentId" size="small" v-if="$route.query.mode===0" label-width="80px">
+                                <el-select filterable v-model="formData.parentId" size="small"  placeholder="请选择" @change="parentIdChange" style="width:300px">
                                     <el-option v-for="(item, index) in parentIdList" :key="index" :label="item.name" :value="item.id"></el-option>
                                 </el-select>
                             </el-form-item>
-                            <el-form-item  v-if="$route.query.grade ===2||$route.query.grade ===3 || $route.query.mode===0" prop="assetType" size="small" style="margin-right: 40px;">
+                            <el-form-item  v-if="$route.query.grade ===2||$route.query.grade ===3 || $route.query.mode===0" prop="assetType" size="small" style="margin-right:40px">
                                 <div>
-                                    <div class="custom-label"><span style="color: #f56c6c;">* </span><span>资产类型:</span></div>
+                                    <div class="custom-label"><span style="color:#F56C6C">* </span><span>资产类型:</span></div>
                                     <treeselect
                                         :disabled ="$route.query.grade ===3"
                                         :disable-branch-nodes="true"
                                         :clearable="false"
-                                        style="width: 300px;"
+                                        style="width:300px"
                                         :options="assetTypeList"
                                         :normalizer="normalizer"
                                         placeholder="请选择"
-                                        noResultsText="无可用选项"
                                         noChildrenText="当前分支无子节点"
                                         noOptionsText="无可用选项"
                                         @select="assetTypeChange"
@@ -47,12 +46,12 @@
                                 </div>
 
                             </el-form-item>
-                            <el-form-item label="厂商:" style="position: relative;margin-bottom: 30px;" prop="manufacturer" size="small"  v-if="$route.query.grade===3 || $route.query.mode===0" label-width="80px">
+                            <el-form-item label="厂商:" style="margin-bottom:30px;position: relative" prop="manufacturer" size="small"  v-if="$route.query.grade===3 || $route.query.mode===0" label-width="80px">
                                 <div class="add-manufacturer" @click="addDialog = true">
                                     <span class="iconfont icon-tianjia"></span>
                                     <span class="add-text">添加厂商</span>
                                 </div>
-                                <el-select filterable v-model="formData.manufacturer" size="small" placeholder="请选择" :disabled ="manufacturerDis" style="width: 300px;">
+                                <el-select filterable v-model="formData.manufacturer" size="small" placeholder="请选择" :disabled ="manufacturerDis" style="width:300px">
                                     <el-option v-for="(item, index) in manufacturerList" :key="index" :label="item.name" :value="item.id"></el-option>
                                 </el-select>
                             </el-form-item>
@@ -62,7 +61,7 @@
                             <el-form-item label="" style=""  size="small">
                                 <el-transfer
                                     class="transfer"
-                                    style=" display: flex;justify-content: space-between;width: 50%;text-align: left;background-color: rgb(0 0 0 / 0%);"
+                                    style="text-align: left; display: flex;justify-content: space-between;background-color: rgba(0,0,0,0);width:50%;"
                                     v-model="formData.optionalField"
                                     filter-placeholder="请输入选项名称"
                                     filterable
@@ -89,7 +88,7 @@
         <el-dialog custom-class="common-dialog user-dialog" title="添加厂商" :visible.sync="addDialog" width="700px">
             <el-form :model="addForm" :rules="rulesTwo" ref="addForm" :inline="true" label-position="top">
                 <el-form-item label="厂商：" prop="manufacturer" label-width="60px">
-                    <el-input size="small"  v-model="addForm.manufacturer" placeholder="请输入" autocomplete="off" clearable style="width: 680px;"></el-input>
+                    <el-input size="small"  v-model="addForm.manufacturer" placeholder="请输入" autocomplete="off" clearable style="width:680px"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -102,14 +101,14 @@
         <el-dialog title="提示" :visible.sync="seeDialog" width="30%" custom-class="attendance-dialog">
             <span>是否放弃当前编辑的内容</span>
             <span slot="footer" class="dialog-footer">
-                <el-button size="small" @click="seeDialog = false" style="margin-right: 10px;">取 消</el-button>
+                <el-button size="small" @click="seeDialog = false" style="margin-right:10px">取 消</el-button>
                 <el-button type="primary" size="small" @click="handleSee">确 定</el-button>
             </span>
         </el-dialog>
         <el-dialog title="提示" :visible.sync="editDialog" width="30%" custom-class="attendance-dialog">
             <span>是否放弃当前编辑的内容</span>
             <span slot="footer" class="dialog-footer">
-                <el-button size="small" @click="handleEditCancel" style="margin-right: 10px;">取 消</el-button>
+                <el-button size="small" @click="handleEditCancel" style="margin-right:10px">取 消</el-button>
                 <el-button type="primary" size="small" @click="handleEdit">确 定</el-button>
             </span>
         </el-dialog>
@@ -611,74 +610,75 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.event {
-    ::v-deep .vue-treeselect__single-value {
-        line-height: 32px !important;
+.event{
+    ::v-deep .vue-treeselect__single-value{
+        line-height:32px !important;
     }
 }
 .event ::v-deep .el-form .el-form-item:nth-child(2) .el-form-item__error {
     left: 80px;
 }
 .custom-label {
-    padding-right: 10px;
-    width: 80px;
-    font-size: 12px;
     text-align: left;
     color: #606266;
+    width: 80px;
+    font-size: 12px;
+    padding-right: 10px;
     box-sizing: border-box;
 }
 .event {
-    ::v-deep .el-transfer-panel__filter {
-        margin: 0;
+    ::v-deep .el-transfer-panel__filter{
+        margin: 0px;
         .el-input__inner {
-            border-radius: 0;
+            border-radius: 0px;
         }
     }
+
     ::v-deep .el-transfer__buttons {
+        padding: 190px 0px 0 0px;
         display: block;
-        padding: 190px 0 0;
-        button {
+        button{
             min-width: 50px !important;
         }
     }
     ::v-deep .el-button+.el-button {
-        margin-left: 0;
+        margin-left: 0px;
     }
 }
 // .event-content {
 //         background-color: #111d2b;
 //     }
-.classify-add {
-    .add-manufacturer {
-        position: absolute;
+  .classify-add {
+      .add-manufacturer {
+        right: 0px;
         top: -32px;
-        right: 0;
-        margin-left: 10px;
-        font-size: 12px;
-        color: #0052d9;
-        .iconfont {
-            font-size: 12px;
-        }
-        .add-text {
-            margin-left: 4px;
-        }
-        &:hover {
-            cursor: pointer;
-        }
-    }
-}
-.main {
+         position:absolute;
+          color: #0052d9;
+          font-size: 12px;
+          margin-left: 10px;
+          .iconfont {
+              font-size: 12px;
+          }
+          .add-text {
+              margin-left: 4px;
+          }
+          &:hover {
+              cursor: pointer;
+          }
+      }
+  }
+  .main {
     margin: 20px 0;
-}
-.attendance-list {
+  }
+  .attendance-list {
     margin-top: 0;
-    padding-right: 20px;
     padding-bottom: 30px;
-    padding-left: 20px;
     min-height: calc(100vh - 80px);
     flex-shrink: 0;
-}
-.title {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .title {
     margin-bottom: 16px;
     // width: 100%;
     // height: 30px;
@@ -698,8 +698,8 @@ export default {
     //     bottom: 0;
     //     left: 10px;
     // }
-}
-.title-two {
+  }
+  .title-two {
     margin-bottom: 26px;
     // width: 100%;
     // height: 30px;
@@ -719,30 +719,30 @@ export default {
     //     bottom: 0;
     //     left: 10px;
     // }
-}
-.transfer ::v-deep .el-transfer-panel {
+  }
+   .transfer ::v-deep .el-transfer-panel {
+    background-color: rgba(0, 0, 0, 0);
     // border-color: #1bd7fa;
     width: 300px;
-    background-color: rgb(0 0 0 / 0%);
     // box-shadow: inset 0px 0px 7px 0px #389bf7;
 }
 .transfer ::v-deep .el-transfer-panel .el-checkbox__inner {
-    width: 12px;
     height: 12px;
+    width: 12px;
 }
 .transfer ::v-deep .el-transfer-panel__body {
     height: 350px;
 }
-@media screen and (max-width: 1366px) {
+@media screen and (max-width: 1366px){
     .transfer ::v-deep .el-transfer-panel__body {
         height: 216px;
     }
     .event ::v-deep .el-transfer__buttons {
-        padding: 80px 0 0;
+        padding: 80px 0px 0 0px;
     }
 }
 .transfer ::v-deep .el-checkbox__input.is-disabled .el-checkbox__inner {
-    background-color: rgba($color: #ffffff, $alpha: 0%);
+    background-color: rgba($color: #fff, $alpha: 0);
     // border-color:  rgba($color: #1bd7fa, $alpha: 0.5);
 }
 .transfer ::v-deep .el-checkbox__input.is-disabled+span.el-checkbox__label {
@@ -751,11 +751,12 @@ export default {
 .transfer ::v-deep .el-transfer-panel__list.is-filterable {
     height: 308px;
 }
+
 .transfer ::v-deep .el-transfer-panel .el-transfer-panel__header {
+    background-color: #ebf1f5;
     // border-color: #1bd7fa;
     // box-shadow: inset 0px 0px 14px 0px #389bf7;
     height: 30px;
-    background-color: #ebf1f5;
     line-height: 30px;
 }
 .transfer ::v-deep .el-transfer-panel__filter .el-input__inner {
@@ -764,98 +765,72 @@ export default {
 .transfer ::v-deep  .el-transfer-panel .el-transfer-panel__header .el-checkbox {
     line-height: 30px;
 }
+
 .transfer ::v-deep .el-transfer-panel .el-transfer-panel__header .el-checkbox .el-checkbox__label {
     font-size: 12px;
     // color: #fff;
 }
+
 .transfer ::v-deep .el-transfer-panel .el-transfer-panel__header .el-checkbox .el-checkbox__label span {
     // color: #fff;
 }
+
 .trans ::v-deep .el-input__inner {
     border-radius: 4px 4px 0 0;
 }
+
 .transfer ::v-deep .el-transfer-panel__item.el-checkbox {
     // color: #fff;
 }
+
 .transfer ::v-deep .el-checkbox__input.is-checked .el-checkbox__inner {
-    border-color: #0052d9;
     background-color: #0052d9;
+    border-color: #0052d9;
 }
+
 .transfer ::v-deep .el-checkbox__input.is-checked .el-checkbox__inner:hover {
     border-color: #0052d9;
 }
+
 .transfer ::v-deep .el-checkbox__input.is-indeterminate .el-checkbox__inner {
     // background-color: #024861;
     // border-color: #01d9f0;
 }
+
 .transfer ::v-deep .el-checkbox__input .el-checkbox__inner:hover {
     // border-color: #01d9f0;
 }
+
 .transfer ::v-deep .el-checkbox__inner::after {
     // border-color: #01d9f0;
 }
+
 .transfer ::v-deep .el-checkbox__input.is-checked+.el-checkbox__label {
     color: #0052d9;
 }
+
 .transfer ::v-deep .el-input__inner,
 .transfer ::v-deep .el-textarea__inner,
 .chart .el-input__inner {
     box-shadow: none;
     // border-color: #01d9f0;
 }
+
 .transfer ::v-deep .el-transfer__button.is-disabled,
 .transfer ::v-deep .el-transfer__button.is-disabled:hover {
-    border: 1px solid rgb(0 0 0 / 0%);
-    background-color: rgb(0 0 0 / 0%);
+    border: 1px solid rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
     // color: #00e9ff;
     // color: rgba($color: #00e9ff, $alpha: 0.5)
 }
+
 .transfer ::v-deep .el-transfer__button {
     color: #387dee;
-    background-color: rgba($color: #000000, $alpha: 0%);
+    background-color: rgba($color: #000000, $alpha: 0);
 }
 .transfer ::v-deep .el-button--primary {
     border: none;
 }
-.custom-star {
-    .custom-label {
-        padding-right: 10px;
-        width: 80px;
-        font-size: 12px;
-        text-align: left;
-        color: #ffffff;
-        box-sizing: border-box;
-    }
-    #app {
-        .bg-color {
-            background: unset;
-        }
-    }
-    .el-transfer {
-        ::v-deep .el-transfer-panel__item {
-            .el-checkbox__label {
-                color: #ffffff;
-            }
-        }
-        ::v-deep .el-transfer-panel {
-            border: 1px solid #1cd7fa;
-        }
-        ::v-deep .el-transfer-panel .el-transfer-panel__header {
-            background-color: rgb(255 255 255 / 0%) !important;
-        }
-        ::v-deep .el-checkbox__input.is-checked+.el-checkbox__label {
-            color: #0052d9;
-        }
-        ::v-deep .el-checkbox__input.is-checked .el-checkbox__inner {
-            border-color: #0052d9;
-            background-color: #0052d9;
-        }
-        ::v-deep .el-checkbox__input.is-checked .el-checkbox__inner:hover {
-            border-color: #0052d9;
-        }
-    }
-    .bg-color {
-        border: solid 1px #1cd7fa!important;
-    }
-}
+
 </style>
+

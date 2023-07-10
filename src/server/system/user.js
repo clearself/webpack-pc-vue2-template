@@ -1,13 +1,4 @@
 import request from '@/utils/server'
-// 获取资产联系人
-export const getAllAssetsUser = (data) => {
-    return request({
-        url: 'base-server/manage/adminUser/getAllAssetsUser',
-        method: 'post',
-        params: data.queryData,
-        data: data.paramsData
-    })
-}
 // 下载模板
 export const template = (data) => {
     return request({
@@ -109,15 +100,6 @@ export const get_all_user = (data) => {
 export const update_password = (data) => {
     return request({
         url: 'base-server/manage/adminUser/updatePassword',
-        method: 'post',
-        params: data.queryData,
-        data: data.paramsData
-    })
-}
-// 获取用户
-export const ssoLogin = (data) => {
-    return request({
-        url: 'base-server/sso/ssoLogin',
         method: 'post',
         params: data.queryData,
         data: data.paramsData

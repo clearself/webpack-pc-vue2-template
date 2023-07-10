@@ -1,14 +1,14 @@
 <template>
     <div class="container h100">
         <!--默认模式-->
-        <div :class="{'default':layoutModeSettings === 'default','ub left-theme':layoutModeSettings === 'left','ub ub-ver top':layoutModeSettings === 'top'}" v-if="show">
+        <div :class="{'default':layoutModeSettings === 'default','ub left-theme':layoutModeSettings === 'left','ub ub-ver top':layoutModeSettings === 'top'}">
             <div class="header w100 no-copy" v-if="layoutModeSettings === 'default'">
-                <TopNav :type="typeDataTwo"/>
+                <TopNav :type="typeDataTwo" />
             </div>
 
             <div class="header w100" v-if="layoutModeSettings === 'top'">
-                <Topbar :menus="menuData" class="topbar-container"/>
-                <Breadcrumb :menuData="menuData"/>
+                <Topbar :menus="menuData" class="topbar-container" />
+                <Breadcrumb :menuData="menuData" />
             </div>
             <div :class="{'ub ub-f1 second-view-wrapper':layoutModeSettings === 'default','ub w100':layoutModeSettings === 'left','w100':layoutModeSettings === 'top'}">
                 <div class="left" v-if="layoutModeSettings === 'left'">
@@ -64,11 +64,6 @@ import per from '@/directive/per/index.js' // 权限判断指令
 import { mapMutations, mapGetters } from 'vuex'
 import { Sidebar, Topbar, ThemeDrawer, TopNav, Password } from './components'
 import { get_menus, get_update_password_state } from '@/server/common.js'
-import { ssoLogin } from '@/server/system/user.js'
-import { groupList } from '@/server/auto_respond/action_manage.js'
-import {
-    get_security_policy
-} from '@/server/login/index.js'
 export default {
     name: 'Index',
     components: {
@@ -87,85 +82,13 @@ export default {
             typeData: 'left',
             menuData: [],
             typeDataTwo: 'default',
-            url: '',
-            safetyInfo: {
-                pwLimit: 10,
-                pwDefault: 1, // 密码策略，1 默认 2 自定义
-                pwCustom: 1, // 1 数字， 2 大写字母， 3 小写字母， 4 特殊字符
-                graphicVerification: 2, // 是否图形验证码 1 是 2 否
-                verificationMode: 1, // 双因子 1 邮箱  2 手机校验
-                doubleVerification: 2, // 是否开启双因子 1 是 2 否
-                style: 1, // 1 默认 2 左侧 3 顶部
-                colour: '', // 主题颜色： 1 默认 2 浅色 3 深色
-                systemName: '基础开发平台', // 系统名称
-                logoAddress: require('../assets/img/logo.png'), // logo 地址
-                adminPhone: '', // 管理员联系方式
-                lockTime: '', // 锁定时间
-                lockTimeUnit: '' // 锁定时间单位 1分、2小时、3天、4月
-            },
-            show: false
+            url: ''
 
         }
     },
-    async created() {
-        // await this.getInitInfo()
-        const code = this.$route.query.code || ''
-        const state = this.$route.query.state || ''
-        if (code) {
-            const data = {
-                queryData: {
-                    code: code,
-                    state: state
-                },
-                paramsData: {}
-            }
-            ssoLogin(data)
-                .then((res) => {
-                    console.log(res)
-                    if (typeof res != 'string') {
-                        let initInfo = this.$getlocalStorage('initInfo')
-                        if (initInfo && initInfo.user) {
-                            initInfo.user.chineseName = res.chineseName
-                            initInfo.user.token = res.token
-                            this.$setlocalStorage('initInfo', initInfo)
-                        }
-                        setTimeout(() => {
-                            this.initUpdatePassword()
-                            this.getMenu()
-                            this.show = true
-                        }, 1000)
-                    } else {
-                        this.$alert('您的账号不存在或被禁用', '提示', {
-                            confirmButtonText: '确定',
-                            showClose: false,
-                            callback: action => {
-                                window.location.href = '/api/base-server/sso/clean'
-                            }
-                        })
-                    }
-                })
-                .catch((err) => {
-                    // window.location.href = '/api/base-server/sso/clean'
-                    // this.$router.replace('/index')
-                    this.$router.replace('/login')
-                    console.log(err)
-                })
-        } else {
-            let initInfo = this.$getlocalStorage('initInfo')
-            if (initInfo.user == '') {
-                this.$router.replace('/login') // 如果获取不到用户信息，重新登录
-            } else {
-                setTimeout(() => {
-                    if (initInfo.user.token != '') {
-                        this.initUpdatePassword()
-                        this.getMenu()
-                        this.show = true
-                    }
-                }, 1000)
-            }
-        }
-        // this.initUpdatePassword()
-        // this.getMenu()
+    created() {
+        this.initUpdatePassword()
+        this.getMenu()
     },
     mounted() {
         this.$eventBus.$on('passwordShow', () => {
@@ -184,8 +107,7 @@ export default {
             let colorObj = {
                 1: 'default',
                 2: 'dark',
-                3: 'purple',
-                4: 'star'
+                3: 'purple'
             }
             this.changeSetting({
                 key: 'layoutModeSettings',
@@ -208,7 +130,6 @@ export default {
                 this.$store.commit('common/setName', theme.systemName)
             }
         }
-        this.groupListFn()
     },
     watch: {
         $route: {
@@ -223,68 +144,6 @@ export default {
         }
     },
     methods: {
-        groupListFn() {
-            let data = {
-                queryData: {},
-                paramsData: {
-                    type: 0
-                }
-            }
-            groupList(data)
-                .then(res => {
-                    this.$setsessionStorage('customAutoList', res)
-                    // this.$setsessionStorage('customAutoList', [])
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-        },
-        getInitInfo() {
-            let data = {
-                queryData: {},
-                paramsData: {}
-            }
-            get_security_policy(data).then(res => {
-                console.log(res, '安全策略')
-                this.safetyInfo.pwLimit = res.pwLimit ?? 8
-                this.safetyInfo.pwDefault = res.pwDefault ?? 1
-                this.safetyInfo.pwCustom = res.pwCustom ?? '1,2'
-                this.safetyInfo.graphicVerification = res.graphicVerification ?? 2
-                this.safetyInfo.verificationMode = res.verificationMode ?? 1
-                this.safetyInfo.doubleVerification = res.doubleVerification ?? 2
-                this.safetyInfo.style = res.style ?? 1
-                this.safetyInfo.colour = res.colour ?? 1
-                this.safetyInfo.systemName = res.systemName ?? '基础开发平台'
-                // this.safetyInfo.logoAddress = '/api/base-server/terminal/toViewPicture'
-                this.safetyInfo.adminPhone = res.adminPhone ?? ''
-                this.safetyInfo.lockTime = res.lockTime ?? ''
-                this.safetyInfo.lockTimeUnit = res.lockTimeUnit ?? ''
-                // this.$setsessionStorage('userInfo', userInfo)
-                this.$store.commit('common/setLogo', res.logoAddress)
-                this.$store.commit('common/setName', res.systemName)
-
-                let obj = {
-                    user: {
-
-                    },
-                    pwd: {
-                        pwDefault: res.pwDefault,
-                        pwCustom: res.pwCustom,
-                        limit: res.pwLimit
-                    },
-                    theme: {
-                        style: res.style,
-                        color: res.colour,
-                        systemName: res.systemName,
-                        logoAddress: res.logoAddress
-                    }
-                }
-                this.$setlocalStorage('initInfo', obj)
-                document.title = res.systemName ?? '基础开发平台'
-            }).catch(error => {
-                console.log(error)
-            })
-        },
         close() {
             this.passwordDialog = false
             setTimeout(() => {
@@ -331,7 +190,7 @@ export default {
                 })
                 this.$setsessionStorage('menuUrls', menuUrls)
 
-                let menus = res.menus
+                let menus = res.menus.filter(item => item.id !== 'b981f964ef9f7c28a26dd4b540c9ceea')
                 this.$setsessionStorage('systemMenus', menus)
                 if (menus.length > 0) {
                     this.gethandeltUrl(menus)
@@ -343,6 +202,13 @@ export default {
                     }
 
                     console.log('urlurl', this.url)
+
+                    // 涉及三级路由页面 不走返回跳转的逻辑
+                    if (this.$route.path.includes('/data_report/report_pages') ||
+                        this.$route.path.includes('/data_report/report_fail') ||
+                        this.$route.path.includes('/data_report/report_config')) {
+                        return
+                    }
 
                     let currentPath = this.$getsessionStorage('currentPath')
                     if ('newWindow' in this.$route.query) {
@@ -407,53 +273,50 @@ export default {
     overflow: hidden;
 }
 .main {
-    overflow: hidden;
     height: 100%;
+    overflow: hidden;
 }
 .all-menu {
     position: relative;
-    top: 88px;
-    left: 150px;
     font-size: 12px;
     @include themeify {
-        color: themed('left-font-color');
+        color: themed("left-font-color");
     }
+    top: 88px;
+    left: 150px;
     &:hover {
         cursor: pointer;
         @include themeify {
-            color: themed('left-hover-font-color');
+            color: themed("left-hover-font-color");
         }
     }
 }
 .default {
-    overflow: hidden;
     width: 100%;
     height: 100%;
+    overflow: hidden;
+
     .header {
         position: fixed;
-        z-index: 999;
         height: 40px;
-        box-shadow: 0 0 32px 0 rgb(41 48 66 / 10%);
+        z-index: 999;
+        box-shadow: 0 0 32px 0 rgba(41,48,66,0.1);
     }
     .second-view-wrapper {
-        position: relative;
-        overflow: hidden;
-        margin-top: 40px;
         height: calc(100vh - 40px);
+        margin-top: 40px;
+        overflow: hidden;
+        position: relative;
         .second-box {
             overflow: hidden;
             .breadcrumb {
-                position: fixed;
-                z-index: 10;
+                position:fixed;
                 height: 40px;
-                @include themeify {
-                    background: themed('breadcrumb-bg-color');
-                }
             }
             .second-view {
-                overflow: auto;
                 margin-top: 40px;
                 box-sizing: border-box;
+                overflow: auto;
             }
         }
     }
@@ -476,56 +339,50 @@ export default {
     background-repeat: no-repeat;
     background-size: cover;
 }
-.custom-star .left {
-    border: 1px solid #1cd7fa;
-    border-radius: 5px;
-    background-position: bottom;
-    background-repeat: no-repeat;
-    background-size: cover;
-    box-shadow: 0 0 7px inset #389bf7;
-    background-image: url('../assets/img/login/star.png') !important;
-}
 .left-theme {
-    overflow: hidden;
     width: 100%;
     height: 100%;
+    overflow: hidden;
+
     .second-box {
-        position: relative;
         overflow: hidden;
+        position: relative;
         .header {
             position: absolute;
-            top: 0;
-            right: 0;
             left: 0;
+            right: 0;
+            top: 0;
             // height: 120px;
             z-index: 999;
         }
         .second-view {
-            overflow: auto;
-            margin-top: 80px;
             height: calc(100vh - 80px);
+            margin-top:80px;
             box-sizing: border-box;
+            overflow: auto;
         }
     }
 }
+
 .top {
-    overflow: hidden;
     width: 100%;
     height: 100%;
+    overflow: hidden;
+
     .header {
         position: fixed;
-        z-index: 999;
         height: 100px;
+        z-index: 999;
     }
     .second-view {
-        overflow: auto;
-        margin-top: 80px;
         height: calc(100vh - 80px);
+        margin-top:80px;
         box-sizing: border-box;
+        overflow: auto;
     }
 }
 .second-view {
-    padding: 0 10px;
+    padding: 0px 10px 0 10px;
     width: 100%;
 }
 </style>

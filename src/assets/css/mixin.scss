@@ -1,17 +1,17 @@
 @charset "utf-8";
-@import './variable'; /* 引入配置 */
+@import "./variable.scss"; /*引入配置*/
 
 // 3.定义混合指令, 切换主题,并将主题中到所有规则添加到theme-map中
 @mixin themeify() {
-    @each $theme-name, $theme-map in $themes { //$theme-name 主题样式类名， $theme-map样式对象
-        $theme-map: $theme-map !global; //!global 把局部变量强升为全局变量
-        body.#{$theme-name} & {// #{}是sass的插值表达式   & sass嵌套里的父容器标识
-            @content; // @content是混合器插槽，像vue的slot
-        }
+  @each $theme-name, $theme-map in $themes { //$theme-name 主题样式类名， $theme-map样式对象
+    $theme-map: $theme-map !global; //!global 把局部变量强升为全局变量
+    body.#{$theme-name} & {// #{}是sass的插值表达式   & sass嵌套里的父容器标识
+      @content; // @content是混合器插槽，像vue的slot
     }
+  }
 }
 
 //声明一个根据Key获取颜色的function
 @function themed($key) {
-    @return map-get($theme-map, $key); //从相应主题中拿到相应key对应的值
+  @return map-get($theme-map, $key); //从相应主题中拿到相应key对应的值
 }

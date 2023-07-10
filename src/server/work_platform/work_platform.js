@@ -116,21 +116,3 @@ export const get_work_bar = (data) => {
         params: data.queryData
     })
 }
-
-export const getSafetyTask = (data) => {
-    return request({
-        url: 'base-server/manage/workPlatform/getSafetyTask',
-        method: 'post',
-        data: data.paramsData,
-        params: data.queryData
-    })
-}
-
-export const getAutoTask = (data) => {
-    return request({
-        url: 'base-server/manage/workPlatform/getAutoTask',
-        method: 'post',
-        data: data.paramsData,
-        params: data.queryData
-    })
-}

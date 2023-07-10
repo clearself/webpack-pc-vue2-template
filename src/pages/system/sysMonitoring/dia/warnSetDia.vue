@@ -51,7 +51,7 @@
             </el-form-item>
             <el-form-item label="通知方式" prop="sendType">
                 <el-radio-group v-model="ruleForm.sendType">
-                    <el-radio disabled :label="0">蓝信</el-radio>
+                    <el-radio :label="0">蓝信</el-radio>
                     <el-radio :label="1">短信</el-radio>
                     <el-radio :label="2">邮件</el-radio>
                 </el-radio-group>
@@ -78,6 +78,12 @@
                         :value="item.id">
                     </el-option>
                 </el-select>
+            </el-form-item>
+            <el-form-item label="是否清除" prop="isClean">
+                <el-radio-group v-model="ruleForm.isClean">
+                    <el-radio :label="1">是</el-radio>
+                    <el-radio :label="0">否</el-radio>
+                </el-radio-group>
             </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
@@ -116,7 +122,8 @@ export default {
                 systemDiskUsage: 0,
                 dataDiskUsage: 0,
                 sendType: null,
-                sendTo: []
+                sendTo: [],
+                isClean: 0
             },
             rules: {
                 ip: [

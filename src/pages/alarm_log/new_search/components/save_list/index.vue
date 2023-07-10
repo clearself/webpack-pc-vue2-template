@@ -1,15 +1,15 @@
 <template>
     <div class="zancun">
-        <el-drawer title="暂存列表" :visible.sync="saveListDialog" direction="rtl" :size="1300" :show-close="true" :before-close="closeDialog" @close="closeDialog" :wrapperClosable="false" v-if="saveListDialog">
+        <el-drawer title="暂存列表" :visible.sync="saveListDialog" direction="rtl" :size="1300" :show-close="true" :before-close="closeDialog" @close="closeDialog" :wrapperClosable="false">
             <div class="drawer-content">
                 <div
                     style="position: relative;
-                        top: 0;
                         left: 0;
-                        overflow-y: auto;
+                        top: 0;
                         width: 100%;
                         height: 100%;
-">
+                        overflow-y: auto;
+                    ">
                     <div class="ub ub-pe w100">
                         <!-- <div class="list-tips">暂存列表</div> -->
                         <div class="ub">
@@ -17,7 +17,7 @@
                             <el-button size="small" icon="iconfont icon-tianjia" type="primary" @click="createAllPackTask">创建PCAP包任务</el-button>
                             <el-dropdown trigger="click" @command="handleCommand">
                                 <span class="el-dropdown-link">
-                                    <el-button style="margin-right: 10px;margin-left: 10px;" size="small" icon="iconfont icon-daochu" type="primary">导 出</el-button>
+                                    <el-button style="margin-left: 10px;margin-right: 10px" size="small" icon="iconfont icon-daochu" type="primary">导 出</el-button>
                                 </span>
                                 <el-dropdown-menu slot="dropdown">
                                     <el-dropdown-item command="0">导出json</el-dropdown-item>
@@ -28,18 +28,18 @@
                         </div>
                     </div>
                     <div class="drawer-pad">
-                        <div style="margin-bottom: 10px;">
+                        <div style="margin-bottom:10px">
                             <CustomDate :append-to-body="appendToBody"  @getCustomTime="getCustomTime" :inputWidth="675" :empty="emptyData" @getDateData="getDateData"  @useing="customDateUse" ref="customDate"></CustomDate>
                         </div>
                         <div class="ub ub-pj">
-                            <div style="width: 1100px;">
+                            <div style="width: 1100px">
                                 <CustomSearch ref="customSearch" :selectWidth="1100" @getData="getData" :type="1" />
                             </div>
                             <Debounce :time='1500' :isDebounce="2">
                                 <el-button size="small" type="primary" @click.native="searchAssets">搜 索</el-button>
                             </Debounce>
                         </div>
-                        <div style="position: relative;">
+                        <div style="position: relative">
                             <FilterCondition :is-drawer="true" :condition-data="conditionData" />
                             <div v-if="conditionShow" class="condition-area">
                                 <ConditionRules
@@ -54,16 +54,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="ub ub-pe" style="margin-bottom: 20px;">
+                        <div class="ub ub-pe" style="margin-bottom: 20px">
                             <div class="set-header" @click="transferDialog = true">
-                                <span style="margin-right: 5px;font-size: 12px;" class="iconfont icon-zidingyibiaotou"></span>
+                                <span style="margin-right:5px;font-size: 12px" class="iconfont icon-zidingyibiaotou"></span>
                                 <span>自定表头</span>
                             </div>
                         </div>
                         <div>
                             <el-table
                                 :row-class-name="tableRowClassName"
-                                style="width: 100%;"
+                                style="width:100%;"
                                 v-loading="loading"
                                 ref="multipleTable"
                                 @expand-change="handleExpand"
@@ -84,11 +84,11 @@
                                 <el-table-column type="expand" class-name="expand-col" width="40">
                                     <template slot-scope="{row}">
                                         <el-tabs>
-                                            <el-tab-pane label="键/值" style="overflow: hidden;padding: 0 20px;" class="demo-table-left">
-                                                <div class="table-expand" style="overflow-y: auto;max-height: 500px;">
+                                            <el-tab-pane label="键/值" style="padding:0 20px;overflow:hidden;" class="demo-table-left">
+                                                <div class="table-expand" style="max-height:500px;overflow-y:auto;">
                                                     <el-form label-position="left" label-width="150px">
                                                         <el-form-item :label="item.name" v-for="(item,index) in expandData" :key="index+row.id">
-                                                            <div style="max-width: 800px;font-size: 12px;text-align: justify;word-break: break-all;">
+                                                            <div style="max-width: 800px;text-align: justify;word-break:break-all;font-size:12px">
                                                                 <span>{{item.value}}</span>
                                                             </div>
                                                         </el-form-item>
@@ -96,33 +96,33 @@
                                                 </div>
 
                                             </el-tab-pane>
-                                            <el-tab-pane label="JSON" style="overflow: hidden;padding: 0 20px;">
-                                                <div class="table-expand" style="overflow-y: auto;max-width: 800px;max-height: 500px;font-size: 12px;text-align: justify;word-break: break-all;">
+                                            <el-tab-pane label="JSON" style="padding:0 20px;overflow:hidden;">
+                                                <div class="table-expand" style="font-size:12px;max-width: 800px;text-align: justify;word-break:break-all;max-height:500px;overflow-y:auto;">
                                                     <json-viewer :value="expandJsonData" :expand-depth="5" copyable theme="my-awesome-json-theme" sort></json-viewer>
                                                 </div>
                                             </el-tab-pane>
 
-                                            <el-tab-pane v-if="row.nftData === 2" label="PCAP包" style="overflow: hidden;padding: 0 20px;max-width: 1000px;">
-                                                <div class="table-expand pcap-detail" style="overflow-y: auto;max-width: 800px;max-height: 500px;font-size: 12px;text-align: justify;word-break: break-all;">
-                                                    <div style="margin-bottom: 10px;">
-                                                        <addBtn class="pcap-btn" style="margin-right: 10px;" icon="iconfont icon-tianjia" :disabled="row.nftData===0" title="创建PCAP包任务" @click="createPackTask(row)"></addBtn>
+                                            <el-tab-pane v-if="row.nftData === 2" label="PCAP包" style="padding:0 20px;overflow:hidden;max-width: 1000px">
+                                                <div class="table-expand pcap-detail" style="font-size:12px;max-width: 800px;text-align: justify;word-break:break-all;max-height:500px;overflow-y:auto;">
+                                                    <div style="margin-bottom: 10px">
+                                                        <addBtn class="pcap-btn" style="margin-right: 10px" icon="iconfont icon-tianjia" :disabled="row.nftData===0" title="创建PCAP包任务" @click="createPackTask(row)"></addBtn>
                                                         <a :href="'/api/data_center/manage/syslog/downloadPacap?logId='+row.id" download>
                                                             <!--<opt-btn :disabled="scope.row.nftData===2" icon="iconfont icon-xiazai1" title="下载PCAP包"></opt-btn>-->
                                                             <addBtn class="pcap-btn" icon="iconfont icon-xiazai1" title="下载PCAP包" />
                                                         </a>
                                                     </div>
-                                                    <el-tabs v-model="tabsValue" type="card" style="height: 100%;">
+                                                    <el-tabs v-model="tabsValue" type="card" style="height:100%;">
                                                         <el-tab-pane
                                                             :key="index"
                                                             v-for="(item, index) in pacpData"
                                                             :label="item.name"
                                                             :name="item.name"
-                                                            style="height: 100%;"
+                                                            style="height:100%;"
                                                         >
                                                             <div v-if="item.content.length>0" class="w100 left-content">
                                                                 <div v-for="(_item,_index) in item.content" :key="_index" class="ub w100 ub-ver">
-                                                                    <div v-if="_item.type==='req'" class="ub ub-f1 request" style="width: 100%;"><pre>{{_item.payload}}</pre></div>
-                                                                    <div v-if="_item.type==='res'" class="ub ub-f1 response" style="width: 100%;"><pre>{{_item.payload}}</pre></div>
+                                                                    <div v-if="_item.type==='req'" class="ub ub-f1 request" style="width:100%;"><pre>{{_item.payload}}</pre></div>
+                                                                    <div v-if="_item.type==='res'" class="ub ub-f1 response" style="width:100%;"><pre>{{_item.payload}}</pre></div>
                                                                 </div>
                                                             </div>
                                                         </el-tab-pane>
@@ -167,7 +167,7 @@
                                                     <p
                                                         v-if="item.field !== 'message' && item.field !== 'dt'"
                                                         class="ub ub-ac click-btn"
-                                                        style="margin: 10px 0;"
+                                                        style="margin: 10px 0"
                                                         @click="unequalVal({
                                                             key: item.field,
                                                             name: item.name,
@@ -189,24 +189,24 @@
                                                         <span>复制</span>
                                                     </p>
                                                     <p
-                                                        style="margin-top: 10px;"
+                                                        style="margin-top:10px"
                                                         v-if="item.field == 'srcIp' || item.field == 'desIp'"
                                                         @click="jumpAsset(item, scope.row[item.field])"
                                                         class="ub ub-ac click-btn">
-                                                        <i class="el-icon-s-promotion" style="font-size: 12px;"></i>
+                                                        <i class="el-icon-s-promotion" style="font-size:12px"></i>
                                                         <span>跳转到资产</span>
                                                     </p>
                                                     <p
-                                                        style="margin-top: 10px;"
+                                                        style="margin-top:10px"
                                                         v-if="['ip', 'url', '域名'].some(keyWord => item.field.toLowerCase().includes(keyWord))"
                                                         @click="jumpThreat(item, scope.row[item.field])"
                                                         class="ub ub-ac click-btn"
                                                     >
-                                                        <i class="iconfont icon-chaxunqingbao" style="font-size: 12px;"></i>
+                                                        <i class="iconfont icon-chaxunqingbao" style="font-size:12px"></i>
                                                         <span>查询情报</span>
                                                     </p>
                                                 </div>
-                                                <p slot="reference" v-if="item.field==='aDate'" style="color: #00c0ff;">{{scope.row[item.field]}}</p>
+                                                <p slot="reference" v-if="item.field==='aDate'" style="color:#00c0ff">{{scope.row[item.field]}}</p>
                                                 <p
                                                     v-else
                                                     class="highlighted"
@@ -271,7 +271,7 @@ import FilterCondition from '@/pages/alarm_log/new_search/components/FilterCondi
 import CustomDate from './custom_date.vue'
 import CustomSearch from '../custom_search/index.vue'
 import CustomTransfer from '../../components/custom_transfer/index.vue'
-import { get_threat_search, getStartConfig, get_threat_searchVenus } from '@/server/alarm/api.js'
+import { get_threat_search } from '@/server/intelligence/api.js'
 // import {
 //     getFilterSql,
 //     getDataTree,
@@ -328,7 +328,7 @@ export default {
     computed: {
         tableList() {
             console.log('this.list', this.list)
-            return this.list.length > 0 ? this.list : [{ field: 'id', name: 'ID' }]
+            return this.list.length > 0 ? this.list : [{ field: 'id', name: 'ID' }, { field: 'srcIp', name: '源IP' }]
         }
     },
     watch: {
@@ -362,20 +362,17 @@ export default {
                 if (this.$refs.customSearch) {
                     this.$refs.customSearch.inputData = ''
                 }
+                this.getStashFields()
             }
         }
     },
     mounted() {
-        console.log(this.startData, '1123322')
         this.$nextTick(() => {
-            this.getStartConfigData()
-            this.get_data()
-            this.getStashFields()
+
         })
     },
     data() {
         return {
-            startData: [],
             totalData: 0,
             emptyData: true,
             tabsValue: '',
@@ -441,11 +438,6 @@ export default {
         }
     },
     methods: {
-        getStartConfigData() {
-            getStartConfig({ queryData: {}, paramsData: {}}).then(res => {
-                this.startData = res
-            })
-        },
         tableRowClassName({ row, rowIndex }) {
             if (rowIndex % 2) {
                 return 'table-row2'
@@ -459,36 +451,24 @@ export default {
             }
             console.log('ip', item.fieldName, value)
             let obj = {
-                queryData: {},
-                paramsData: { value }
+                queryData: {
+                    value
+                },
+                paramsData: {}
             }
-            console.log(this.startData)
-            if (this.startData.includes(1)) {
-                this.searchWeibu(obj, value)
-            } else if (this.startData.includes(0)) {
-                this.searchVenus(obj, value)
-            }
-        },
-        searchWeibu(obj, value) {
             get_threat_search(obj)
                 .then(res => {
                     console.log(res)
                     this.$setsessionStorage('search-item', res)
-                    window.open(window.location.origin + '/#' + '/intelligence/threat_detail?searchStr=' + value)
+                    let route = this.$router.resolve({
+                        name: 'intelligence_threat_detail',
+                        query: {
+                            searchStr: value
+                        }
+                    })
+                    window.open(route.href, '_blank')
                 })
                 .catch(err => {
-                    console.log(err + 'err')
-                })
-        },
-        searchVenus(obj, value) {
-            get_threat_searchVenus(obj, value)
-                .then(res => {
-                    console.log(res)
-                    this.$setsessionStorage('search-item', res)
-                    window.open(window.location.origin + '/#' + '/intelligence/threat_detail?searchStr=' + value)
-                })
-                .catch(err => {
-                    this.btnLoading = false
                     console.log(err + 'err')
                 })
         },
@@ -1004,41 +984,42 @@ export default {
 }
 </script>
 <style lang="scss">
-.zancun {
-    .el-table__body-wrapper {
-        height: 584px !important;
+.zancun{
+    .el-table__body-wrapper{
+    height:584px !important;
     }
 }
 </style>
 <style scoped lang="scss">
-@import '../../../../../assets/css/pacap';
+@import '../../../../../assets/css/pacap.scss';
 .pcap-btn {
     background-image: url(../../../../../assets/img/XZWJ.png);
     background-position: 0 0;
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
-.drawer-pad {
-    overflow-y: auto;
+  .drawer-pad {
     // padding: 0 20px;
     height: calc(100% - 53px);
+    overflow-y: auto;
     .dialog-footer {
         float: right;
         margin-top: 78px;
     }
+
     & ::v-deep img {
-        max-width: 600px;
-        max-height: 600px;
+      max-width: 600px;
+      max-height: 600px;
     }
     &::-webkit-scrollbar,
     li::-webkit-scrollbar,
     ul::-webkit-scrollbar {
-        width: 4px;
+      width: 4px;
     }
     &::-webkit-scrollbar-track,
     li::-webkit-scrollbar-track,
     ul::-webkit-scrollbar-track {
-        background: none;
+      background: none;
     }
     .el-form--inline .el-form-item {
         margin-right: 0;
@@ -1046,69 +1027,69 @@ export default {
     .set-header {
         font-size: 12px;
         color: #0052d9;
-        cursor: pointer;
+        cursor:pointer;
     }
     ::v-deep .time-panel-picker {
         top: 168px !important;
     }
     ::v-deep .filter-title {
-        margin-left: 0 !important;
+        color: rgba(0, 0, 0, 0.9);
         font-size: 12px;
-        color: rgb(0 0 0 / 90%);
+        margin-left: 0px !important;
     }
-    .bigTable {
-        ::v-deep .el-form-item {
-            margin-bottom: 0;
-        }
+    .bigTable  {
+       ::v-deep .el-form-item {
+            margin-bottom: 0px
+       }
     }
-}
-.drawer-pad ::v-deep.el-form-item__content {
+  }
+  .drawer-pad ::v-deep.el-form-item__content {
     font-size: 12px;
-}
-.drawer-pad ::v-deep .el-form-item__label {
+  }
+  .drawer-pad ::v-deep .el-form-item__label {
     font-size: 12px;
-}
-.condition-area {
+  }
+  .condition-area {
     position: absolute;
-    top: 0;
-    right: 0;
     left: 0;
+    right: 0;
+    top: 0;
     z-index: 1000;
+    background-color: #fff;
     padding: 20px;
-    border: solid 1px #dcdcdc;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
     border-radius: 2px;
-    background-color: #ffffff;
-    box-shadow: 0 0 20px 0 rgb(0 0 0 / 10%);
-    transition: all 0.3s;
+    border: solid 1px #dcdcdc;
+    transition: all .3s;
 }
 .split-line {
-    position: absolute;
-    bottom: 60px;
-    left: 0;
     width: 100%;
     height: 1px;
+    position: absolute;
+    left: 0;
+    bottom: 60px;
     background: #dcdcdc;
 }
-.click-btn {
-    cursor: pointer;
-    font-size: 12px;
-    i {
-        margin-right: 5px;
-        color: #0052d9;
-    }
-    span.val {
-        color: #0052d9;
-    }
-}
-.click-btn:hover {
-    background-color: #f3f3f3;
-}
-::-webkit-scrollbar {
+  .click-btn {
+      cursor: pointer;
+      font-size: 12px;
+      i {
+          margin-right: 5px;
+          color: #0052D9;
+      }
+      span.val {
+          color: #0052D9;
+      }
+  }
+  .click-btn:hover {
+      background-color: #f3f3f3;
+  }
+  ::-webkit-scrollbar {
     width: 0 !important;
 }
 div ::v-deep .el-table__expand-column.expand-col {
-    width: 30px;
     border: none;
+    width: 30px;
 }
 </style>
 <style lang="scss">

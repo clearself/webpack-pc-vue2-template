@@ -1,8 +1,11 @@
 <template>
-    <div class="btn_box del" @click="searchBtn">
-        <div class="ub ub-ac ub-pc btn_inner_box">
-            <i v-if="icon!=''"  :class="icon"></i>
+    <div @click="searchBtn" :class="{'btn_box':!isReuse,'del':!isReuse, 'reuseBtn':isReuse}">
+        <div v-if="!isReuse" class="ub ub-ac ub-pc btn_inner_box">
+            <i v-if="icon!=''" :class="icon"></i>
             <span>{{title}}</span>
+        </div>
+        <div v-else>
+            <el-button size="small" :icon="icon" type="danger">{{title}}</el-button>
         </div>
     </div>
 </template>
@@ -18,6 +21,10 @@ export default {
         icon: {
             type: String,
             default: 'el-icon-delete'
+        },
+        isReuse: {
+            type: Boolean,
+            default: (val) => Boolean(val)
         }
     },
     data() {
@@ -35,6 +42,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.reuseBtn {
+    display: inline-block;
+}
 .btn_box{
     min-width:70px;
     width:auto;
